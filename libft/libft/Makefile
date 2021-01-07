@@ -19,4 +19,3 @@ fclean: clean
 	rm -f $(NAME)
 	rm -f libft.so
 re: fclean all
-
