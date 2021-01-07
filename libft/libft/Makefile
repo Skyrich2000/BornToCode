@@ -1,5 +1,5 @@
 CFLAGS = -Wall -Wextra -Werror
-ARFLAGS = -rcs
+ARFLAGS = rcs
 NAME = libft.a
 SRCDIR = srcs
 INCDIR = includes
