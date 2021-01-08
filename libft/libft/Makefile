@@ -61,9 +61,6 @@ bonus: $(OBJS_B)
 	gcc $(CFLAGS) -c $(SRCS_B) -I $(INCDIR)
 	ar rc $(NAME) $^
 
-# so: $(OBJS_P) $(OBJS_B)
-#	gcc -shared -o libft.so $^
-
 clean:
 	rm -f $(OBJS_P)
 	rm -f $(OBJS_B)

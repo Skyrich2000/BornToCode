@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 01:45:23 by ycha              #+#    #+#             */
-/*   Updated: 2021/01/08 16:43:41 by ycha             ###   ########.fr       */
+/*   Updated: 2021/01/08 20:24:13 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,3 +84,18 @@ char		**ft_split(char const *s, char c)
 	*ptr = 0;
 	return (ret);
 }
+#include <stdio.h>
+int	main(void)
+{
+	char **ret = ft_split("abc abc qwe asd", ' ');
+	int	i = 0;
+	while(ret[i])
+	{
+		printf("%s\n", ret[i]);
+		i++;
+	}
+	while(1)
+		;
+	return (0);
+}
+
