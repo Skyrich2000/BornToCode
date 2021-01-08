@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 21:20:59 by ycha              #+#    #+#             */
-/*   Updated: 2021/01/07 09:34:23 by ycha             ###   ########.fr       */
+/*   Updated: 2021/01/08 01:59:42 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	*ft_memset(void *s, int c, size_t n)
 	void	*ret;
 	char	*ptr;
 
-	ptr = (char *)s;
 	ret = s;
+	ptr = (char *)s;
 	while (n--)
 	{
 		*ptr = c;

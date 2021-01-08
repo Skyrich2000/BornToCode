@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 17:19:09 by ycha              #+#    #+#             */
-/*   Updated: 2021/01/07 09:32:07 by ycha             ###   ########.fr       */
+/*   Updated: 2021/01/08 02:22:11 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ size_t	ft_strlcat(char *dest, char *src, size_t size)
 	s_ptr = src;
 	while (size && *dest)
 	{
-		size--;
-		dest++;
+		--size;
+		++dest;
 	}
 	while (*src)
 		++src;

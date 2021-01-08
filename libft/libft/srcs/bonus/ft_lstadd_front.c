@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:12:42 by ycha              #+#    #+#             */
-/*   Updated: 2021/01/07 10:18:41 by ycha             ###   ########.fr       */
+/*   Updated: 2021/01/07 16:34:17 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	if (!lst)
+	if (!lst || !new)
 		return ;
-	if (*lst)
-		new->next = (*lst)->next;
+	new->next = *lst;
 	*lst = new;
 }

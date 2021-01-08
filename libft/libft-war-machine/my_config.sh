@@ -6,7 +6,7 @@
 #    By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/07 13:15:10 by ycha              #+#    #+#              #
-#    Updated: 2021/01/07 13:34:13 by ycha             ###   ########.fr        #
+#    Updated: 2021/01/07 16:40:21 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@
 ###################################
 
 #Edit the next line with the path of your libft project.
-PATH_LIBFT=../libft
+PATH_LIBFT=/home/dhuni/workspace/libft/libft
 
 #If you use a relative path, don't put double quotes.
 #For example :
@@ -36,14 +36,14 @@ PATH_LIBFT=../libft
 ##############
 # Edit with the name of your header's directory
 # Keep it empty if you have your header file in your main directory
-HEADER_DIR="includes"
+HEADER_DIR=""
 
 ###########
 # SRC DIR #
 ###########
 # Edit with the name of your sources' directory
 # Keep it empty if you have your header file in your main directory
-SRC_DIR="srcs"
+SRC_DIR=""
 
 
 ###################################

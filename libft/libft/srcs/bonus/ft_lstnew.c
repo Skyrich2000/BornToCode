@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:02:02 by ycha              #+#    #+#             */
-/*   Updated: 2021/01/07 10:04:18 by ycha             ###   ########.fr       */
+/*   Updated: 2021/01/08 01:08:03 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 t_list	*ft_lstnew(void *content)
 {
-	t_list *ret;
+	t_list	*ret;
 
-	if(!(ret = malloc(sizeof(t_list))))
+	if (!(ret = malloc(sizeof(t_list))))
 		return (0);
 	ret->content = content;
 	ret->next = 0;

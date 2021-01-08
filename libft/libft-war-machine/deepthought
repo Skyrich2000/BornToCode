@@ -1,37 +1,26 @@
 = Host-specific information ====================================================
 $> hostname; uname -msr
-c2r8s5.42seoul.kr
-Darwin 18.7.0 x86_64
+67fd231ce167
+Linux 5.4.0-58-generic x86_64
 $> date
-Thu Jan  7 13:32:53 KST 2021
+Fri Jan  8 14:35:15 KST 2021
 $> gcc --version
-Apple LLVM version 10.0.1 (clang-1001.0.46.4)
-Target: x86_64-apple-darwin18.7.0
-Thread model: posix
-InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
+Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
 $> clang --version
-Apple LLVM version 10.0.1 (clang-1001.0.46.4)
-Target: x86_64-apple-darwin18.7.0
+clang version 6.0.1-14 (tags/RELEASE_601/final)
+Target: x86_64-pc-linux-gnu
 Thread model: posix
-InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+InstalledDir: /usr/bin
 
 = Compiling libft ==============================================================
 $> make re
-rm -f 
-rm -f libft.a
-rm -f libft.so
-ar rcs -o libft.a 
-ar: illegal option combination for -r
-usage:  ar -d [-TLsv] archive file ...
-	ar -m [-TLsv] archive file ...
-	ar -m [-abiTLsv] position archive file ...
-	ar -p [-TLsv] archive [file ...]
-	ar -q [-cTLsv] archive file ...
-	ar -r [-cuTLsv] archive file ...
-	ar -r [-abciuTLsv] position archive file ...
-	ar -t [-TLsv] archive [file ...]
-	ar -x [-ouTLsv] archive [file ...]
-make: *** [libft.a] Error 1
+rm -f srcs/part1/ft_isalpha.o srcs/part1/ft_isdigit.o srcs/part1/ft_isalnum.o srcs/part1/ft_isascii.o srcs/part1/ft_isprint.o srcs/part1/ft_toupper.o srcs/part1/ft_tolower.o srcs/part1/ft_memset.o srcs/part1/ft_bzero.o srcs/part1/ft_memcpy.o srcs/part1/ft_memccpy.o srcs/part1/ft_memmove.o srcs/part1/ft_memchr.o srcs/part1/ft_memcmp.o srcs/part1/ft_calloc.o srcs/part1/ft_strlen.o srcs/part1/ft_strlcpy.o srcs/part1/ft_strlcat.o srcs/part1/ft_strchr.o srcs/part1/ft_strrchr.o srcs/part1/ft_strnstr.o srcs/part1/ft_strncmp.o srcs/part1/ft_atoi.o srcs/part1/ft_strdup.o srcs/part2/ft_substr.o srcs/part2/ft_strjoin.o srcs/part2/ft_strtrim.o srcs/part2/ft_split.o srcs/part2/ft_itoa.o srcs/part2/ft_strmapi.o srcs/part2/ft_putchar_fd.o srcs/part2/ft_putstr_fd.o srcs/part2/ft_putendl_fd.o srcs/part2/ft_putnbr_fd.o
+rm -f srcs/bonus/ft_lstnew.o srcs/bonus/ft_lstadd_front.o srcs/bonus/ft_lstsize.o srcs/bonus/ft_lstlast.o srcs/bonus/ft_lstadd_back.o srcs/bonus/ft_lstdelone.o srcs/bonus/ft_lstclear.o srcs/bonus/ft_lstiter.o srcs/bonus/ft_lstmap.o
+make: *** No rule to make target 'srcs/part1/ft_isalpha.o', needed by 'libft.a'.  Stop.
 
 $> ls -la libft.a
 
