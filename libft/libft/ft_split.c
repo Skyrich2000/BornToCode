@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 01:45:23 by ycha              #+#    #+#             */
-/*   Updated: 2021/01/08 16:06:50 by ycha             ###   ########.fr       */
+/*   Updated: 2021/01/08 16:43:41 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,17 @@ static char	*strdup_p(char *start, char *end)
 	return (ret);
 }
 
+static char	**free_all(char **ret)
+{
+	while (*ret)
+	{
+		free(*ret);
+		++ret;
+	}
+	free(ret);
+	return (0);
+}
+
 char		**ft_split(char const *s, char c)
 {
 	char	*start;
@@ -63,7 +74,8 @@ char		**ft_split(char const *s, char c)
 			start = (char *)s;
 			while (*s && *s != c)
 				++s;
-			*ptr = strdup_p(start, (char *)s);
+			if (!(*ptr = strdup_p(start, (char *)s)))
+				return (free_all(ret));
 			++ptr;
 		}
 		else
