@@ -1,8 +1,4 @@
-CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-
-AR = ar
-ARFLAGS = rc
 
 NAME = libft.a
 INCDIR = ./
@@ -31,16 +27,16 @@ SRCS_P = ft_isalpha.c \
        ft_strncmp.c \
        ft_atoi.c \
        ft_strdup.c \
-	   ft_substr.c \
-	ft_strjoin.c \
-	ft_strtrim.c \
-	ft_split.c \
-	ft_itoa.c \
-	ft_strmapi.c \
-	ft_putchar_fd.c \
-	ft_putstr_fd.c \
-	ft_putendl_fd.c \
-	ft_putnbr_fd.c
+       ft_substr.c \
+       ft_strjoin.c \
+       ft_strtrim.c \
+       ft_split.c \
+       ft_itoa.c \
+       ft_strmapi.c \
+       ft_putchar_fd.c \
+       ft_putstr_fd.c \
+       ft_putendl_fd.c \
+       ft_putnbr_fd.c
 
 SRCS_B = ft_lstnew.c \
 	 ft_lstadd_front.c \
@@ -65,8 +61,8 @@ bonus: $(OBJS_B)
 	gcc $(CFLAGS) -c $(SRCS_B) -I $(INCDIR)
 	ar rc $(NAME) $^
 
-# so: $(OBJS_P) $(OBJS_B)
-#	$(CC) -shared -o libft.so $^
+so: $(OBJS_P) $(OBJS_B)
+	gcc -shared -o libft.so $^
 
 clean:
 	rm -f $(OBJS_P)

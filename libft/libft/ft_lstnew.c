@@ -6,12 +6,11 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:02:02 by ycha              #+#    #+#             */
-/*   Updated: 2021/01/08 01:08:03 by ycha             ###   ########.fr       */
+/*   Updated: 2021/01/08 16:14:16 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
 t_list	*ft_lstnew(void *content)
 {

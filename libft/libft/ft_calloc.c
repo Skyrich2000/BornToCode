@@ -6,12 +6,11 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/24 17:47:52 by ycha              #+#    #+#             */
-/*   Updated: 2021/01/07 09:35:46 by ycha             ###   ########.fr       */
+/*   Updated: 2021/01/08 16:02:06 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {

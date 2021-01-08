@@ -6,12 +6,11 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 18:52:36 by ycha              #+#    #+#             */
-/*   Updated: 2021/01/07 09:36:10 by ycha             ###   ########.fr       */
+/*   Updated: 2021/01/08 16:05:42 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
 static char	*ft_strcpy(char *dest, char *src)
 {

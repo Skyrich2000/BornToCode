@@ -6,13 +6,14 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 16:06:19 by ycha              #+#    #+#             */
-/*   Updated: 2021/01/08 15:33:49 by ycha             ###   ########.fr       */
+/*   Updated: 2021/01/08 16:02:25 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <unistd.h>
+# include <stdlib.h>
 
 typedef struct		s_list
 {

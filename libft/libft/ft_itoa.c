@@ -6,11 +6,11 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 18:35:18 by ycha              #+#    #+#             */
-/*   Updated: 2021/01/07 09:31:28 by ycha             ###   ########.fr       */
+/*   Updated: 2021/01/08 16:07:04 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
 static int	getlen(int n)
 {

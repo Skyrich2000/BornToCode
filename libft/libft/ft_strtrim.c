@@ -6,11 +6,11 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 08:39:29 by ycha              #+#    #+#             */
-/*   Updated: 2021/01/07 09:30:17 by ycha             ###   ########.fr       */
+/*   Updated: 2021/01/08 16:06:31 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
 static int	is_inset(char c, char const *set)
 {
