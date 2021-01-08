@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/23 17:38:02 by ycha              #+#    #+#             */
-/*   Updated: 2021/01/07 09:34:42 by ycha             ###   ########.fr       */
+/*   Created: 2020/12/23 18:06:17 by ycha              #+#    #+#             */
+/*   Updated: 2021/01/08 15:24:16 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalpha(int c)
+int	ft_toupper(int c)
 {
-	unsigned char	chr;
-
-	chr = (unsigned char)c;
-	if (c > 255)
-		return (0);
-	if (('a' <= chr && chr <= 'z') || ('A' <= chr && chr <= 'Z'))
-		return (1);
-	return (0);
+	if ('a' <= c && c <= 'z')
+		return (c + 'A' - 'a');
+	return (c);
 }

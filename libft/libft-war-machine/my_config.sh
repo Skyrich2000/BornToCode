@@ -6,7 +6,7 @@
 #    By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/07 13:15:10 by ycha              #+#    #+#              #
-#    Updated: 2021/01/07 16:40:21 by ycha             ###   ########.fr        #
+#    Updated: 2021/01/08 15:26:05 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@
 ###################################
 
 #Edit the next line with the path of your libft project.
-PATH_LIBFT=/home/dhuni/workspace/libft/libft
+PATH_LIBFT=../libft
 
 #If you use a relative path, don't put double quotes.
 #For example :

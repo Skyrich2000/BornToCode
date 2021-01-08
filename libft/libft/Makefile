@@ -2,12 +2,12 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 AR = ar
-ARFLAGS = rcs
+ARFLAGS = rc
 
 NAME = libft.a
-INCDIR = includes
+INCDIR = ./
 
-CFILE_P1 = ft_isalpha.c \
+SRCS_P = ft_isalpha.c \
        ft_isdigit.c \
        ft_isalnum.c \
        ft_isascii.c \
@@ -30,9 +30,8 @@ CFILE_P1 = ft_isalpha.c \
        ft_strnstr.c \
        ft_strncmp.c \
        ft_atoi.c \
-       ft_strdup.c
-
-CFILE_P2 = ft_substr.c \
+       ft_strdup.c \
+	   ft_substr.c \
 	ft_strjoin.c \
 	ft_strtrim.c \
 	ft_split.c \
@@ -43,7 +42,7 @@ CFILE_P2 = ft_substr.c \
 	ft_putendl_fd.c \
 	ft_putnbr_fd.c
 
-CFILE_B = ft_lstnew.c \
+SRCS_B = ft_lstnew.c \
 	 ft_lstadd_front.c \
 	 ft_lstsize.c \
 	 ft_lstlast.c \
@@ -53,28 +52,21 @@ CFILE_B = ft_lstnew.c \
 	 ft_lstiter.c \
 	 ft_lstmap.c
 
-SRCS_P1 = $(addprefix srcs/part1/, $(CFILE_P1))
-SRCS_P2 = $(addprefix srcs/part2/, $(CFILE_P2))
-SRCS_B = $(addprefix srcs/bonus/, $(CFILE_B))
-SRCS_P = $(SRCS_P1) \
-	 $(SRCS_P2)
-
-OBJS_P = $(SRCS_P:.c=.o)
-OBJS_B = $(SRCS_B:.c=.o)
+OBJS_P = $(SRCS_P:%.c=%.o)
+OBJS_B = $(SRCS_B:%.c=%.o)
 
 all: $(NAME)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o  $@ -I $(INCDIR)
-
 $(NAME): $(OBJS_P)
-	$(AR) $(ARFLAGS) -o $@ $^
+	gcc $(CFLAGS) -c $(SRCS_P) -I $(INCDIR)
+	ar rc $@ $^
 
 bonus: $(OBJS_B)
-	$(AR) $(ARFLAGS) -o $(NAME) $^
+	gcc $(CFLAGS) -c $(SRCS_B) -I $(INCDIR)
+	ar rc $(NAME) $^
 
-so: $(OBJS_P) $(OBJS_B)
-	$(CC) -shared -o libft.so $^
+# so: $(OBJS_P) $(OBJS_B)
+#	$(CC) -shared -o libft.so $^
 
 clean:
 	rm -f $(OBJS_P)

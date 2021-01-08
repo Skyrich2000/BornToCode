@@ -6,12 +6,11 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 01:45:23 by ycha              #+#    #+#             */
-/*   Updated: 2021/01/07 16:28:50 by ycha             ###   ########.fr       */
+/*   Updated: 2021/01/08 15:44:18 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 
 static int	get_word_num(char const *s, char c)
 {

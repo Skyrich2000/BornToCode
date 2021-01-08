@@ -1,2 +1,1 @@
-make -f ../libft/Makefile re
 bash grademe.sh -u

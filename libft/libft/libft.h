@@ -6,13 +6,13 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 16:06:19 by ycha              #+#    #+#             */
-/*   Updated: 2021/01/08 14:48:00 by ycha             ###   ########.fr       */
+/*   Updated: 2021/01/08 15:33:49 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
-#define LIBFT_H
-#include <unistd.h>
+# define LIBFT_H
+# include <unistd.h>
 
 typedef struct		s_list
 {
@@ -42,7 +42,8 @@ size_t				ft_strlcpy(char *dest, char *src, size_t n);
 size_t				ft_strlcat(char *dest, char *src, size_t n);
 char				*ft_strchr(const char *s, int c);
 char				*ft_strrchr(const char *s, int c);
-char				*ft_strnstr(const char *big, const char *little, size_t len);
+char				*ft_strnstr(const char *big,
+								const char *little, size_t len);
 int					ft_strncmp(char *s1, char *s2, size_t n);
 int					ft_atoi(const char *nptr);
 char				*ft_strdup(const char *s);
@@ -66,6 +67,7 @@ void				ft_lstadd_back(t_list **lst, t_list *new);
 void				ft_lstdelone(t_list *lst, void (*del)(void *));
 void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
-t_list				*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
+											void (*del)(void *));
 
 #endif
