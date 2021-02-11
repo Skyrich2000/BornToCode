@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 20:36:55 by ycha              #+#    #+#             */
-/*   Updated: 2021/02/11 05:09:46 by ycha             ###   ########.fr       */
+/*   Updated: 2021/02/11 16:22:42 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ static int		ft_strncat(char *dest, char *src, int n, char **out, int need_free)
 	len = ft_strlen(dest) + n + 1;
 //	printf("%s:%s:%d=", dest, src, len); 
 	if (len == 0 || (ret = malloc(len)) == 0) {
-		if (need_free)
+		if (need_free) {
 			free(*out);
+			*out = 0;
+		}
 		return (0);
 	}
 	*ret = 0;
@@ -67,7 +69,7 @@ int     get_next_line(int fd, char **line)
 //	printf("[@@@@@@@DEBUG]copy to line\n");
 	ft_strncat(0, buf, ptr - buf, line, 0);
 //	printf("[@@@@@@@DEBUG]update buf from prev newline\n");
-	ft_strncat(0, ptr + 1, ft_strlen(ptr) - 1, &buf, 1);
+	ft_strncat(0, ptr + 1, ft_strlen(ptr) - 1, &buf, buf ? 1 : 0);
 	return (size ? 1 : 0);
 }
 /*
