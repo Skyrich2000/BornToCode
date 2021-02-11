@@ -6,38 +6,12 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 20:36:55 by ycha              #+#    #+#             */
-/*   Updated: 2021/02/11 16:22:42 by ycha             ###   ########.fr       */
+/*   Updated: 2021/02/11 19:18:13 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <fcntl.h>
+#include <fcntl.h>
 #include "get_next_line.h"
-
-static int		ft_strncat(char *dest, char *src, int n, char **out, int need_free)
-{
-	int len;
-	char *ret;
-
-//	need_free = 1;
-	len = ft_strlen(dest) + n + 1;
-//	printf("%s:%s:%d=", dest, src, len); 
-	if (len == 0 || (ret = malloc(len)) == 0) {
-		if (need_free) {
-			free(*out);
-			*out = 0;
-		}
-		return (0);
-	}
-	*ret = 0;
-	if (dest)
-		ft_strlcat(ret, dest, len);
-	ft_strlcat(ret, src, len);
-	if (need_free)
-		free(*out);
-	*out = ret;
-//	printf("%s;\n", *out);
-	return (1);
-}
 
 /*
 ** size > 0 : ptr is valid
@@ -45,42 +19,94 @@ static int		ft_strncat(char *dest, char *src, int n, char **out, int need_free)
 ** size == -1 : error
 */
 
+
+void    print_hex(unsigned char c)
+{
+        write(1, "\\", 1);
+        write(1, &"0123456789abcdef"[c / 16], 1);
+        write(1, &"0123456789abcdef"[c % 16], 1);
+}
+
+int             is_printable(unsigned char c)
+{
+        return (32 <= c && c <= 126);
+}
+
+void    ft_putstr(char *str)
+{
+        int     len;
+
+        len = 0;
+        while (str[len])
+                len++;
+        write(1, str, len);
+}
+
+void    ft_putstr_non_printable(char *str)
+{
+	if (!str) {
+		ft_putstr("(NULL)");
+		return ;
+	}
+        while (*str)
+        {
+                if (is_printable(*str))
+                        write(1, str, 1);
+                else
+                        print_hex(*str);
+                str++;
+        }
+}
+
+char	*set_ptr(char **out, char *str) {
+	free(*out);
+	if (*str == 0)
+	{
+		free(str);
+		*out = 0;
+	}
+	else 
+		*out = str;
+	return(*out);
+}
+
 int     get_next_line(int fd, char **line)
 {
 	int size;
 	char *ptr;
-	char temp[BUFFER_SIZE];
-	static char *buf;
+	char buf[BUFFER_SIZE + 1];
+	static char *save; 
 
 	size = 1;
-	while((ptr = ft_strchr(buf, '\n')) == 0) {
-		if ((size = read(fd, temp, BUFFER_SIZE)) < 1)
+	//ft_putstr("[@@@@@@@]before\n");
+	//ft_putstr("[@@@@@@@]SAVE {");
+	//ft_putstr_non_printable(save);
+	//ft_putstr("}\n");
+	while((ptr = ft_strchr(save, '\n')) == 0) {
+		if ((size = read(fd, buf, BUFFER_SIZE)) < 1)
 			break;
-//		printf("[@@@@@@@DEBUG]read new from file\n");
-		ft_strncat(buf, temp, size, &buf, buf ? 1 : 0);
+		//ft_putstr("[@@@@@@]read new from file\n");
+		set_ptr(&save, ft_strnjoin(save, buf, size));
+		//ft_putstr("[@@@@@@]SAVE {");
+		//ft_putstr_non_printable(save);
+		//ft_putstr("}\n");
 	}
 	if (size == -1)
-		return (size);
+		return (-1);
 	if (size == 0)
-		ptr = ft_strchr(buf, 0);
-//	printf("[@@@@@@@DEBUG]buf : %p\n", buf);
-//	printf("[@@@@@@@DEBUG]ptr : %p\n", ptr);
-//	printf("[@@@@@@@DEBUG]size : %d\n", size);
-//	printf("[@@@@@@@DEBUG]copy to line\n");
-	ft_strncat(0, buf, ptr - buf, line, 0);
-//	printf("[@@@@@@@DEBUG]update buf from prev newline\n");
-	ft_strncat(0, ptr + 1, ft_strlen(ptr) - 1, &buf, buf ? 1 : 0);
+		ptr = ft_strchr(save, 0);
+	//ft_putstr("[@@@@]copy to line\n");
+	*line = ft_strnjoin(0, save, ptr - save);
+	//ft_putstr("[@@@@]LINE {");
+	//ft_putstr_non_printable(*line);
+	//ft_putstr("}\n");
+	//ft_putstr("[@@]update save from prev newline\n");
+	set_ptr(&save, ft_strnjoin(0, ptr ? ptr + 1 : 0, ft_strlen(save) - (ptr - save)));
+	//ft_putstr("[@@]SAVE {");
+	//ft_putstr_non_printable(save);
+	//ft_putstr("}\n");
 	return (size ? 1 : 0);
 }
-/*
-int	main(void) {
-	static char *buf;
-	ft_strncat(0, "abcd", 4, &buf);
-	printf("buf : %s\n", buf);
-	return (0);
-}
-*/
-
 /*
 int main(void)
 {
@@ -91,10 +117,10 @@ int main(void)
 	fd = open("testfile2", O_RDONLY);
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
-		printf("%s\n", line);
+		printf("                     [out%d]%s\n", ret, line);
 		free(line);
 	}
-	printf("%s\n", line);
+	printf("                       [out%d]%s\n", ret, line);
 	free(line);
 	return (0);
 }
