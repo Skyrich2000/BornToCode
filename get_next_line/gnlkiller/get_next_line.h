@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 01:47:28 by ycha              #+#    #+#             */
-/*   Updated: 2021/02/10 01:56:16 by ycha             ###   ########.fr       */
+/*   Updated: 2021/02/12 14:37:38 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 256
-# endif
-
-int     get_next_line(int fd, char **line);
-char    *ft_strdup(const char *s);
+int		get_next_line(int fd, char **line);
+int		ft_strlen(char *s);
+char	*ft_strchr(char *s, int c);
+char	*ft_strnjoin(char *s1, char *s2, int n);
 
 #endif

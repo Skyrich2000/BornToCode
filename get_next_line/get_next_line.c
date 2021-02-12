@@ -12,9 +12,11 @@
 
 #include "get_next_line.h"
 
-char	*set_ptr(char **out, char *str)
+int		set_ptr(char **out, char *str)
 {
 	free(*out);
+	if (!str)
+		return (0);
 	if (*str == 0)
 	{
 		free(str);
@@ -22,7 +24,7 @@ char	*set_ptr(char **out, char *str)
 	}
 	else
 		*out = str;
-	return (*out);
+	return (1);
 }
 
 int		get_next_line(int fd, char **line)
@@ -33,17 +35,20 @@ int		get_next_line(int fd, char **line)
 	static char *save;
 
 	flag = 1;
-	if (fd < 0 || read(fd, buf, 0) == -1 || line == 0 || BUFFER_SIZE < 1)
+	if (read(fd, buf, 0) == -1 || line == 0 || BUFFER_SIZE < 1)
 		return (-1);
 	while ((ptr = ft_strchr(save, '\n')) == 0)
 	{
 		if ((flag = read(fd, buf, BUFFER_SIZE)) < 1)
 			break ;
-		set_ptr(&save, ft_strnjoin(save, buf, flag));
+		if (!(set_ptr(&save, ft_strnjoin(save, buf, flag))))
+			return (-1);
 	}
 	ptr = flag ? ptr : ft_strchr(save, 0);
-	*line = ft_strnjoin(0, save, ptr - save);
-	set_ptr(&save,
-		ft_strnjoin(0, flag ? ptr + 1 : 0, ft_strlen(save) - (ptr - save)));
+	if (!(*line = ft_strnjoin(0, save, ptr - save)))
+		return (-1);
+	if (!(set_ptr(&save, ft_strnjoin(0, flag ? ptr + 1 : 0,
+							ft_strlen(save) - (ptr - save)))))
+		return (-1);
 	return (flag > 0 ? 1 : flag);
 }
