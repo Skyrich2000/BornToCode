@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 20:36:55 by ycha              #+#    #+#             */
-/*   Updated: 2021/02/12 14:38:54 by ycha             ###   ########.fr       */
+/*   Updated: 2021/02/12 15:00:21 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		get_next_line(int fd, char **line)
 	int			flag;
 	char		*ptr;
 	char		buf[BUFFER_SIZE + 1];
-	static char *save[FOPEN_MAX];
+	static char *save[OPEN_MAX];
 
 	flag = 1;
 	if (read(fd, buf, 0) == -1 || line == 0 || BUFFER_SIZE < 1)
