@@ -1,29 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-int ft_printf(const char *, ...);
+#include "ft_printf.h"
 
 int main() {
-	char *str = "asdf";
-//        ft_printf("%-010x\n", str);
-        ft_printf("[%-020p]\n", str);
-		ft_printf("[%20.14p]\n", str);
-		ft_printf("[%20p]\n", str);
-		ft_printf("[%-20p]\n", str);
-		ft_printf("[%020p]\n", str);
-		ft_printf("[%020.p]\n", str);
-//		ft_printf("%10.5x\n", str);
-//		ft_printf("%10x\n", str);
-//		ft_printf("%-10x\n", str);
-//		ft_printf("%010x\n", str);
-//		ft_printf("%010.x\n", str);
+	int ret;
+//	char *-12 = "asdf";
+//        ft_printf("%-010x\n", -12);
+        ret = ft_printf("[%-020.2d]", -12);
+		ft_printf(" : %d\n", ret);
+		ret = ft_printf("[%0.4d]", -12);
+		ft_printf(" : %d\n", ret);
+		ret = ft_printf("[%20d]", -12);
+		ft_printf(" : %d\n", ret);
+		ret = ft_printf("[%-20d]", -12);
+		ft_printf(" : %d\n", ret);
+		ret = ft_printf("[%020p]", -12);
+		ft_printf(" : %d\n", ret);
+		ret = ft_printf("[%020.p]", -12);
+		ft_printf(" : %d\n", ret);
+//		ft_printf("%10.5x\n", -12);
+//		ft_printf("%10x\n", -12);
+//		ft_printf("%-10x\n", -12);
+//		ft_printf("%010x\n", -12);
+//		ft_printf("%010.x\n", -12);
 		ft_printf("------------\n");
-        printf("[%-020p]\n", str);
-		printf("[%20.14p]\n", str);
-		printf("[%20p]\n", str);
-		printf("[%-20p]\n", str);
-		printf("[%020p]\n", str);
-		printf("[%020.p]\n", str);
+        ret = printf("[%-020.2d]", -12);
+		printf(" : %d\n", ret);
+		ret = printf("[%0.4d]", -12);
+		printf(" : %d\n", ret);
+		ret = printf("[%20d]", -12);
+		printf(" : %d\n", ret);
+		ret = printf("[%-20d]", -12);
+		printf(" : %d\n", ret);
+		ret = printf("[%020p]", -12);
+		printf(" : %d\n", ret);
+		ret = printf("[%020.p]", -12);
+		printf(" : %d\n", ret);
         return (0);
 }
 

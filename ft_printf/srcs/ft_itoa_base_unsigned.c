@@ -6,12 +6,11 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 18:35:18 by ycha              #+#    #+#             */
-/*   Updated: 2021/03/02 20:36:50 by ycha             ###   ########.fr       */
+/*   Updated: 2021/03/08 15:50:30 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "ft_string.h"
+#include "ft_printf.h"
 
 static int	getlen(long long int n)
 {

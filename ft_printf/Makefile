@@ -1,15 +1,12 @@
 CC			= 	gcc
-CFLAGS		=	-Wextra -Wall -Werror -I includes -c
+CFLAGS		=	-Wextra -Wall -Werror -I . -c
 
 NAME		=	libftprintf.a
-SRCS		=	srcs/ft_printf.c \
-				srcs/build_arg.c \
-				srcs/get_arg.c \
-				srcs/parse.c \
-				srcs/ft_string.c \
-				srcs/ft_itoa_base.c \
-				srcs/ft_itoa_base_unsigned.c \
-				srcs/init.c \
+SRCS		=	ft_printf.c \
+				./srcs/print_other.c \
+				./srcs/print_number.c \
+				./srcs/get_arg.c \
+				./srcs/parse.c
 OBJS		=	$(SRCS:.c=.o)
 
 all			: $(NAME)
@@ -20,6 +17,7 @@ all			: $(NAME)
 $(NAME)		: $(OBJS)
 	make all -C libft/
 	cp libft/libft.a $(NAME)
+	echo $(OBJS)
 	ar -cr $(NAME) $(OBJS)
 
 clean		:
