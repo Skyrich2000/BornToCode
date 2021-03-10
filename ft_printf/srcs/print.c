@@ -21,7 +21,7 @@ void put_number(t_ull n, char *base, int len) //max number check
 
 void put_string(char *arg, int len)
 {
-	if ((char *)arg == 0)
+	if (arg == 0)
 		write(1, "(null)", len);
 	else
 		write(1, (char *)arg, len);

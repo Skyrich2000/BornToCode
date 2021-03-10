@@ -39,7 +39,7 @@ static void boxing_char(t_flag *flag, t_box *box)
 
 static void boxing_string(t_flag *flag, t_box *box)
 {
-	box->len = ft_strlen((char *)box->arg);
+	box->len = box->arg ? ft_strlen((char *)box->arg) : 6;
 	if (flag->precision != -1)
 		box->len = MIN(flag->precision, box->len);
 }
