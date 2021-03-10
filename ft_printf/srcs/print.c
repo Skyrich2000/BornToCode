@@ -12,13 +12,6 @@
 
 #include "ft_printf.h"
 
-static void put_number(t_ull n, char *base, int len) //max number check
-{
-	if (n > (unsigned int)len - 1)
-		put_number(n / len, base, len);
-	ft_putchar_fd(base[n % len], 1);
-}
-
 static void put_char(char arg)
 {
 	write(1, &arg, 1);
@@ -30,6 +23,13 @@ static void put_string(char *arg, int len)
 		write(1, "(null)", len);
 	else
 		write(1, arg, len);
+}
+
+static void put_number(t_ull n, char *base, int len) //max number check
+{
+	if (n > (unsigned int)len - 1)
+		put_number(n / len, base, len);
+	ft_putchar_fd(base[n % len], 1);
 }
 
 void put_all(t_flag *flag, t_box *box)

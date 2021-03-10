@@ -14,7 +14,7 @@
 
 t_8byte get_arg(t_flag *flag, va_list ap)
 {
-	if (flag->type & POINTER)
+	if (flag->type & PERCENT)
 		return (0);
 	else if (flag->type & (STRING | POINTER))
 		return ((t_8byte)va_arg(ap, void *));

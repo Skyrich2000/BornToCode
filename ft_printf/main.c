@@ -3,7 +3,7 @@
 #include "ft_printf.h"
 
 int main() {
-	ft_printf("%%c", 'a');
+	ft_printf("%%%c", 'b');
 }
 
 /*
