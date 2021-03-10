@@ -41,6 +41,8 @@ static void boxing_string(t_flag *flag, t_box *box)
 	box->len = box->arg ? ft_strlen((char *)box->arg) : 6;
 	if (flag->precision != -1)
 		box->len = MIN(flag->precision, box->len);
+	if (flag->flag & ZERO && !(flag->flag & LEFT))
+		box->zero = flag->width - box->len - box->minus - box->is_pointer;
 }
 
 static void boxing_number(t_flag *flag, t_box *box)
