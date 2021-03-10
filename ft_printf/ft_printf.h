@@ -33,6 +33,10 @@
 # define HEXA 128
 # define CHEXA 256
 
+typedef long long t_8byte;
+typedef long long t_ll;
+typedef unsigned long long t_ull;
+
 typedef struct s_flag {
 	int flag;
 	int width;
@@ -42,21 +46,20 @@ typedef struct s_flag {
 } t_flag;
 
 typedef struct s_box {
+	int minus;
+	int is_pointer;
 	int zero;
 	int len;
-	int minus;
-	char base[20];
-	void *arg;
+	int margin;
+	char base[20]; //char *base;
+	int base_len;
+	t_8byte arg;
 } t_box;
 
 int ft_printf(const char *format, ...);
-void print_flag(t_flag *tk);
 
 int parse(t_flag *tk, char **str, va_list ap);
-void get_arg(t_flag *flag, void *arg, va_list ap);
-
-int print_arg(t_flag *flag, void *input);
-int get_number_len(unsigned long long int n, int len);
-int put_all(t_flag *flag, t_box *box);
+int print_arg(t_flag *flag, t_8byte input);
+void put_all(t_flag *flag, t_box *box);
 
 #endif

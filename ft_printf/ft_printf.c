@@ -12,19 +12,13 @@
 
 #include "ft_printf.h"
 
-int print(t_flag *flag, va_list ap)
+t_8byte get_arg(t_flag *flag, va_list ap)
 {
-	void *arg;
-	int ret;
-
-//	print_flag(flag);
-	if (!(arg = malloc(32)))
-		return (0);
-	ft_bzero(arg, 32);
-	get_arg(flag, arg, ap);
-	ret = print_arg(flag, arg);
-	free(arg);
-	return (ret);
+	if (flag->type & (STRING | POINTER))
+		return ((t_8byte)va_arg(ap, void *));
+	else if (flag->type & (CHAR | DIGIT))
+		return ((t_8byte)va_arg(ap, int));
+	return ((t_8byte)va_arg(ap, unsigned int));
 }
 
 int ft_vprintf(char *str, va_list ap) {
@@ -35,7 +29,7 @@ int ft_vprintf(char *str, va_list ap) {
 	while (*str)
 	{
 		if (*str == '%' && parse(&flag, &str, ap))
-			i += print(&flag, ap);
+			i += print_arg(&flag, get_arg(&flag, ap));
 		else
 		{
 			write(1, str++, 1);

@@ -3,9 +3,8 @@ CFLAGS		=	-Wextra -Wall -Werror -I . -c
 
 NAME		=	libftprintf.a
 SRCS		=	ft_printf.c \
-				./srcs/print_other.c \
-				./srcs/print_number.c \
-				./srcs/get_arg.c \
+				./srcs/boxing.c \
+				./srcs/print.c \
 				./srcs/parse.c
 OBJS		=	$(SRCS:.c=.o)
 

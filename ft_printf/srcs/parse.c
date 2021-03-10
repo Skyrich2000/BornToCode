@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "ft_printf.h"
 
 static int parse_number(char **str, va_list ap) {
@@ -55,17 +54,11 @@ int parse(t_flag *flag, char **str, va_list ap) {
 	flag->precision = -1;
 	if ((flag->only_dot = parse_char(&ptr, ".", 1)))
 	{
-		if (('0' <= *ptr && *ptr <= '9') || *ptr == '*')
-			flag->only_dot = 0;
 		if ((flag->precision = parse_number(&ptr, ap)) < 0)
-			flag->precision = 0;
+			flag->precision = -1;
 	}
 	if ((flag->type = parse_char(&ptr, "%cspdiuxX", 0)))
 		*str = ptr;
+	//printf("{flag %d, width %d, only_dot %d, precision %d, type %d}\n", flag->flag ,flag->width, flag->only_dot, flag->precision, flag->type);
 	return (flag->type);
 }
-
-void print_flag(t_flag *tk) {
-	printf("{flag %d, width %d, precision %d, type %d}\n", tk->flag ,tk->width, tk->precision, tk->type);
-}
-
