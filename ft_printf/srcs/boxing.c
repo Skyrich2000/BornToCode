@@ -32,6 +32,8 @@ static void boxing_char(t_flag *flag, t_box *box)
 	box->len = 1;
 	if (flag->type & PERCENT)
 		box->arg = '%';
+	if (flag->flag & ZERO && !(flag->flag & LEFT))
+		box->zero = flag->width - box->len - box->minus - box->is_pointer;
 }
 
 static void boxing_string(t_flag *flag, t_box *box)
