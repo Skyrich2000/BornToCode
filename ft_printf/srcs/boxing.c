@@ -29,12 +29,9 @@ static int get_number_len(t_ull n, int len)
 
 static void boxing_char(t_flag *flag, t_box *box)
 {
-	char tmp[2];
-
 	box->len = 1;
-	tmp[0] = flag->type & PERCENT ? '%' : (char)box->arg;
-	tmp[1] = 0;
-	box->arg = (t_8byte)tmp;
+	if (flag->type & PERCENT)
+		box->arg = '%';
 }
 
 static void boxing_string(t_flag *flag, t_box *box)

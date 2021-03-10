@@ -14,7 +14,9 @@
 
 t_8byte get_arg(t_flag *flag, va_list ap)
 {
-	if (flag->type & (STRING | POINTER))
+	if (flag->type & POINTER)
+		return (0);
+	else if (flag->type & (STRING | POINTER))
 		return ((t_8byte)va_arg(ap, void *));
 	else if (flag->type & (CHAR | DIGIT))
 		return ((t_8byte)va_arg(ap, int));
@@ -22,21 +24,22 @@ t_8byte get_arg(t_flag *flag, va_list ap)
 }
 
 int ft_vprintf(char *str, va_list ap) {
-	int i;
+	int printed;
 	t_flag flag;
 
-	i = 0;
+	printed = 0;
+	ft_bzero(&flag, sizeof(t_flag));
 	while (*str)
 	{
 		if (*str == '%' && parse(&flag, &str, ap))
-			i += print_arg(&flag, get_arg(&flag, ap));
+			printed += print_arg(&flag, get_arg(&flag, ap));
 		else
 		{
 			write(1, str++, 1);
-			i++;
+			printed++;
 		}
 	}
-	return (i);
+	return (printed);
 }
 
 int ft_printf(const char *format, ...) {

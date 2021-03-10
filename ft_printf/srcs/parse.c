@@ -59,6 +59,5 @@ int parse(t_flag *flag, char **str, va_list ap) {
 	}
 	if ((flag->type = parse_char(&ptr, "%cspdiuxX", 0)))
 		*str = ptr;
-	//printf("{flag %d, width %d, only_dot %d, precision %d, type %d}\n", flag->flag ,flag->width, flag->only_dot, flag->precision, flag->type);
 	return (flag->type);
 }
