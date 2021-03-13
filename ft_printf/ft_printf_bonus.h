@@ -41,6 +41,7 @@ typedef struct s_flag {
 	int flag;
 	int width;
 	int precision;
+	int length;
 	int type;
 } t_flag;
 
