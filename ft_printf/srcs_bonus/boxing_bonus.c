@@ -1,60 +1,64 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_other.c                                      :+:      :+:    :+:   */
+/*   boxing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 17:25:25 by ycha              #+#    #+#             */
-/*   Updated: 2021/03/09 13:45:13 by ycha             ###   ########.fr       */
+/*   Updated: 2021/03/14 01:32:36 by suhshin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 
-static int get_number_len(t_ull n, int len)
+static int	get_number_len(t_ull n, int len)
 {
-	int i;
+	int	i;
 
-	i = 0;
-	if (n == 0)
-		return (1);
-	while (n)
-	{
-		n /= len;
+	i = 1;
+	while ((n /= len) > 0)
 		++i;
-	}
 	return (i);
 }
 
-static void boxing_char(t_flag *flag, t_box *box)
+static void	boxing_char(t_flag *flag, t_box *box)
 {
 	box->len = 1;
 	if (flag->type & PERCENT)
 		box->arg = '%';
 	if (flag->flag & ZERO && !(flag->flag & LEFT))
-		box->zero = flag->width - box->len - box->minus - box->is_pointer;
+		box->zero = flag->width - box->len - box->sign - box->prefix;
 }
 
-static void boxing_string(t_flag *flag, t_box *box)
+static void	boxing_string(t_flag *flag, t_box *box)
 {
 	box->len = box->arg ? ft_strlen((char *)box->arg) : 6;
-	if (flag->precision != -1)
-		box->len = MIN(flag->precision, box->len);
+	if (flag->precision != -1 && flag->precision < box->len)
+		box->len = flag->precision;
 	if (flag->flag & ZERO && !(flag->flag & LEFT))
-		box->zero = flag->width - box->len - box->minus - box->is_pointer;
+		box->zero = flag->width - box->len - box->sign - box->prefix;
 }
 
-static void boxing_number(t_flag *flag, t_box *box)
+static void	boxing_number(t_flag *flag, t_box *box)
 {
-	char *base;
+	char	*base;
 
-	if ((flag->type & DIGIT) && box->arg < 0)
+	if (flag->type & (DIGIT | UDIGIT))
 	{
-		box->minus = 1;
-		box->arg = -box->arg;
+		if (flag->flag & PLUS)
+			box->sign = '+';
+		else if (flag->flag & SPACE)
+			box->sign = ' ';
+		if (box->arg < 0)
+		{
+			box->sign = '-';
+			box->arg = -box->arg;
+		}
 	}
-	box->is_pointer = (flag->type & POINTER) / POINTER * 2;
+	if (flag->type & POINTER || \
+		(flag->flag & HASH && flag->type & (HEXA | CHEXA)))
+		box->prefix = 2;
 	base = "0123456789abcdef";
 	if (flag->type & CHEXA)
 		base = "0123456789ABCDEF";
@@ -68,13 +72,13 @@ static void boxing_number(t_flag *flag, t_box *box)
 	if (flag->precision != -1)
 		box->zero = flag->precision - box->len;
 	else if (flag->flag & ZERO && !(flag->flag & LEFT))
-		box->zero = flag->width - box->len - box->minus - box->is_pointer;
+		box->zero = flag->width - box->len - box->sign - box->prefix;
 }
 
-int print_arg(t_flag *flag, t_8byte arg)
+int			print_arg(t_flag *flag, t_8byte arg)
 {
-	int content;
-	t_box box;
+	int		content;
+	t_box	box;
 
 	ft_bzero(&box, sizeof(t_box));
 	box.arg = arg;
@@ -84,8 +88,8 @@ int print_arg(t_flag *flag, t_8byte arg)
 		boxing_string(flag, &box);
 	else
 		boxing_number(flag, &box);
-	content = box.len + MAX(box.zero, 0) + box.minus + box.is_pointer;
-	box.margin = MAX(flag->width - content, 0);
+	content = box.len + ft_max(box.zero, 0) + box.sign + box.prefix;
+	box.margin = ft_max(flag->width - content, 0);
 	put_all(flag, &box);
-	return (MAX(flag->width - content, 0) + content);
+	return (ft_max(flag->width - content, 0) + content);
 }

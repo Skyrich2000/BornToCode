@@ -53,13 +53,14 @@ OBJS_B = $(SRCS_B:%.c=%.o)
 
 all: $(NAME)
 
+%.o : %.c
+	gcc $(CFLAGS) -c $? -I $(INCDIR)
+
 $(NAME): $(OBJS_P)
-	gcc $(CFLAGS) -c $(SRCS_P) -I $(INCDIR)
-	ar rc $@ $^
+	ar rc $@ $?
 
 bonus: $(OBJS_B)
-	gcc $(CFLAGS) -c $(SRCS_B) -I $(INCDIR)
-	ar rc $(NAME) $^
+	ar rc $(NAME) $?
 
 clean:
 	rm -f $(OBJS_P)
