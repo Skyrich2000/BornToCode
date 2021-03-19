@@ -3,7 +3,7 @@
 #include "ft_printf.h"
 
 int main() {
-	printf("%+ x", 0xff);
+	ft_printf("%+-4.d", 0);
 }
 
 /*
