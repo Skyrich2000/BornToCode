@@ -49,8 +49,8 @@ static t_8byte	get_unsigned_int(int length, va_list ap)
 	if (length == 0)
 		return (value);
 	else if (length == 1)
-		return ((short int)value);
-	return ((char)value);
+		return ((short unsigned int)value);
+	return ((unsigned char)value);
 }
 
 t_8byte			get_arg(t_flag *flag, va_list ap)
