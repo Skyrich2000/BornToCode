@@ -46,12 +46,10 @@ static void boxing_hexa(t_flag *flag, t_box *box)
 		base = "0123456789ABCDEF";
 	ft_memcpy(box->base, base, (box->base_len = 16));
 	box->value_len = get_number_len((t_ull)box->value, 16);
+	if (box->value == 0 && !(flag->type & POINTER))
+		box->prefix[0] = 0;
 	if (flag->precision == 0 && box->value == 0)
-	{
 		box->value_len = 0;
-		if (!(flag->type & POINTER))
-			box->prefix[0] = 0;
-	}
 	if (flag->precision != -1)
 		box->zero = flag->precision - box->value_len;
 	else if (flag->flag & ZERO && !(flag->flag & LEFT))
