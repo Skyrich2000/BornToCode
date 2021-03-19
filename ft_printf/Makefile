@@ -34,6 +34,7 @@ bonus		: $(OBJS_BONUS) libft/libft.a
 
 clean		:
 	rm -rf $(OBJS)
+	rm -rf $(OBJS_BONUS)
 	make clean -C libft
 
 fclean		: clean

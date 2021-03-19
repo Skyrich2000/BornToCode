@@ -10,19 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf_bonus.h"
+#include "ft_printf.h"
 
-static void	put_char(char arg)
+static void	put_char_n(char chr, int n)
 {
-	write(1, &arg, 1);
+	while(n-- > 0)
+		write(1, &chr, 1);
 }
 
-static void	put_string(char *arg, int len)
+static void	put_string(char *str, int len)
 {
-	if (arg == 0)
+	if (str == 0)
 		write(1, "(null)", len);
 	else
-		write(1, arg, len);
+		write(1, str, len);
 }
 
 static void	put_number(t_ull n, char *base, int len)
@@ -32,36 +33,17 @@ static void	put_number(t_ull n, char *base, int len)
 	ft_putchar_fd(base[n % len], 1);
 }
 
-static void put_prefix_and_sign(t_flag *flag, t_box *box)
-{
-	if (box->prefix)
-	{
-		write(1, "0", 1);
-		if (flag->type & CHEXA)
-			write(1, "X", 1);
-		else
-			write(1, "x", 1);
-	}
-	if (flag->flag & HASH)
-	{
-		if (box->sign)
-			write(1, "-", 1);
-	}
-}
-
 void		put_all(t_flag *flag, t_box *box)
 {
-	while (!(flag->flag & LEFT) && box->margin-- > 0)
-		ft_putchar_fd(' ', 1);
-	put_prefix_and_sign(flag, box);
-	while (box->zero-- > 0)
-		ft_putchar_fd('0', 1);
+	put_char_n(' ', !(flag->flag & LEFT) * box->margin);
+	put_char_n(box->sign, (box->sign > 0));
+	put_string(box->prefix, (box->prefix[0] > 0) * 2);
+	put_char_n('0', box->zero);
 	if (flag->type & (PERCENT | CHAR))
-		put_char((char)box->arg);
+		put_char_n((char)box->value, 1);
 	else if (flag->type & STRING)
-		put_string((char *)box->arg, box->len);
-	else if (box->len)
-		put_number((t_ull)box->arg, box->base, box->base_len);
-	while (box->margin-- > 0)
-		ft_putchar_fd(' ', 1);
+		put_string((char *)box->value, box->value_len);
+	else if (box->value_len)
+		put_number((t_ull)box->value, box->base, box->base_len);
+	put_char_n(' ', (flag->flag & LEFT) * box->margin);
 }

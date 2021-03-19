@@ -12,24 +12,6 @@
 
 #include "ft_printf.h"
 
-int		ft_max(int x, int y)
-{
-	if (x > y)
-		return (x);
-	return (y);
-}
-
-t_8byte	get_arg(t_flag *flag, va_list ap)
-{
-	if (flag->type & PERCENT)
-		return (0);
-	else if (flag->type & (STRING | POINTER))
-		return ((t_8byte)va_arg(ap, void *));
-	else if (flag->type & (CHAR | DIGIT))
-		return ((t_8byte)va_arg(ap, int));
-	return ((t_8byte)va_arg(ap, unsigned int));
-}
-
 int		ft_vprintf(char *str, va_list ap)
 {
 	int		printed;
@@ -42,10 +24,7 @@ int		ft_vprintf(char *str, va_list ap)
 		if (*str == '%' && parse(&flag, &str, ap))
 			printed += print_arg(&flag, get_arg(&flag, ap));
 		else
-		{
-			write(1, str++, 1);
-			printed++;
-		}
+			printed += write(1, str++, 1);
 	}
 	return (printed);
 }
