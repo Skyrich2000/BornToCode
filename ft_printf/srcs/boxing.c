@@ -60,11 +60,15 @@ static void boxing_hexa(t_flag *flag, t_box *box)
 
 static void	boxing_number(t_flag *flag, t_box *box)
 {
-	box->sign = ' ' * ((flag->flag & SPACE) && box->value > 0);
-	box->sign += '+' * ((flag->flag & PLUS) && box->value > 0);
-	box->sign += '-' * (box->value < 0);
+	if ((flag->flag & SPACE) && box->value > 0))
+		box->sign = ' '
+	if ((flag->flag & PLUS) && box->value > 0)
+		box->sign += '+';
 	if (box->value < 0)
+	{
+		box->sign = '-';
 		box->value = -box->value;
+	}
 	ft_memcpy(box->base, "0123456789", (box->base_len = 10));
 	box->value_len = get_number_len((t_ull)box->value, 10);
 	if (flag->precision == 0 && box->value == 0)
