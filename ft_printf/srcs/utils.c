@@ -28,7 +28,7 @@ int	get_number_len(t_ull n, int len)
 		++i;
 	return (i);
 }
-/*
+
 static t_8byte	get_int(int length, va_list ap)
 {
 	t_8byte value;
@@ -52,12 +52,14 @@ static t_8byte	get_unsigned_int(int length, va_list ap)
 		return ((short int)value);
 	return ((char)value);
 }
-*/
+
 t_8byte			get_arg(t_flag *flag, va_list ap)
 {
-	if (flag->type & (STRING | POINTER))
+	if (flag->type & PERCENT)
+		return (0);
+	else if (flag->type & (STRING | POINTER))
 		return ((t_8byte)va_arg(ap, void *));
 	else if (flag->type & (CHAR | DIGIT))
-		return ((t_8byte)va_arg(ap, int));
-	return ((t_8byte)va_arg(ap, unsigned int));
+		return (get_int(flag->length, ap));
+	return (get_unsigned_int(flag->length, ap));
 }
