@@ -60,8 +60,8 @@ static void boxing_hexa(t_flag *flag, t_box *box)
 
 static void	boxing_number(t_flag *flag, t_box *box)
 {
-	box->sign = ' ' * ((flag->flag & SPACE) > 0);
-	box->sign = '+' * ((flag->flag & PLUS) > 0);
+	box->sign = ' ' * ((flag->flag & SPACE) && box->value > 0);
+	box->sign = '+' * ((flag->flag & PLUS) && box->value > 0);
 	box->sign = '-' * (box->value < 0);
 	if (box->value < 0)
 		box->value = -box->value;
