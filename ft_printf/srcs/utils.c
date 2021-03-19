@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf_bonus.h"
+#include "ft_printf.h"
 
 int		ft_max(int x, int y)
 {
@@ -37,9 +37,8 @@ static t_8byte	get_int(int length, va_list ap)
 	if (length == 0)
 		return (value);
 	else if (length == 1)
-		return ((short int)value));
-	else
-		return ((signed char)value);
+		return ((short int)value);
+	return ((signed char)value);
 }
 
 static t_8byte	get_unsigned_int(int length, va_list ap)
@@ -51,8 +50,7 @@ static t_8byte	get_unsigned_int(int length, va_list ap)
 		return (value);
 	else if (length == 1)
 		return ((short int)value);
-	else
-		return ((char)value);
+	return ((char)value);
 }
 
 t_8byte			get_arg(t_flag *flag, va_list ap)

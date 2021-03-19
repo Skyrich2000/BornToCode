@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf_bonus.h"
+#include "ft_printf.h"
 
 static void	boxing_char(t_flag *flag, t_box *box)
 {
@@ -44,7 +44,7 @@ static void boxing_hexa(t_flag *flag, t_box *box)
 	base = "0123456789abcdef";
 	if (flag->type & CHEXA)
 		base = "0123456789ABCDEF";
-	ft_memcpy(box->base, base, (box->base_len = 16)));
+	ft_memcpy(box->base, base, (box->base_len = 16));
 	box->value_len = get_number_len((t_ull)box->value, 16);
 	if (flag->precision == 0 && box->value == 0)
 	{
@@ -54,7 +54,7 @@ static void boxing_hexa(t_flag *flag, t_box *box)
 	if (flag->precision != -1)
 		box->zero = flag->precision - box->value_len;
 	else if (flag->flag & ZERO && !(flag->flag & LEFT))
-		box->zero = flag->width - box->value_len - (box->sign > 0) - box->prefix;
+		box->zero = flag->width - box->value_len - (box->sign > 0) - (box->prefix[0] > 0) * 2;
 }
 
 static void	boxing_number(t_flag *flag, t_box *box)
@@ -64,14 +64,14 @@ static void	boxing_number(t_flag *flag, t_box *box)
 	box->sign = '-' * (box->value < 0);
 	if (box->value < 0)
 		box->value = -box->value;
-	ft_memcpy(box->base, "0123456789", (box->base_len = 10)));
+	ft_memcpy(box->base, "0123456789", (box->base_len = 10));
 	box->value_len = get_number_len((t_ull)box->value, 10);
 	if (flag->precision == 0 && box->value == 0)
 		box->value_len = 0;
 	if (flag->precision != -1)
 		box->zero = flag->precision - box->value_len;
 	else if (flag->flag & ZERO && !(flag->flag & LEFT))
-		box->zero = flag->width - box->value_len - (box->sign > 0) - box->prefix;
+		box->zero = flag->width - box->value_len - (box->sign > 0) - (box->prefix[0] > 0) * 2;
 }
 
 int			print_arg(t_flag *flag, t_8byte arg)
