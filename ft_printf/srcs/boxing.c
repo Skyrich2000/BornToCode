@@ -39,7 +39,7 @@ static void boxing_hexa(t_flag *flag, t_box *box)
 	if (flag->type & POINTER || flag->flag & HASH)
 	{
 		box->prefix[0] = '0';
-		box->prefix[1] = 'x' - 32 * ((flag->flag & CHEXA) > 0);
+		box->prefix[1] = 'x' - 32 * ((flag->type & CHEXA) > 0);
 	}
 	base = "0123456789abcdef";
 	if (flag->type & CHEXA)
@@ -61,7 +61,7 @@ static void	boxing_number(t_flag *flag, t_box *box)
 	if ((flag->flag & SPACE))
 		box->sign = ' ';
 	if ((flag->flag & PLUS))
-		box->sign += '+';
+		box->sign = '+';
 	if (box->value < 0)
 	{
 		box->sign = '-';
