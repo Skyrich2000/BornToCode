@@ -49,7 +49,7 @@ static void boxing_hexa(t_flag *flag, t_box *box)
 	if (flag->precision == 0 && box->value == 0)
 	{
 		box->value_len = 0;
-		if (flag->type & POINTER)
+		if (!(flag->type & POINTER))
 			box->prefix[0] = 0;
 	}
 	if (flag->precision != -1)
