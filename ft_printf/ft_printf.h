@@ -30,6 +30,7 @@
 # define UDIGIT 64
 # define HEXA 128
 # define CHEXA 256
+# define NUMBER 512
 
 typedef long long			t_8byte;
 typedef unsigned long long	t_ull;
@@ -61,7 +62,7 @@ int							get_number_len(t_ull n, int len);
 
 int							parse(t_flag *tk, char **str, va_list ap);
 t_8byte						get_arg(t_flag *flag, va_list ap);
-int							print_arg(t_flag *flag, t_8byte input);
+int							print_arg(t_flag *flag, t_8byte arg, int printed);
 void						put_all(t_flag *flag, t_box *box);
 
 #endif

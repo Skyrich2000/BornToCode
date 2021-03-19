@@ -60,7 +60,7 @@ int			parse(t_flag *flag, char **str, va_list ap)
 			flag->precision = -1;
 	if ((flag->length = parse_char(&ptr, "h", 0)))
 		flag->length += parse_char(&ptr, "h", 0);
-	if ((flag->type = parse_char(&ptr, "%cspdiuxX", 0)))
+	if ((flag->type = parse_char(&ptr, "%cspdiuxXn", 0)))
 		*str = ptr;
 	return (flag->type);
 }

@@ -3,8 +3,12 @@
 #include "ft_printf.h"
 
 int main() {
-	printf("%#-4.*X\n", -4, 0xff);
-	ft_printf("%#-4.*X", -4, 0xff);
+	int t1;
+	int t2;
+
+	printf("%#-4.*X%n\n", -4, 0xff, &t1);
+	ft_printf("%#-4.*X%n", -4, 0xff, &t2);
+	printf("{%d %d}", t1, t2);
 }
 
 /*

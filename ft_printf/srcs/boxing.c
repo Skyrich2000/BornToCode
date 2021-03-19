@@ -77,14 +77,27 @@ static void	boxing_number(t_flag *flag, t_box *box)
 		box->zero = flag->width - box->value_len - (box->sign > 0) - (box->prefix[0] > 0) * 2;
 }
 
-int			print_arg(t_flag *flag, t_8byte arg)
+int			handle_number(t_flag *flag, t_8byte arg, int printed)
+{
+	if (flag->length == 0)
+		*(int *)arg = printed;
+	else if (flag->length == 1)
+		*(short int *)arg = printed;
+	else
+		*(signed char *)arg = printed;
+	return (0);
+}
+
+int			print_arg(t_flag *flag, t_8byte arg, int printed)
 {
 	int		len;
 	t_box	box;
 
 	ft_bzero(&box, sizeof(t_box));
 	box.value = arg;
-	if (flag->type & (PERCENT | CHAR))
+	if (flag->type & NUMBER)
+		return (handle_number(flag, arg, printed));
+	else if (flag->type & (PERCENT | CHAR))
 		boxing_char(flag, &box);
 	else if (flag->type & STRING)
 		boxing_string(flag, &box);

@@ -22,7 +22,7 @@ int		ft_vprintf(char *str, va_list ap)
 	while (*str)
 	{
 		if (*str == '%' && parse(&flag, &str, ap))
-			printed += print_arg(&flag, get_arg(&flag, ap));
+			printed += print_arg(&flag, get_arg(&flag, ap), printed);
 		else
 			printed += write(1, str++, 1);
 	}
