@@ -16,21 +16,15 @@ all			: $(NAME)
 %.o			: %.c
 	$(CC) $(CFLAGS) $< -o $@
 
-libft/libft.a		:
-	make all -C libft/
-
-$(NAME)		: $(OBJS) libft/libft.a
-	cp libft/libft.a $(NAME)
-	ar -cr $(NAME) $?
+$(NAME)		: $(OBJS)
+	ar -cr $@ $?
 
 clean		:
 	rm -rf $(OBJS)
-	make clean -C libft
 
 fclean		: clean
 	rm -rf $(NAME)
-	make fclean -C libft
 
 re			: fclean all
 
-.PHONY		: all bonus clean fclean re libft/libft.a
+.PHONY		: all bonus clean fclean re
