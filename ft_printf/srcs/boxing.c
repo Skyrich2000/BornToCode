@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 17:25:25 by ycha              #+#    #+#             */
-/*   Updated: 2021/03/14 01:32:36 by suhshin          ###   ########.fr       */
+/*   Updated: 2021/03/20 19:48:11 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	boxing_string(t_flag *flag, t_box *box)
 		box->zero = flag->width - box->value_len;
 }
 
-static void boxing_hexa(t_flag *flag, t_box *box)
+static void	boxing_hexa(t_flag *flag, t_box *box)
 {
 	char	*base;
 
@@ -50,7 +50,7 @@ static void boxing_hexa(t_flag *flag, t_box *box)
 	if (flag->precision != -1)
 		box->zero = flag->precision - box->value_len;
 	else if (flag->flag & ZERO && !(flag->flag & LEFT))
-		box->zero = flag->width - box->value_len - (box->sign > 0) + (box->prefix > 0) * 2;
+		b->zero = f->width - b->value_len - (b->sign > 0) - (b->prefix > 0) * 2;
 }
 
 static void	boxing_number(t_flag *flag, t_box *box)
@@ -71,7 +71,7 @@ static void	boxing_number(t_flag *flag, t_box *box)
 	if (flag->precision != -1)
 		box->zero = flag->precision - box->value_len;
 	else if (flag->flag & ZERO && !(flag->flag & LEFT))
-		box->zero = flag->width - box->value_len - (box->sign > 0) + (box->prefix > 0) * 2;
+		box->zero = flag->width - box->value_len - (box->sign > 0) - (box->prefix > 0) * 2;
 }
 
 int			print_arg(t_flag *flag, t_8byte arg)

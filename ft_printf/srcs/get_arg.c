@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_arg.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/20 19:31:32 by ycha              #+#    #+#             */
+/*   Updated: 2021/03/20 19:35:34 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 static t_8byte	get_int(int length, va_list ap)
@@ -24,9 +36,9 @@ static t_8byte	get_unsigned_int(int length, va_list ap)
 	return ((unsigned char)value);
 }
 
-static void		handle_number(t_flag *flag,  va_list ap, int printed)
+static void		handle_number(t_flag *flag, va_list ap, int printed)
 {
-	t_8byte value;
+	t_8byte	value;
 
 	value = (t_8byte)va_arg(ap, void *);
 	if (flag->length == 0)
@@ -51,4 +63,3 @@ t_8byte			get_arg(t_flag *flag, va_list ap, int printed)
 		handle_number(flag, ap, printed);
 	return (0);
 }
-

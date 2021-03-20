@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 09:50:43 by ycha              #+#    #+#             */
-/*   Updated: 2021/03/14 01:32:48 by suhshin          ###   ########.fr       */
+/*   Updated: 2021/03/20 19:34:58 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	put_char_n(char chr, int n)
 {
-	while(n-- > 0)
+	while (n-- > 0)
 		write(1, &chr, 1);
 }
 
@@ -48,4 +48,3 @@ void		put_all(t_flag *flag, t_box *box)
 		put_number((t_ull)box->value, box->base, box->base_len);
 	put_char_n(' ', (flag->flag & LEFT) * box->margin);
 }
-
