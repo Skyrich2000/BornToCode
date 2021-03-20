@@ -22,7 +22,7 @@ static int	parse_number(char **str, va_list ap)
 		(*str)++;
 		return (va_arg(ap, int));
 	}
-	while (ft_isdigit(**str))
+	while ('0' <= **str && **str <= '9')
 		ret = ret * 10 + *((*str)++) - '0';
 	return (ret);
 }

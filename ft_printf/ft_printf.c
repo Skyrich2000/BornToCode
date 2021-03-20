@@ -12,6 +12,13 @@
 
 #include "ft_printf.h"
 
+int		ft_max(int x, int y)
+{
+	if (x > y)
+		return (x);
+	return (y);
+}
+
 int		ft_vprintf(char *str, va_list ap)
 {
 	int		printed;
@@ -22,7 +29,7 @@ int		ft_vprintf(char *str, va_list ap)
 	while (*str)
 	{
 		if (*str == '%' && parse(&flag, &str, ap))
-			printed += print_arg(&flag, get_arg(&flag, ap), printed);
+			printed += print_arg(&flag, get_arg(&flag, ap, printed));
 		else
 			printed += write(1, str++, 1);
 	}

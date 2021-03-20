@@ -30,14 +30,15 @@ static void	put_number(t_ull n, char *base, int len)
 {
 	if (n > (unsigned int)len - 1)
 		put_number(n / len, base, len);
-	ft_putchar_fd(base[n % len], 1);
+	write(1, &(base[n % len]), 1);
 }
 
 void		put_all(t_flag *flag, t_box *box)
 {
 	put_char_n(' ', !(flag->flag & LEFT) * box->margin);
-	put_char_n(box->sign, (box->sign > 0));
-	put_string(box->prefix, (box->prefix[0] > 0) * 2);
+	put_char_n(box->sign, box->sign > 0);
+	put_char_n('0', box->prefix > 0);
+	put_char_n(box->prefix, box->prefix > 0);
 	put_char_n('0', box->zero);
 	if (flag->type & (PERCENT | CHAR))
 		put_char_n((char)box->value, 1);
@@ -47,3 +48,4 @@ void		put_all(t_flag *flag, t_box *box)
 		put_number((t_ull)box->value, box->base, box->base_len);
 	put_char_n(' ', (flag->flag & LEFT) * box->margin);
 }
+

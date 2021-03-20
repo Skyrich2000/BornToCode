@@ -12,7 +12,6 @@
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-# include "./libft/libft.h"
 # include <stdarg.h>
 # include <unistd.h>
 
@@ -48,7 +47,7 @@ typedef struct				s_box
 {
 	int						margin;
 	char					sign;
-	char					prefix[2];
+	char					prefix;
 	int						zero;
 	t_8byte					value;
 	int						value_len;
@@ -57,12 +56,16 @@ typedef struct				s_box
 }							t_box;
 
 int							ft_printf(const char *format, ...);
-int							ft_max(int x, int y);
-int							get_number_len(t_ull n, int len);
 
 int							parse(t_flag *tk, char **str, va_list ap);
-t_8byte						get_arg(t_flag *flag, va_list ap);
-int							print_arg(t_flag *flag, t_8byte arg, int printed);
+t_8byte						get_arg(t_flag *flag, va_list ap, int printed);
+int							print_arg(t_flag *flag, t_8byte arg);
 void						put_all(t_flag *flag, t_box *box);
 
+int							ft_max(int x, int y);
+int							ft_get_number_len(t_ull n, int len);
+void						ft_bzero(void *s, size_t n);
+char						*ft_strchr(const char *s, int c);
+void						*ft_memcpy(void *dest, const void *src, size_t n);
+size_t						ft_strlen(const char *s);
 #endif

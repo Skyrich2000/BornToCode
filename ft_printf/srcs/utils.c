@@ -12,14 +12,7 @@
 
 #include "ft_printf.h"
 
-int		ft_max(int x, int y)
-{
-	if (x > y)
-		return (x);
-	return (y);
-}
-
-int	get_number_len(t_ull n, int len)
+int		ft_get_number_len(t_ull n, int len)
 {
 	int	i;
 
@@ -29,37 +22,49 @@ int	get_number_len(t_ull n, int len)
 	return (i);
 }
 
-static t_8byte	get_int(int length, va_list ap)
+void	ft_bzero(void *s, size_t n)
 {
-	t_8byte value;
+	char	*ptr;
 
-	value = va_arg(ap, int);
-	if (length == 0)
-		return (value);
-	else if (length == 1)
-		return ((short int)value);
-	return ((signed char)value);
+	ptr = (char *)s;
+	while (n--)
+	{
+		*ptr = 0;
+		ptr++;
+	}
 }
 
-static t_8byte	get_unsigned_int(int length, va_list ap)
+char	*ft_strchr(const char *s, int c)
 {
-	t_8byte value;
-
-	value = va_arg(ap, unsigned int);
-	if (length == 0)
-		return (value);
-	else if (length == 1)
-		return ((short unsigned int)value);
-	return ((unsigned char)value);
+	while (*s)
+	{
+		if (*s == c)
+			return ((char *)s);
+		s++;
+	}
+	if (*s == c)
+		return ((char *)s);
+	return (0);
 }
 
-t_8byte			get_arg(t_flag *flag, va_list ap)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	if (flag->type & PERCENT)
+	void	*temp;
+
+	if (src == 0 && dest == 0)
 		return (0);
-	else if (flag->type & (STRING | POINTER | NUMBER))
-		return ((t_8byte)va_arg(ap, void *));
-	else if (flag->type & (CHAR | DIGIT))
-		return (get_int(flag->length, ap));
-	return (get_unsigned_int(flag->length, ap));
+	temp = dest;
+	while (n--)
+		*(char *)dest++ = *(char *)src++;
+	return (temp);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	len;
+
+	len = 0;
+	while (*s++)
+		len++;
+	return (len);
 }

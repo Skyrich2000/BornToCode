@@ -37,23 +37,20 @@ static void boxing_hexa(t_flag *flag, t_box *box)
 	char	*base;
 
 	if (flag->type & POINTER || flag->flag & HASH)
-	{
-		box->prefix[0] = '0';
-		box->prefix[1] = 'x' - 32 * ((flag->type & CHEXA) > 0);
-	}
+		box->prefix = 'x' - 32 * ((flag->type & CHEXA) > 0);
 	base = "0123456789abcdef";
 	if (flag->type & CHEXA)
 		base = "0123456789ABCDEF";
 	ft_memcpy(box->base, base, (box->base_len = 16));
-	box->value_len = get_number_len((t_ull)box->value, 16);
+	box->value_len = ft_get_number_len((t_ull)box->value, 16);
 	if (box->value == 0 && !(flag->type & POINTER))
-		box->prefix[0] = 0;
+		box->prefix = 0;
 	if (flag->precision == 0 && box->value == 0)
 		box->value_len = 0;
 	if (flag->precision != -1)
 		box->zero = flag->precision - box->value_len;
 	else if (flag->flag & ZERO && !(flag->flag & LEFT))
-		box->zero = flag->width - box->value_len - (box->sign > 0) - (box->prefix[0] > 0) * 2;
+		box->zero = flag->width - box->value_len - (box->sign > 0) + (box->prefix > 0) * 2;
 }
 
 static void	boxing_number(t_flag *flag, t_box *box)
@@ -68,27 +65,16 @@ static void	boxing_number(t_flag *flag, t_box *box)
 		box->value = -box->value;
 	}
 	ft_memcpy(box->base, "0123456789", (box->base_len = 10));
-	box->value_len = get_number_len((t_ull)box->value, 10);
+	box->value_len = ft_get_number_len((t_ull)box->value, 10);
 	if (flag->precision == 0 && box->value == 0)
 		box->value_len = 0;
 	if (flag->precision != -1)
 		box->zero = flag->precision - box->value_len;
 	else if (flag->flag & ZERO && !(flag->flag & LEFT))
-		box->zero = flag->width - box->value_len - (box->sign > 0) - (box->prefix[0] > 0) * 2;
+		box->zero = flag->width - box->value_len - (box->sign > 0) + (box->prefix > 0) * 2;
 }
 
-int			handle_number(t_flag *flag, t_8byte arg, int printed)
-{
-	if (flag->length == 0)
-		*(int *)arg = printed;
-	else if (flag->length == 1)
-		*(short int *)arg = printed;
-	else
-		*(signed char *)arg = printed;
-	return (0);
-}
-
-int			print_arg(t_flag *flag, t_8byte arg, int printed)
+int			print_arg(t_flag *flag, t_8byte arg)
 {
 	int		len;
 	t_box	box;
@@ -96,7 +82,7 @@ int			print_arg(t_flag *flag, t_8byte arg, int printed)
 	ft_bzero(&box, sizeof(t_box));
 	box.value = arg;
 	if (flag->type & NUMBER)
-		return (handle_number(flag, arg, printed));
+		return (0);
 	else if (flag->type & (PERCENT | CHAR))
 		boxing_char(flag, &box);
 	else if (flag->type & STRING)
@@ -105,7 +91,7 @@ int			print_arg(t_flag *flag, t_8byte arg, int printed)
 		boxing_number(flag, &box);
 	else if (flag->type & (HEXA | CHEXA | POINTER))
 		boxing_hexa(flag, &box);
-	len = box.value_len + ft_max(box.zero, 0) + (box.sign > 0) + (box.prefix[0] > 0) * 2;
+	len = box.value_len + ft_max(box.zero, 0) + (box.sign > 0) + (box.prefix > 0) * 2;
 	box.margin = ft_max(flag->width - len, 0);
 	put_all(flag, &box);
 	return (box.margin + len);
