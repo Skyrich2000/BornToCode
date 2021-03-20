@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 16:49:09 by ycha              #+#    #+#             */
-/*   Updated: 2021/03/14 01:33:04 by suhshin          ###   ########.fr       */
+/*   Updated: 2021/03/20 10:57:38 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,5 @@ void						ft_bzero(void *s, size_t n);
 char						*ft_strchr(const char *s, int c);
 void						*ft_memcpy(void *dest, const void *src, size_t n);
 size_t						ft_strlen(const char *s);
+
 #endif
