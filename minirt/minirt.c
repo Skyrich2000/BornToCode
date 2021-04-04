@@ -40,10 +40,30 @@ int		create_trgb(int t, int r, int g, int b)
 	return(t << 24 | r << 16 | g << 8 | b);
 }
 
+double hit_sphere(t_vec *center, double radius, t_ray *ray)
+{
+	t_vec *oc = vec_alloc(ray->origin->x - center->x
+						, ray->origin->y - center->y
+						, ray->origin->z - center->z);
+	double a = vec_dot(ray->dir, ray->dir);
+	double half_b = vec_dot(oc, ray->dir);
+	double c = vec_dot(oc, oc) - radius * radius;
+	double discriminant = half_b*half_b - a*c;
+	if (discriminant < 0)
+		return -1;
+	return ((-half_b - sqrt(discriminant)) / a);
+}
+
 int get_color(t_ray *ray)
 {
-	 t_vec *unit_direction = vec_unit_vector(ray->dir);
-    double t = 1-0.5*(unit_direction->y + 1.0);
+	double t = hit_sphere(vec_alloc(0, 0, -1), 0.5, ray);
+	if (t > 0) {
+		t_vec *p = ray_at(ray, t);
+		t_vec *n = vec_unit_vector(vec_alloc(p->x, p->y, p->z+1));
+		return create_trgb(0, 255.999 *((n->x + 1) / 2), 255.999 *((n->y + 1) / 2), 255.999 *((n->z + 1) / 2));
+	}
+	t_vec *unit_direction = vec_unit_vector(ray->dir);
+    t = 1-0.5*(unit_direction->y + 1.0);
 	return create_trgb(0, 255.999 * (1-t + 0.5*t),255.999 * (1-t + 0.7*t) ,255.999 * (1-t + 1.0*t) );
 }
 

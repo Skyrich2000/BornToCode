@@ -41,8 +41,10 @@ typedef struct s_ray
 }	t_ray;
 
 void vec_print(t_vec *vec);
-t_vec *ray_at(t_vec *origin, t_vec* dir, double t);
+t_vec *ray_at(t_ray *ray, double t);
 t_vec *vec_alloc(double x, double y, double z);
+double vec_dot(t_vec *vec, t_vec *add);
 
 t_vec *vec_unit_vector(t_vec *vec);
 
+void vec_subvec(t_vec *vec, t_vec *add);

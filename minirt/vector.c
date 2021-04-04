@@ -123,9 +123,9 @@ t_vec *vec_alloc(double x, double y, double z)
 	return (new_vec);
 }
 
-t_vec *ray_at(t_vec *origin, t_vec* dir, double t)
+t_vec *ray_at(t_ray *ray, double t)
 {
-	return vec_alloc(origin->x + dir->x * t
-					,origin->y + dir->y * t
-					,origin->z + dir->z * t);
+	return vec_alloc(ray->origin->x + ray->dir->x * t
+					,ray->origin->y + ray->dir->y * t
+					,ray->origin->z + ray->dir->z * t);
 }
