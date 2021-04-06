@@ -6,7 +6,7 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/26 15:07:00 by suhshin           #+#    #+#              #
-#    Updated: 2021/04/04 19:46:53 by ycha             ###   ########.fr        #
+#    Updated: 2021/04/06 21:54:50 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME	=	a.out
 
 SRCS	=	\
 			minirt.c \
-			vector.c
+			vector.c \
+			event.c
 
 #
 #
@@ -27,7 +28,7 @@ OBJS = $(SRCS:%.c=%.o)
 #
 
 CC		=	clang
-CFLAGS	=	-Wall -Werror -Wextra
+CFLAGS	=	#-Wall -Werror -Wextra
 CLIB	=	-Lmlx -lmlx -framework OpenGL -framework Appkit -Imlx
 
 #
