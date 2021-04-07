@@ -1,32 +1,13 @@
-#include <unistd.h>
-#include <mlx.h>
-#include <math.h>
-#include <stdlib.h>
+#ifndef MINIRT_H
+# define MINIRT_H
+# include <unistd.h>
+# include <mlx.h>
+# include <math.h>
+# include <stdlib.h>
+# include "vector.h"
+# include "object.h"
 
-#include <stdio.h>
-#include <time.h>
-
-// vector 구조체
-typedef struct s_vec
-{
-	double x;
-	double y;
-	double z;
-}		t_vec;
-
-typedef struct s_ray
-{
-	t_vec origin;
-	t_vec dir;
-}	t_ray;
-
-// mlx 구조체
-typedef struct	s_window
-{
-	void		*mlx;
-	void		*win;
-}				t_window;
-
+// camera 구조체
 typedef struct s_camera
 {
 	t_vec	pos;
@@ -42,6 +23,8 @@ typedef struct s_camera
 // image data 구조체
 typedef struct s_screen
 {
+	void	*mlx;
+	void	*win;
 	void 	*ptr;
 	char	*addr;
 	int		bits_per_pixel;
@@ -51,22 +34,7 @@ typedef struct s_screen
 	int		height;
 }		t_screen;
 
+void set_camera(t_camera *cam, t_vec pos, double height, double ratio);
+int	render(t_screen *screen, t_world *world, t_camera *cam);
 
-/*
-** ray member function
-*/
-void ray_at(t_vec *out, t_ray *ray, double t);
-
-/*
-** vector member function
-*/
-void vec(t_vec *out, double x, double y, double z);
-void vec_cal(t_vec *out, t_vec *v, double *a, int n);
-void vec_cross(t_vec *out, t_vec *v1, t_vec *v2);
-void vec_unit(t_vec *out, t_vec *vec);
-double vec_dot(t_vec *v1, t_vec *v2);
-
-void vec_print(t_vec *vec);
-
-int exit_hook();
-int	key_hook(int keycode, t_window *vars);
+#endif
