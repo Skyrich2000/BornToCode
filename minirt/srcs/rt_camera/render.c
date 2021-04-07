@@ -21,7 +21,7 @@ static int	ray_color(t_world *world, t_ray *ray)
 	double t;
 	t_hit_record rec;
 
-	if (world_hit(world->next, ray, (double[2]){0, 99999999}, &rec))
+	if (world_hit(world, ray, (double[2]){0, 99999999}, &rec))
 	{
 		// p = ray_at(ray, t);
 		// n = vec_cal((t_vec[2]){p, center}, (double[2]){1, -1}, 2);

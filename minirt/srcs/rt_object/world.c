@@ -16,7 +16,7 @@ int	world_add(t_world *head, t_object obj, int (*hit)(t_object *obj, t_ray *ray,
 {
 	t_world *new;
 
-	new = malloc(sizeof(t_world) * 1);
+	new = (t_world *)malloc(sizeof(t_world) * 1);
 	if(!new)
 		return (0);
 	new->obj = obj;
@@ -36,6 +36,7 @@ int			world_hit(t_world *head, t_ray *ray, double minmax[2], t_hit_record *out)
 	closest = minmax[1]; // max
 	flag = 0;
 	w = head;
+
 	while (w->next)
 	{
 		w = w->next;

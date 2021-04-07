@@ -40,6 +40,7 @@ int main()
 
 	world = world_init();
 	world_add(world, set_sphere(vec(0, 0, -1), 0.5), hit_sphere);
+	world_add(world, set_sphere(vec(0, 100, -1), 100), hit_sphere);
 	cam = malloc(sizeof(t_camera) * 1); // -> parse
 	set_camera(&(cam[0]), vec(0, 0, 0), 2.0, (16.0 / 9.0)); // -> parse
 	//parsing();
