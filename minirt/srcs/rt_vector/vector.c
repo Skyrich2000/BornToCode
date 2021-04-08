@@ -44,24 +44,24 @@ double vec_length(t_vec *vec)
 	return (len);
 }
 
-t_vec vec_unit(t_vec *v)
+t_vec	vec_unit(t_vec *v)
 {
 	double len;
 
 	len = vec_length(v);
 	return (vec(v->x / len
-			,v->y / len
-			,v->z / len));
+			, v->y / len
+			, v->z / len));
 }
 
-t_vec ray_at(t_ray *ray, double t)
+t_vec	ray_at(t_ray *ray, double t)
 {
 	return (vec(ray->origin.x + ray->dir.x * t
-			,ray->origin.y + ray->dir.y * t
-			,ray->origin.z + ray->dir.z * t));
+			, ray->origin.y + ray->dir.y * t
+			, ray->origin.z + ray->dir.z * t));
 }
 
-t_vec vec_cal(t_vec *v, double *a, int n)
+t_vec	vec_cal(t_vec *v, double *a, int n)
 {
 	t_vec out;
 
