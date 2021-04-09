@@ -28,7 +28,6 @@ int hit_sphere(t_object *obj, t_ray *ray, double minmax[2], t_hit_record *rec)
 		if (t < minmax[0] || minmax[1] < t)
 			return 0;
 	}
-
 	rec->t = t;
 	rec->p = ray_at(ray, rec->t);
 	rec->n = vec_cal((t_vec[2]){rec->p, obj->sphere.c}, (double[2]){1 / obj->sphere.r, -1 / obj->sphere.r}, 2); // P - C
