@@ -24,8 +24,12 @@ static int trgb_anti(t_vec *colors, int anti)
 	colors->z *= scale;
 	return ((int)colors->x << 16 | (int)colors->y << 8 | (int)colors->z);
 }
-static double rand_num()
+static double rand_num(int anti)
 {
+	if (anti == 1)
+	{
+		return (0);
+	}
     return (double)rand() / (double)RAND_MAX ;
 }
 /******************** antialiasing  end   *********************/
@@ -116,7 +120,7 @@ int	render(t_screen *screen, t_world *world, t_camera *cam)
 	double		v;
 	t_ray		ray;
 
-	int anti = 30; // 여기서
+	int anti = 10; // 여기서
 	int adx;
 	t_vec color; // 이까지 추가..
 
@@ -127,8 +131,8 @@ int	render(t_screen *screen, t_world *world, t_camera *cam)
 		color = vec(0, 0, 0);
 		while (++adx < anti)
 		{
-			u = (double)((idx % (screen->width - 1)) + rand_num()) / (screen->width - 1);
-			v = (double)((screen->height - (idx / (screen->width - 1))) + rand_num()) / (screen->height - 1);
+			u = (double)((idx % (screen->width - 1)) + rand_num(anti)) / (screen->width - 1);
+			v = (double)((screen->height - (idx / (screen->width - 1))) + rand_num(anti)) / (screen->height - 1);
 			ray.origin = cam->pos;
 			ray.dir = vec_cal((t_vec[3]){cam->low_left_corner, cam->horizon, cam->vertical} \
 							, (double[3]){1, u, v}, 3);

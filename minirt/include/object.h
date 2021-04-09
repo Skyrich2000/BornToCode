@@ -62,7 +62,7 @@ typedef struct	s_world
 	struct s_world	*next;
 }				t_world;
 
-t_world		*world_init();
+t_world		*set_world();
 int	world_add(t_world *head, t_object obj, int (*hit)(t_object *obj, t_ray *ray, double minmax[2], t_hit_record *out));
 int	world_hit(t_world *head, t_ray *ray, double minmax[2], t_hit_record *out);
 

@@ -1,7 +1,7 @@
 #include "object.h"
 #include "stdlib.h"
 
-t_world		*world_init()
+t_world		*set_world()
 {
 	t_world	*head;
 
