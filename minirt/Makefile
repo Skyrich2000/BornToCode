@@ -6,7 +6,7 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/26 15:07:00 by suhshin           #+#    #+#              #
-#    Updated: 2021/04/08 15:08:13 by ycha             ###   ########.fr        #
+#    Updated: 2021/04/08 15:23:57 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRCS	=	\
 
 SRC_DIR	=	./srcs
 
-INCLUDE =	-Iinclude -Imlx -I./
+INCLUDE =	-Iinclude -Isrcs/mlx -I./
 
 OBJS = $(SRCS:%.c=%.o)
 
@@ -36,7 +36,7 @@ OBJS = $(SRCS:%.c=%.o)
 
 CC		=	clang
 CFLAGS	=	#-Wall -Werror -Wextra
-CLIB	=	-Lmlx -lmlx -framework OpenGL -framework Appkit $(INCLUDE)
+CLIB	=	-Lsrcs/mlx -lmlx -framework OpenGL -framework Appkit $(INCLUDE)
 
 #
 # Rules
@@ -49,7 +49,7 @@ all		: $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(CLIB) $(SRCS) -o $(NAME)
-	install_name_tool -change libmlx.dylib mlx/libmlx.dylib $(NAME)
+	install_name_tool -change libmlx.dylib srcs/mlx/libmlx.dylib $(NAME)
 
 clean	:
 	rm -rf $(OBJS)

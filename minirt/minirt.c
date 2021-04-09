@@ -1,5 +1,6 @@
 #include "minirt.h"
 #include "event.h"
+#include <time.h>
 
 static void init(t_screen *screen)
 {
@@ -25,12 +26,18 @@ static void draw(t_screen *screen)
 
 int minirt(t_screen *screen, t_world *world, t_camera *cam)
 {
+	clock_t start, end;
+
 	init(screen);
 	event(screen, world, cam);
+	start = clock();
 	render(screen, world, cam + 0);
+	end = clock();
+	printf("time : %f\n",(double)(end - start) / CLOCKS_PER_SEC);
 	draw(screen);
 	return (0);
 }
+
 
 int main()
 {
@@ -39,8 +46,9 @@ int main()
 	t_camera *cam;
 
 	world = world_init();
-	world_add(world, set_sphere(vec(0, 0, -1), 0.5), hit_sphere);
-	world_add(world, set_sphere(vec(0, 100, -1), 100), hit_sphere);
+
+	world_add(world, set_sphere(vec(0, 0, -1), 0.5), hit_sphere);	// 원래 구
+	world_add(world, set_sphere(vec(0, -100, -1), 100), hit_sphere);	// 원래 구
 	cam = malloc(sizeof(t_camera) * 1); // -> parse
 	set_camera(&(cam[0]), vec(0, 0, 0), 2.0, (16.0 / 9.0)); // -> parse
 	//parsing();
@@ -49,3 +57,24 @@ int main()
 	//minirt 에러 체크
 	return (0);
 }
+
+
+// hi zzz..
+/*
+	double i = 0.0;
+	for (int k = 0 ; k < 4 ; ++k)
+	{
+		world_add(world, set_sphere(vec(-0.1, i, -1), 0.08), hit_sphere);
+		world_add(world, set_sphere(vec(-0.58, i, -1), 0.08), hit_sphere);
+		i += 0.2;
+	}
+	world_add(world, set_sphere(vec(-0.26, 0.3, -1), 0.08), hit_sphere);
+	world_add(world, set_sphere(vec(-0.42, 0.3, -1), 0.08), hit_sphere);
+	for (int k = 0 ; k < 5 ; ++k)
+	{
+		i -= 0.16;
+		if (k == 1)
+			continue;
+		world_add(world, set_sphere(vec(0.15, i, -1), 0.08), hit_sphere);
+	}
+*/
