@@ -1,2 +1,3 @@
-미니 알트 간드아
-f
+https://raytracing.github.io/books/RayTracingInOneWeekend.html
+
+2021.4.10 : 9.5 까지 함
