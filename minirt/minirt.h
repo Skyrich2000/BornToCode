@@ -38,6 +38,7 @@ typedef struct s_screen
 	int		anti;
 }		t_screen;
 
+// the everything...
 typedef struct s_minirt
 {
 	t_screen	scr;

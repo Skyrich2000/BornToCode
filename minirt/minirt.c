@@ -2,7 +2,7 @@
 #include "event.h"
 #include <time.h>
 
-static void init_screen(t_screen *screen)
+static void	init_screen(t_screen *screen)
 {
 	screen->width = 1600; //  -> parse
 	screen->height = 900; //  -> parse
@@ -12,7 +12,7 @@ static void init_screen(t_screen *screen)
 	screen->addr = mlx_get_data_addr(screen->ptr, &screen->bits_per_pixel, &screen->line_length, &screen->endian); // 이미지 주소 할당
 }
 
-static void event(t_minirt *mini)
+static void	event(t_minirt *mini)
 {
 	mlx_key_hook(mini->scr.win, key_hook, &mini->scr); // esc close
 	mlx_hook(mini->scr.win, 17, 0, exit_hook, 0); // x button close
@@ -24,12 +24,11 @@ static void draw(t_screen *screen)
 	mlx_loop(screen->mlx);
 }
 
-int minirt(t_minirt *mini)
+static int	minirt(t_minirt *mini)
 {
 	clock_t start, end;		// time check
 
 	init_screen(&mini->scr);
-
 	event(mini);
 	start = clock();		// time check
 	render(mini);
@@ -41,9 +40,6 @@ int minirt(t_minirt *mini)
 
 int		main()
 {
-	// t_screen	screen;
-	// t_world		*world;
-	// t_camera	*cam;
 	t_minirt	mini;
 
 	//parsing();
@@ -57,38 +53,3 @@ int		main()
 	//minirt 에러 체크
 	return (0);
 }
-
-
-/*******************       아래는 기존 코드!!     *********************************/
-// int		main()
-// {
-// 	t_screen	screen;
-// 	t_world		*world;
-// 	t_camera	*cam;
-
-
-// 	//parsing();
-// 	//parsing 에러 체크
-// 	world = init_world();
-// 	world_add(world, init_sphere(vec(0, 0, -1), 0.5), hit_sphere);	// 원래 구
-// 	world_add(world, init_sphere(vec(0, -100.5, -1), 100), hit_sphere);	// 원래 구
-// 	cam = malloc(sizeof(t_camera) * 1); // -> parse needed
-// 	set_camera(&(cam[0]), vec(0, 0, 0), 2.0, (16.0 / 9.0)); // -> parse
-// 	minirt(&screen, world, cam);
-// 	//minirt 에러 체크
-// 	return (0);
-// }
-
-// int minirt(t_screen *screen, t_world *world, t_camera *cam)
-// {
-// 	clock_t start, end;
-
-// 	init(screen);
-// 	event(screen, world, cam);
-// 	start = clock();		// time check
-// 	render(screen, world, cam + 0);
-// 	end = clock();		// time check
-// 	printf("time : %f\n",(double)(end - start) / CLOCKS_PER_SEC);
-// 	draw(screen);
-// 	return (0);
-// }

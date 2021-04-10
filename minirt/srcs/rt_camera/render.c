@@ -85,18 +85,3 @@ int render(t_minirt *mini)
 	}
 	return (0);
 }
-
-
-
-// adx = -1;
-// 			color = vec(0, 0, 0); // color 값 초기화
-// 			while(++adx < mini->scr->anti)
-// 			{
-// 				u = (double)(wdx + rand_num(mini->scr->anti, 0, 0)) / (mini->scr->width - 1);
-// 				v = (double)(hdx + rand_num(mini->scr->anti, 0, 0)) / (mini->scr->height - 1);
-// 				ray.origin = mini->cam->pos;
-// 				ray.dir = vec_cal((t_vec[3]){ mini->cam->low_left_corner, mini->cam->horizon, mini->cam->vertical },
-// 									(double[3]){ 1, u, v },
-// 									3);
-// 				color = vec_cal((t_vec[2]){color, ray_color(mini->wrd, &ray, MAX_DEPTH)}, (double[2]){1, 1}, 2);
-// 			}
