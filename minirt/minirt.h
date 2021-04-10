@@ -7,6 +7,7 @@
 # include "vector.h"
 # include "object.h"
 # include "library.h"
+
 // camera 구조체
 typedef struct s_camera
 {
@@ -33,6 +34,8 @@ typedef struct s_screen
 	int		width;
 	int		height;
 }		t_screen;
+
+
 
 void set_camera(t_camera *cam, t_vec pos, double height, double ratio);
 int	render(t_screen *screen, t_world *world, t_camera *cam);

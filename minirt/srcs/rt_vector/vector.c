@@ -101,11 +101,12 @@ t_vec	random_unit_vector()
 	return vec_unit(&tmp);
 }
 
-// t_vec	random_in_hemisphere(t_vec &normal)
-// {
-// 	vec3 in_unit_sphere = random_in_unit_sphere();
-// 	if (dot(in_unit_sphere, normal) > 0.0) // In the same hemisphere as the normal
-// 		return in_unit_sphere;
-// 	else
-// 		return -in_unit_sphere;
-// }
+t_vec	random_in_hemisphere(t_vec *normal)
+{
+	t_vec in_unit_sphere = random_in_unit_sphere();
+
+	if (vec_dot(&in_unit_sphere, normal) > 0.0) // In the same hemisphere as the normal
+		return in_unit_sphere;
+	else
+		return vec_cal((t_vec[1]){in_unit_sphere}, (double[1]){-1}, 1);
+}

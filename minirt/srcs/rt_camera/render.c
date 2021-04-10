@@ -8,20 +8,6 @@ static void put_pixel(t_screen *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-static int trgb(int t, int r, int g, int b)
-{
-	return (t << 24 | r << 16 | g << 8 | b);
-}
-
-static double clamp(double n, double min, double max)
-{
-	if (n < min)
-		return (min);
-	if (n > max)
-		return (max);
-	return (n);
-}
-/******************** antialiasing  start *********************/
 static int trgb_anti(t_vec *colors, int anti)
 {
 	double scale;
@@ -32,34 +18,10 @@ static int trgb_anti(t_vec *colors, int anti)
 	colors->x = clamp(sqrt(colors->x * scale), 0, 0.999);
 	colors->y = clamp(sqrt(colors->y * scale), 0, 0.999);
 	colors->z = clamp(sqrt(colors->z * scale), 0, 0.999);
-
-	// printf("R, G, B : [%d, %d, %d]\n",(int)colors->x, (int)colors->y, (int)colors->z);
 	return trgb(0, colors->x * 256, colors->y * 256, colors->z * 256);
 }
-/******************** antialiasing  end   *********************/
 
-
-// static int ray_color(t_world *world, t_ray *ray, int depth)
-// {
-// 	t_vec target;
-// 	t_vec n;
-// 	double t;
-// 	t_hit_record rec;
-
-// 	if (world_hit(world, ray, (double[2]){ 0, 99999999 }, &rec))
-// 	{
-// 		// p = ray_at(ray, t);
-// 		// n = vec_cal((t_vec[2]){p, center}, (double[2]){1, -1}, 2);
-// 		n = rec.n; // unit_vector 변환은 hit_sphere 에서 처리
-// 		return (trgb(0, 255 * ((n.x + 1) / 2), 255 * ((n.y + 1) / 2), 255 * ((n.z + 1) / 2)));
-// 	}
-// 	n = vec_unit(&ray->dir);
-// 	t = 1 - 0.5 * (n.y + 1.0);
-// 	return (trgb(0, 255 * (1 - t + 0.5 * t), 255 * (1 - t + 0.7 * t), 255 * (1 - t + 1.0 * t)));
-// }
-
-/********************  ray_color를 구조체 리턴하도록 바꿔본거 ***********************/
-static t_vec ray_color_tvec(t_world *world, t_ray *ray, int depth)
+static t_vec ray_color(t_world *world, t_ray *ray, int depth)
 {
 	t_vec p;
 	t_vec n;
@@ -79,14 +41,13 @@ static t_vec ray_color_tvec(t_world *world, t_ray *ray, int depth)
 		tmp.origin = rec.p; // random value에 의한 정점좌표를 새로 지정
 		tmp.dir = vec_cal((t_vec[2]){p, rec.p},(double[2]){1, -1} ,2);
 		// return (out);
-		return (vec_cal((t_vec[1]){ray_color_tvec(world, &tmp, depth - 1)}, (double[1]){0.5}, 1));
+		return (vec_cal((t_vec[1]){ray_color(world, &tmp, depth - 1)}, (double[1]){0.5}, 1));
 	}
 	n = vec_unit(&ray->dir);
 	t = 1 - 0.5 * (n.y + 1.0);
 	out = vec((1 - 0.5 * t), (1 - 0.3 * t), 1);
 	return (out);
 }
-/********************  ray_color를 구조체 리턴하도록 바꿔본거 ***********************/
 
 
 // int render(t_screen *screen, t_world *world, t_camera *cam)
@@ -117,7 +78,7 @@ static t_vec ray_color_tvec(t_world *world, t_ray *ray, int depth)
 // 				ray.dir = vec_cal((t_vec[3]){ cam->low_left_corner, cam->horizon, cam->vertical },
 // 									(double[3]){ 1, u, v },
 // 									3);
-// 				color = vec_cal((t_vec[3]){color, ray_color_tvec(world, &ray)}, (double[2]){1, 1}, 2);
+// 				color = vec_cal((t_vec[3]){color, ray_color(world, &ray)}, (double[2]){1, 1}, 2);
 // 			}
 // 			put_pixel(screen, wdx, (screen->height - 1- hdx), trgb_anti(&color, anti));
 // 			// put_pixel(screen, wdx, hdx, ray_color(world, &ray)); // 생성한 이미지에 픽셀별 color지정하기å
@@ -125,6 +86,8 @@ static t_vec ray_color_tvec(t_world *world, t_ray *ray, int depth)
 // 	}
 // 	return (0);
 // }
+
+
 
 int	render(t_screen *screen, t_world *world, t_camera *cam)
 {
@@ -150,7 +113,7 @@ int	render(t_screen *screen, t_world *world, t_camera *cam)
 			ray.origin = cam->pos;
 			ray.dir = vec_cal((t_vec[3]){cam->low_left_corner, cam->horizon, cam->vertical} \
 							, (double[3]){1, u, v}, 3);
-			color = vec_cal((t_vec[2]){color, ray_color_tvec(world, &ray, max_depth)}, (double[2]){1, 1}, 2);
+			color = vec_cal((t_vec[2]){color, ray_color(world, &ray, max_depth)}, (double[2]){1, 1}, 2);
 		}
 		put_pixel(screen, idx % (screen->width - 1), (idx / (screen->width - 1)), trgb_anti(&color, anti));
 		// put_pixel(screen, idx % (screen->width - 1), idx / (screen->width - 1), ray_color(world, &ray)); // 생성한 이미지에 픽셀별 color지정하기

@@ -31,5 +31,6 @@ t_vec	random_unit_vector();
 void	vec_print(t_vec *vec);
 double	vec_dot(t_vec *v1, t_vec *v2);
 double	vec_length_squared(t_vec *vec);
+t_vec	random_in_hemisphere(t_vec *normal);
 
 #endif
