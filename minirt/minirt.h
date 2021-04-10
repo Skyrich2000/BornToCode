@@ -42,12 +42,13 @@ typedef struct s_screen
 typedef struct s_minirt
 {
 	t_screen	scr;
-	t_camera	*cam;
 	t_world		*wrd;
+	t_camera	*cam;
+	t_camera	*curr_cam;
 }		t_minirt;
 
 
-void set_camera(t_camera *cam, t_vec pos, double height, double ratio);
+void init_camera(t_camera *cam, t_vec pos, double height, double ratio);
 int	render(t_minirt *mini);
 
 #endif

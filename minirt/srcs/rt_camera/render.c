@@ -31,10 +31,10 @@ static t_vec ray_color(t_world *world, t_ray *ray, int depth)
 	t_vec ray_from_cam;	// 카메라에서 쏜 방향벡터..
 
 	if (depth <= 0)
-		return ((t_vec){0, 0, 0});
+		return ((t_vec){0, 0, 0}); // ?! 이런게 됨?? - huni
 	if (world_hit(world, ray, (double[2]){ 0.001, INFINITY }, &rec))
 	{
-		target = vec_cal((t_vec[3]){rec.p, rec.n, random_unit_vector()}, (double[3]){1, 1, 1} ,3);
+		target = vec_cal((t_vec[2]){rec.p, random_in_hemisphere(&rec.n)}, (double[2]){1, 1} ,3);
 		tmp.origin = rec.p; // random value에 의한 정점좌표를 새로 지정
 		tmp.dir = vec_cal((t_vec[2]){target, rec.p},(double[2]){1, -1} ,2);
 		return (vec_cal((t_vec[1]){ray_color(world, &tmp, depth - 1)}, (double[1]){0.5}, 1));
@@ -66,7 +66,7 @@ static int	anti(t_minirt *mini, int wdx, int hdx)
 						  3);
 		color = vec_cal((t_vec[2]){ color, ray_color(mini->wrd, &ray, MAX_DEPTH) },
 						(double[2]){ 1, 1 },
-						2);
+						2); // line break ..? - huni
 	}
 	return (trgb_anti(&color, mini->scr.anti));
 }

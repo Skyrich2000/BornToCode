@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-void	set_camera(t_camera *cam, t_vec pos, double height, double ratio)
+void	init_camera(t_camera *cam, t_vec pos, double height, double ratio)
 {
 	cam->pos = pos;
 	cam->view_width = ratio * 2;

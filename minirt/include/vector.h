@@ -28,9 +28,9 @@ t_vec	vec_cross(t_vec *v1, t_vec *v2);
 t_vec	vec_unit(t_vec *vec);
 t_vec	random_in_unit_sphere(void);
 t_vec	random_unit_vector(void);
+t_vec	random_in_hemisphere(t_vec *normal);
 void	vec_print(t_vec *vec);
 double	vec_dot(t_vec *v1, t_vec *v2);
 double	vec_length_squared(t_vec *vec);
-t_vec	random_in_hemisphere(t_vec *normal);
 
 #endif

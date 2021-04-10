@@ -63,15 +63,11 @@ typedef struct s_world
 	struct s_world		*next;
 }				t_world;
 
-t_world		*init_world(void);
+t_world		*init_world(void); // create world?
 int			world_add(t_world *head, t_object obj, int (*hit)(t_object *obj, t_ray *ray, double minmax[2], t_hit_record *out));
 int			world_hit(t_world *head, t_ray *ray, double minmax[2], t_hit_record *out);
 
 t_object	init_sphere(t_vec c, double r);
 int			hit_sphere(t_object *obj, t_ray *ray, double minmax[2], t_hit_record *rec);
-// double hit_triangle(t_triangle triangle, t_ray *ray, double t_min, double t_max, t_hit_record *rec);
-// double hit_cylinder(t_cylinder cylinder, t_ray *ray, double t_min, double t_max, t_hit_record *rec);
-// double hit_square(t_square square, t_ray *ray, double t_min, double t_max, t_hit_record *rec);
-// double hit_plane(t_plane plane, t_ray *ray, double t_min, double t_max, t_hit_record *rec);
 
 #endif

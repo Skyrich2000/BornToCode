@@ -28,12 +28,19 @@ static int	minirt(t_minirt *mini)
 {
 	clock_t start, end;		// time check
 
+	// setting screen
 	init_screen(&mini->scr);
+
+	// setting event handler
 	event(mini);
+
+	// render first scene
 	start = clock();		// time check
 	render(mini);
 	end = clock();		// time check
 	printf("time : %f\n",(double)(end - start) / CLOCKS_PER_SEC);
+
+	// draw screen to window
 	draw(&mini->scr);
 	return (0);
 }
@@ -42,14 +49,18 @@ int		main()
 {
 	t_minirt	mini;
 
-	//parsing();
-	//parsing 에러 체크
+	//parsing(); //parsing 에러 체크
+
+	// world setting
 	mini.wrd = init_world();
 	world_add(mini.wrd, init_sphere(vec(0, 0, -1), 0.5), hit_sphere);	// 원래 구
 	world_add(mini.wrd, init_sphere(vec(0, -100.5, -1), 100), hit_sphere);	// 원래 구
+
+	// camera setting
 	mini.cam = malloc(sizeof(t_camera) * 1); // -> parse needed
-	set_camera((&mini.cam[0]), vec(0, 0, 0), 2.0, (16.0 / 9.0)); // -> parse
-	minirt(&mini);
-	//minirt 에러 체크
+	init_camera((&mini.cam[0]), vec(0, 0, 0), 2.0, (16.0 / 9.0)); // -> parse
+
+	// start app
+	minirt(&mini); //minirt 에러 체크
 	return (0);
 }
