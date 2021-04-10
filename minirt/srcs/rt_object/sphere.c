@@ -7,7 +7,6 @@ t_object init_sphere(t_vec c, double r)
 	obj.sphere.c = c;
 	obj.sphere.r = r;
 	return (obj);
-
 }
 
 int hit_sphere(t_object *obj, t_ray *ray, double minmax[2], t_hit_record *rec)

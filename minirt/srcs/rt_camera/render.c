@@ -34,10 +34,8 @@ static t_vec ray_color(t_world *world, t_ray *ray, int depth)
 		return ((t_vec){0, 0, 0}); // ?! 이런게 됨?? - huni
 	if (world_hit(world, ray, (double[2]){ 0.001, INFINITY }, &rec))
 	{
-		target = vec_cal((t_vec[2]){rec.p, random_in_hemisphere(&rec.n)}, (double[2]){1, 1} ,3);
-		tmp.origin = rec.p; // random value에 의한 정점좌표를 새로 지정
-		tmp.dir = vec_cal((t_vec[2]){target, rec.p},(double[2]){1, -1} ,2);
-		return (vec_cal((t_vec[1]){ray_color(world, &tmp, depth - 1)}, (double[1]){0.5}, 1));
+		if (rec.material->scatter(ray, &rec, attenuation, &tmp));
+			return (vec_cal((t_vec[1]){ray_color(world, &tmp, depth - 1)}, (double[1]){0.5}, 1));
 	}
 	ray_from_cam = vec_unit(&ray->dir);
 	val_for_sky = 0.5 - 0.5 * ray_from_cam.y;

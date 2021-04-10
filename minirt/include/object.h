@@ -57,6 +57,7 @@ typedef struct s_hit_record
 	double	t;	// ray가 구와 충돌한 지점 사이의 크기
 	int		front_face;
 	t_material	*material;
+	// scatter , ray_in, ray_out, color 넣을까..? - huni
 }				t_hit_record;
 
 typedef struct s_world
