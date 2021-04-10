@@ -1,15 +1,13 @@
-#ifndef VECTOR_H
-# define VECTOR_H
-# include <math.h>
+#ifndef MATERIAL_H
+#define MATERIAL_H
 # include <stdio.h>
+# include "vector.h"
 
 // vector 구조체
-typedef struct	s_vec
+typedef struct	s_material
 {
-	double	x;
-	double	y;
-	double	z;
-}				t_vec;
+	t_vec 	color;
+}				t_material;
 
 // ray 구조체
 typedef struct	s_ray

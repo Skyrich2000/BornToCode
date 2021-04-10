@@ -2,6 +2,7 @@
 #ifndef OBJECT_H
 # define OBJECT_H
 # include "vector.h"
+# include "material.h"
 # include <stdlib.h>
 
 typedef struct s_sphere
@@ -54,6 +55,8 @@ typedef struct s_hit_record
 	t_vec	p;	// ray에서 구위의 점으로 향하는 벡터 p
 	t_vec	n;	// 해당 좌표에서의 법선벡터 n
 	double	t;	// ray가 구와 충돌한 지점 사이의 크기
+	int		front_face;
+	t_material	*material;
 }				t_hit_record;
 
 typedef struct s_world
