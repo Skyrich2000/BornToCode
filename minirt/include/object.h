@@ -2,6 +2,7 @@
 #ifndef OBJECT_H
 # define OBJECT_H
 # include "vector.h"
+# include <stdlib.h>
 
 typedef struct s_sphere
 {

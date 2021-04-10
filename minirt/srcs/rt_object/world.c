@@ -1,5 +1,4 @@
 #include "object.h"
-#include <stdlib.h>
 
 t_world		*init_world()
 {

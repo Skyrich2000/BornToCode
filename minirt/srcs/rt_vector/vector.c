@@ -1,5 +1,6 @@
 #include "vector.h"
 #include "library.h"
+
 void vec_print(t_vec *vec)
 {
 	printf("[%.2f, %.2f, %.2f]", vec->x, vec->y, vec->z);

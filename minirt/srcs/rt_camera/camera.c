@@ -1,5 +1,5 @@
 #include "minirt.h"
-#include "vector.h"
+
 
 void	set_camera(t_camera *cam, t_vec pos, double height, double ratio)
 {

@@ -8,6 +8,8 @@
 # include "object.h"
 # include "library.h"
 
+# define MAX_DEPTH 50
+
 // camera 구조체
 typedef struct s_camera
 {
@@ -33,11 +35,18 @@ typedef struct s_screen
 	int		endian;
 	int		width;
 	int		height;
+	int		anti;
 }		t_screen;
 
+typedef struct s_minirt
+{
+	t_screen	scr;
+	t_camera	*cam;
+	t_world		*wrd;
+}		t_minirt;
 
 
 void set_camera(t_camera *cam, t_vec pos, double height, double ratio);
-int	render(t_screen *screen, t_world *world, t_camera *cam);
+int	render(t_minirt *mini);
 
 #endif
