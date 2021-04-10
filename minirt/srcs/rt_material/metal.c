@@ -1,6 +1,6 @@
 #include "material.h"
 
-t_material init_metal(t_vec color)
+t_material create_metal(t_vec color)
 {
 	t_material mat;
 

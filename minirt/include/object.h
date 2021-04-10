@@ -73,7 +73,7 @@ t_world		*init_world(void); // create world?
 int			add_world(t_world *head, t_object obj, int (*hit)(t_world *this, t_ray *ray, double minmax[2], t_hit_record *out), t_material *material);
 int			hit_world(t_world *head, t_ray *ray, double minmax[2], t_hit_record *out);
 
-t_object	init_sphere(t_vec c, double r);
+t_object	create_sphere(t_vec c, double r);
 
 int			hit_sphere(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec);
 

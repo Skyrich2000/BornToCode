@@ -1,6 +1,6 @@
 #include "object.h"
 
-t_object init_sphere(t_vec c, double r)
+t_object create_sphere(t_vec c, double r)
 {
 	t_object obj;
 

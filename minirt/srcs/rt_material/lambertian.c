@@ -1,6 +1,6 @@
 #include "material.h"
 
-t_material init_lambertian(t_vec color)
+t_material create_lambertian(t_vec color)
 {
 	t_material mat;
 

@@ -49,7 +49,7 @@ typedef struct s_minirt
 }		t_minirt;
 
 
-void init_camera(t_camera *cam, t_vec pos, double height, double ratio);
+void create_camera(t_camera *cam, t_vec pos, double height, double ratio);
 int	render(t_minirt *mini);
 
 #endif

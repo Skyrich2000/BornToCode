@@ -52,21 +52,21 @@ int		main()
 	//parsing(); //parsing 에러 체크
 
 	// material setting
-	t_material material_ground = init_lambertian(vec(0.8, 0.8, 0.8));
-	t_material material_center = init_lambertian(vec(0.7, 0.3, 0.3));
-	t_material material_left = init_metal(vec(0.8, 0.8, 0.8));
-	t_material material_right = init_metal(vec(0.8, 0.6, 0.2));
+	t_material material_ground = create_lambertian(vec(0.8, 0.8, 0.8));
+	t_material material_center = create_lambertian(vec(0.7, 0.3, 0.3));
+	t_material material_left = create_metal(vec(0.8, 0.8, 0.8));
+	t_material material_right = create_metal(vec(0.8, 0.6, 0.2));
 
 	// world setting
 	mini.wrd = init_world();
-	add_world(mini.wrd, init_sphere(vec(0, -100.5, -1), 100), hit_sphere, &material_ground);
-	add_world(mini.wrd, init_sphere(vec(0, 0, -1), 0.5), hit_sphere, &material_center);
-	add_world(mini.wrd, init_sphere(vec(-1, 0, -1), 0.5), hit_sphere, &material_left);
-	add_world(mini.wrd, init_sphere(vec(1, 0, -1), 0.5), hit_sphere, &material_right);
+	add_world(mini.wrd, create_sphere(vec(0, -100.5, -1), 100), hit_sphere, &material_ground);
+	add_world(mini.wrd, create_sphere(vec(0, 0, -1), 0.5), hit_sphere, &material_center);
+	add_world(mini.wrd, create_sphere(vec(-1, 0, -1), 0.5), hit_sphere, &material_left);
+	add_world(mini.wrd, create_sphere(vec(1, 0, -1), 0.5), hit_sphere, &material_right);
 
 	// camera setting
 	mini.cam = malloc(sizeof(t_camera) * 1); // -> parse needed
-	init_camera((&mini.cam[0]), vec(0, 0, 0), 2.0, (16.0 / 9.0)); // -> parse
+	create_camera((&mini.cam[0]), vec(0, 0, 0), 2.0, (16.0 / 9.0)); // -> parse
 
 	// start app
 	minirt(&mini); //minirt 에러 체크
