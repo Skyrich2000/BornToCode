@@ -7,6 +7,7 @@
 # include "vector.h"
 # include "object.h"
 # include "library.h"
+# include "material.h"
 
 # define MAX_DEPTH 50
 

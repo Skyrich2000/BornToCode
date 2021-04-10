@@ -23,19 +23,19 @@ static int trgb_anti(t_vec *colors, int anti)
 
 static t_vec ray_color(t_world *world, t_ray *ray, int depth)
 {
-	t_vec target;
 	t_hit_record rec;	// world_hit -> hit = true 면 rec 에 object 위의 점에 대한 정보 기록
-	t_ray tmp;	// target - p ray
+	t_ray new_ray;	// target - p ray
 
 	double val_for_sky;	// 하늘색 표현을 위한 값... 아래 변수들은 사실 나중에 없애도 됨
 	t_vec ray_from_cam;	// 카메라에서 쏜 방향벡터..
 
 	if (depth <= 0)
 		return ((t_vec){0, 0, 0}); // ?! 이런게 됨?? - huni
-	if (world_hit(world, ray, (double[2]){ 0.001, INFINITY }, &rec))
+	if (hit_world(world, ray, (double[2]){0.001, INFINITY }, &rec))
 	{
-		if (rec.material->scatter(ray, &rec, attenuation, &tmp));
-			return (vec_cal((t_vec[1]){ray_color(world, &tmp, depth - 1)}, (double[1]){0.5}, 1));
+		if (rec.material->scatter(ray, &rec, &new_ray));
+			return (vec_mul(rec.material->color, ray_color(world, &new_ray, depth - 1)));
+		return (vec(0, 0, 0));
 	}
 	ray_from_cam = vec_unit(&ray->dir);
 	val_for_sky = 0.5 - 0.5 * ray_from_cam.y;
@@ -64,7 +64,7 @@ static int	anti(t_minirt *mini, int wdx, int hdx)
 						  3);
 		color = vec_cal((t_vec[2]){ color, ray_color(mini->wrd, &ray, MAX_DEPTH) },
 						(double[2]){ 1, 1 },
-						2); // line break ..? - huni
+						2); // line break? - huni
 	}
 	return (trgb_anti(&color, mini->scr.anti));
 }

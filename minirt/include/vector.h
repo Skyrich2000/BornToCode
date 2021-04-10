@@ -24,7 +24,8 @@ t_vec	ray_at(t_ray *ray, double t);
 // vector member function
 t_vec	vec(double x, double y, double z);
 t_vec	vec_cal(t_vec *v, double *a, int n);
-t_vec	vec_add(t_vec v, double a);
+t_vec	vec_add(t_vec v, double a); // 어디서 쓰임? - huni
+t_vec	vec_mul(t_vec v1, t_vec v2);
 t_vec	vec_cross(t_vec *v1, t_vec *v2);
 t_vec	vec_unit(t_vec *vec);
 t_vec	random_in_unit_sphere(void);
