@@ -1,5 +1,5 @@
 #include "vector.h"
-
+#include "library.h"
 void vec_print(t_vec *vec)
 {
 	printf("[%.2f, %.2f, %.2f]", vec->x, vec->y, vec->z);
@@ -74,3 +74,38 @@ t_vec	vec_cal(t_vec *v, double *a, int n)
 	}
 	return (out);
 }
+
+t_vec	vec_add(t_vec v, double a)
+{
+	return (vec(v.x + a, v.y + a, v.z + a));
+}
+
+t_vec	random_in_unit_sphere()
+{
+	t_vec out;
+
+	while (1)
+	{
+		out = vec(rand_num(1, -1, 1), rand_num(1, -1, 1), rand_num(1, -1, 1));
+		if (vec_length_squared(&out) >= 1)
+			continue ;
+		return (out);
+	}
+}
+
+t_vec	random_unit_vector()
+{
+	t_vec tmp;
+
+	tmp = random_in_unit_sphere();
+	return vec_unit(&tmp);
+}
+
+// t_vec	random_in_hemisphere(t_vec &normal)
+// {
+// 	vec3 in_unit_sphere = random_in_unit_sphere();
+// 	if (dot(in_unit_sphere, normal) > 0.0) // In the same hemisphere as the normal
+// 		return in_unit_sphere;
+// 	else
+// 		return -in_unit_sphere;
+// }

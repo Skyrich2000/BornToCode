@@ -1,11 +1,11 @@
 #include "minirt.h"
 #include "vector.h"
 
-void set_camera(t_camera *cam, t_vec pos, double height, double ratio)
+void	set_camera(t_camera *cam, t_vec pos, double height, double ratio)
 {
 	cam->pos = pos;
-	cam->view_width = ratio * height;
-	cam->view_height = height;
+	cam->view_width = ratio * 2;
+	cam->view_height = 2;
 	cam->focal_length = vec(0, 0, 1); // 고정값
 	cam->horizon = vec(cam->view_width, 0, 0);
 	cam->vertical = vec(0, cam->view_height, 0);

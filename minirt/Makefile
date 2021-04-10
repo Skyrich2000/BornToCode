@@ -19,7 +19,8 @@ SRCS	=	\
 			./srcs/rt_object/sphere.c \
 			./srcs/rt_camera/camera.c \
 			./srcs/rt_camera/render.c \
-			./srcs/rt_object/world.c
+			./srcs/rt_object/world.c \
+			./srcs/rt_library/library.c
 #
 #
 #

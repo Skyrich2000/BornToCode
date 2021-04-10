@@ -6,7 +6,7 @@
 # include <stdlib.h>
 # include "vector.h"
 # include "object.h"
-
+# include "library.h"
 // camera 구조체
 typedef struct s_camera
 {
