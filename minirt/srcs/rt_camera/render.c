@@ -57,12 +57,12 @@ static int	anti(t_minirt *mini, int wdx, int hdx)
 		u = (double)(wdx + rand_num(mini->scr.anti, 0, 0)) / (mini->scr.width - 1);
 		v = (double)(hdx + rand_num(mini->scr.anti, 0, 0)) / (mini->scr.height - 1);
 		ray.origin = mini->cam->pos;
-		ray.dir = vec_cal((t_vec[3]){ mini->cam->low_left_corner,
+		ray.dir = vec_cal((t_vec[4]){ mini->cam->low_left_corner,
 									  mini->cam->horizon,
-									  mini->cam->vertical },
-						  (double[3]){ 1, u, v },
-						  3);
-		// ray.dir = vec_unit(&ray.dir); // for test
+									  mini->cam->vertical,
+									  mini->cam->pos},
+						  (double[4]){ 1, u, v, -1},
+						  4);
 		color = vec_cal((t_vec[2]){ color, ray_color(mini->wrd, &ray, MAX_DEPTH) },
 						(double[2]){ 1, 1 },
 						2); // line break? - huni

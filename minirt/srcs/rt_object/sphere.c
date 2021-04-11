@@ -18,6 +18,7 @@ int hit_sphere(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
 	double discriminant;
 	t_vec oc;
 
+	ray->dir = vec_unit(&ray->dir);
 	oc = vec_cal((t_vec[2]){ray->origin, this->obj.sphere.c}, (double[2]){1, -1}, 2);
 	a = vec_length_squared(&ray->dir);
 	// a = 1;

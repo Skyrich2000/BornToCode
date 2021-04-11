@@ -3,7 +3,7 @@
 
 void vec_print(t_vec *vec)
 {
-	printf("[%.2f, %.2f, %.2f]", vec->x, vec->y, vec->z);
+	printf("[%.2f, %.2f, %.2f]\n", vec->x, vec->y, vec->z);
 }
 
 t_vec vec(double x, double y, double z)
@@ -111,8 +111,7 @@ t_vec	random_unit_vector()
 	t_vec tmp;
 
 	tmp = random_in_unit_sphere();
-	// return vec_unit(&tmp);
-	return (tmp);
+	return vec_unit(&tmp);
 }
 
 t_vec	random_in_hemisphere(t_vec *normal)

@@ -52,11 +52,9 @@ int		main()
 	// screen setting
 	mini.scr.width = 1600; //  -> parse
 	mini.scr.height = 900; //  -> parse
-	mini.scr.anti = 0; // -> parse
+	mini.scr.anti = 100; // -> parse
 
 	// material setting
-	// t_material material_left = create_lambertian(vec(0, 0, 1.0));
-	// t_material material_right = create_lambertian(vec(1, 0, 0));
 	t_material material_ground = create_lambertian(vec(0.8, 0.8, 0.0));
 	t_material material_center = create_lambertian(vec(0.1, 0.2, 0.5));
 	t_material material_left = create_dielectric(1.5);
@@ -65,19 +63,14 @@ int		main()
 	// world setting
 	mini.wrd = init_world();
 	add_world(mini.wrd, create_sphere(vec( 0.0, -100.5, -1.0), 100), hit_sphere, &material_ground);
-	// add_world(mini.wrd, create_sphere(vec( 0.0, 0.0, -1.0), 0.5), hit_sphere, &material_center);
-	// add_world(mini.wrd, create_sphere(vec(-1.0, 0.0, -1.0), 0.5), hit_sphere, &material_left);
-	// add_world(mini.wrd, create_sphere(vec(-1.0, 0.0, -1.0), -0.45), hit_sphere, &material_left);
-	// add_world(mini.wrd, create_sphere(vec( 1.0, 0.0, -1.0), 0.5), hit_sphere, &material_right);
-	// add_world(mini.wrd, create_sphere(vec( 0.0, 0.0, -1.0), 0.5), hit_sphere, &material_center);
-	double R = cos(M_PI / 4);
-	add_world(mini.wrd, create_sphere(vec(-R, 0, -1), R), hit_sphere, &material_left);
-	add_world(mini.wrd, create_sphere(vec(R, 0, -1), R), hit_sphere, &material_right);
+	add_world(mini.wrd, create_sphere(vec( 0.0, 0.0, -1.0), 0.5), hit_sphere, &material_center);
+	add_world(mini.wrd, create_sphere(vec(-1.0, 0.0, -1.0), 0.5), hit_sphere, &material_left);
+	add_world(mini.wrd, create_sphere(vec(-1.0, 0.0, -1.0), -0.45), hit_sphere, &material_left);
+	add_world(mini.wrd, create_sphere(vec( 1.0, 0.0, -1.0), 0.5), hit_sphere, &material_right);
 
 	// camera setting
 	mini.cam = malloc(sizeof(t_camera) * 1); // -> parse needed
-	create_camera((&mini.cam[0]), vec(0, 0, R), vec(0, 0, -R), vec(0, 1, 0), 90, (16.0 / 9.0)); // -> parse
-	//create_camera((&mini.cam[0]), vec(-2, 2, 1), vec(0, 0, -1), vec(0, 1, 0), 90, (16.0 / 9.0)); // -> parse
+	create_camera((&mini.cam[0]), vec(-2, 2, 1), vec(0, 0, -1), vec(0, 1, 0), 20, (16.0 / 9.0)); // -> parse
 	// start app
 	minirt(&mini); //minirt 에러 체크
 	return (0);
