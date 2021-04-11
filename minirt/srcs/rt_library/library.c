@@ -23,3 +23,17 @@ double	clamp(double n, double min, double max)
 		return (max);
 	return (n);
 }
+
+double ft_abs(double n)
+{
+	if (0 > n)
+		return (-n);
+	return (n);
+}
+
+double ft_min(double a, double b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}

@@ -50,6 +50,8 @@ typedef union u_object
 	t_plane		plane;
 }		t_object;
 
+typedef struct s_material t_material;
+
 typedef struct s_hit_record
 {
 	t_vec	p;	// ray에서 구위의 점으로 향하는 벡터 p
@@ -65,7 +67,7 @@ typedef struct s_world
 {
 	t_object	obj;
 	t_material	*material;
-	int			(*hit)(t_world *this, t_ray *ray, double minmax[2], t_hit_record *out);
+	int			(*hit)(struct s_world *this, t_ray *ray, double minmax[2], t_hit_record *out);
 	struct s_world		*next;
 }				t_world;
 

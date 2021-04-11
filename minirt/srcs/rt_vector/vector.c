@@ -20,9 +20,9 @@ t_vec vec_cross(t_vec *v1, t_vec *v2)
 {
 	t_vec out;
 
-	out.x = v1->y * v2->z + v1->z * v2->y;
-	out.y = v1->z * v2->x + v1->x * v2->z;
-	out.z = v1->x * v2->y + v1->y * v2->x;
+	out.x = v1->y * v2->z - v1->z * v2->y;
+	out.y = v1->z * v2->x - v1->x * v2->z;
+	out.z = v1->x * v2->y - v1->y * v2->x;
 	return (out);
 }
 
@@ -60,6 +60,8 @@ t_vec	vec_unit(t_vec *v)
 	double len;
 
 	len = vec_length(v);
+	if (len == 0)
+		len = 1;
 	return (vec(v->x / len
 			, v->y / len
 			, v->z / len));
@@ -109,7 +111,8 @@ t_vec	random_unit_vector()
 	t_vec tmp;
 
 	tmp = random_in_unit_sphere();
-	return vec_unit(&tmp);
+	// return vec_unit(&tmp);
+	return (tmp);
 }
 
 t_vec	random_in_hemisphere(t_vec *normal)

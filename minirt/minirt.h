@@ -7,7 +7,6 @@
 # include "vector.h"
 # include "object.h"
 # include "library.h"
-# include "material.h"
 
 # define MAX_DEPTH 50
 
@@ -17,7 +16,6 @@ typedef struct s_camera
 	t_vec	pos;
 	t_vec	horizon;
 	t_vec	vertical;
-	t_vec	focal_length;
 	t_vec	low_left_corner;
 	double			view_width;
 	double			view_height;
@@ -49,7 +47,7 @@ typedef struct s_minirt
 }		t_minirt;
 
 
-void create_camera(t_camera *cam, t_vec pos, double height, double ratio);
+void	create_camera(t_camera *cam, t_vec lookfrom, t_vec lookat, t_vec vup, double vfov, double ratio);
 int	render(t_minirt *mini);
 
 #endif

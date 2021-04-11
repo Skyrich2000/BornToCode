@@ -6,9 +6,10 @@ t_material create_lambertian(t_vec color)
 
 	mat.color = color;
 	mat.scatter = scatter_lambertian;
+	return (mat);
 }
 
-int scatter_lambertian(t_ray *ray_in, t_hit_record *rec, t_ray *ray_out)
+int scatter_lambertian(t_material *this, t_ray *ray_in, t_hit_record *rec, t_ray *ray_out)
 {
 	t_vec target;
 

@@ -33,7 +33,7 @@ static t_vec ray_color(t_world *world, t_ray *ray, int depth)
 		return ((t_vec){0, 0, 0}); // ?! 이런게 됨?? - huni
 	if (hit_world(world, ray, (double[2]){0.001, INFINITY }, &rec))
 	{
-		if (rec.material->scatter(ray, &rec, &new_ray));
+		if (rec.material->scatter(rec.material, ray, &rec, &new_ray))
 			return (vec_mul(rec.material->color, ray_color(world, &new_ray, depth - 1)));
 		return (vec(0, 0, 0));
 	}
@@ -62,6 +62,7 @@ static int	anti(t_minirt *mini, int wdx, int hdx)
 									  mini->cam->vertical },
 						  (double[3]){ 1, u, v },
 						  3);
+		// ray.dir = vec_unit(&ray.dir); // for test
 		color = vec_cal((t_vec[2]){ color, ray_color(mini->wrd, &ray, MAX_DEPTH) },
 						(double[2]){ 1, 1 },
 						2); // line break? - huni
