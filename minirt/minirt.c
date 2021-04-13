@@ -70,7 +70,15 @@ int		main()
 
 	// camera setting
 	mini.cam = malloc(sizeof(t_camera) * 1); // -> parse needed
-	create_camera((&mini.cam[0]), vec(-2, 2, 1), vec(0, 0, -1), vec(0, 1, 0), 20, (16.0 / 9.0)); // -> parse
+
+	t_vec lookfrom = vec(3, 3, 2);
+	t_vec lookat = vec(0, 0, -1);
+	t_vec vup = vec(0, 1, 0);
+	double ratio = 16.0 / 9.0;
+	double aperture = 2.0;
+	double dist_to_focus = p2p(lookfrom, lookat);
+	create_camera((&mini.cam[0]), lookfrom, lookat, vup, 20, ratio, aperture, dist_to_focus); // -> parse
+	// create_camera((&mini.cam[0]), vec(-2, 2, 1), vec(0, 0, -1), vec(0, 1, 0), 20, (16.0 / 9.0)); // -> parse
 	// start app
 	minirt(&mini); //minirt 에러 체크
 	return (0);

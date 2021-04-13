@@ -20,6 +20,11 @@ typedef struct s_camera
 	double			view_width;
 	double			view_height;
 	double			ratio;
+
+	double lens_radius;
+	t_vec	u;
+	t_vec	v;
+	t_vec	w;
 } 				t_camera;
 
 // image data 구조체
@@ -47,7 +52,7 @@ typedef struct s_minirt
 }		t_minirt;
 
 
-void	create_camera(t_camera *cam, t_vec lookfrom, t_vec lookat, t_vec vup, double vfov, double ratio);
+void	create_camera(t_camera *cam, t_vec lookfrom, t_vec lookat, t_vec vup, double vfov, double ratio, double aperture, double dist_to_focus);
 int	render(t_minirt *mini);
 
 #endif
