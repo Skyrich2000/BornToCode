@@ -21,6 +21,18 @@ static int trgb_anti(t_vec *colors, int anti)
 	return trgb(0, colors->x * 256, colors->y * 256, colors->z * 256);
 }
 
+static t_vec random_in_unit_disk(double dist_to_focus)
+{
+	t_vec out;
+	while(1)
+	{
+		out = vec(rand_num(1, -1, 1),rand_num(1, -1, 1),0);
+		if (vec_length_squared(&out) >= 1)
+			continue;
+		return (vec_cal(&out, &dist_to_focus, 1));
+	}
+}
+
 static t_vec ray_color(t_world *world, t_ray *ray, int depth)
 {
 	t_hit_record rec;	// world_hit -> hit = true 면 rec 에 object 위의 점에 대한 정보 기록
@@ -56,16 +68,22 @@ static int	anti(t_minirt *mini, int wdx, int hdx)
 	{
 		u = (double)(wdx + rand_num(mini->scr.anti, 0, 0)) / (mini->scr.width - 1);
 		v = (double)(hdx + rand_num(mini->scr.anti, 0, 0)) / (mini->scr.height - 1);
-		ray.origin = mini->cam->pos;
-		ray.dir = vec_cal((t_vec[4]){ mini->cam->low_left_corner,
+
+		// blur effect
+		t_vec rd = random_in_unit_disk(mini->cam->lens_radius);
+
+		t_vec offset = vec_cal((t_vec[2]){mini->cam->u, mini->cam->v}, (double[2]){rd.x, rd.y}, 2);  // u * rd.x() + v * rd.y();
+		ray.origin = vec_cal((t_vec[2]){mini->cam->pos, offset}, (double[2]){1, 1}, 2);
+		ray.dir = vec_cal((t_vec[5]){ mini->cam->low_left_corner,
 									  mini->cam->horizon,
 									  mini->cam->vertical,
-									  mini->cam->pos},
-						  (double[4]){ 1, u, v, -1},
-						  4);
+									  mini->cam->pos,
+									  offset},
+						  (double[5]){ 1, u, v, -1, -1},
+						  5);
 		color = vec_cal((t_vec[2]){ color, ray_color(mini->wrd, &ray, MAX_DEPTH) },
 						(double[2]){ 1, 1 },
-						2); // line break? - huni
+						2);
 	}
 	return (trgb_anti(&color, mini->scr.anti));
 }

@@ -22,6 +22,11 @@ static void draw(t_screen *screen)
 	mlx_loop(screen->mlx);
 }
 
+static double p2p(t_vec p1, t_vec p2)
+{
+	return (sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2) + pow(p1.z - p2.z, 2)));
+}
+
 static int	minirt(t_minirt *mini)
 {
 	clock_t start, end;		// time check

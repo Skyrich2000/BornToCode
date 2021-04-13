@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-void	create_camera(t_camera *cam, t_vec lookfrom, t_vec lookat, t_vec vup, double vfov, double ratio, double aperture, double dist_to_focus);;
+void	create_camera(t_camera *cam, t_vec lookfrom, t_vec lookat, t_vec vup, double vfov, double ratio, double aperture, double dist_to_focus)
 {
 	cam->pos = lookfrom;
 	cam->view_height = 2.0 * tan((vfov * M_PI / 180) / 2.0);
