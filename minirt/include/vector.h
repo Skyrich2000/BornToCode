@@ -4,12 +4,16 @@
 # include <stdio.h>
 
 // vector 구조체
-typedef struct	s_vec
+typedef struct s_vec t_color;
+typedef struct s_vec t_point;
+typedef struct s_vec t_vec;
+
+struct	s_vec
 {
 	double	x;
 	double	y;
 	double	z;
-}				t_vec;
+};
 
 // ray 구조체
 typedef struct	s_ray
