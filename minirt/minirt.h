@@ -13,7 +13,7 @@
 // camera 구조체
 typedef struct s_camera
 {
-	t_vec	pos;
+	t_pnt	pos;
 	t_vec	horizon;
 	t_vec	vertical;
 	t_vec	low_left_corner;

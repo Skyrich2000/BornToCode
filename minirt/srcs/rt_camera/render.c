@@ -60,7 +60,7 @@ static int	anti(t_minirt *mini, int wdx, int hdx)
 	double	v;
 	int		adx;
 	t_ray	ray;
-	t_vec	color;
+	t_clr	color;
 
 	color = vec(0, 0, 0); // color 값 초기화
 	adx = -1;

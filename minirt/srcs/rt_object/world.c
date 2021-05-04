@@ -13,7 +13,7 @@ t_world		*init_world()
 
 int			add_world(t_world *head, t_object obj, int (*hit)(t_world *this, t_ray *ray, double minmax[2], t_hit_record *out), t_material *material)
 {
-        t_world *new;
+	t_world *new;
 
 	new = (t_world *)malloc(sizeof(t_world) * 1);
 	if(!new)

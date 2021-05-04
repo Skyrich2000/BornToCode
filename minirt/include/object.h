@@ -7,7 +7,7 @@
 
 typedef struct s_sphere
 {
-	t_vec	c;
+	t_pnt	c;
 	double	r;
 	int		inside;
 }				t_sphere;

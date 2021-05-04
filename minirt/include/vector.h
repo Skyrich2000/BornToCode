@@ -4,8 +4,8 @@
 # include <stdio.h>
 
 // vector 구조체
-typedef struct s_vec t_color;
-typedef struct s_vec t_point;
+typedef struct s_vec t_clr;
+typedef struct s_vec t_pnt;
 typedef struct s_vec t_vec;
 
 struct	s_vec
@@ -18,7 +18,7 @@ struct	s_vec
 // ray 구조체
 typedef struct	s_ray
 {
-	t_vec	origin;
+	t_pnt	origin;
 	t_vec	dir;
 }				t_ray;
 
