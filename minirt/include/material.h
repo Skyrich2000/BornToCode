@@ -1,8 +1,7 @@
 #ifndef MATERIAL_H
 # define MATERIAL_H
 # include <stdio.h>
-# include "vector.h"
-# include "object.h"
+# include "minirt.h"
 
 typedef struct s_hit_record t_hit_record;
 

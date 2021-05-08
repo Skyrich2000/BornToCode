@@ -1,4 +1,4 @@
-#include "object.h"
+#include "minirt.h"
 
 t_world		*init_world()
 {
@@ -7,23 +7,26 @@ t_world		*init_world()
 	head = (t_world *)malloc(sizeof(t_world));
 	if (!head)
 		return (0);
+	head->light = init_light();
+	head->ambient = vec_muln(vec(1, 1, 1), 0.001);
 	head->next = 0;
 	return (head);
 }
 
-int			add_world(t_world *head, t_object obj, int (*hit)(t_world *this, t_ray *ray, double minmax[2], t_hit_record *out), t_material *material)
+int			add_world(t_world *head, t_object obj, int (*hit)(t_world *this, t_ray *ray, double minmax[2], t_hit_record *out), t_material material, t_clr albedo)
 {
 	t_world *new;
 
 	new = (t_world *)malloc(sizeof(t_world) * 1);
 	if(!new)
-		return (0);
+		return (ERROR);
 	new->obj = obj;
 	new->hit = hit;
 	new->material = material;
+	new->albedo = albedo;
 	new->next = head->next;
 	head->next = new;
-	return (1);
+	return (OK);
 }
 
 int			hit_world(t_world *head, t_ray *ray, double minmax[2], t_hit_record *out)

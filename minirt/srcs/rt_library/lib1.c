@@ -1,4 +1,4 @@
-#include "library.h"
+#include "minirt.h"
 
 double	rand_num(int anti, int min, int max)
 {
@@ -7,7 +7,7 @@ double	rand_num(int anti, int min, int max)
 	if (min < max)
 		return ((double)(min + (max - min)) *rand_num(1, 0, 0));
 	else
-		return ((double)rand() / (double)RAND_MAX);
+		return ((double)rand() / ((double)RAND_MAX));
 }
 
 int	trgb(int t, int r, int g, int b)
@@ -34,6 +34,13 @@ double ft_abs(double n)
 double ft_min(double a, double b)
 {
 	if (a < b)
+		return (a);
+	return (b);
+}
+
+double ft_max(double a, double b)
+{
+	if (a > b)
 		return (a);
 	return (b);
 }

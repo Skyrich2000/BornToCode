@@ -1,5 +1,7 @@
 #include "minirt.h"
 
+void print_cam(t_camera *cam);
+
 static void put_pixel(t_screen *data, int x, int y, int color)
 {
 	char *dst;
@@ -33,7 +35,7 @@ static t_vec random_in_unit_disk(double dist_to_focus)
 	}
 }
 
-static t_vec ray_color(t_world *world, t_ray *ray, int depth)
+static t_clr ray_color_scatter(t_world *world, t_ray *ray, int depth)
 {
 	t_hit_record rec;	// world_hit -> hit = true 면 rec 에 object 위의 점에 대한 정보 기록
 	t_ray new_ray;	// target - p ray
@@ -42,14 +44,31 @@ static t_vec ray_color(t_world *world, t_ray *ray, int depth)
 	t_vec ray_from_cam;	// 카메라에서 쏜 방향벡터..
 
 	if (depth <= 0)
-		return ((t_vec){0, 0, 0}); // ?! 이런게 됨?? - huni
-	if (hit_world(world, ray, (double[2]){0.001, INFINITY }, &rec))
+		return ((t_vec){0, 0, 0});
+	if (hit_world(world, ray, (double[2]){EPSILON, INFINITY}, &rec))
 	{
 		if (rec.material->scatter(rec.material, ray, &rec, &new_ray))
-			return (vec_mul(rec.material->color, ray_color(world, &new_ray, depth - 1)));
+			return (vec_mul(rec.material->color, ray_color_scatter(world, &new_ray, depth - 1)));
 		return (vec(0, 0, 0));
 	}
-	ray_from_cam = vec_unit(&ray->dir);
+	ray_from_cam = vec_oppo(vec_unit_(&ray->dir));
+	val_for_sky = 0.5 - 0.5 * ray_from_cam.y;
+	return (vec((1 - 0.5 * val_for_sky), (1 - 0.3 * val_for_sky), 1));
+}
+
+static t_clr ray_color(t_world *world, t_ray *ray, int depth)
+{
+	t_hit_record rec;	// world_hit -> hit = true 면 rec 에 object 위의 점에 대한 정보 기록
+	t_ray new_ray;	// target - p ray
+
+	double val_for_sky;	// 하늘색 표현을 위한 값... 아래 변수들은 사실 나중에 없애도 됨
+	t_vec ray_from_cam;	// 카메라에서 쏜 방향벡터..
+
+	if (depth <= 0)
+		return ((t_vec){0, 0, 0});
+	if (hit_world(world, ray, (double[2]){0.001, INFINITY }, &rec))
+		return (phong(world, &rec));
+	ray_from_cam = vec_oppo(vec_unit_(&ray->dir));
 	val_for_sky = 0.5 - 0.5 * ray_from_cam.y;
 	return (vec((1 - 0.5 * val_for_sky), (1 - 0.3 * val_for_sky), 1));
 }
@@ -70,17 +89,16 @@ static int	anti(t_minirt *mini, int wdx, int hdx)
 		v = (double)(hdx + rand_num(mini->scr.anti, 0, 0)) / (mini->scr.height - 1);
 
 		// blur effect
-		t_vec rd = random_in_unit_disk(mini->cam->lens_radius);
-
-		t_vec offset = vec_cal((t_vec[2]){mini->cam->u, mini->cam->v}, (double[2]){rd.x, rd.y}, 2);  // u * rd.x() + v * rd.y();
-		ray.origin = vec_cal((t_vec[2]){mini->cam->pos, offset}, (double[2]){1, 1}, 2);
-		ray.dir = vec_cal((t_vec[5]){ mini->cam->low_left_corner,
-									  mini->cam->horizon,
-									  mini->cam->vertical,
-									  mini->cam->pos,
-									  offset},
-						  (double[5]){ 1, u, v, -1, -1},
-						  5);
+		// t_vec rd = random_in_unit_disk(mini->curr_cam->lens_radius);
+		// t_vec offset = vec_cal((t_vec[2]){mini->curr_cam->u, mini->curr_cam->v}, (double[2]){rd.x, rd.y}, 2);  // u * rd.x() + v * rd.y();
+		ray.origin = mini->curr_cam->pos;
+		ray.dir = vec_cal((t_vec[4]){ mini->curr_cam->low_left_corner,
+									  mini->curr_cam->horizon,
+									  mini->curr_cam->vertical,
+									  mini->curr_cam->pos,
+									  },
+						  (double[4]){ 1, u, v, -1},
+						  4);
 		color = vec_cal((t_vec[2]){ color, ray_color(mini->wrd, &ray, MAX_DEPTH) },
 						(double[2]){ 1, 1 },
 						2);
@@ -93,12 +111,29 @@ int render(t_minirt *mini)
 	int hdx;
 	int wdx;
 
+	// print_cam(mini->curr_cam);
 	hdx = -1;
 	while (++hdx < (mini->scr.height - 1))
 	{
 		wdx = -1;
 		while (++wdx < (mini->scr.width - 1))
 			put_pixel(&mini->scr, wdx, (mini->scr.height - 1 - hdx), anti(mini, wdx, hdx));
+		// printf("%d / %d (%.f%%)\n", hdx, mini->scr.height, (double)(hdx) / (mini->scr.height) * 100);
 	}
 	return (0);
+}
+
+void print_cam(t_camera *cam)
+{
+	vec_print("pos", &cam->pos);
+	vec_print("horizon", &cam->horizon);
+	vec_print("vertical", &cam->vertical);
+	vec_print("lowleftcorner", &cam->low_left_corner);
+	printf("view_width : %.2f\n", cam->view_width);
+	printf("view_height : %.2f\n", cam->view_height);
+	// printf("fov : %.2f\n", cam->fov);
+	vec_print("u", &cam->u);
+	vec_print("v", &cam->v);
+	vec_print("w", &cam->w);
+
 }

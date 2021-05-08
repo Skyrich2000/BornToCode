@@ -1,4 +1,4 @@
-#include "material.h"
+#include "minirt.h"
 
 t_material create_lambertian(t_vec color)
 {
