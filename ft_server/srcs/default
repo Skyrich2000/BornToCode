@@ -13,6 +13,7 @@ server {
 	ssl_certificate_key /etc/ssl/private/localhost.dev.key;
 
 	root /var/www/html;
+
 	index index.php index.html index.htm;
 
 	location / {
