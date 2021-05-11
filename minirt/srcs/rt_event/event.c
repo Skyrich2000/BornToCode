@@ -1,5 +1,5 @@
-#include "event.h"
-#include <stdio.h>
+#include "minirt.h"
+
 int exit_hook()
 {
 	exit(0);

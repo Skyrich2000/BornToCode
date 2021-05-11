@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-t_object create_sphere(t_vec c, double r)
+t_object create_plane(t_vec c, double r)
 {
 	t_object obj;
 
@@ -10,7 +10,7 @@ t_object create_sphere(t_vec c, double r)
 	return (obj);
 }
 
-int hit_sphere(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
+int hit_plane(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
 {
 	double t;
 	double a;

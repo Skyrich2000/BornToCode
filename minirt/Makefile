@@ -20,10 +20,17 @@ SRCS	=	\
 			./srcs/rt_camera/camera.c \
 			./srcs/rt_camera/render.c \
 			./srcs/rt_object/world.c \
-			./srcs/rt_library/library.c \
+			./srcs/rt_library/lib1.c \
+			./srcs/rt_library/lib2.c \
+			./srcs/rt_library/lib3.c \
 			./srcs/rt_material/lambertian.c \
 			./srcs/rt_material/metal.c \
-			./srcs/rt_material/dielectric.c
+			./srcs/rt_material/dielectric.c \
+			./srcs/rt_parsing/parse.c \
+			./srcs/rt_parsing/parse1.c \
+			./srcs/rt_parsing/parse2.c \
+			./srcs/rt_parsing/util.c \
+			./srcs/rt_light/light.c \
 #
 #
 #

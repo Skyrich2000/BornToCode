@@ -1,5 +1,4 @@
-#include "material.h"
-#include "library.h"
+#include "minirt.h"
 
 t_material create_dielectric(double ir)
 {
@@ -18,10 +17,6 @@ static double reflectance(double cos_theta, double ir)
 	return (ir * (1 - ir) * pow(1 - cos_theta, 5));
 }
 
-static t_vec reflect(t_vec *v, t_vec *n)
-{
-    return (vec_cal((t_vec[2]){*v, *n}, (double[2]){1, -2 * vec_dot(v, n)}, 2));
-}
 
 static t_vec refract(t_vec *r_in, t_vec *n, double ir, double cos_theta)
 {
@@ -47,14 +42,14 @@ int scatter_dielectric(t_material *this, t_ray *ray_in, t_hit_record *rec, t_ray
 	if (rec->front_face)
 		refraction_ratio = 1.0 / this->ir;
 
-	ray_in_dir_unit = vec_unit(&ray_in->dir);
+	ray_in_dir_unit = vec_unit_(&ray_in->dir);
 	ray_in_dir_unit_minus = vec_cal((t_vec[1]){ray_in_dir_unit}, (double[1]){-1}, 1);
 
-	cos_theta = ft_min(vec_dot(&ray_in_dir_unit_minus, &rec->n), 1.0); // min 왜함?
+	cos_theta = ft_min(vec_dot_(&ray_in_dir_unit_minus, &rec->n), 1.0); // min 왜함?
 	sin_theta = sqrt(1 - pow(cos_theta, 2));
 
 	if (refraction_ratio * sin_theta > 1.0) // || reflectance(cos_theta, this->ir) > rand_num(0, 0, 0))
-		target = reflect(&ray_in_dir_unit, &rec->n);
+		target = reflect_(&ray_in_dir_unit, &rec->n);
 	else
 		target = refract(&ray_in_dir_unit, &rec->n, refraction_ratio, cos_theta);
 
