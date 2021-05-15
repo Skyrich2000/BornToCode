@@ -13,7 +13,9 @@ typedef struct s_sphere
 
 typedef struct s_plane
 {
-	t_vec	p;
+	t_pnt	origin;
+	t_vec	n;
+	t_clr	color;
 }				t_plane;
 
 typedef struct s_square
@@ -80,4 +82,6 @@ int			hit_world(t_world *head, t_ray *ray, double minmax[2], t_hit_record *out);
 t_object	create_sphere(t_vec c, double r);
 int			hit_sphere(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec);
 
+t_object	create_plane(t_pnt origin, t_vec n, t_clr color);
+int			hit_plane(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec);
 #endif

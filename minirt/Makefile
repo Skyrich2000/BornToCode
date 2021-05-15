@@ -6,7 +6,7 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/26 15:07:00 by suhshin           #+#    #+#              #
-#    Updated: 2021/04/11 21:34:50 by ycha             ###   ########.fr        #
+#    Updated: 2021/05/14 02:39:09 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,11 @@ SRCS	=	\
 			minirt.c \
 			./srcs/rt_vector/vector.c \
 			./srcs/rt_event/event.c	\
-			./srcs/rt_object/sphere.c \
 			./srcs/rt_camera/camera.c \
 			./srcs/rt_camera/render.c \
 			./srcs/rt_object/world.c \
+			./srcs/rt_object/sphere.c \
+			./srcs/rt_object/plain.c \
 			./srcs/rt_library/lib1.c \
 			./srcs/rt_library/lib2.c \
 			./srcs/rt_library/lib3.c \
