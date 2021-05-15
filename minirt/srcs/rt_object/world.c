@@ -13,7 +13,7 @@ t_world		*init_world()
 	return (head);
 }
 
-int			add_world(t_world *head, t_object obj, int (*hit)(t_world *this, t_ray *ray, double minmax[2], t_hit_record *out), t_material material, t_clr albedo)
+int			add_world(t_world *head, t_object obj, int (*hit)(t_world *this, t_ray *ray, double minmax[2], t_hit_record *out), t_material material)
 {
 	t_world *new;
 
@@ -23,7 +23,6 @@ int			add_world(t_world *head, t_object obj, int (*hit)(t_world *this, t_ray *ra
 	new->obj = obj;
 	new->hit = hit;
 	new->material = material;
-	new->albedo = albedo;
 	new->next = head->next;
 	head->next = new;
 	return (OK);
@@ -47,4 +46,13 @@ int			hit_world(t_world *head, t_ray *ray, double minmax[2], t_hit_record *out)
 		}
 	}
 	return (flag);
+}
+
+void		set_rec(t_world *this, t_ray *ray, t_hit_record *rec)
+{
+	rec->rayin = ray->dir;
+	rec->front_face = vec_dot_(&ray->dir, &rec->n) < 0;
+	if (!rec->front_face) // 만약 위에서 구한 법선벡터와 ray의 방향벡터(어차피 둘다 단위벡터로 만들었음)의 내적값이 양수이면 예각이므로 n의 방향을 반대로 해주어야 한다
+		rec->n = vec_cal((t_vec[1]){rec->n}, (double[1]){ -1}, 1);
+	rec->material = &this->material;		// 메터리얼 추가
 }

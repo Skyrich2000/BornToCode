@@ -13,16 +13,15 @@ typedef struct s_sphere
 
 typedef struct s_plane
 {
-	t_pnt	origin;
+	t_pnt	c;
 	t_vec	n;
-	t_clr	color;
 }				t_plane;
 
 typedef struct s_square
 {
 	t_vec	c;
+	t_vec	n;
 	double	side;
-
 }				t_square;
 
 typedef struct s_cylinder
@@ -68,7 +67,7 @@ typedef struct s_world
 {
 	t_object	obj;
 	t_material	material;
-	t_clr		albedo; // ?
+	//t_clr		albedo; // ?
 	t_clr		ambient; // ?
 	t_light		*light;
 	int			(*hit)(struct s_world *this, t_ray *ray, double minmax[2], t_hit_record *out);
@@ -76,12 +75,13 @@ typedef struct s_world
 }				t_world;
 
 t_world		*init_world(void); // create world?
-int			add_world(t_world *head, t_object obj, int (*hit)(t_world *this, t_ray *ray, double minmax[2], t_hit_record *out), t_material material, t_clr albedo);
+int			add_world(t_world *head, t_object obj, int (*hit)(t_world *this, t_ray *ray, double minmax[2], t_hit_record *out), t_material material);
 int			hit_world(t_world *head, t_ray *ray, double minmax[2], t_hit_record *out);
+void		set_rec(t_world *this, t_ray *ray, t_hit_record *rec);
 
 t_object	create_sphere(t_vec c, double r);
 int			hit_sphere(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec);
 
-t_object	create_plane(t_pnt origin, t_vec n, t_clr color);
+t_object	create_plane(t_pnt c, t_vec n);
 int			hit_plane(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec);
 #endif

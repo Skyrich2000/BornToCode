@@ -89,5 +89,5 @@ t_clr phong(t_world *world, t_hit_record *rec)
 		light = light->next;
 	}
 	color = vec_add(color, world->ambient);
-	return (vec_min(vec_mul(color, rec->albedo), vec(1, 1, 1)));
+	return (vec_min(vec_mul(color, rec->material->color), vec(1, 1, 1)));
 }

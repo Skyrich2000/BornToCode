@@ -45,10 +45,11 @@ int parse_pl(char **line, t_minirt *mini)
 		!parse_split(&origin, line[1]) || \
 		!parse_split(&n, line[2]) || \
 		!parse_split(&color, line[3]))
-			return (ERROR);
+		return (ERROR);
 	color = vec_divn(color, 255);
-	return (add_world(mini->wrd, create_plane(origin, n, color), \
-			hit_plane, create_metal(color, (double)rand() / (double)RAND_MAX), color));
+	return (add_world(mini->wrd, \
+			create_plane(origin, n), hit_plane, \
+			create_metal(color, (double)rand() / (double)RAND_MAX)));
 
 }
 

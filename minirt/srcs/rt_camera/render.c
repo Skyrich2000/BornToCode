@@ -99,6 +99,7 @@ static int	anti(t_minirt *mini, int wdx, int hdx)
 									  },
 						  (double[4]){ 1, u, v, -1},
 						  4);
+		ray.dir = vec_unit_(&ray.dir);
 		color = vec_cal((t_vec[2]){ color, ray_color(mini->wrd, &ray, MAX_DEPTH) },
 						(double[2]){ 1, 1 },
 						2);
