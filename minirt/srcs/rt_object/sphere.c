@@ -6,11 +6,11 @@ t_object create_sphere(t_vec c, double r)
 
 	vec_print("sphere", &c);
 	obj.sphere.c = c;
-	obj.sphere.r = r;
+	obj.sphere.r = r /2;
 	return (obj);
 }
 
-static int get_t(t_world *this, t_ray *ray, double minmax[2], double *t)
+int get_sphere_t(t_sphere *sp, t_ray *ray, double minmax[2], double *t)
 {
 	double a;
 	double half_b;
@@ -18,10 +18,10 @@ static int get_t(t_world *this, t_ray *ray, double minmax[2], double *t)
 	double discriminant;
 	t_vec oc;
 
-	oc = vec_cal((t_vec[2]){ray->origin, this->obj.sphere.c}, (double[2]){1, -1}, 2);
-	a = vec_length_squared(&ray->dir);
+	oc = vec_cal((t_vec[2]){ray->origin, sp->c}, (double[2]){1, -1}, 2);
+	a = vec_length_squared_(&ray->dir);
 	half_b = vec_dot_(&oc, &ray->dir);
-	c = vec_length_squared(&oc) - this->obj.sphere.r * this->obj.sphere.r;
+	c = vec_length_squared_(&oc) - sp->r * sp->r;
 	discriminant = half_b * half_b - a * c;
 	if (discriminant < 0)
 		return (ERROR);
@@ -36,7 +36,7 @@ static int get_t(t_world *this, t_ray *ray, double minmax[2], double *t)
 
 int hit_sphere(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
 {
-	if (!get_t(this, ray, minmax, &rec->t)) // hit_record 에 위 식에서 나온 해를 저장한다(ray-hit_point사이 거리)
+	if (!get_sphere_t(&this->obj.sphere, ray, minmax, &rec->t)) // hit_record 에 위 식에서 나온 해를 저장한다(ray-hit_point사이 거리)
 		return (ERROR);
 	rec->p = ray_at(ray, rec->t);
 	rec->n = vec_cal((t_vec[2]){rec->p, this->obj.sphere.c}, (double[2]){1 / this->obj.sphere.r, -1 / this->obj.sphere.r}, 2); // P - C를 한 뒤 반지름을 나눠서 단위벡터를 구한다

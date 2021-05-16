@@ -65,6 +65,26 @@ t_vec vec_add(t_vec v1, t_vec v2)
 	return (out);
 }
 
+t_vec vec_sub(t_vec v1, t_vec v2)
+{
+	t_vec out;
+
+	out.x = v1.x - v2.x;
+	out.y = v1.y - v2.y;
+	out.z = v1.z - v2.z;
+	return (out);
+}
+
+t_vec vec_sub_(t_vec *v1, t_vec *v2)
+{
+	t_vec out;
+
+	out.x = v1->x - v2->x;
+	out.y = v1->y - v2->y;
+	out.z = v1->z - v2->z;
+	return (out);
+}
+
 t_vec vec_mul(t_vec v1, t_vec v2)
 {
 	t_vec out;
@@ -105,16 +125,30 @@ t_vec vec_divn(t_vec v1, double k)
 	return (out);
 }
 
-double vec_length_squared(t_vec *vec)
+double vec_length_squared_(t_vec *vec)
 {
 	return (vec->x * vec->x + vec->y * vec->y + vec->z * vec->z);
 }
 
-double vec_length(t_vec *vec)
+double vec_length_squared(t_vec vec)
+{
+	return (vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+}
+
+double vec_length_(t_vec *vec)
 {
 	double len;
 
-	len = vec_length_squared(vec);
+	len = vec_length_squared_(vec);
+	len = sqrt(len);
+	return (len);
+}
+
+double vec_length(t_vec vec)
+{
+	double len;
+
+	len = vec_length_squared_(&vec);
 	len = sqrt(len);
 	return (len);
 }
@@ -123,7 +157,7 @@ t_vec	vec_unit(t_vec v)
 {
 	double len;
 
-	len = vec_length(&v);
+	len = vec_length_(&v);
 	if (len == 0)
 		len = 1;
 	return (vec(v.x / len
@@ -135,7 +169,7 @@ t_vec	vec_unit_(t_vec *v)
 {
 	double len;
 
-	len = vec_length(v);
+	len = vec_length_(v);
 	if (len == 0)
 		len = 1;
 	return (vec(v->x / len
@@ -176,7 +210,7 @@ t_vec	random_in_unit_sphere()
 	while (1)
 	{
 		out = vec(rand_num(1, -1, 1), rand_num(1, -1, 1), rand_num(1, -1, 1));
-		if (vec_length_squared(&out) >= 1)
+		if (vec_length_squared_(&out) >= 1)
 			continue ;
 		return (out);
 	}

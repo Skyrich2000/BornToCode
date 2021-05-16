@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 19:45:34 by ycha              #+#    #+#             */
-/*   Updated: 2021/04/11 19:17:00 by ycha             ###   ########.fr       */
+/*   Updated: 2021/05/16 17:25:25 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int ft_isspace(char c);
 int ft_isdigit(char c);
 int ft_isnum(char *str);
 int ft_atoi(char *line);
-double ft_atod(char *line);
+double ft_atod(double *f, char *line);
 
 //lib3.c
 char **ft_split(char const *s, char *delim);

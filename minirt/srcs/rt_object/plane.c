@@ -11,22 +11,27 @@ t_object	create_plane(t_pnt c, t_vec n)
 	return (obj);
 }
 
-static int get_t(t_world *this, t_ray *ray, double minmax[2], double *t)
+int _get_plane_t(t_vec *c, t_vec *n, t_ray *ray, double minmax[2], double *t)
 {
 	double	d;
 
-	d = vec_dot(ray->dir, this->obj.plane.n);
+	d = vec_dot_(&ray->dir, n);
 	if (ft_abs(d) < EPSILON)
 		return (ERROR);
-	*t = vec_dot(vec_cal((t_vec[2]){this->obj.plane.c, ray->origin}, (double[2]){1, -1}, 2), this->obj.plane.n) / d;
+	*t = vec_dot(vec_cal((t_vec[2]){*c, ray->origin}, (double[2]){1, -1}, 2), *n) / d;
 	if (*t < minmax[0] || minmax[1] < *t)			// 이때 min 은 ray의 시작점
 		return (ERROR);
 	return (OK);
 }
 
+int	get_plane_t(t_plane *pl, t_ray *ray, double minmax[2], double *t)
+{
+	return(_get_plane_t(&pl->c, &pl->n, ray, minmax, t));
+}
+
 int hit_plane(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
 {
-	if (!get_t(this, ray, minmax, &rec->t))
+	if (!get_plane_t(&this->obj.plane, ray, minmax, &rec->t))
 		return (ERROR);
 	rec->p = ray_at(ray, rec->t);
 	rec->n = this->obj.plane.n;

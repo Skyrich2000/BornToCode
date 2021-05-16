@@ -4,7 +4,7 @@ t_material create_metal(t_vec color, double fuzz)
 {
 	t_material mat;
 
-	mat.color = color;
+	mat.color = vec_divn(color, 255);
 	mat.scatter = scatter_metal;
 	mat.fuzz = 1;
 	if (fuzz < 1)

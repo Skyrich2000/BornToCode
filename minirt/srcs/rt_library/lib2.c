@@ -97,12 +97,14 @@ int ft_atoi(char *line)
 	return num * sign;
 }
 
-double ft_atod(char *line)
+double ft_atod(double *f, char *line)
 {
-	double num;
-	int sign;
-	char* pos;
+	double	num;
+	int		sign;
+	char* 	pos;
 
+	if (!ft_isnum(line))
+		return (ERROR);
 	sign = 1;
 	pos = 0;
 	num = 0;
@@ -119,7 +121,8 @@ double ft_atod(char *line)
 			num = num * 10 + (*line - '0');
 		++(line);
 	}
-	if (!pos)
-		return (num * sign);
-	return (num / pow(10, line - pos) * sign) ;
+	*f = num * sign;
+	if (pos)
+		*f = num / pow(10, line - pos) * sign;
+	return (OK);
 }

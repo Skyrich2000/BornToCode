@@ -29,11 +29,12 @@ typedef struct s_camera
 	double			view_width;
 	double			view_height;
 	double			fov;
-
 	double lens_radius;
 	t_vec	u;
 	t_vec	v;
 	t_vec	w;
+	void 	*img;
+	char	*img_addr;
 	struct s_camera	*next;
 } 				t_camera;
 
@@ -42,13 +43,11 @@ typedef struct s_screen
 {
 	void	*mlx;
 	void	*win;
-	void 	*ptr;
-	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	int		width;
-	int		height;
+	double	width;
+	double	height;
 	int		anti;
 }		t_screen;
 
@@ -59,11 +58,12 @@ typedef struct s_minirt
 	t_world		*wrd;
 	t_camera	*cam;
 	t_camera	*curr_cam;
+	t_light		*light;
 }		t_minirt;
 
-t_camera		*init_camera();
-t_light		*init_light();
-int		add_camera(t_camera *head, t_vec lookfrom, t_vec dir, double fov);
-int	render(t_minirt *mini);
-t_clr phong(t_world *world, t_hit_record *rec);
+t_camera	*init_camera();
+int			add_camera(t_camera *head, t_vec lookfrom, t_vec dir, double fov);
+void	draw(t_minirt *m);
+int		render(t_minirt *mini);
+t_clr 	phong(t_minirt *mini, t_hit_record *rec);
 #endif

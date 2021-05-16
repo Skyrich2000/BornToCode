@@ -31,12 +31,19 @@ int		add_camera(t_camera *head, t_vec lookfrom, t_vec dir, double vfov)
 	cam->low_left_corner = vec_cal((t_vec[4]){lookfrom, cam->horizon, cam->vertical, cam->w}, \
 									(double [4]){1, -0.5, -0.5, -1}, 4);
 	// cam->lens_radius = aperture / 2;
+	cam->img = 0;
 	cam->next = head->next;
 	head->next = cam;
 	return (OK);
 }
 
-void	index_camera(t_camera *head)
+void	draw(t_minirt *m)
 {
-
+	if (!m->curr_cam->img)
+	{
+		m->curr_cam->img = mlx_new_image(m->scr.mlx, m->scr.width, m->scr.height);
+		m->curr_cam->img_addr = mlx_get_data_addr(m->curr_cam->img, &m->scr.bits_per_pixel, &m->scr.line_length, &m->scr.endian);
+		render(m);
+	}
+	mlx_put_image_to_window(m->scr.mlx, m->scr.win, m->curr_cam->img, 0, 0); // 생성한 이미지 객체 윈도우에 올리기
 }

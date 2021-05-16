@@ -24,7 +24,7 @@ static t_vec refract(t_vec *r_in, t_vec *n, double ir, double cos_theta)
 	t_vec r_out_parallel;
 
 	r_out_perp = vec_cal((t_vec[2]){*r_in, *n}, (double[2]){1 * ir, cos_theta * ir}, 2);
-	r_out_parallel = vec_cal((t_vec[1]){*n}, (double[1]){-1 * sqrt(ft_abs(1.0 - vec_length_squared(&r_out_perp)))}, 1); // abs 왜 있음?
+	r_out_parallel = vec_cal((t_vec[1]){*n}, (double[1]){-1 * sqrt(ft_abs(1.0 - vec_length_squared_(&r_out_perp)))}, 1); // abs 왜 있음?
 	return (vec_cal((t_vec[2]){r_out_perp, r_out_parallel}, (double[2]){1 ,1}, 2));
 }
 

@@ -11,5 +11,7 @@ typedef struct s_light
 	struct s_light *next;
 }	t_light;
 
+t_light	*init_light();
 int		add_light(t_light *head, t_pnt origin, t_clr color, double ratio);
+
 #endif

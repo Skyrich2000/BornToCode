@@ -4,7 +4,7 @@ t_material create_lambertian(t_vec color)
 {
 	t_material mat;
 
-	mat.color = color;
+	mat.color = vec_divn(color, 255);
 	mat.scatter = scatter_lambertian;
 	return (mat);
 }
