@@ -1,11 +1,13 @@
 #include "minirt.h"
 
-t_object	create_square(t_pnt c, double side)
+t_object	create_square(t_pnt c, t_vec n, double side)
 {
 	t_object obj;
 
 	vec_print("square center", &c);
+	vec_print("square center", &n);
 	obj.square.c = c;
+	obj.square.n = n;
 	obj.square.side = side;
 	return (obj);
 }
@@ -31,10 +33,10 @@ static int get_t(t_world *this, t_ray *ray, double minmax[2], double *t)
 	if (ft_abs(this->obj.square.n.y) == 1)
 		random_vector = vec(1, 0, 0);
 	side_vecter = vec_cross_(&this->obj.square.n, &random_vector);
-	cp = vec_cal((t_vec[2]){p, this->obj.square.n}, (double[2]){1, -1}, 2);
+	cp = vec_cal((t_vec[2]){p, this->obj.square.c}, (double[2]){1, -1}, 2);
 	cos_theta = ft_abs(vec_dot_(&side_vecter, &cp) / (vec_length(&side_vecter) * vec_length(&cp)));
 	if (cos_theta < sqrt(2) / 2)
-		cos_theta = cos(M_PI - acos(cos_theta));
+		cos_theta = cos(M_PI_2 - acos(cos_theta));
 	limit = (this->obj.square.side / 2) / cos_theta;
 	if (vec_length_squared(&cp) > limit * limit)
 		return (ERROR);

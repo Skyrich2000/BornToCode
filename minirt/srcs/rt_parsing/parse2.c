@@ -32,15 +32,22 @@ int	parse_sp(char **line, t_minirt *mini)
 
 int	parse_sq(char **line, t_minirt *mini)
 {
-	t_parsed	parsed;
+	t_pnt c;
+	t_vec n;
+	t_clr color;
+	double side;
 
-	if (ft_arrsize(line) != 5 || !ft_isnum(line[3]))
+	if (ft_arrsize(line) != 5 || \
+		!ft_isnum(line[3]) || \
+		!parse_split(&c, line[1]) || \
+		!parse_split(&n, line[2]) || \
+		!parse_split(&color, line[4]))
 		return (ERROR);
-	parsed.sq.sidesize = ft_atod(line[3]);
-	return (parse_split(&(parsed.sq.pos), line[1]) && \
-			parse_split(&(parsed.sq.n), line[2]) && \
-			parse_split(&(parsed.sq.color), line[4]) && \
-			parsed_list_add(box, sq, parsed));
+	side = ft_atod(line[3]);
+	color = vec_divn(color, 255);
+	return (add_world(mini->wrd, \
+			create_square(c, n, side), hit_square, \
+			create_metal(color, (double)rand() / (double)RAND_MAX)));
 }
 
 // int	parse_tr(char **line, t_minirt *mini)

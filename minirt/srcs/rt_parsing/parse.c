@@ -8,7 +8,7 @@ static void	parser_init(int (*parser[9])(char **, t_minirt *))
 	parser[l] = parse_l;
 	parser[sp] = parse_sp;
 	parser[pl] = parse_pl;
-	// parser[sq] = parse_sq;
+	parser[sq] = parse_sq;
 	// parser[cy] = parse_cy;
 	// parser[tr] = parse_tr;
 }
