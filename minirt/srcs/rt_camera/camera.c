@@ -1,6 +1,7 @@
 #include "minirt.h"
+#include <time.h>
 
-t_camera		*init_camera()
+t_camera	*init_camera(void)
 {
 	t_camera	*head;
 
@@ -11,39 +12,50 @@ t_camera		*init_camera()
 	return (head);
 }
 
-int		add_camera(t_camera *head, t_vec lookfrom, t_vec dir, double vfov)
+int			add_camera(t_minirt *mini, t_vec lookfrom, t_vec dir, double fov)
 {
-	t_camera *cam;
-	double aperture = 2.0;
-	double ratio = (16.0 / 9.0);
+	t_camera	*cam;
+	double		aperture;
+	double		ratio;
 
+	aperture = 2.0;
+	ratio = mini->scr.wid / mini->scr.hei;
 	cam = malloc(sizeof(t_camera));
 	if (!cam)
 		return (ERROR);
 	cam->pos = lookfrom;
-	cam->view_height = 2.0 * tan((vfov * M_PI / 180) / 2.0);
+	cam->view_height = 2.0 * tan((fov * M_PI / 180) / 2.0);
 	cam->view_width = ratio * cam->view_height;
-	cam->w = vec_cal((t_vec[1]){dir}, (double[1]){-1}, 1);
+	cam->w = vec_oppo(dir);
 	cam->u = vec_unit(vec_cross(vec(0, 1, 0), cam->w));
 	cam->v = vec_cross(cam->w, cam->u);
-	cam->horizon = vec_cal((t_vec[1]){cam->u}, (double[1]){cam->view_width}, 1);
-	cam->vertical = vec_cal((t_vec[1]){cam->v}, (double[1]){cam->view_height}, 1);
-	cam->low_left_corner = vec_cal((t_vec[4]){lookfrom, cam->horizon, cam->vertical, cam->w}, \
-									(double [4]){1, -0.5, -0.5, -1}, 4);
-	// cam->lens_radius = aperture / 2;
+	cam->hor = vec_muln(cam->u, cam->view_width);
+	cam->ver = vec_muln(cam->v, cam->view_height);
+	cam->low_left_corner = vec_cal((t_vec[4]){lookfrom, cam->hor, cam->ver, cam->w},
+									(double[4]){1, -0.5, -0.5, -1},
+									4);
 	cam->img = 0;
-	cam->next = head->next;
-	head->next = cam;
+	cam->next = mini->cam->next;
+	mini->cam->next = cam;
 	return (OK);
 }
 
-void	draw(t_minirt *m)
+void		draw(t_minirt *m)
 {
+	clock_t	start, end;
+
 	if (!m->curr_cam->img)
 	{
-		m->curr_cam->img = mlx_new_image(m->scr.mlx, m->scr.width, m->scr.height);
-		m->curr_cam->img_addr = mlx_get_data_addr(m->curr_cam->img, &m->scr.bits_per_pixel, &m->scr.line_length, &m->scr.endian);
+		m->curr_cam->img = mlx_new_image(m->scr.mlx, m->scr.wid, m->scr.hei);
+		m->curr_cam->img_addr = mlx_get_data_addr(m->curr_cam->img,
+													&m->scr.bits_per_pixel,
+													&m->scr.line_length,
+													&m->scr.endian);
+		printf("start render!\n");
+		start = clock();
 		render(m);
+		end = clock();
+		printf("time : %f\n",(double)(end - start) / CLOCKS_PER_SEC);
 	}
-	mlx_put_image_to_window(m->scr.mlx, m->scr.win, m->curr_cam->img, 0, 0); // 생성한 이미지 객체 윈도우에 올리기
+	mlx_put_image_to_window(m->scr.mlx, m->scr.win, m->curr_cam->img, 0, 0);
 }

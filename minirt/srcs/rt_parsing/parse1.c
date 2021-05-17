@@ -23,7 +23,7 @@ int		parse_c(char **line, t_minirt *mini)
 		!parse_split(&c, line[1]) || \
 		!parse_split(&dir, line[2]))
 		return (ERROR);
-	return (add_camera(mini->cam, \
+	return (add_camera(mini, \
 			c, dir, fov));
 }
 

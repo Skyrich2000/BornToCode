@@ -26,22 +26,7 @@ static int check_t(t_cylinder *cy, t_ray *ray, double t)
 		return (ERROR);
 	return (OK);
 }
-/*
-** P = A + Bt
-** |CP|sin@ = r
-** |CP x n| = r
-** (CP x n)^2 - r^2 = 0
-** ((P - C) x n)^2 - r^2 = 0
-** ((A + Bt - C) x n)^2 - r^2 = 0
-** CA = A - C
-** ((CA + Bt) x n)^2 - r^2 = 0
-** ((CA + Bt)^2 x n^2) - r^2 = 0
-** ((CA^2 + 2*CA*Bt + B^2*t^2) x n^2 ) - r^2 = 0
-** (a)t^2 + 2(half_b))t + (c) = 0
-** a = B^2 x n^2 = (B x n)^2
-** half_b = (CA * B) x n^2 = (CA x n) * (B * n)
-** c = CA^2 x n^2 - r^2 = (CA x n)^2 - r^2
-*/
+
 int	get_cylinder_t(t_cylinder *cy, t_ray *ray, double minmax[2], double *t)
 {
 	double	a;
@@ -62,20 +47,37 @@ int	get_cylinder_t(t_cylinder *cy, t_ray *ray, double minmax[2], double *t)
 	{
 		*t = (-half_b + sqrt(discriminant)) / a;
 		if (!check_t(cy, ray, *t) || *t < minmax[0] || minmax[1] < *t)
-		return (ERROR);
+			return (ERROR);
 	}
 	return (OK);
 }
 
 int	hit_cylinder(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
 {
-	t_vec cp;
+	t_vec	cp;
 
 	if (!get_cylinder_t(&this->obj.cylinder, ray, minmax, &rec->t))
 		return (ERROR);
 	rec->p = ray_at(ray, rec->t);
-	cp = vec_cal((t_vec[2]){this->obj.cylinder.c, rec->p}, (double[2]){ 1, -1 }, 2);
+	cp = vec_cal((t_vec [2]){this->obj.cylinder.c, rec->p}, (double [2]){1, -1}, 2);
 	rec->n = vec_unit(vec_cross(this->obj.cylinder.n, vec_cross_(&cp, &this->obj.cylinder.n)));
 	set_rec(this, ray, rec);
 	return (OK);
 }
+
+/*
+** P = A + Bt
+** |CP|sin@ = r
+** |CP x n| = r
+** (CP x n)^2 - r^2 = 0
+** ((P - C) x n)^2 - r^2 = 0
+** ((A + Bt - C) x n)^2 - r^2 = 0
+** CA = A - C
+** ((CA + Bt) x n)^2 - r^2 = 0
+** ((CA + Bt)^2 x n^2) - r^2 = 0
+** ((CA^2 + 2*CA*Bt + B^2*t^2) x n^2 ) - r^2 = 0
+** (a)t^2 + 2(half_b))t + (c) = 0
+** a = B^2 x n^2 = (B x n)^2
+** half_b = (CA * B) x n^2 = (CA x n) * (B * n)
+** c = CA^2 x n^2 - r^2 = (CA x n)^2 - r^2
+*/

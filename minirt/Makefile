@@ -6,7 +6,7 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/26 15:07:00 by suhshin           #+#    #+#              #
-#    Updated: 2021/05/17 03:15:18 by ycha             ###   ########.fr        #
+#    Updated: 2021/05/17 04:15:29 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,13 @@ NAME	=	a.out
 
 SRCS	=	\
 			minirt.c \
-			./srcs/rt_vector/vector.c \
+			./srcs/rt_vector/vector1.c \
+			./srcs/rt_vector/vector2.c \
+			./srcs/rt_vector/vector3.c \
+			./srcs/rt_vector/vector4.c \
+			./srcs/rt_vector/vector5.c \
+			./srcs/rt_vector/vector6.c \
+			./srcs/rt_vector/vector7.c \
 			./srcs/rt_event/event.c	\
 			./srcs/rt_camera/camera.c \
 			./srcs/rt_camera/render.c \
@@ -27,6 +33,8 @@ SRCS	=	\
 			./srcs/rt_library/lib1.c \
 			./srcs/rt_library/lib2.c \
 			./srcs/rt_library/lib3.c \
+			./srcs/rt_library/lib4.c \
+			./srcs/rt_library/lib5.c \
 			./srcs/rt_material/lambertian.c \
 			./srcs/rt_material/metal.c \
 			./srcs/rt_material/dielectric.c \

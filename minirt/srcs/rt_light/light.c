@@ -40,7 +40,7 @@ t_clr light_get(t_minirt *mini, t_hit_record *rec, t_light *light)
 {
 	t_clr	diffuse;
 	t_vec	light_dir;
-	double	kd; // diffuse의 강도
+	double	kd;
 	// specular lighting
 	t_clr specular;
 	t_vec view_dir;
@@ -48,12 +48,9 @@ t_clr light_get(t_minirt *mini, t_hit_record *rec, t_light *light)
 	double spec;
 	double ksn;
 	double ks;
-	//
-	// shadow
+
 	double light_len;
 	t_ray light_ray;
-	//
-	double brightness;
 
 	// shadow
 	light_ray.dir = vec_cal((t_vec[2]){light->origin, rec->p}, (double[2]){1, -1}, 2);
@@ -71,9 +68,7 @@ t_clr light_get(t_minirt *mini, t_hit_record *rec, t_light *light)
 	ks = 0.25;
 	spec = pow(ft_max(vec_dot(view_dir, refl_dir), 0.0), ksn);
 	specular = vec_muln(vec_muln(light->color, ks), spec);
-	return (vec_add(diffuse, specular));
-	// brightness = light->ratio * LUMEN;
-	// return (vec_muln(vec_add(vec_add(diffuse, world->ambient) ,specular), brightness));
+	return (vec_muln(vec_add(diffuse, specular), light->ratio * LUMEN));
 }
 
 t_clr phong(t_minirt *mini, t_hit_record *rec)

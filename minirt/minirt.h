@@ -18,13 +18,13 @@
 # define EPSILON 1e-6
 # define LUMEN 3
 
-typedef struct s_world t_world;
+typedef struct s_world t_wold;
 // camera 구조체
 typedef struct s_camera
 {
 	t_pnt	pos;
-	t_vec	horizon;
-	t_vec	vertical;
+	t_vec	hor;
+	t_vec	ver;
 	t_vec	low_left_corner;
 	double			view_width;
 	double			view_height;
@@ -46,8 +46,8 @@ typedef struct s_screen
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	double	width;
-	double	height;
+	double	wid;
+	double	hei;
 	int		anti;
 }		t_screen;
 
@@ -62,7 +62,7 @@ typedef struct s_minirt
 }		t_minirt;
 
 t_camera	*init_camera();
-int			add_camera(t_camera *head, t_vec lookfrom, t_vec dir, double fov);
+int			add_camera(t_minirt *mini, t_vec lookfrom, t_vec dir, double fov);
 void	draw(t_minirt *m);
 int		render(t_minirt *mini);
 t_clr 	phong(t_minirt *mini, t_hit_record *rec);

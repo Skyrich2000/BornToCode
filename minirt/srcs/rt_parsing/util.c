@@ -19,16 +19,3 @@ int parse_split(t_vec *input, char *line)
 	ft_free_split(tmp, ft_arrsize(tmp));
 	return (OK);
 }
-
-// int parsed_list_add(t_minirt *mini, t_parsable index, t_parsed parsed)
-// {
-// 	t_parsed_list *t;
-
-// 	t = malloc(sizeof(t_parsed_list));
-// 	if (!t)
-// 		return (ERROR);
-// 	t->id = parsed;
-// 	t->next = box->parsed[index].next;
-// 	box->parsed[index].next = t;
-// 	return (OK);
-// }

@@ -18,15 +18,15 @@ int _get_plane_t(t_vec *c, t_vec *n, t_ray *ray, double minmax[2], double *t)
 	d = vec_dot_(&ray->dir, n);
 	if (ft_abs(d) < EPSILON)
 		return (ERROR);
-	*t = vec_dot(vec_cal((t_vec[2]){*c, ray->origin}, (double[2]){1, -1}, 2), *n) / d;
-	if (*t < minmax[0] || minmax[1] < *t)			// 이때 min 은 ray의 시작점
+	*t = vec_dot(vec_cal((t_vec [2]){*c, ray->origin}, (double [2]){1, -1}, 2), *n) / d;
+	if (*t < minmax[0] || minmax[1] < *t)
 		return (ERROR);
 	return (OK);
 }
 
 int	get_plane_t(t_plane *pl, t_ray *ray, double minmax[2], double *t)
 {
-	return(_get_plane_t(&pl->c, &pl->n, ray, minmax, t));
+	return (_get_plane_t(&pl->c, &pl->n, ray, minmax, t));
 }
 
 int hit_plane(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)

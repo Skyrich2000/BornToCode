@@ -10,7 +10,8 @@ t_object	create_triangle(t_vec p1, t_vec p2, t_vec p3)
 	obj.triangle.e1 = vec_sub_(&p2, &p1);
 	obj.triangle.e2 = vec_sub_(&p3, &p2);
 	obj.triangle.e3 = vec_sub_(&p1, &p3);
-	obj.triangle.n = vec_unit(vec_cross(obj.triangle.e1, vec_oppo(obj.triangle.e3)));
+	obj.triangle.n = vec_unit(vec_cross(obj.triangle.e1, \
+										vec_oppo(obj.triangle.e3)));
 	return (obj);
 }
 

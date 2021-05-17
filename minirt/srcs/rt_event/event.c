@@ -1,11 +1,10 @@
 #include "minirt.h"
 
-int exit_hook()
+int	exit_hook(void)
 {
 	exit(0);
 }
 
-// key event
 int	key_hook(int keycode, t_minirt *mini)
 {
 	if (keycode == 53)

@@ -1,9 +1,8 @@
 #include "minirt.h"
-#include <time.h>
 
 static void	event(t_minirt *mini)
 {
-	mlx_key_hook(mini->scr.win, key_hook, mini); // esc close
+	mlx_key_hook(mini->scr.win, key_hook, mini);  // esc close
 	mlx_hook(mini->scr.win, 17, 0, exit_hook, 0); // x button close
 }
 
@@ -12,7 +11,8 @@ static void	setting(t_minirt *mini)
 	t_camera	*c;
 
 	mini->scr.mlx = mlx_init();
-	mini->scr.win = mlx_new_window(mini->scr.mlx, mini->scr.width, mini->scr.height, "이게 미니 알티다");
+	mini->scr.win = mlx_new_window(
+		mini->scr.mlx, mini->scr.wid, mini->scr.hei, "이게 미니 알티다");
 	mini->scr.anti = 0;
 	c = mini->cam;
 	while (c->next)
@@ -25,7 +25,6 @@ static void	setting(t_minirt *mini)
 static int	minirt(t_minirt *mini)
 {
 	// clock_t	start, end;
-
 	setting(mini);
 	// start = clock();
 	draw(mini);
@@ -35,7 +34,7 @@ static int	minirt(t_minirt *mini)
 	return (0);
 }
 
-int		init(t_minirt *mini)
+int			init(t_minirt *mini)
 {
 	ft_memset(mini, 0, sizeof(t_minirt));
 	mini->wrd = init_world();
@@ -46,7 +45,7 @@ int		init(t_minirt *mini)
 	return (OK);
 }
 
-int		main(int argc, char **argv)
+int			main(int argc, char **argv)
 {
 	t_minirt	mini;
 

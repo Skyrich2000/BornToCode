@@ -2,10 +2,10 @@
 
 int	parse_r(char **line, t_minirt *mini)
 {
-	if ((mini->scr.width && mini->scr.height) || \
+	if ((mini->scr.wid && mini->scr.hei) || \
 		ft_arrsize(line) != 3 || \
-		!ft_atod(&mini->scr.width, line[1]) || \
-		!ft_atod(&mini->scr.height, line[2]))
+		!ft_atod(&mini->scr.wid, line[1]) || \
+		!ft_atod(&mini->scr.hei, line[2]))
 		return (ERROR);
 	return (OK);
 }
@@ -57,7 +57,7 @@ int	parse_tr(char **line, t_minirt *mini)
 		!parse_split(&p3, line[3]) || \
 		!parse_split(&color, line[4]))
 		return (ERROR);
-		return (add_world(mini->wrd, \
+	return (add_world(mini->wrd, \
 			create_triangle(p1, p2, p3), hit_triangle, \
 			create_metal(color, (double)rand() / (double)RAND_MAX)));
 }
