@@ -46,6 +46,6 @@ RUN wget https://wordpress.org/latest.tar.gz \
 		&& cp -rp /root/wp-config.php /var/www/html/wordpress
 
 COPY ./srcs/entrypoint.sh /root
-ENTRYPOINT ["/root/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "/root/entrypoint.sh"]
 
 EXPOSE 80 443
