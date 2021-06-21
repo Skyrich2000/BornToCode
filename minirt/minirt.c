@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minirt.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/15 14:24:28 by ycha              #+#    #+#             */
+/*   Updated: 2021/06/15 14:25:49 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 static void	event(t_minirt *mini)
@@ -22,18 +34,6 @@ static void	setting(t_minirt *mini)
 	event(mini);
 }
 
-static int	minirt(t_minirt *mini)
-{
-	// clock_t	start, end;
-	setting(mini);
-	// start = clock();
-	draw(mini);
-	// end = clock();
-	// printf("time : %f\n",(double)(end - start) / CLOCKS_PER_SEC);
-	mlx_loop(mini->scr.mlx);
-	return (0);
-}
-
 int			init(t_minirt *mini)
 {
 	ft_memset(mini, 0, sizeof(t_minirt));
@@ -51,6 +51,8 @@ int			main(int argc, char **argv)
 
 	if (!init(&mini) || !input(argc, argv, &mini))
 		return (ERROR);
-	minirt(&mini);
+	setting(&mini);
+	draw(&mini);
+	mlx_loop(mini.scr.mlx);
 	return (0);
 }
