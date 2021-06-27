@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME	= push_swap
-CFLAGS	= -Wall -Wextra -Werror -I.
+CFLAGS	= #-Wall -Wextra -Werror -I.
 SRCS	= main.c \
 			list.c list_sub.c func.c \
 			lib1.c lib2.c \
