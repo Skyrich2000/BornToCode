@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 08:48:28 by ycha              #+#    #+#             */
-/*   Updated: 2021/06/21 17:36:13 by ycha             ###   ########.fr       */
+/*   Updated: 2021/06/28 01:05:39 by echung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static t_node	*malloc_node(int data)
 {
-	t_node *node;
+	t_node	*node;
 
 	node = malloc(sizeof(t_node));
 	if (!node)
@@ -25,9 +25,9 @@ static t_node	*malloc_node(int data)
 	return (node);
 }
 
-void	init_list(int pos)
+void			init_list(int pos)
 {
-	t_list *list;
+	t_list	*list;
 
 	list = st();
 	list->size[pos >> 1] = 0;
@@ -37,7 +37,7 @@ void	init_list(int pos)
 	list->n[pos >> 1][tail]->link[prev] = list->n[pos >> 1][head];
 }
 
-int		swap(int pos)
+int				swap(int pos)
 {
 	int		tmp;
 	t_node	*node;
@@ -51,7 +51,7 @@ int		swap(int pos)
 	return (OK);
 }
 
-int		push(int pos, int data)
+int				push(int pos, int data)
 {
 	int		dir;
 	t_node	*node;
@@ -70,7 +70,7 @@ int		push(int pos, int data)
 	return (OK);
 }
 
-int		pop(int pos, int *data)
+int				pop(int pos, int *data)
 {
 	int		dir;
 	t_node	*node;

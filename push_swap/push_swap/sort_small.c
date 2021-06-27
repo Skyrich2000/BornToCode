@@ -2,10 +2,7 @@
 
 void	sort_three()
 {
-
 }
-
 void	sort_five()
 {
-
 }
