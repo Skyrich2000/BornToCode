@@ -21,6 +21,7 @@
 static int	print(int cmd, int stack)
 {
 	push(PRINT, cmd * 3 + (stack >> 1));
+	return (OK);
 }
 
 int			s(int stack)

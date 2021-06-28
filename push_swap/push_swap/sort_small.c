@@ -20,7 +20,8 @@ void	sort_three()
 
 void	sort_five()
 {
-	int i;
+	int a_size;
+	int b_size;
 
 	p(B);
 	p(B);
@@ -28,15 +29,17 @@ void	sort_five()
 	if (st()->n[B][HEAD]->link[NEXT]->data >
 		st()->n[B][HEAD]->link[NEXT]->link[NEXT]->data)
 		s(B);
-	i = 0;
-	while (i++ < 5)
+	a_size = 3;
+	b_size = 2;
+	while (a_size && b_size)
 	{
-		if (st()->n[A][HEAD]->link[NEXT]->data < st()->n[B][HEAD]->link[NEXT]->data)
-			r(A);
+		if (st()->n[B][HEAD]->link[NEXT]->data < st()->n[A][HEAD]->link[NEXT]->data)
+			b_size -= p(A) && r(A);
 		else
-		{
-			p(A);
-			r(A);
-		}
+			a_size -= r(A);
 	}
+	while (a_size)
+		a_size -= r(A);
+	while (b_size)
+		b_size -= p(A) && r(A);
 }
