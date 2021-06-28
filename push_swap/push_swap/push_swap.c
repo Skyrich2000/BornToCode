@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <stdio.h>
 
 static int	is_unique(int num)
 {

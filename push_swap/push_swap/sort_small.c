@@ -17,6 +17,7 @@ void	sort_three()
 		s(A);
 	sort_three();
 }
+
 void	sort_five()
 {
 	int i;
