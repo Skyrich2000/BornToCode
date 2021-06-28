@@ -12,10 +12,10 @@
 
 NAME	= push_swap
 CFLAGS	= #-Wall -Wextra -Werror -I.
-SRCS	= main.c \
-			list.c list_sub.c func.c \
+SRCS	= push_swap.c \
+			list1.c list2.c func.c \
 			lib1.c lib2.c \
-			quick_sort.c sort_small.c
+			sort_quick.c sort_small.c
 
 
 OBJS	= $(SRCS:%.c=%.o)

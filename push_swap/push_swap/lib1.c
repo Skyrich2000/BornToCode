@@ -1,9 +1,9 @@
 #include "push_swap.h"
 
-int	ft_atoi(char *str, int *data)
+int		ft_atoi(char *str, int *data)
 {
-	int				sign;
-	long long		result;
+	int			sign;
+	long long	result;
 
 	sign = 1;
 	result = 0;
@@ -25,20 +25,6 @@ int	ft_atoi(char *str, int *data)
 	return (OK);
 }
 
-int		ft_abs(int n)
-{
-	if (n < 0)
-		return (-n);
-	return (n);
-}
-
-int		ft_min(int a, int b)
-{
-	if (a < b)
-		return (a);
-	return (b);
-}
-
 void	ft_bzero(void *s, size_t n)
 {
 	char	*ptr;
@@ -53,7 +39,7 @@ void	ft_bzero(void *s, size_t n)
 
 void	ft_swap(int *a, int *b)
 {
-	int tmp;
+	int	tmp;
 
 	tmp = *a;
 	*a = *b;
