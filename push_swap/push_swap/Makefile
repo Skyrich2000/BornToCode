@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+         #
+#    By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/01/15 22:13:22 by echung            #+#    #+#              #
-#    Updated: 2021/06/27 17:01:28 by echung           ###   ########.fr        #
+#    Created: 2021/07/02 00:01:37 by ycha              #+#    #+#              #
+#    Updated: 2021/07/02 00:01:39 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= push_swap
-BNOUS_NAME	= checker
+BONUS_NAME	= checker
 
 CFLAGS	= -Wall -Wextra -Werror -I.
 
@@ -28,12 +28,12 @@ OBJS	= $(SRCS:%.c=%.o)
 BONUS_OBJS	= $(BONUS_SRCS:%.c=%.o)
 
 all: $(NAME)
-bonus: $(BNOUS_NAME)
+bonus: $(BONUS_NAME)
 
 $(NAME): $(OBJS)
 	gcc $(CFLAGS) -o $@ $^
 
-$(BNOUS_NAME): $(BONUS_OBJS)
+$(BONUS_NAME): $(BONUS_OBJS)
 	gcc $(CFLAGS) -o $@ $^
 
 clean:
