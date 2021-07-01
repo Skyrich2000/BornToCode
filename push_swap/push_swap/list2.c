@@ -23,7 +23,7 @@ static int	print_cmd(t_cmd cmd)
 {
 	char	*s;
 
-	s = (char [12][4]){"sa", "sb", "ss", "pa", "pb", "pp", \
+	s = (char [12][4]){"sa", "sb", "ss", "pa", "pb", "", \
 						"ra", "rb", "rr", "rra", "rrb", "rrr"}[cmd];
 	while (*s)
 		write(1, s++, 1);
@@ -33,8 +33,10 @@ static int	print_cmd(t_cmd cmd)
 
 static int	check_pair(t_node *node, t_cmd cmd1, t_cmd cmd2)
 {
-	return ((node->data == cmd1 && node->link[PREV]->data == cmd2) || \
-			(node->data == cmd2 && node->link[PREV]->data == cmd1));
+	return ((node->data == (int)cmd1 && \
+			node->link[PREV]->data == (int)cmd2) || \
+			(node->data == (int)cmd2 && \
+			node->link[PREV]->data == (int)cmd1));
 }
 
 void	print_result(void)

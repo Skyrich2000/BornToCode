@@ -37,6 +37,18 @@ void	ft_bzero(void *s, int n)
 	}
 }
 
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	void	*temp;
+
+	if (src == 0 && dest == 0)
+		return (0);
+	temp = dest;
+	while (n--)
+		*(char *)dest++ = *(char *)src++;
+	return (temp);
+}
+
 void	ft_swap(int *a, int *b)
 {
 	int	tmp;

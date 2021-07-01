@@ -58,8 +58,8 @@ static int	get_pivot(int pos, int len, int *pivot)
 	{
 		arr[i] = node->data;
 		node = node->link[NEXT];
-		if (i > 0 && ((pos & 2) == A && arr[i - 1] > arr[i]) || \
-			((pos & 2) == B && arr[i - 1] < arr[i]))
+		if (i > 0 && (((pos & 2) == A && arr[i - 1] > arr[i]) || \
+			((pos & 2) == B && arr[i - 1] < arr[i])))
 			ret = OK;
 	}
 	pre_sort(arr, 0, len - 1);
@@ -102,10 +102,10 @@ int	A_to_B(int len)
 	while (len--)
 	{
 		if (st()->n[A][HEAD]->link[NEXT]->data >= pivot[1])
-			r(A) && ++count[RA];
+			count[RA] += r(A);
 		else if (p(B) && ++count[PB] && \
 			st()->n[B][HEAD]->link[NEXT]->data >= pivot[0])
-			r(B) && ++count[RB];
+			count[RB] += r(B);
 	}
 	return (reverse(count[RA], count[RB]) && \
 			A_to_B(count[RA]) && B_to_A(count[RB]) && \
@@ -130,10 +130,10 @@ int	B_to_A(int len)
 	while (len--)
 	{
 		if (st()->n[B][HEAD]->link[NEXT]->data < pivot[0])
-			r(B) && ++count[RB];
+			count[RB] += r(B);
 		else if (p(A) && ++count[PA] && \
 			st()->n[A][HEAD]->link[NEXT]->data < pivot[1])
-			r(A) && ++count[RA];
+			count[RA] += r(A);
 	}
 	return (A_to_B(count[PA] - count[RA]) && \
 			reverse(count[RA], count[RB]) && \

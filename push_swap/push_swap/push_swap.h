@@ -30,24 +30,37 @@
 # define OK 1
 # define ERROR 0
 
-typedef struct		s_node
+typedef struct s_node
 {
 	int				data;
 	struct s_node	*link[2];
-}					t_node;
+}	t_node;
 
-typedef struct		s_list
+typedef struct s_list
 {
 	int				size[5];
 	t_node			*n[5][2];
-}					t_list;
+}	t_list;
 
-typedef enum		e_cmd
+typedef enum e_cmd
 {
-	SA = 0, SB, SS, PA, PB, PP, RA, RB, RR, RRA, RRB, RRR
-}					t_cmd;
+	SA = 0,
+	SB,
+	SS,
+	PA,
+	PB,
+	PP,
+	RA,
+	RB,
+	RR,
+	RRA,
+	RRB,
+	RRR
+}	t_cmd;
 
-t_list		*st();
+int			input(int ac, char **av);
+
+t_list		*st(void);
 void		init_list(int pos);
 int			swap(int pos);
 int			push(int pos, int data);
@@ -56,10 +69,12 @@ int			top(int pos);
 void		print_result(void);
 void		free_list(t_node *node);
 
-int			ft_atoi(char *str, int *data);
-void		ft_bzero(void *s, int n);
 void		ft_swap(int *a, int *b);
+void		ft_bzero(void *s, int n);
 char		**ft_split(char *s, char c);
+int			ft_atoi(char *str, int *data);
+int			get_next_line(int fd, char **line);
+void		*ft_memcpy(void *dest, const void *src, size_t n);
 
 int			s(int stack);
 int			p(int stack);
