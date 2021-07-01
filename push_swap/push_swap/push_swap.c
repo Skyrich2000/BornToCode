@@ -42,10 +42,10 @@ static int	is_num(char *str)
 
 static int	_input(char *str)
 {
-	int j;
-	int data;
-	char **sp;
-	char **s;
+	int		j;
+	int		data;
+	char	**sp;
+	char	**s;
 
 	sp = ft_split(str, ' ');
 	j = 0;
@@ -81,7 +81,7 @@ static int	input(int ac, char **av)
 	return (OK);
 }
 
-int			main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	if (!input(ac, av))
 	{

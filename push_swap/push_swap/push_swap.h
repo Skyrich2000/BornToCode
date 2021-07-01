@@ -48,26 +48,26 @@ typedef enum		e_cmd
 }					t_cmd;
 
 t_list		*st();
-void		init_list();
+void		init_list(int pos);
 int			swap(int pos);
 int			push(int pos, int data);
 int			pop(int pos, int *data);
 int			top(int pos);
-void		print_result();
-void		free_list();
+void		print_result(void);
+void		free_list(t_node *node);
 
 int			ft_atoi(char *str, int *data);
-void		ft_bzero(void *s, size_t n);
+void		ft_bzero(void *s, int n);
 void		ft_swap(int *a, int *b);
-char		**ft_split(char const *s, char c);
+char		**ft_split(char *s, char c);
 
 int			s(int stack);
 int			p(int stack);
 int			r(int stack);
 int			rr(int stack);
 
-void		sort_three();
-void		sort_five();
+void		sort_three(void);
+void		sort_five(void);
 int			A_to_B(int len);
 int			B_to_A(int len);
 

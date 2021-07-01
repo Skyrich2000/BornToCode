@@ -84,14 +84,14 @@ static int	reverse(int count_RA, int count_RB)
 	return (OK);
 }
 
-int			A_to_B(int len)
+int	A_to_B(int len)
 {
 	int	pivot[2];
 	int	count[12];
 
 	if (len <= 2)
 	{
-		if (len == 2 && st()->n[A][HEAD]->link[NEXT]->data >
+		if (len == 2 && st()->n[A][HEAD]->link[NEXT]->data > \
 			st()->n[A][HEAD]->link[NEXT]->link[NEXT]->data)
 			s(A);
 		return (OK);
@@ -100,27 +100,26 @@ int			A_to_B(int len)
 		return (OK);
 	ft_bzero(count, sizeof(int) * 12);
 	while (len--)
+	{
 		if (st()->n[A][HEAD]->link[NEXT]->data >= pivot[1])
-			r(A) && count[RA]++;
-		else
-		{
-			p(B) && count[PB]++;
-			if (st()->n[B][HEAD]->link[NEXT]->data >= pivot[0])
-				r(B) && count[RB]++;
-		}
+			r(A) && ++count[RA];
+		else if (p(B) && ++count[PB] && \
+			st()->n[B][HEAD]->link[NEXT]->data >= pivot[0])
+			r(B) && ++count[RB];
+	}
 	return (reverse(count[RA], count[RB]) && \
 			A_to_B(count[RA]) && B_to_A(count[RB]) && \
 			B_to_A(count[PB] - count[RB]));
 }
 
-int			B_to_A(int len)
+int	B_to_A(int len)
 {
 	int	pivot[2];
 	int	count[12];
 
 	if (len <= 2 || !get_pivot(B, len, pivot))
 	{
-		if (len == 2 && st()->n[B][HEAD]->link[NEXT]->data <
+		if (len == 2 && st()->n[B][HEAD]->link[NEXT]->data < \
 			st()->n[B][HEAD]->link[NEXT]->link[NEXT]->data)
 			s(B);
 		while (len--)
@@ -129,14 +128,13 @@ int			B_to_A(int len)
 	}
 	ft_bzero(count, sizeof(int) * 12);
 	while (len--)
+	{
 		if (st()->n[B][HEAD]->link[NEXT]->data < pivot[0])
-			r(B) && count[RB]++;
-		else
-		{
-			p(A) && count[PA]++;
-			if (st()->n[A][HEAD]->link[NEXT]->data < pivot[1])
-				r(A) && count[RA]++;
-		}
+			r(B) && ++count[RB];
+		else if (p(A) && ++count[PA] && \
+			st()->n[A][HEAD]->link[NEXT]->data < pivot[1])
+			r(A) && ++count[RA];
+	}
 	return (A_to_B(count[PA] - count[RA]) && \
 			reverse(count[RA], count[RB]) && \
 			A_to_B(count[RA]) && B_to_A(count[RB]));

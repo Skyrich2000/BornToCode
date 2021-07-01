@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-# define MASK 0b110
+#define MASK 0b110
 
 static t_node	*malloc_node(int data)
 {
@@ -27,7 +27,7 @@ static t_node	*malloc_node(int data)
 	return (node);
 }
 
-void			init_list(int pos)
+void	init_list(int pos)
 {
 	t_list	*list;
 
@@ -39,7 +39,7 @@ void			init_list(int pos)
 	list->n[pos & MASK][TAIL]->link[PREV] = list->n[pos & MASK][HEAD];
 }
 
-int				swap(int pos)
+int	swap(int pos)
 {
 	int		tmp;
 	t_node	*node;
@@ -53,7 +53,7 @@ int				swap(int pos)
 	return (OK);
 }
 
-int				push(int pos, int data)
+int	push(int pos, int data)
 {
 	int		dir;
 	t_node	*node;
@@ -72,7 +72,7 @@ int				push(int pos, int data)
 	return (OK);
 }
 
-int				pop(int pos, int *data)
+int	pop(int pos, int *data)
 {
 	int		dir;
 	t_node	*node;

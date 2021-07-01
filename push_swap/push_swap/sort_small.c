@@ -1,8 +1,8 @@
 #include "push_swap.h"
 
-void	sort_three()
+void	sort_three(void)
 {
-	int num[3];
+	int	num[3];
 
 	num[0] = st()->n[A][HEAD]->link[NEXT]->data;
 	num[1] = st()->n[A][HEAD]->link[NEXT]->link[NEXT]->data;
@@ -18,10 +18,10 @@ void	sort_three()
 	sort_three();
 }
 
-void	sort_five()
+void	sort_five(void)
 {
-	int a_size;
-	int b_size;
+	int	a_size;
+	int	b_size;
 
 	p(B);
 	p(B);
@@ -33,7 +33,8 @@ void	sort_five()
 	b_size = 2;
 	while (a_size && b_size)
 	{
-		if (st()->n[B][HEAD]->link[NEXT]->data < st()->n[A][HEAD]->link[NEXT]->data)
+		if (st()->n[B][HEAD]->link[NEXT]->data <
+			st()->n[A][HEAD]->link[NEXT]->data)
 			b_size -= p(A) && r(A);
 		else
 			a_size -= r(A);

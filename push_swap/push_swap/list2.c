@@ -12,18 +12,18 @@
 
 #include "push_swap.h"
 
-t_list		*st()
+t_list	*st(void)
 {
-	static t_list _list;
+	static t_list	_list;
 
 	return (&_list);
 }
 
-static int print_cmd(t_cmd cmd)
+static int	print_cmd(t_cmd cmd)
 {
-	char *s;
+	char	*s;
 
-	s = (char [12][4]) {"sa", "sb", "ss", "pa", "pb", "pp",
+	s = (char [12][4]){"sa", "sb", "ss", "pa", "pb", "pp", \
 						"ra", "rb", "rr", "rra", "rrb", "rrr"}[cmd];
 	while (*s)
 		write(1, s++, 1);
@@ -31,16 +31,16 @@ static int print_cmd(t_cmd cmd)
 	return (OK);
 }
 
-static int check_pair(t_node *node, t_cmd cmd1, t_cmd cmd2)
+static int	check_pair(t_node *node, t_cmd cmd1, t_cmd cmd2)
 {
-	return ((node->data == cmd1 && node->link[PREV]->data == cmd2) ||
+	return ((node->data == cmd1 && node->link[PREV]->data == cmd2) || \
 			(node->data == cmd2 && node->link[PREV]->data == cmd1));
 }
 
-void print_result()
+void	print_result(void)
 {
 	t_node	*node;
-	int flag;
+	int		flag;
 
 	node = st()->n[PRINT][TAIL]->link[PREV];
 	if (node->link[PREV])

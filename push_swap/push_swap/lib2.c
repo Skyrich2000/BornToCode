@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-static int	get_word_num(char const *s, char c)
+static int	get_word_num(char *s, char c)
 {
 	int	num;
 
@@ -24,7 +24,8 @@ static char	*strdup_p(char *start, char *end)
 	char	*ret;
 	char	*ptr;
 
-	if (!(ret = malloc(end - start + 1)))
+	ret = malloc(end - start + 1);
+	if (!ret)
 		return (0);
 	ptr = ret;
 	while (start != end)
@@ -44,7 +45,7 @@ static char	**free_all(char **ret)
 	return (0);
 }
 
-char		**ft_split(char const *s, char c)
+char	**ft_split(char *s, char c)
 {
 	char	*start;
 	char	**ret;
@@ -52,22 +53,22 @@ char		**ft_split(char const *s, char c)
 
 	if (!s)
 		return (0);
-	if (!(ret = malloc((get_word_num(s, c) + 1) * sizeof(char *))))
+	ret = malloc((get_word_num(s, c) + 1) * sizeof(char *));
+	if (!ret)
 		return (0);
 	ptr = ret;
-	while (*s)
+	while (*s++)
 	{
-		if (*s != c)
+		if (*(s - 1) != c)
 		{
-			start = (char *)s;
+			start = (char *)--s;
 			while (*s && *s != c)
 				++s;
-			if (!(*ptr = strdup_p(start, (char *)s)))
+			*ptr = strdup_p(start, (char *)s);
+			if (!*ptr)
 				return (free_all(ret));
 			++ptr;
 		}
-		else
-			++s;
 	}
 	*ptr = 0;
 	return (ret);
