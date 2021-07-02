@@ -31,7 +31,7 @@ static int	play_cmd(char *str)
 	{
 		if (i == 5)
 			continue ;
-		if (ft_strcmp((char [12][4]){"sa", "sb", "ss", "pa", "pb", "", \
+		if (ft_strcmp((char [12][4]){"sa", "sb", "ss", "pa", "pb", "_", \
 						"ra", "rb", "rr", "rra", "rrb", "rrr"}[i], str) == 0)
 		{
 			if (0 <= i && i < 3)
@@ -70,22 +70,23 @@ static int	input_cmd(void)
 {
 	char	*line;
 	int		flag;
-	int		ret;
+	int		result;
 
-	while (ret > 0)
+        flag = OK;
+	while (1)
 	{
-		ret = get_next_line(0, &line);
-		if (ret == 0 && *line == 0)
-			flag = OK;
-		else if (ret > 0)
-			flag = play_cmd(line);
+		result = get_next_line(0, &line); // 그냥 엔터만 치면 리턴값이 머지
+                if (result <= 0)
+                        break;
+		flag = play_cmd(line);
 		free(line);
 		if (!flag)
 			return (ERROR);
 	}
-	if (flag)
-		return (OK);
-	return (ERROR);
+        if (*line != 0)
+                flag = ERROR;
+        free(line);
+	return (flag);
 }
 
 int	main(int ac, char **av)
