@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 13:07:14 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/02 00:01:44 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/02 08:24:21 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,17 @@ static int	play_cmd(char *str)
 
 static int	check_sort(void)
 {
-	int		prev;
 	t_node	*node;
 
-	node = st()->n[A][HEAD]->link[NEXT];
+	node = st()->n[A][HEAD]->link[NEXT]->link[NEXT];
+	if (st()->size[B] != 0)
+		return (ERROR);
 	if (!node)
 		return (OK);
-	prev = node->data;
-	node = node->link[NEXT];
 	while (node && node->link[NEXT])
 	{
-		if (node->data < prev)
+		if (node->data < node->link[PREV]->data)
 			return (ERROR);
-		prev = node->data;
 		node = node->link[NEXT];
 	}
 	return (OK);
