@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 13:07:14 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/02 08:24:21 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/02 08:37:45 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,20 +72,20 @@ static int	input_cmd(void)
 	int		flag;
 	int		result;
 
-        flag = OK;
+	flag = OK;
 	while (1)
 	{
-		result = get_next_line(0, &line); // 그냥 엔터만 치면 리턴값이 머지
-                if (result <= 0)
-                        break;
+		result = get_next_line(0, &line);
+		if (result <= 0)
+			break;
 		flag = play_cmd(line);
 		free(line);
 		if (!flag)
 			return (ERROR);
 	}
-        if (*line != 0)
-                flag = ERROR;
-        free(line);
+	if (*line != 0)
+			flag = ERROR;
+	free(line);
 	return (flag);
 }
 
