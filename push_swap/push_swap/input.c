@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 00:01:53 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/02 00:01:54 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/02 17:46:50 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	is_num(char *str)
 	return (OK);
 }
 
-static int	_input(char *str)
+static int	input_sub(char *str)
 {
 	int		j;
 	int		data;
@@ -66,7 +66,7 @@ static int	_input(char *str)
 	return (OK);
 }
 
-int	input(int ac, char **av)
+int			input(int ac, char **av)
 {
 	int	i;
 
@@ -75,7 +75,7 @@ int	input(int ac, char **av)
 	init_list(PRINT);
 	i = ac;
 	while (--i > 0)
-		if (!_input(av[i]))
+		if (!input_sub(av[i]))
 			return (ERROR);
 	return (OK);
 }

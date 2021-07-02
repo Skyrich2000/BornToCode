@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 08:49:26 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/02 00:02:35 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/02 18:02:08 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int			rr(int stack);
 
 void		sort_three(void);
 void		sort_five(void);
-int			A_to_B(int len);
-int			B_to_A(int len);
+int			a_to_b(int len);
+int			b_to_a(int len);
 
 #endif

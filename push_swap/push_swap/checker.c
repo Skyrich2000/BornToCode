@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 13:07:14 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/02 08:37:45 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/02 17:49:08 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	play_cmd(char *str)
 	{
 		if (i == 5)
 			continue ;
-		if (ft_strcmp((char [12][4]){"sa", "sb", "ss", "pa", "pb", "_", \
+		if (ft_strcmp((char[12][4]){"sa", "sb", "ss", "pa", "pb", "_", \
 						"ra", "rb", "rr", "rra", "rrb", "rrr"}[i], str) == 0)
 		{
 			if (0 <= i && i < 3)
@@ -77,19 +77,19 @@ static int	input_cmd(void)
 	{
 		result = get_next_line(0, &line);
 		if (result <= 0)
-			break;
+			break ;
 		flag = play_cmd(line);
 		free(line);
 		if (!flag)
 			return (ERROR);
 	}
 	if (*line != 0)
-			flag = ERROR;
+		flag = ERROR;
 	free(line);
 	return (flag);
 }
 
-int	main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	if (ac == 1)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 00:02:09 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/02 00:02:10 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/02 17:47:03 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static char	**free_all(char **ret)
 	return (0);
 }
 
-char	**ft_split(char *s, char c)
+char		**ft_split(char *s, char c)
 {
 	char	*start;
 	char	**ret;

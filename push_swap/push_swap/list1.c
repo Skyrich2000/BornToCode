@@ -6,13 +6,13 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 08:48:28 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/02 00:02:20 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/02 17:55:19 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-#define MASK 0b110
+#define MASK 6
 
 static t_node	*malloc_node(int data)
 {
@@ -27,7 +27,7 @@ static t_node	*malloc_node(int data)
 	return (node);
 }
 
-void	init_list(int pos)
+void			init_list(int pos)
 {
 	t_list	*list;
 
@@ -39,7 +39,7 @@ void	init_list(int pos)
 	list->n[pos & MASK][TAIL]->link[PREV] = list->n[pos & MASK][HEAD];
 }
 
-int	swap(int pos)
+int				swap(int pos)
 {
 	int		tmp;
 	t_node	*node;
@@ -53,7 +53,7 @@ int	swap(int pos)
 	return (OK);
 }
 
-int	push(int pos, int data)
+int				push(int pos, int data)
 {
 	int		dir;
 	t_node	*node;
@@ -72,7 +72,7 @@ int	push(int pos, int data)
 	return (OK);
 }
 
-int	pop(int pos, int *data)
+int				pop(int pos, int *data)
 {
 	int		dir;
 	t_node	*node;

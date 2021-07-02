@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 08:49:26 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/02 00:02:41 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/02 17:53:19 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,22 +69,22 @@ static int	get_pivot(int pos, int len, int *pivot)
 	return (ret);
 }
 
-static int	reverse(int count_RA, int count_RB)
+static int	reverse(int count_ra, int count_rb)
 {
-	while (count_RA > 0 && count_RB > 0)
+	while (count_ra > 0 && count_rb > 0)
 	{
 		rr(ALL);
-		count_RA--;
-		count_RB--;
+		count_ra--;
+		count_rb--;
 	}
-	while (count_RA-- > 0)
+	while (count_ra-- > 0)
 		rr(A);
-	while (count_RB-- > 0)
+	while (count_rb-- > 0)
 		rr(B);
 	return (OK);
 }
 
-int	A_to_B(int len)
+int			a_to_b(int len)
 {
 	int	pivot[2];
 	int	count[12];
@@ -108,11 +108,11 @@ int	A_to_B(int len)
 			count[RB] += r(B);
 	}
 	return (reverse(count[RA], count[RB]) && \
-			A_to_B(count[RA]) && B_to_A(count[RB]) && \
-			B_to_A(count[PB] - count[RB]));
+			a_to_b(count[RA]) && b_to_a(count[RB]) && \
+			b_to_a(count[PB] - count[RB]));
 }
 
-int	B_to_A(int len)
+int			b_to_a(int len)
 {
 	int	pivot[2];
 	int	count[12];
@@ -135,7 +135,7 @@ int	B_to_A(int len)
 			st()->n[A][HEAD]->link[NEXT]->data < pivot[1])
 			count[RA] += r(A);
 	}
-	return (A_to_B(count[PA] - count[RA]) && \
+	return (a_to_b(count[PA] - count[RA]) && \
 			reverse(count[RA], count[RB]) && \
-			A_to_B(count[RA]) && B_to_A(count[RB]));
+			a_to_b(count[RA]) && b_to_a(count[RB]));
 }

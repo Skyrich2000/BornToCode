@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 13:07:14 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/02 00:02:30 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/02 18:02:22 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 		else if (st()->size[A] == 5)
 			sort_five();
 		else
-			A_to_B(st()->size[A]);
+			a_to_b(st()->size[A]);
 		print_result();
 	}
 	else
