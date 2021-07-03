@@ -6,43 +6,35 @@
 #    By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/02 00:01:37 by ycha              #+#    #+#              #
-#    Updated: 2021/07/03 16:17:25 by ycha             ###   ########.fr        #
+#    Updated: 2021/07/04 03:06:23 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= push_swap
-BONUS_NAME	= checker
+SERVER_NAME	= server
+CLIENT_NAME = client
 
 CFLAGS	= -Wall -Wextra -Werror -I.
 
-SRCS	= push_swap.c \
-			srcs/input.c \
-			srcs/list1.c srcs/list2.c srcs/func.c \
-			srcs/lib.c srcs/lib_split.c srcs/lib_gnl.c \
-			srcs/sort_quick.c srcs/sort_small.c
+SERVER_SRCS	= server.c lib.c
+CLIENT_SRCS = client.c lib.c
 
-BONUS_SRCS	= checker.c \
-			srcs/input.c \
-			srcs/list1.c srcs/list2.c srcs/func.c \
-			srcs/lib.c srcs/lib_split.c srcs/lib_gnl.c \
+SERVER_OBJS	= $(SERVER_SRCS:%.c=%.o)
+CLIENT_OBJS	= $(CLIENT_SRCS:%.c=%.o)
 
-OBJS	= $(SRCS:%.c=%.o)
-BONUS_OBJS	= $(BONUS_SRCS:%.c=%.o)
+all: $(SERVER_NAME) $(CLIENT_NAME)
 
-all: $(NAME) $(BONUS_NAME)
-
-$(NAME): $(OBJS)
+$(SERVER_NAME): $(SERVER_OBJS)
 	gcc $(CFLAGS) -o $@ $^
 
-$(BONUS_NAME): $(BONUS_OBJS)
+$(CLIENT_NAME): $(CLIENT_OBJS)
 	gcc $(CFLAGS) -o $@ $^
 
 clean:
-	rm -f $(OBJS)
-	rm -f $(BONUS_OBJS)
+	rm -f $(SERVER_OBJS)
+	rm -f $(CLIENT_OBJS)
 
 fclean: clean
-	rm -f $(NAME) $(BONUS_NAME)
+	rm -f $(SERVER_NAME) $(CLIENT_NAME)
 
 re: fclean all
 
