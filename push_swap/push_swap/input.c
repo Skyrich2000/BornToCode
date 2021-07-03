@@ -28,8 +28,10 @@ static int	is_unique(int num)
 
 static int	is_num(char *str)
 {
-	if (*str == '-')
+	if (*str == '-' || *str == '+')
 		str++;
+	if (!*str)
+		return (ERROR);
 	while (*str)
 	{
 		if (!('0' <= *str && *str <= '9'))
