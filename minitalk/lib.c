@@ -17,30 +17,21 @@ void	ft_putchar_fd(char c, int fd)
 	write(fd, &c, 1);
 }
 
-void	ft_putnbr_fd(int n, int fd)
-{
-	if (n == -2147483648)
-	{
-		ft_putnbr_fd(n / 10, fd);
-		ft_putchar_fd('8', fd);
-	}
-	else if (n < 0)
-	{
-		ft_putchar_fd('-', fd);
-		ft_putnbr_fd(-n, fd);
-	}
-	else
-	{
-		if (n > 9)
-			ft_putnbr_fd(n / 10, fd);
-		ft_putchar_fd('0' + n % 10, fd);
-	}
-}
-
 void	ft_putstr_fd(char *s, int fd)
 {
 	while (*s)
 		write(fd, s++, 1);
+}
+
+int		is_num(char *str)
+{
+	while (*str)
+	{
+		if (!('0' <= *str && *str <= '9'))
+			return (ERROR);
+		str++;
+	}
+	return (OK);
 }
 
 int		ft_atoi(char *str, int *data)
@@ -66,13 +57,22 @@ int		ft_atoi(char *str, int *data)
 	return (OK);
 }
 
-int		is_num(char *str)
+void	ft_putnbr_fd(int n, int fd)
 {
-	while (*str)
+	if (n == -2147483648)
 	{
-		if (!('0' <= *str && *str <= '9'))
-			return (ERROR);
-		str++;
+		ft_putnbr_fd(n / 10, fd);
+		ft_putchar_fd('8', fd);
 	}
-	return (OK);
+	else if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		ft_putnbr_fd(-n, fd);
+	}
+	else
+	{
+		if (n > 9)
+			ft_putnbr_fd(n / 10, fd);
+		ft_putchar_fd('0' + n % 10, fd);
+	}
 }
