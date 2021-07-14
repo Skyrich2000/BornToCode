@@ -174,8 +174,11 @@ int		main_loop(t_game *game)
 		fps = 0;
 		time(&start);
 	}
-	draw_rectangles(game);
-	draw_lines(game);
+	img_init(game);
+	if (fps < 40)
+		draw_rectangles(game);
+	if (fps > 10)
+		draw_lines(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 	return (0);
 }
@@ -187,10 +190,10 @@ int		main(void)
 	time(&start);
 	game_init(&game);
 	window_init(&game);
-	img_init(&game);
+	
 	mlx_hook(game.win, X_EVENT_KEY_PRESS, 0, &deal_key, &game);
 	mlx_hook(game.win, X_EVENT_KEY_EXIT, 0, &close, &game);
-
+	
 	mlx_loop_hook(game.mlx, &main_loop, &game);
 	mlx_loop(game.mlx);
 }
