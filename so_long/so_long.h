@@ -1,12 +1,11 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-typedef struct	s_img
-{
-	void	*img;
-	int		width;
-	int		height;
-}				t_img;
+# define OK 1
+# define ERROR 0
+
+# define WIDTH 500
+# define HEIGHT 500
 
 typedef struct		s_list
 {
@@ -18,52 +17,84 @@ typedef struct		s_list
 typedef struct		s_sprite
 {
 	t_list			*imgs;
+	int				width;
+	int				height;
 	int				subimg;
 	int				offset_x;
 	int				offset_y;
 }					t_sprite;
 
+typedef struct		s_obj_player
+{
+	int				hp;
+}					t_obj_player;
+
+typedef struct		s_obj_zombie
+{
+	int				hp;
+}					t_obj_zombie;
+
+typedef union		u_object
+{
+	t_obj_player	player;
+	t_obj_zombie	zombie;
+}					t_object;
+
 typedef struct		s_instance
 {
+	int 			type;
+	t_object		obj;
 	t_sprite		*spr;
-	int				image_index;
+	t_list			*img;
+	int				x;
+	int				y;
+	void			(*step)(struct s_instance *this)
+	void			(*draw)(struct s_instance *this)
 }					t_instance;
 
-typedef struct	s_canvas
+typedef struct		s_canvas
 {
-	void	*img;
-	void	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_canvas;
+	void			*img;
+	void			*addr;
+	int				bits_per_pixel;
+	int				line_length;
+	int				endian;
+}					t_canvas;
 
-typedef struct	s_game
+typedef struct		s_game
 {
 	void			*mlx;
 	void			*win;
-
 	t_canvas		canvas;
-	int				width;
-	int				height;
 
-	t_sprite		spr_player;
-	t_sprite		spr_zombie;
-	t_sprite		spr_wall;
-	t_sprite		spr_key;
-	t_sprite		spr_exit;
+	t_sprite		*spr_player_idle;
+	t_sprite		*spr_zombie;
+	t_sprite		*spr_wall;
+	t_sprite		*spr_key;
+	t_sprite		*spr_exit;
 
-	t_obj_player	obj_player;
-	t_obj_zombie	obj_zombie;
-	t_obj_wall		obj_wall;
-	t_obj_key		obj_key;
-	t_obj_exit		obj_exit;
-}				t_game;
+	t_list			instances;
+}					t_game;
 
-t_sprite	*create_sprite(char *path);
+t_list		*create_list();
+int			push_list(t_list *list, void *data);
+void		free_list(t_list *list, void (*del)(void *));
+
+t_sprite	*create_sprite();
+int			add_subimage(t_sprite *spr, char *path)
+void		set_sprite_offset(int offset_x, int offset_y);
+void		delete_sprite(t_sprite *spr)
+
+
+t_instance	*create_player_instance(int x, int y);
+void		obj_player_step(t_instance *this);
+void		obj_player_draw(t_instance *this);
+void		destroy_instance(void *id);
 
 void		draw_sprite(t_sprite *spr, int subimg, int x, int y);
 
+void		reset_canvas();
+void		loop();
 void		draw();
 
 #endif
