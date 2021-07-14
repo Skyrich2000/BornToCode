@@ -4,8 +4,8 @@
 # define OK 1
 # define ERROR 0
 
-# define WIDTH 500
-# define HEIGHT 500
+# define WIDTH 600
+# define HEIGHT 300
 
 typedef struct		s_list
 {
@@ -45,11 +45,12 @@ typedef struct		s_instance
 	int 			type;
 	t_object		obj;
 	t_sprite		*spr;
-	t_list			*img;
+	t_list			*img_node;
+	int				img_speed;
 	int				x;
 	int				y;
-	void			(*step)(struct s_instance *this)
-	void			(*draw)(struct s_instance *this)
+	void			(*step)(struct s_instance *this);
+	void			(*draw)(struct s_instance *this);
 }					t_instance;
 
 typedef struct		s_canvas
@@ -65,15 +66,15 @@ typedef struct		s_game
 {
 	void			*mlx;
 	void			*win;
-	t_canvas		canvas;
 
 	t_sprite		*spr_player_idle;
+	t_sprite		*spr_player_move_right;
 	t_sprite		*spr_zombie;
 	t_sprite		*spr_wall;
 	t_sprite		*spr_key;
 	t_sprite		*spr_exit;
 
-	t_list			instances;
+	t_list			*instances;
 }					t_game;
 
 t_list		*create_list();
@@ -81,9 +82,9 @@ int			push_list(t_list *list, void *data);
 void		free_list(t_list *list, void (*del)(void *));
 
 t_sprite	*create_sprite();
-int			add_subimage(t_sprite *spr, char *path)
+int			add_subimage(t_sprite *spr, char *path);
 void		set_sprite_offset(int offset_x, int offset_y);
-void		delete_sprite(t_sprite *spr)
+void		delete_sprite(t_sprite *spr);
 
 
 t_instance	*create_player_instance(int x, int y);
@@ -94,7 +95,7 @@ void		destroy_instance(void *id);
 void		draw_sprite(t_sprite *spr, int subimg, int x, int y);
 
 void		reset_canvas();
-void		loop();
+int			loop(void *param);
 void		draw();
 
 #endif
