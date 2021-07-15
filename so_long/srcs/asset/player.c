@@ -3,52 +3,37 @@
 
 t_instance	*create_player_instance(int x, int y)
 {
-	t_instance *new;
+	t_instance *ins;
 
-	new = (t_instance *)malloc(sizeof(t_instance));
-	if (!new)
+	ins = create_instance(g()->asset.spr_player_idle, (int [3]){PLAYER, x, y}, obj_player_step, obj_player_draw);
+	if (!ins)
 		return (ERROR);
-	new->type = 0;
-	new->obj.player.hp = 0;
-	new->spr = g()->spr_player_idle;
-	new->img_node = new->spr->imgs->next;
-	new->img_speed = 10;
-	new->x = x;
-	new->y = y;
-	new->step = obj_player_step;
-	new->draw = obj_player_draw;
-	if (!push_list(g()->instances, new))
-		return (ERROR);
-	return (new);
+	ins->obj.player.hp = 0;
+	ins->obj.player.mv = 0;
+	return (ins);
 }
 
 void		obj_player_step(t_instance *this)
 {
-	static int time = 0;
-	static int mv = 0;
+	int prev_mv;
+	int mv;
 
-	time++;
-	if (time > 120)
-	{
-		if (mv == 0) // if stop
-		{
-			this->spr = g()->spr_player_move_right;
-			this->img_node = this->spr->imgs->next;
-			this->img_speed = 5;
-			mv = 1; // go right
-		}
-		else if (mv == 1) // if going right
-		{
-			this->spr = g()->spr_player_idle;
-			this->img_node = this->spr->imgs->next;
-			this->img_speed = 10;
-			mv = 0; // stop
-		}
-		time = 0;
-	}
+	prev_mv = this->obj.player.mv;
+	mv = 0;
+	if (keyboard_check(KEY_D))
+		mv = 1;
+	else if (keyboard_check(KEY_A))
+		mv = -1;
 
-	if (mv)
-		this->x += 1;
+	if (prev_mv != 0 && mv == 0)
+		change_sprite(this, g()->asset.spr_player_idle);
+	if (prev_mv != 1 && mv == 1)
+		change_sprite(this, g()->asset.spr_player_move_right);
+	if (prev_mv != -1 && mv == -1)
+		change_sprite(this, g()->asset.spr_player_move_left);
+
+	this->x += mv * 2;
+	this->obj.player.mv = mv;
 }
 
 void		obj_player_draw(t_instance *this)

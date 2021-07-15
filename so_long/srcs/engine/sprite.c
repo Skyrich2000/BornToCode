@@ -1,6 +1,6 @@
 #include "engine.h"
 
-t_sprite	*create_sprite()
+t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed)
 {
 	t_sprite *new;
 
@@ -8,12 +8,14 @@ t_sprite	*create_sprite()
 	new->imgs = create_list();
 	if (!new->imgs)
 		return (ERROR);
-	new->offset_x = 0;
-	new->offset_y = 0;
+	new->subimg = 0;
+	new->img_speed = img_speed;
+	new->offset_x = offset_x;
+	new->offset_y = offset_y;
 	return (new);
 }
 
-int			add_subimage(t_sprite *spr, char *path)
+int			add_sprite_subimage(t_sprite *spr, char *path)
 {
 	void	*img;
 
@@ -26,4 +28,11 @@ void		delete_sprite(t_sprite *spr)
 {
 	free_list(spr->imgs, 0);
 	free(spr);
+}
+
+void		change_sprite(t_instance *id, t_sprite *spr)
+{
+	id->spr = spr;
+	id->img_node = id->spr->imgs->next;
+	id->img_speed = id->spr->img_speed;
 }

@@ -25,13 +25,14 @@ typedef struct		s_sprite
 	int				width;
 	int				height;
 	int				subimg;
+	int				img_speed;
 	int				offset_x;
 	int				offset_y;
 }					t_sprite;
 
 typedef struct		s_instance
 {
-	int 			type;
+	int				type;
 	t_object		obj;
 	t_sprite		*spr;
 	t_list			*img_node;
@@ -55,27 +56,34 @@ typedef struct		s_game
 {
 	void			*mlx;
 	void			*win;
-`	t_asset			asset;
+	t_asset			asset;
 	t_canvas		background;
 	t_list			*instances;
+	int				keys[127];
 }					t_game;
+
+t_game		*g();
+void		init_game();
+int			loop();
+int			key_press(int keycode);
+int			key_release(int keycode);
+void		start_game();
 
 t_list		*create_list();
 int			push_list(t_list *list, void *data);
 void		free_list(t_list *list, void (*del)(void *));
 
-t_sprite	*add_sprite();
+t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed);
 int			add_sprite_subimage(t_sprite *spr, char *path);
-void		set_sprite_offset(int offset_x, int offset_y);
 void		delete_sprite(t_sprite *spr);
+void		change_sprite(t_instance *id, t_sprite *spr);
 
+int			keyboard_check(int keycode);
+
+t_instance  *create_instance(t_sprite *spr, int data[4], void (*step)(t_instance *this), void (*draw)(t_instance *this));
 void		destroy_instance(void *id);
+
 void		draw_sprite(t_sprite *spr, t_list *img_node, int x, int y);
 void		draw_background();
-
-t_game		*g();
-void		init_game();
-int			loop(void *param);
-void		start_game();
 
 #endif

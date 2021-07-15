@@ -2,9 +2,24 @@
 # define ASSET_H
 # include "engine.h"
 
+#define PLAYER 0
+#define ZOMBIE 1
+#define WALL 2
+#define KEY 3
+#define EXIT 4
+
+# define KEY_A				0
+# define KEY_S				1
+# define KEY_D				2
+
+
+typedef struct		s_sprite t_sprite;
+typedef struct		s_instance t_instance;
+
 typedef struct		s_obj_player
 {
 	int				hp;
+	int				mv;
 }					t_obj_player;
 
 typedef struct		s_obj_zombie
@@ -22,6 +37,7 @@ typedef struct		s_asset
 {
 	t_sprite		*spr_player_idle;
 	t_sprite		*spr_player_move_right;
+	t_sprite		*spr_player_move_left;
 	t_sprite		*spr_zombie;
 	t_sprite		*spr_wall;
 	t_sprite		*spr_key;

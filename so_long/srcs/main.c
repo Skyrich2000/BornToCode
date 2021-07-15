@@ -8,11 +8,11 @@ int main()
 
 	t_instance	*player;
 	player = create_player_instance(50, 50);
-	printf("done!\n", player);
+	printf("done!\n");
 
 	start_game();
 
-	delete_sprite(g()->spr_player_idle);
-	delete_sprite(g()->spr_player_move_right);
+	delete_sprite(g()->asset.spr_player_idle);
+	delete_sprite(g()->asset.spr_player_move_right);
 	return (0);
 }

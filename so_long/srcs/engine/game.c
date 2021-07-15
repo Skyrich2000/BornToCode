@@ -1,6 +1,8 @@
 #include "engine.h"
 #include <time.h>
 
+time_t start;
+
 t_game	*g()
 {
 	static t_game game;
@@ -10,17 +12,21 @@ t_game	*g()
 
 void	init_game()
 {
-	t_game *game;
+	t_game	*game;
+	int		i;
 
 	game = g();
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "my game");
-	game->bakcground.img = mlx_new_image(g()->mlx, WIDTH, HEIGHT);
+	game->background.img = mlx_new_image(g()->mlx, WIDTH, HEIGHT);
 	game->background.addr = mlx_get_data_addr(game->background.img, &game->background.bits_per_pixel, &game->background.line_length, &game->background.endian);
 	game->instances = create_list();
+	i = 0;
+	while (i++ < 127)
+		game->keys[i] = 0;
 }
 
-int		loop(void *param)
+int		loop()
 {
 	static int fps = 0;
 	time_t end;
@@ -40,7 +46,8 @@ int		loop(void *param)
 	while (node)
 	{
 		ins = (t_instance *)node->data;
-		ins->step(ins);
+		if (ins->step)
+			ins->step(ins);
 		node = node->next;
 
 	}
@@ -50,7 +57,8 @@ int		loop(void *param)
 	while (node)
 	{
 		ins = (t_instance *)node->data;
-		ins->draw(ins);
+		if (ins->draw)
+			ins->draw(ins);
 		node = node->next;
 	}
 	return (OK);
@@ -58,6 +66,8 @@ int		loop(void *param)
 
 void	start_game()
 {
+	mlx_hook(g()->win, 2, 0, key_press, 0);
+	mlx_hook(g()->win, 3, 0, key_release, 0);
 	mlx_loop_hook(g()->mlx, loop, 0);
 	mlx_loop(g()->mlx);
 }
