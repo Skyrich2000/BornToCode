@@ -1,5 +1,10 @@
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef ENGINE_H
+# define ENGINE_H
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include "../srcs/mlx/mlx.h"
+# include "asset.h"
 
 # define OK 1
 # define ERROR 0
@@ -23,22 +28,6 @@ typedef struct		s_sprite
 	int				offset_x;
 	int				offset_y;
 }					t_sprite;
-
-typedef struct		s_obj_player
-{
-	int				hp;
-}					t_obj_player;
-
-typedef struct		s_obj_zombie
-{
-	int				hp;
-}					t_obj_zombie;
-
-typedef union		u_object
-{
-	t_obj_player	player;
-	t_obj_zombie	zombie;
-}					t_object;
 
 typedef struct		s_instance
 {
@@ -66,14 +55,8 @@ typedef struct		s_game
 {
 	void			*mlx;
 	void			*win;
-
-	t_sprite		*spr_player_idle;
-	t_sprite		*spr_player_move_right;
-	t_sprite		*spr_zombie;
-	t_sprite		*spr_wall;
-	t_sprite		*spr_key;
-	t_sprite		*spr_exit;
-
+`	t_asset			asset;
+	t_canvas		background;
 	t_list			*instances;
 }					t_game;
 
@@ -81,21 +64,18 @@ t_list		*create_list();
 int			push_list(t_list *list, void *data);
 void		free_list(t_list *list, void (*del)(void *));
 
-t_sprite	*create_sprite();
-int			add_subimage(t_sprite *spr, char *path);
+t_sprite	*add_sprite();
+int			add_sprite_subimage(t_sprite *spr, char *path);
 void		set_sprite_offset(int offset_x, int offset_y);
 void		delete_sprite(t_sprite *spr);
 
-
-t_instance	*create_player_instance(int x, int y);
-void		obj_player_step(t_instance *this);
-void		obj_player_draw(t_instance *this);
 void		destroy_instance(void *id);
+void		draw_sprite(t_sprite *spr, t_list *img_node, int x, int y);
+void		draw_background();
 
-void		draw_sprite(t_sprite *spr, int subimg, int x, int y);
-
-void		reset_canvas();
+t_game		*g();
+void		init_game();
 int			loop(void *param);
-void		draw();
+void		start_game();
 
 #endif

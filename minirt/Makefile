@@ -58,7 +58,7 @@ OBJS = $(SRCS:%.c=%.o)
 #
 
 CC		=	clang
-CFLAGS	=	#-Wall -Werror -Wextra
+CFLAGS	=	-Wall -Werror -Wextra
 CLIB	=	-Lsrcs/mlx -lmlx -framework OpenGL -framework Appkit $(INCLUDE)
 
 #
@@ -70,7 +70,7 @@ all		: $(NAME)
 %.o	:%.c
 	$(CC) $(CFLAGS)  -c $< -o $@
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(CLIB) $(SRCS) -o $(NAME)
 	install_name_tool -change libmlx.dylib srcs/mlx/libmlx.dylib $(NAME)
 
