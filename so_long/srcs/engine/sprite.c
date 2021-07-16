@@ -32,6 +32,8 @@ void		delete_sprite(t_sprite *spr)
 
 void		change_sprite(t_instance *id, t_sprite *spr)
 {
+	if (id->spr == spr)
+		return ;
 	id->spr = spr;
 	id->img_node = id->spr->imgs->next;
 	id->img_speed = id->spr->img_speed;

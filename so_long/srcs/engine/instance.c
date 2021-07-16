@@ -15,5 +15,6 @@ t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance
 	new->y = data[2];
 	new->step = step;
 	new->draw = draw;
+	new->draw_time = 0;
     return (new);
 }

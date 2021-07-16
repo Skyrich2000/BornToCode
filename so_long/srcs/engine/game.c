@@ -17,7 +17,7 @@ void	init_game()
 
 	game = g();
 	game->mlx = mlx_init();
-	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "my game");
+	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "TENET");
 	game->background.img = mlx_new_image(g()->mlx, WIDTH, HEIGHT);
 	game->background.addr = mlx_get_data_addr(game->background.img, &game->background.bits_per_pixel, &game->background.line_length, &game->background.endian);
 	game->instances = create_list();
@@ -51,7 +51,6 @@ int		loop()
 		node = node->next;
 
 	}
-
 	draw_background();
 	node = g()->instances->next;
 	while (node)

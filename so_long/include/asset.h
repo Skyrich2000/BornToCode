@@ -11,7 +11,13 @@
 # define KEY_A				0
 # define KEY_S				1
 # define KEY_D				2
+# define KEY_W				13
+# define KEY_SPACEBAR		49
 
+# define KEY_LEFT			123
+# define KEY_DOWN			125
+# define KEY_RIGHT			124
+# define KEY_UP				126
 
 typedef struct		s_sprite t_sprite;
 typedef struct		s_instance t_instance;
@@ -19,7 +25,10 @@ typedef struct		s_instance t_instance;
 typedef struct		s_obj_player
 {
 	int				hp;
-	int				mv;
+	int				attack;
+	int				h_mv;
+	int				v_mv;
+	int				dir;
 }					t_obj_player;
 
 typedef struct		s_obj_zombie
@@ -35,10 +44,19 @@ typedef union		u_object
 
 typedef struct		s_asset
 {
-	t_sprite		*spr_player_idle;
+	t_sprite		*spr_player_idle_right;
+	t_sprite		*spr_player_idle_left;
 	t_sprite		*spr_player_move_right;
 	t_sprite		*spr_player_move_left;
-	t_sprite		*spr_zombie;
+	t_sprite		*spr_player_attack_right;
+	t_sprite		*spr_player_attack_left;
+	t_sprite		*spr_player_die_right;
+	t_sprite		*spr_player_die_left;
+
+	t_sprite		*spr_zombie_move_right;
+	t_sprite		*spr_zombie_move_left;
+	t_sprite		*spr_zombie_die_right;
+	t_sprite		*spr_zombie_die_left;
 	t_sprite		*spr_wall;
 	t_sprite		*spr_key;
 	t_sprite		*spr_exit;

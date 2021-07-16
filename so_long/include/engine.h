@@ -37,6 +37,7 @@ typedef struct		s_instance
 	t_sprite		*spr;
 	t_list			*img_node;
 	int				img_speed;
+	int				draw_time;
 	int				x;
 	int				y;
 	void			(*step)(struct s_instance *this);

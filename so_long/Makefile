@@ -9,7 +9,8 @@ SRCS	= ./srcs/main.c \
 			./srcs/engine/instance.c \
 			./srcs/engine/list.c \
 			./srcs/asset/asset.c \
-			./srcs/asset/player.c
+			./srcs/asset/player.c \
+			./srcs/asset/zombie.c
 
 CC		=	gcc
 INCLUDE =	-Iinclude -Isrcs/mlx
@@ -29,3 +30,5 @@ clean	:
 
 fclean	: clean
 	rm -f $(NAME)
+
+re		: fclean all
