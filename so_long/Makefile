@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/16 07:48:16 by ycha              #+#    #+#              #
-#    Updated: 2021/07/16 07:48:21 by ycha             ###   ########.fr        #
+#    Updated: 2021/07/17 04:28:05 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= so_long
 
-SRCS	= ./srcs/main.c \
+SRCS	= ./srcs/main.c ./srcs/debug.c\
 			./srcs/engine/game.c \
 			./srcs/engine/sprite.c \
 			./srcs/engine/draw.c \
@@ -21,7 +21,10 @@ SRCS	= ./srcs/main.c \
 			./srcs/engine/list.c \
 			./srcs/asset/asset.c \
 			./srcs/asset/player.c \
-			./srcs/asset/zombie.c
+			./srcs/asset/zombie.c \
+			./srcs/asset/round.c \
+			./srcs/asset/avatar.c \
+			./srcs/library/library.c
 
 CC		=	gcc
 INCLUDE =	-Iinclude -Isrcs/mlx

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:53 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/16 07:48:54 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/17 04:25:15 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ t_instance	*create_player_instance(int x, int y)
 	ins->obj.player.attack = 0;
 	ins->obj.player.h_mv = 0;
 	ins->obj.player.v_mv = 0;
-	ins->obj.player.dir = 1;
+	ins->obj.player.prev_x = x;
+	ins->obj.player.prev_y = y;
+	ins->dir = 1;
 	return (ins);
 }
 
@@ -32,34 +34,50 @@ void		obj_player_step(t_instance *this)
 {
 	int h_mv;
 	int v_mv;
+	t_instance *ins;
+	t_instance *round;
+	t_footprint *footprint;
 
+	round = g()->instances[ROUND]->next->data;
+	if (round->obj.round.inverted == 1)
+		return ;
+	this->obj.player.prev_x = this->x;
+	this->obj.player.prev_y = this->y;
 	if (keyboard_check(KEY_D) || keyboard_check(KEY_RIGHT))
-		this->obj.player.dir = 1;
+		this->dir = 1;
 	else if (keyboard_check(KEY_A) || keyboard_check(KEY_LEFT))
-		this->obj.player.dir = -1;
+		this->dir = -1;
 	h_mv = (keyboard_check(KEY_D) || keyboard_check(KEY_RIGHT)) - (keyboard_check(KEY_A) || keyboard_check(KEY_LEFT));
 	v_mv = (keyboard_check(KEY_S) || keyboard_check(KEY_DOWN)) - (keyboard_check(KEY_W) || keyboard_check(KEY_UP));
+
+	if (keyboard_check(KEY_SPACEBAR))
+	{
+		round->obj.round.inverted = 1;
+		create_avatar_instance(round->obj.round.straight, 1);
+		return ;
+	}
 
 	if (this->obj.player.attack == 0)
 	{
 		if (keyboard_check(KEY_SPACEBAR))
 		{
-			if (this->obj.player.dir == 1)
+			if (this->dir == 1)
 				change_sprite(this, g()->asset.spr_player_attack_right);
 			else
 				change_sprite(this, g()->asset.spr_player_attack_left);
-			this->obj.player.attack = 1;		
+			this->obj.player.attack = 1;
+
 		}
 		else if (v_mv == 0 && h_mv == 0)
 		{
-			if (this->obj.player.dir == 1)
+			if (this->dir == 1)
 				change_sprite(this, g()->asset.spr_player_idle_right);
 			else
 				change_sprite(this, g()->asset.spr_player_idle_left);
 		}
 		else
 		{
-			if (this->obj.player.dir == 1)
+			if (this->dir == 1)
 				change_sprite(this, g()->asset.spr_player_move_right);
 			else
 				change_sprite(this, g()->asset.spr_player_move_left);
@@ -67,10 +85,15 @@ void		obj_player_step(t_instance *this)
 		this->x += h_mv * 2;
 		this->y += v_mv * 2;
 	}
-	
+
+	footprint = malloc(sizeof(t_footprint));
+	footprint->x = this->x;
+	footprint->y = this->y;
+	footprint->dir = this->dir;
+	ins = g()->instances[ROUND]->next->data;
+	push_list(ins->obj.round.straight, footprint);
 	if (this->obj.player.attack == 1 && this->img_node->next == 0)
 		this->obj.player.attack = 0;
-
 	this->obj.player.h_mv = h_mv;
 	this->obj.player.v_mv = v_mv;
 }

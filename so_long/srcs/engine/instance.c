@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   instance.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:08 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/16 07:49:09 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/17 03:05:53 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance
 	t_instance *new;
 
 	new = (t_instance *)malloc(sizeof(t_instance));
-	if (!new || !push_list(g()->instances, new))
+	if (!new || !push_list(g()->instances[data[0]], new))
 		return (ERROR);
     new->type = data[0];
 	new->spr = spr;
@@ -25,6 +25,7 @@ t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance
 	new->img_speed = spr->img_speed;
 	new->x = data[1];
 	new->y = data[2];
+	new->dir = 1;
 	new->step = step;
 	new->draw = draw;
 	new->draw_time = 0;

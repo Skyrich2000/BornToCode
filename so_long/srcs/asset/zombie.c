@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   zombie.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:56 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/16 07:48:57 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/17 03:11:42 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,11 @@ t_instance	*create_zombie_instance(int x, int y)
 {
 	t_instance *ins;
 
-	ins = create_instance(g()->asset.spr_zombie_move_left, (int [3]){ZOMBIE, x, y}, obj_zombie_step, obj_zombie_draw);
+	ins = create_instance(g()->asset.spr_zombie_move_left, (int [3]){ZOMBIE, x, y}, 0, obj_zombie_draw);
 	if (!ins)
 		return (ERROR);
-	ins->obj.zombie.hp = 0;
+	ins->obj.zombie.hp = 100;
 	return (ins);
-}
-
-void        obj_zombie_step(t_instance *this)
-{
-    this->x -= 1;
 }
 
 void        obj_zombie_draw(t_instance *this)

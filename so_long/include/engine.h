@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:32 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/16 07:48:33 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/17 04:07:03 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include "../srcs/mlx/mlx.h"
 # include "asset.h"
+#include "library.h"
 
 # define OK 1
 # define ERROR 0
@@ -52,6 +53,7 @@ typedef struct		s_instance
 	int				draw_time;
 	int				x;
 	int				y;
+	int				dir;
 	void			(*step)(struct s_instance *this);
 	void			(*draw)(struct s_instance *this);
 }					t_instance;
@@ -71,17 +73,20 @@ typedef struct		s_game
 	void			*win;
 	t_asset			asset;
 	t_canvas		background;
-	t_list			*instances;
+	t_list			*instances[OBJ_SIZE];
 	int				keys[127];
 }					t_game;
 
+// core engine function
 t_game		*g();
 void		init_game();
 int			loop();
+int			exit_press(void);
 int			key_press(int keycode);
 int			key_release(int keycode);
 void		start_game();
 
+// dev usable function
 t_list		*create_list();
 int			push_list(t_list *list, void *data);
 void		free_list(t_list *list, void (*del)(void *));
@@ -91,12 +96,15 @@ int			add_sprite_subimage(t_sprite *spr, char *path);
 void		delete_sprite(t_sprite *spr);
 void		change_sprite(t_instance *id, t_sprite *spr);
 
+// user usable function
 int			keyboard_check(int keycode);
 
-t_instance  *create_instance(t_sprite *spr, int data[4], void (*step)(t_instance *this), void (*draw)(t_instance *this));
+t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance *this), void (*draw)(t_instance *this));
 void		destroy_instance(void *id);
 
 void		draw_sprite(t_sprite *spr, t_list *img_node, int x, int y);
 void		draw_background();
 
+// debug
+void	print_footprint();
 #endif

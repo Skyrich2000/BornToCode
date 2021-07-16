@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asset.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/16 07:48:30 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/17 04:09:48 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 # define ASSET_H
 # include "engine.h"
 
-#define PLAYER 0
-#define ZOMBIE 1
-#define WALL 2
-#define KEY 3
-#define EXIT 4
+# define PLAYER 0
+# define ZOMBIE 1
+# define WALL 2
+# define KEY 3
+# define EXIT 4
+# define ROUND 5
+# define OBJ_SIZE 6
 
 # define KEY_A				0
 # define KEY_S				1
@@ -33,6 +35,14 @@
 
 typedef struct		s_sprite t_sprite;
 typedef struct		s_instance t_instance;
+typedef struct		s_list t_list;
+
+typedef struct		s_footprint
+{
+	int				x;
+	int				y;
+	int				dir;
+}					t_footprint;
 
 typedef struct		s_obj_player
 {
@@ -40,8 +50,24 @@ typedef struct		s_obj_player
 	int				attack;
 	int				h_mv;
 	int				v_mv;
-	int				dir;
+	int				prev_x;
+	int				prev_y;
 }					t_obj_player;
+
+typedef struct		s_obj_round
+{
+	t_list			*straight;
+	t_list			*reverse;
+	int				steps;
+	int				deathcount;
+	int				inverted;
+
+}					t_obj_round;
+
+typedef struct		s_obj_avatar
+{
+	t_list			*node;
+}					t_obj_avatar;
 
 typedef struct		s_obj_zombie
 {
@@ -52,6 +78,8 @@ typedef union		u_object
 {
 	t_obj_player	player;
 	t_obj_zombie	zombie;
+	t_obj_round		round;
+	t_obj_avatar	avatar;
 }					t_object;
 
 typedef struct		s_asset
@@ -81,7 +109,12 @@ void		obj_player_step(t_instance *this);
 void		obj_player_draw(t_instance *this);
 
 t_instance	*create_zombie_instance(int x, int y);
-void		obj_zombie_step(t_instance *this);
 void		obj_zombie_draw(t_instance *this);
+
+t_instance	*create_avatar_instance(t_list *route, int dir);
+void		obj_avatar_step(t_instance *this);
+void		obj_avatar_draw(t_instance *this);
+
+t_instance	*create_round_instance();
 
 #endif

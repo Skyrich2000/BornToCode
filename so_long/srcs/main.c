@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:43 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/16 07:48:44 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/17 03:59:09 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,14 @@ int main()
 	init_game();
 	init_asset();
 
-	create_player_instance(50, 50);
+	t_instance *ins;
+
+	ins = create_player_instance(50, 50);
 	create_zombie_instance(450, 150);
 	create_zombie_instance(450, 100);
 	create_zombie_instance(450, 50);
 	create_zombie_instance(450, 75);
+	create_round_instance();
 	printf("loading done!\n");
 
 	start_game();
