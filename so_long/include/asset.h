@@ -21,6 +21,7 @@
 # define EXIT 4
 # define ROUND 5
 # define OBJ_SIZE 6
+# define INS_MAX 100
 
 # define KEY_A				0
 # define KEY_S				1
@@ -36,6 +37,17 @@
 typedef struct		s_sprite t_sprite;
 typedef struct		s_instance t_instance;
 typedef struct		s_list t_list;
+
+typedef struct		s_global
+{
+	int				steps;
+	t_list			*straight;
+	t_list			*reverse;
+	int				deathcount;
+	int				inverted;
+	t_instance		*player_id;
+	t_instance		*avatar_id;
+}					t_global;
 
 typedef struct		s_footprint
 {
@@ -54,16 +66,6 @@ typedef struct		s_obj_player
 	int				prev_y;
 }					t_obj_player;
 
-typedef struct		s_obj_round
-{
-	t_list			*straight;
-	t_list			*reverse;
-	int				steps;
-	int				deathcount;
-	int				inverted;
-
-}					t_obj_round;
-
 typedef struct		s_obj_avatar
 {
 	t_list			*node;
@@ -78,12 +80,13 @@ typedef union		u_object
 {
 	t_obj_player	player;
 	t_obj_zombie	zombie;
-	t_obj_round		round;
 	t_obj_avatar	avatar;
 }					t_object;
 
 typedef struct		s_asset
 {
+	t_canvas		*background_black;
+
 	t_sprite		*spr_player_idle_right;
 	t_sprite		*spr_player_idle_left;
 	t_sprite		*spr_player_move_right;
@@ -100,6 +103,12 @@ typedef struct		s_asset
 	t_sprite		*spr_wall;
 	t_sprite		*spr_key;
 	t_sprite		*spr_exit;
+
+	t_scene			*scene_main;
+	t_scene			*scene_tutorial;
+	t_scene			*scene_mandatory;
+	t_scene			*scene_play;
+	t_scene			*scene_rank;
 }					t_asset;
 
 void		init_asset();
@@ -116,5 +125,8 @@ void		obj_avatar_step(t_instance *this);
 void		obj_avatar_draw(t_instance *this);
 
 t_instance	*create_round_instance();
+
+void		scene_play_start();
+void		scene_play_end();
 
 #endif

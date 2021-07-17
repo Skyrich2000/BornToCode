@@ -67,13 +67,21 @@ typedef struct		s_canvas
 	int				endian;
 }					t_canvas;
 
+typedef struct		s_scene
+{
+	t_canvas		*background;
+	void			(*start)(void);
+	void			(*end)(void);
+}					t_scene;
+
 typedef struct		s_game
 {
 	void			*mlx;
 	void			*win;
+	t_global		global;
 	t_asset			asset;
-	t_canvas		background;
 	t_list			*instances[OBJ_SIZE];
+	t_scene			*scene;
 	int				keys[127];
 }					t_game;
 
@@ -84,9 +92,10 @@ int			loop();
 int			exit_press(void);
 int			key_press(int keycode);
 int			key_release(int keycode);
-void		start_game();
+void		scene_end();
+void		start_game(t_scene *scene);
 
-// dev usable function
+// dev function
 t_list		*create_list();
 int			push_list(t_list *list, void *data);
 void		free_list(t_list *list, void (*del)(void *));
@@ -96,10 +105,14 @@ int			add_sprite_subimage(t_sprite *spr, char *path);
 void		delete_sprite(t_sprite *spr);
 void		change_sprite(t_instance *id, t_sprite *spr);
 
+t_scene		*add_scene(t_canvas *background, void (*init)(void));
+void		delete_scene(t_scene *scene);
+
 // user usable function
 int			keyboard_check(int keycode);
 
 t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance *this), void (*draw)(t_instance *this));
+t_instance	*get_instance(int type);
 void		destroy_instance(void *id);
 
 void		draw_sprite(t_sprite *spr, t_list *img_node, int x, int y);

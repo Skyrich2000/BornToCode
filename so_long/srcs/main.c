@@ -18,9 +18,9 @@ int main()
 	init_game();
 	init_asset();
 
-	t_instance *ins;
+	//t_instance *ins;
 
-	ins = create_player_instance(50, 50);
+	create_player_instance(50, 50);
 	create_zombie_instance(450, 150);
 	create_zombie_instance(450, 100);
 	create_zombie_instance(450, 50);
