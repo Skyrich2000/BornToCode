@@ -28,16 +28,19 @@ void	init_game()
 	int		i;
 
 	game = g();
+	sl_bzero(game, sizeof(t_game));
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "TENET");
-	game->background.img = mlx_new_image(g()->mlx, WIDTH, HEIGHT);
-	game->background.addr = mlx_get_data_addr(game->background.img, &game->background.bits_per_pixel, &game->background.line_length, &game->background.endian);
 	i = -1;
 	while (++i < OBJ_SIZE)
 		game->instances[i] = create_list();
 	i = -1;
 	while (++i < 127)
 		game->keys[i] = 0;
+	mlx_hook(g()->win, 2, 0, key_press, 0);
+	mlx_hook(g()->win, 3, 0, key_release, 0);
+	mlx_hook(g()->win, 17, 0, exit_press, 0);
+	mlx_loop_hook(g()->mlx, loop, 0);
 }
 
 int		loop()
@@ -72,7 +75,7 @@ int		loop()
 		}
 	}
 	// draw
-	draw_background();
+	draw_background(g()->scene->background);
 	i = -1;
 	while (++i < OBJ_SIZE)
 	{
@@ -88,11 +91,10 @@ int		loop()
 	return (OK);
 }
 
-void	start_game()
+void	start_game(t_scene *scene)
 {
-	mlx_hook(g()->win, 2, 0, key_press, 0);
-	mlx_hook(g()->win, 3, 0, key_release, 0);
-	mlx_hook(g()->win, 17, 0, exit_press, 0);
-	mlx_loop_hook(g()->mlx, loop, 0);
+	g()->scene = scene;
+	if (scene->start)
+		scene->start();
 	mlx_loop(g()->mlx);
 }

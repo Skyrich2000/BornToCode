@@ -17,6 +17,8 @@ t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed)
 	t_sprite *new;
 
 	new = (t_sprite *)malloc(sizeof(t_sprite));
+	if (!new)
+		return (ERROR);
 	new->imgs = create_list();
 	if (!new->imgs)
 		return (ERROR);
@@ -27,13 +29,32 @@ t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed)
 	return (new);
 }
 
-int			add_sprite_subimage(t_sprite *spr, char *path)
+int			add_sprite_subimage(t_sprite *spr, char *path, int start, int end)
 {
+	char	*num;
+	char	*path_all[2];
 	void	*img;
+	int		dir;
 
-	spr->subimg++;
-	img = mlx_xpm_file_to_image(g()->mlx, path, &spr->width, &spr->height);
-	return (push_list(spr->imgs, img));
+	dir = -1;
+	if (start > end)
+		dir = 1;
+	start += dir;
+	while (start != end)
+	{
+		num = sl_itoa(end);
+		path_all[0] = sl_strjoin(path, num);
+		path_all[1] = sl_strjoin(path_all[0], ".xpm");
+		img = mlx_xpm_file_to_image(g()->mlx, path_all[1], &spr->width, &spr->height);
+		if (!push_list(spr->imgs, img))
+			return (ERROR);
+		spr->subimg++;
+		end += dir;
+		free(path_all[0]);
+		free(path_all[1]);
+		free(num);
+	}
+	return (OK);
 }
 
 void		delete_sprite(t_sprite *spr)

@@ -12,9 +12,14 @@
 
 #include "engine.h"
 
-void	draw_background()
+void	draw_background(t_canvas *background)
 {
-	mlx_put_image_to_window(g()->mlx, g()->win, g()->background.img, 0, 0);
+	mlx_put_image_to_window(g()->mlx, g()->win, background->img, 0, 0);
+}
+
+void	draw_subimg(void *img, int x, int y)
+{
+	mlx_put_image_to_window(g()->mlx, g()->win, img, x, y);
 }
 
 void	draw_sprite(t_sprite *spr, t_list *img_node, int x, int y)

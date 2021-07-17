@@ -24,7 +24,7 @@ t_list	*create_list()
 	return (new);
 }
 
-int		push_list(t_list *list, void *data)
+t_list	*push_list(t_list *list, void *data)
 {
 	t_list *new;
 
@@ -37,7 +37,19 @@ int		push_list(t_list *list, void *data)
 	if (new->next)
 		new->next->prev = new;
 	new->prev->next = new;
-	return (OK);
+	return (new);
+}
+
+void	*pop_list(t_list *node)
+{
+	void *data;
+
+	data = node->data;
+	node->prev->next = node->next;
+	if (node->next)
+		node->next->prev = node->prev;
+	free(node);
+	return (data);
 }
 
 void	free_list(t_list *list, void (*del)(void *))

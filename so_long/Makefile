@@ -19,12 +19,18 @@ SRCS	= ./srcs/main.c ./srcs/debug.c\
 			./srcs/engine/keyboard.c \
 			./srcs/engine/instance.c \
 			./srcs/engine/list.c \
+			./srcs/engine/scene.c \
 			./srcs/asset/asset.c \
-			./srcs/asset/player.c \
-			./srcs/asset/zombie.c \
-			./srcs/asset/round.c \
-			./srcs/asset/avatar.c \
-			./srcs/library/library.c
+			./srcs/asset/background/background_black.c \
+			./srcs/asset/object/obj_player.c \
+			./srcs/asset/object/obj_zombie.c \
+			./srcs/asset/object/obj_avatar.c \
+			./srcs/asset/scene/scene_play.c \
+			./srcs/asset/sprite/spr_player.c \
+			./srcs/asset/sprite/spr_zombie.c \
+			./srcs/library/sl_free.c \
+			./srcs/library/sl_itoa.c \
+			./srcs/library/sl_strjoin.c
 
 CC		=	gcc
 INCLUDE =	-Iinclude -Isrcs/mlx

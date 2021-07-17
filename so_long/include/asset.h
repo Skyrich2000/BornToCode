@@ -15,11 +15,11 @@
 # include "engine.h"
 
 # define PLAYER 0
-# define ZOMBIE 1
-# define WALL 2
-# define KEY 3
-# define EXIT 4
-# define ROUND 5
+# define AVATAR 1
+# define ZOMBIE 2
+# define WALL 3
+# define KEY 4
+# define EXIT 5
 # define OBJ_SIZE 6
 # define INS_MAX 100
 
@@ -28,32 +28,32 @@
 # define KEY_D				2
 # define KEY_W				13
 # define KEY_SPACEBAR		49
-
 # define KEY_LEFT			123
 # define KEY_DOWN			125
 # define KEY_RIGHT			124
 # define KEY_UP				126
+# define KEY_B				11
 
+typedef struct		s_canvas t_canvas;
+typedef struct		s_scene t_scene;
 typedef struct		s_sprite t_sprite;
 typedef struct		s_instance t_instance;
 typedef struct		s_list t_list;
 
 typedef struct		s_global
 {
-	int				steps;
 	t_list			*straight;
 	t_list			*reverse;
+	int				steps;
 	int				deathcount;
 	int				inverted;
-	t_instance		*player_id;
-	t_instance		*avatar_id;
 }					t_global;
 
 typedef struct		s_footprint
 {
 	int				x;
 	int				y;
-	int				dir;
+	void			*img;
 }					t_footprint;
 
 typedef struct		s_obj_player
@@ -96,10 +96,25 @@ typedef struct		s_asset
 	t_sprite		*spr_player_die_right;
 	t_sprite		*spr_player_die_left;
 
-	t_sprite		*spr_zombie_move_right;
-	t_sprite		*spr_zombie_move_left;
+	t_sprite		*spr_player_idle_right_reverse;
+	t_sprite		*spr_player_idle_left_reverse;
+	t_sprite		*spr_player_move_right_reverse;
+	t_sprite		*spr_player_move_left_reverse;
+	t_sprite		*spr_player_attack_right_reverse;
+	t_sprite		*spr_player_attack_left_reverse;
+	t_sprite		*spr_player_die_right_reverse;
+	t_sprite		*spr_player_die_left_reverse;
+
+	t_sprite		*spr_zombie_idle_right;
+	t_sprite		*spr_zombie_idle_left;
 	t_sprite		*spr_zombie_die_right;
 	t_sprite		*spr_zombie_die_left;
+
+	t_sprite		*spr_zombie_idle_right_reverse;
+	t_sprite		*spr_zombie_idle_left_reverse;
+	t_sprite		*spr_zombie_die_right_reverse;
+	t_sprite		*spr_zombie_die_left_reverse;
+
 	t_sprite		*spr_wall;
 	t_sprite		*spr_key;
 	t_sprite		*spr_exit;
@@ -111,8 +126,22 @@ typedef struct		s_asset
 	t_scene			*scene_rank;
 }					t_asset;
 
-void		init_asset();
+int			init_asset();
+void		free_asset();
 
+//background
+int			init_background_black();
+
+// sprite
+int			init_spr_player();
+int			init_spr_player_reverse();
+int			init_spr_zombie();
+int			init_spr_zombie_reverse();
+int			init_spr_wall();
+int			init_spr_key();
+int			init_spr_exit();
+
+// object
 t_instance	*create_player_instance(int x, int y);
 void		obj_player_step(t_instance *this);
 void		obj_player_draw(t_instance *this);
@@ -124,8 +153,8 @@ t_instance	*create_avatar_instance(t_list *route, int dir);
 void		obj_avatar_step(t_instance *this);
 void		obj_avatar_draw(t_instance *this);
 
-t_instance	*create_round_instance();
-
+// scene
+int			init_scene_play();
 void		scene_play_start();
 void		scene_play_end();
 

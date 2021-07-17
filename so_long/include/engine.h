@@ -45,7 +45,8 @@ typedef struct		s_sprite
 
 typedef struct		s_instance
 {
-	int				type;
+	t_list			*node;
+	int				type; // delete?
 	t_object		obj;
 	t_sprite		*spr;
 	t_list			*img_node;
@@ -85,39 +86,40 @@ typedef struct		s_game
 	int				keys[127];
 }					t_game;
 
-// core engine function
+// engine function
 t_game		*g();
 void		init_game();
 int			loop();
+void		start_game(t_scene *scene);
+
 int			exit_press(void);
 int			key_press(int keycode);
 int			key_release(int keycode);
-void		scene_end();
-void		start_game(t_scene *scene);
 
 // dev function
 t_list		*create_list();
-int			push_list(t_list *list, void *data);
+t_list		*push_list(t_list *list, void *data);
+void		*pop_list(t_list *node);
 void		free_list(t_list *list, void (*del)(void *));
 
 t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed);
-int			add_sprite_subimage(t_sprite *spr, char *path);
+int			add_sprite_subimage(t_sprite *spr, char *path, int start, int end);
 void		delete_sprite(t_sprite *spr);
 void		change_sprite(t_instance *id, t_sprite *spr);
 
-t_scene		*add_scene(t_canvas *background, void (*init)(void));
-void		delete_scene(t_scene *scene);
+t_scene		*add_scene(t_canvas *background, void (*start)(void), void (*end)(void));
+void		scene_end();
 
 // user usable function
 int			keyboard_check(int keycode);
 
 t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance *this), void (*draw)(t_instance *this));
-t_instance	*get_instance(int type);
-void		destroy_instance(void *id);
+void		destroy_instance(t_instance *id);
 
+void		draw_subimg(void *img, int x, int y);
 void		draw_sprite(t_sprite *spr, t_list *img_node, int x, int y);
-void		draw_background();
+void		draw_background(t_canvas *background);
 
 // debug
-void	print_footprint();
+
 #endif

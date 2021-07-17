@@ -18,19 +18,8 @@ int main()
 	init_game();
 	init_asset();
 
-	//t_instance *ins;
-
-	create_player_instance(50, 50);
-	create_zombie_instance(450, 150);
-	create_zombie_instance(450, 100);
-	create_zombie_instance(450, 50);
-	create_zombie_instance(450, 75);
-	create_round_instance();
 	printf("loading done!\n");
 
-	start_game();
-
-	delete_sprite(g()->asset.spr_player_idle_right);
-	delete_sprite(g()->asset.spr_player_move_right);
+	start_game(g()->asset.scene_play);
 	return (0);
 }

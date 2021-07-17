@@ -14,12 +14,17 @@
 
 t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance *this), void (*draw)(t_instance *this))
 {
-	t_instance *new;
+	t_list		*node;
+	t_instance	*new;
 
 	new = (t_instance *)malloc(sizeof(t_instance));
-	if (!new || !push_list(g()->instances[data[0]], new))
+	if (!new)
 		return (ERROR);
-    new->type = data[0];
+	node = push_list(g()->instances[data[0]], new);
+	if (!node)
+		return (ERROR);
+	new->node = node;
+	new->type = data[0];
 	new->spr = spr;
 	new->img_node = new->spr->imgs->next;
 	new->img_speed = spr->img_speed;
@@ -30,4 +35,10 @@ t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance
 	new->draw = draw;
 	new->draw_time = 0;
     return (new);
+}
+
+void		destroy_instance(t_instance *id)
+{
+	pop_list(id->node);
+	free(id);
 }
