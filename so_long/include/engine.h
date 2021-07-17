@@ -72,6 +72,7 @@ typedef struct		s_scene
 {
 	t_canvas		*background;
 	void			(*start)(void);
+	void			(*controller)(void);
 	void			(*end)(void);
 }					t_scene;
 
@@ -107,7 +108,7 @@ int			add_sprite_subimage(t_sprite *spr, char *path, int start, int end);
 void		delete_sprite(t_sprite *spr);
 void		change_sprite(t_instance *id, t_sprite *spr);
 
-t_scene		*add_scene(t_canvas *background, void (*start)(void), void (*end)(void));
+t_scene		*add_scene(t_canvas *background, void (*start)(void), void (*controller)(void), void (*end)(void));
 void		scene_end();
 
 // user usable function
@@ -119,6 +120,8 @@ void		destroy_instance(t_instance *id);
 void		draw_subimg(void *img, int x, int y);
 void		draw_sprite(t_sprite *spr, t_list *img_node, int x, int y);
 void		draw_background(t_canvas *background);
+
+void		scene_restart();
 
 // debug
 

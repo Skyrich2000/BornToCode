@@ -63,29 +63,31 @@ int		loop()
 
 	// step
 	i = -1;
+	if (g()->scene->controller)
+		g()->scene->controller();
 	while (++i < OBJ_SIZE)
 	{
 		node = g()->instances[i]->next;
 		while (node)
 		{
 			ins = (t_instance *)node->data;
+			node = node->next;
 			if (ins->step)
 				ins->step(ins);
-			node = node->next;
 		}
 	}
 	// draw
-	draw_background(g()->scene->background);
 	i = -1;
+	draw_background(g()->scene->background);
 	while (++i < OBJ_SIZE)
 	{
 		node = g()->instances[i]->next;
 		while (node)
 		{
 			ins = (t_instance *)node->data;
+			node = node->next;
 			if (ins->draw)
 				ins->draw(ins);
-			node = node->next;
 		}
 	}
 	return (OK);

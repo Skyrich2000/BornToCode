@@ -17,9 +17,7 @@ int		init_asset()
 {
 	return (init_background_black() && \
 			init_spr_player() && \
-			init_spr_player_reverse() && \
 			init_spr_zombie() && \
-			init_spr_zombie_reverse() && \
 			init_scene_play());
 }
 

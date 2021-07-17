@@ -7,13 +7,13 @@ t_instance *create_avatar_instance(t_list *route, int dir)
 	t_list		*node;
 	t_instance	*ins;
 
-	ins = create_instance(g()->asset.spr_player_idle_right, (int[3]){AVATAR, 0, 0}, obj_avatar_draw, obj_avatar_draw);
+	ins = create_instance(g()->asset.spr_player_idle_right, (int[3]){AVATAR, 0, 0}, obj_avatar_step, obj_avatar_draw);
 	if (!ins)
 		return (ERROR);
 	node = route->next;
 	if (!dir)
 		while(node && node->next)
-			node = node->next; // not checked
+			node = node->next;
 	ins->obj.avatar.node = node;
 	ins->dir = dir;
 	return (ins);
@@ -36,6 +36,15 @@ void		obj_avatar_step(t_instance *this)
 	// 멈춰있을때, 왼쪽일때, 오른쪽일떄
 	//prev_fp = this->obj.avatar.node->data;
 	//fp = this->obj.avatar.node->next->data;
+	if (!this->obj.avatar.node)
+	{
+		if (g()->global.status == 0)
+			g()->global.status = 1;
+		if (g()->global.status == 2)
+			g()->global.status = 3;
+		destroy_instance(this);
+		return ;
+	}
 	if (this->dir)
 		this->obj.avatar.node = this->obj.avatar.node->next;
 	else
@@ -62,6 +71,10 @@ void		obj_avatar_draw(t_instance *this)
 {
 	t_footprint *fp;
 
-	fp = this->obj.avatar.node->next->data;
-	draw_subimg(fp->img, fp->x, fp->y);
+	if (this->obj.avatar.node)
+	{
+		fp = this->obj.avatar.node->data;
+		if (fp)
+			draw_subimg(fp->img, fp->x, fp->y);
+	}
 }

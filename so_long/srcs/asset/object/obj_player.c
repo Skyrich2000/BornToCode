@@ -36,8 +36,6 @@ void		obj_player_step(t_instance *this)
 	int v_mv;
 	t_footprint *footprint;
 
-	if (g()->global.inverted == 1)
-		return ;
 	this->obj.player.prev_x = this->x;
 	this->obj.player.prev_y = this->y;
 	if (keyboard_check(KEY_D) || keyboard_check(KEY_RIGHT))
@@ -46,13 +44,6 @@ void		obj_player_step(t_instance *this)
 		this->dir = -1;
 	h_mv = (keyboard_check(KEY_D) || keyboard_check(KEY_RIGHT)) - (keyboard_check(KEY_A) || keyboard_check(KEY_LEFT));
 	v_mv = (keyboard_check(KEY_S) || keyboard_check(KEY_DOWN)) - (keyboard_check(KEY_W) || keyboard_check(KEY_UP));
-
-	if (keyboard_check(KEY_B))
-	{
-		g()->global.inverted = 1;
-		create_avatar_instance(g()->global.straight, 1);
-		return ;
-	}
 
 	if (this->obj.player.attack == 0)
 	{
@@ -86,8 +77,11 @@ void		obj_player_step(t_instance *this)
 	footprint = malloc(sizeof(t_footprint));
 	footprint->x = this->x + this->spr->offset_x;
 	footprint->y = this->y + this->spr->offset_y;
-	footprint->img = this->img_node;
-	push_list(g()->global.straight, footprint);
+	footprint->img = this->img_node->data;
+	if (g()->global.inverted == 0)
+		push_list(g()->global.straight, footprint);
+	else
+		push_list(g()->global.reverse, footprint);
 
 	if (this->obj.player.attack == 1 && this->img_node->next == 0)
 		this->obj.player.attack = 0;

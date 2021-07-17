@@ -19,6 +19,7 @@ t_list	*create_list()
 	new = (t_list *)malloc(sizeof(t_list));
 	if (!new)
 		return (ERROR);
+	new->data = 0;
 	new->prev = 0;
 	new->next = 0;
 	return (new);
@@ -56,7 +57,7 @@ void	free_list(t_list *list, void (*del)(void *))
 {
 	if (list->next)
 		free_list(list->next, del);
-	if (del)
+	if (del && list->data)
 		del(list->data);
 	free(list);
 }

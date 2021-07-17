@@ -1,6 +1,6 @@
 #include "engine.h"
 
-t_scene		*add_scene(t_canvas *background, void (*start)(void), void (*end)(void))
+t_scene		*add_scene(t_canvas *background, void (*start)(void), void (*controller)(void), void (*end)(void))
 {
 	t_scene *new;
 
@@ -9,6 +9,7 @@ t_scene		*add_scene(t_canvas *background, void (*start)(void), void (*end)(void)
 		return (ERROR);
 	new->background = background;
 	new->start = start;
+	new->controller = controller;
 	new->end = end;
 	return (new);
 }
@@ -20,6 +21,13 @@ void		scene_end()
 	i = -1;
 	while (++i < OBJ_SIZE)
 	{
-		free_list(g()->instances[i], sl_free);
+		while (g()->instances[i]->next)
+			destroy_instance(g()->instances[i]->next->data);
 	}
+}
+
+void		scene_restart()
+{
+	g()->scene->end();
+	g()->scene->start();
 }

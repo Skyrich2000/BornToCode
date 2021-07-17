@@ -14,12 +14,12 @@
 # define ASSET_H
 # include "engine.h"
 
-# define PLAYER 0
-# define AVATAR 1
-# define ZOMBIE 2
-# define WALL 3
-# define KEY 4
-# define EXIT 5
+# define ZOMBIE 0
+# define WALL 1
+# define KEY 2
+# define EXIT 3
+# define AVATAR 4
+# define PLAYER 5
 # define OBJ_SIZE 6
 # define INS_MAX 100
 
@@ -32,7 +32,7 @@
 # define KEY_DOWN			125
 # define KEY_RIGHT			124
 # define KEY_UP				126
-# define KEY_B				11
+# define KEY_I				34
 
 typedef struct		s_canvas t_canvas;
 typedef struct		s_scene t_scene;
@@ -47,6 +47,7 @@ typedef struct		s_global
 	int				steps;
 	int				deathcount;
 	int				inverted;
+	int				status;
 }					t_global;
 
 typedef struct		s_footprint
@@ -134,9 +135,7 @@ int			init_background_black();
 
 // sprite
 int			init_spr_player();
-int			init_spr_player_reverse();
 int			init_spr_zombie();
-int			init_spr_zombie_reverse();
 int			init_spr_wall();
 int			init_spr_key();
 int			init_spr_exit();
@@ -156,6 +155,7 @@ void		obj_avatar_draw(t_instance *this);
 // scene
 int			init_scene_play();
 void		scene_play_start();
+void		scene_play_controller();
 void		scene_play_end();
 
 #endif

@@ -16,10 +16,13 @@
 int main()
 {
 	init_game();
-	init_asset();
+	if (!init_asset())
+	{
+		printf("loading failed\n");
+		return (0);
+	}
 
 	printf("loading done!\n");
-
 	start_game(g()->asset.scene_play);
 	return (0);
 }
