@@ -44,7 +44,9 @@ typedef struct		s_global
 {
 	t_list			*straight;
 	t_list			*reverse;
+	t_instance		*avatar;
 	int				steps;
+	int				invert_steps;
 	int				deathcount;
 	int				inverted;
 	int				status;
@@ -67,15 +69,15 @@ typedef struct		s_obj_player
 	int				prev_y;
 }					t_obj_player;
 
+typedef struct		s_obj_zombie
+{
+	int				die;
+}					t_obj_zombie;
+
 typedef struct		s_obj_avatar
 {
 	t_list			*node;
 }					t_obj_avatar;
-
-typedef struct		s_obj_zombie
-{
-	int				hp;
-}					t_obj_zombie;
 
 typedef union		u_object
 {
@@ -119,6 +121,7 @@ typedef struct		s_asset
 	t_sprite		*spr_wall;
 	t_sprite		*spr_key;
 	t_sprite		*spr_exit;
+	t_sprite		*spr_empty;
 
 	t_scene			*scene_main;
 	t_scene			*scene_tutorial;
@@ -146,6 +149,7 @@ void		obj_player_step(t_instance *this);
 void		obj_player_draw(t_instance *this);
 
 t_instance	*create_zombie_instance(int x, int y);
+void		obj_zombie_step(t_instance *this);
 void		obj_zombie_draw(t_instance *this);
 
 t_instance	*create_avatar_instance(t_list *route, int dir);

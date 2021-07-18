@@ -18,22 +18,39 @@ void		scene_play_start()
 	g()->global.deathcount = 0;
 	g()->global.inverted = 0;
 	g()->global.status = 0;
+	g()->global.steps = 0;
+	g()->global.invert_steps = 0;
 	create_player_instance(50, 50);
 	create_zombie_instance(250, 210);
 }
 
 void		scene_play_controller()
 {
+	t_footprint *fp;
+
 	if (g()->global.status == 0)
 	{
-		g()->global.steps += 1;
-		if (g()->global.steps > 60 * 60)
-			scene_restart();
-		if (g()->global.inverted == 0 && keyboard_check(KEY_I))
+		if (g()->global.inverted == 0)
 		{
-			printf("inversion start\n");
-			g()->global.inverted = 1;
-			create_avatar_instance(g()->global.straight, 1);
+			g()->global.steps += 1;
+			if (g()->global.steps > 60 * 60)
+				scene_restart();
+			if (keyboard_check(KEY_I))
+			{
+				printf("inversion start\n");
+				g()->global.inverted = 1;
+				g()->global.avatar = create_avatar_instance(g()->global.straight, 1);
+			}
+		}
+		else
+		{
+			g()->global.invert_steps += 1;
+			if (g()->global.invert_steps == g()->global.steps / 3 || \
+				g()->global.invert_steps == g()->global.steps / 3 * 2)
+			{
+				fp = g()->global.avatar->obj.avatar.node->data;
+				create_zombie_instance(fp->x, fp->y);
+			}
 		}
 	}
 	else if (g()->global.status == 1)
@@ -54,7 +71,6 @@ void		scene_play_controller()
 void		scene_play_end()
 {
 	scene_end();
-	g()->global.steps = 0;
 	free_list(g()->global.straight, sl_free);
 	free_list(g()->global.reverse, sl_free);
 }

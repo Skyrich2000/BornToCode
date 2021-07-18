@@ -15,15 +15,17 @@
 static int	init_spr_player_die()
 {
 	t_game	*game;
+	t_asset	*as;
 
 	game = g();
-	game->asset.spr_player_die_right = add_sprite(0, 0, 7);
-	game->asset.spr_player_die_left = add_sprite(0, 0, 7);
-	if (!game->asset.spr_player_die_right || \
-		!game->asset.spr_player_die_left)
+	as = &game->asset;
+	as->spr_player_die_right = add_sprite(0, 0, 7, (t_box){0, 0, 32, 32});
+	as->spr_player_die_left = add_sprite(0, 0, 7, (t_box){0, 0, 32, 32});
+	if (!as->spr_player_die_right || \
+		!as->spr_player_die_left)
 		return (ERROR);
-	if (!add_sprite_subimage(game->asset.spr_player_die_right, "./res/xpm_right/player_", 18, 22) || \
-		!add_sprite_subimage(game->asset.spr_player_die_left, "./res/xpm_left/player_", 18, 22))
+	if (!add_sprite_subimage(as->spr_player_die_right, "./res/xpm_right/player_", 18, 22) || \
+		!add_sprite_subimage(as->spr_player_die_left, "./res/xpm_left/player_", 18, 22))
 		return (ERROR);
 	return (OK);
 }
@@ -33,8 +35,8 @@ static int	init_spr_player_attack()
 	t_game	*game;
 
 	game = g();
-	game->asset.spr_player_attack_right = add_sprite(0, 0, 7);
-	game->asset.spr_player_attack_left = add_sprite(0, 0, 7);
+	game->asset.spr_player_attack_right = add_sprite(0, 0, 7, (t_box){0, 0, 32, 32});
+	game->asset.spr_player_attack_left = add_sprite(0, 0, 7, (t_box){0, 0, 32, 32});
 	if (!game->asset.spr_player_attack_right || \
 		!game->asset.spr_player_attack_left)
 		return (ERROR);
@@ -49,8 +51,8 @@ static int	init_spr_player_move()
 	t_game	*game;
 
 	game = g();
-	game->asset.spr_player_move_right = add_sprite(0, 0, 5);
-	game->asset.spr_player_move_left = add_sprite(0, 0, 5);
+	game->asset.spr_player_move_right = add_sprite(0, 0, 5, (t_box){0, 0, 32, 32});
+	game->asset.spr_player_move_left = add_sprite(0, 0, 5, (t_box){0, 0, 32, 32});
 	if (!game->asset.spr_player_move_right || \
 		!game->asset.spr_player_move_left)
 		return (ERROR);
@@ -65,8 +67,8 @@ static int	init_spr_player_idle()
 	t_game	*game;
 
 	game = g();
-	game->asset.spr_player_idle_right = add_sprite(0, 0, 10);
-	game->asset.spr_player_idle_left = add_sprite(0, 0, 10);
+	game->asset.spr_player_idle_right = add_sprite(0, 0, 10, (t_box){0, 0, 32, 32});
+	game->asset.spr_player_idle_left = add_sprite(0, 0, 10, (t_box){0, 0, 32, 32});
 	if (!game->asset.spr_player_idle_right || \
 		!game->asset.spr_player_idle_left)
 		return (ERROR);

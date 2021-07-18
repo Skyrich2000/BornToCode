@@ -32,6 +32,14 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+typedef struct		s_box
+{
+	int				x1;
+	int				y1;
+	int				x2;
+	int				y2;
+}					t_box;
+
 typedef struct		s_sprite
 {
 	t_list			*imgs;
@@ -41,6 +49,7 @@ typedef struct		s_sprite
 	int				img_speed;
 	int				offset_x;
 	int				offset_y;
+	t_box			mask;
 }					t_sprite;
 
 typedef struct		s_instance
@@ -103,7 +112,7 @@ t_list		*push_list(t_list *list, void *data);
 void		*pop_list(t_list *node);
 void		free_list(t_list *list, void (*del)(void *));
 
-t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed);
+t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed, t_box mask);
 int			add_sprite_subimage(t_sprite *spr, char *path, int start, int end);
 void		delete_sprite(t_sprite *spr);
 void		change_sprite(t_instance *id, t_sprite *spr);
@@ -115,6 +124,9 @@ void		scene_end();
 int			keyboard_check(int keycode);
 
 t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance *this), void (*draw)(t_instance *this));
+int			point_distance(int x1, int y1, int x2, int y2);
+t_instance	*place_meeting(t_instance *id, int x, int y, int type);
+t_instance	*position_meeting(int x, int y, int type);
 void		destroy_instance(t_instance *id);
 
 void		draw_subimg(void *img, int x, int y);

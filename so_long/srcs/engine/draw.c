@@ -24,5 +24,6 @@ void	draw_subimg(void *img, int x, int y)
 
 void	draw_sprite(t_sprite *spr, t_list *img_node, int x, int y)
 {
-	mlx_put_image_to_window(g()->mlx, g()->win, img_node->data, x + spr->offset_x, y + spr->offset_y);
+	if (img_node)
+		mlx_put_image_to_window(g()->mlx, g()->win, img_node->data, x - spr->offset_x, y - spr->offset_y);
 }

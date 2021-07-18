@@ -17,13 +17,13 @@ static int	init_spr_zombie_die()
 	t_game *game;
 
 	game = g();
-	game->asset.spr_zombie_die_right = add_sprite(0, 0, 7);
-	game->asset.spr_zombie_die_left = add_sprite(0, 0, 7);
+	game->asset.spr_zombie_die_right = add_sprite(0, 0, 15, (t_box){0, 0, 32, 32});
+	game->asset.spr_zombie_die_left = add_sprite(0, 0, 15, (t_box){0, 0, 32, 32});
 	if (!game->asset.spr_zombie_die_right || \
 		!game->asset.spr_zombie_die_left)
 		return (ERROR);
-	if (!add_sprite_subimage(game->asset.spr_zombie_die_right, "./res/xpm_right/zombie_", 2, 5) || \
-		!add_sprite_subimage(game->asset.spr_zombie_die_left, "./res/xpm_left/zombie_", 2, 5))
+	if (!add_sprite_subimage(game->asset.spr_zombie_die_right, "./res/xpm_right/zombie_", 17, 27) || \
+		!add_sprite_subimage(game->asset.spr_zombie_die_left, "./res/xpm_left/zombie_", 17, 27))
 		return (ERROR);
 	return (OK);
 }
@@ -33,8 +33,8 @@ static int	init_spr_zombie_idle()
 	t_game *game;
 
 	game = g();
-	game->asset.spr_zombie_idle_right = add_sprite(0, 0, 10);
-	game->asset.spr_zombie_idle_left = add_sprite(0, 0, 10);
+	game->asset.spr_zombie_idle_right = add_sprite(0, 0, 10, (t_box){0, 0, 32, 32});
+	game->asset.spr_zombie_idle_left = add_sprite(0, 0, 10, (t_box){0, 0, 32, 32});
 	if (!game->asset.spr_zombie_idle_right || \
 		!game->asset.spr_zombie_idle_left)
 		return (ERROR);
@@ -46,6 +46,7 @@ static int	init_spr_zombie_idle()
 
 int			init_spr_zombie()
 {
+	g()->asset.spr_empty = add_sprite(0, 0, 10, (t_box){0, 0, 32, 32});
 	return (init_spr_zombie_idle() && \
 			init_spr_zombie_die());
 }

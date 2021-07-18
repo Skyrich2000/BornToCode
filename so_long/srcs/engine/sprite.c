@@ -12,7 +12,7 @@
 
 #include "engine.h"
 
-t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed)
+t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed, t_box mask)
 {
 	t_sprite *new;
 
@@ -26,6 +26,7 @@ t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed)
 	new->img_speed = img_speed;
 	new->offset_x = offset_x;
 	new->offset_y = offset_y;
+	new->mask = mask;
 	return (new);
 }
 

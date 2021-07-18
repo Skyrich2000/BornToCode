@@ -35,6 +35,7 @@ void		obj_player_step(t_instance *this)
 	int h_mv;
 	int v_mv;
 	t_footprint *footprint;
+	t_instance	*ins;
 
 	this->obj.player.prev_x = this->x;
 	this->obj.player.prev_y = this->y;
@@ -75,8 +76,8 @@ void		obj_player_step(t_instance *this)
 	}
 
 	footprint = malloc(sizeof(t_footprint));
-	footprint->x = this->x + this->spr->offset_x;
-	footprint->y = this->y + this->spr->offset_y;
+	footprint->x = this->x - this->spr->offset_x;
+	footprint->y = this->y - this->spr->offset_y;
 	footprint->img = this->img_node->data;
 	if (g()->global.inverted == 0)
 		push_list(g()->global.straight, footprint);
@@ -87,6 +88,12 @@ void		obj_player_step(t_instance *this)
 		this->obj.player.attack = 0;
 	this->obj.player.h_mv = h_mv;
 	this->obj.player.v_mv = v_mv;
+
+	ins = place_meeting(this, this->x, this->y, ZOMBIE);
+	if (this->obj.player.attack && ins)
+	{
+		ins->obj.zombie.die = 1;
+	}
 }
 
 void		obj_player_draw(t_instance *this)
