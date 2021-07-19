@@ -80,7 +80,7 @@ void		obj_player_step(t_instance *this)
 	footprint->y = this->y - this->spr->offset_y;
 	footprint->img = this->img_node->data;
 	if (g()->global.inverted == 0)
-		push_list(g()->global.straight, footprint);
+		push_list(this->obj.player., footprint);
 	else
 		push_list(g()->global.reverse, footprint);
 
@@ -91,9 +91,7 @@ void		obj_player_step(t_instance *this)
 
 	ins = place_meeting(this, this->x, this->y, ZOMBIE);
 	if (this->obj.player.attack && ins)
-	{
 		ins->obj.zombie.die = 1;
-	}
 }
 
 void		obj_player_draw(t_instance *this)

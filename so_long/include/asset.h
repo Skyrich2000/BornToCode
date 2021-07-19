@@ -42,14 +42,11 @@ typedef struct		s_list t_list;
 
 typedef struct		s_global
 {
-	t_list			*straight;
-	t_list			*reverse;
-	t_instance		*avatar;
-	int				steps;
-	int				invert_steps;
 	int				deathcount;
 	int				inverted;
 	int				status;
+	int				steps;
+	int				time;
 }					t_global;
 
 typedef struct		s_footprint
@@ -67,11 +64,13 @@ typedef struct		s_obj_player
 	int				v_mv;
 	int				prev_x;
 	int				prev_y;
+	t_list			*route;
 }					t_obj_player;
 
 typedef struct		s_obj_zombie
 {
 	int				die;
+	t_list			*route
 }					t_obj_zombie;
 
 typedef struct		s_obj_avatar

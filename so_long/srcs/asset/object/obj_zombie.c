@@ -26,7 +26,8 @@ t_instance	*create_zombie_instance(int x, int y)
 
 void		obj_zombie_step(t_instance *this)
 {
-
+	(void)this;
+/*
 	t_instance *ins;
 
 	ins = g()->instances[PLAYER]->next->data;
@@ -44,6 +45,7 @@ void		obj_zombie_step(t_instance *this)
 			change_sprite(this, g()->asset.spr_zombie_die_left);
 
 	}
+	*/
 }
 
 void        obj_zombie_draw(t_instance *this)
@@ -56,11 +58,5 @@ void        obj_zombie_draw(t_instance *this)
 		this->draw_time = 0;
 	}
 	if (!this->img_node)
-	{
-		if (this->obj.zombie.die)
-		{
-			change_sprite(this, g()->asset.spr_empty);
-		}
 		this->img_node = this->spr->imgs->next;
-	}
 }
