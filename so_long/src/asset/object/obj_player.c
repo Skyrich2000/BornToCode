@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player.c                                           :+:      :+:    :+:   */
+/*   obj_player.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:53 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/17 04:25:15 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/20 03:13:23 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,15 @@ t_instance	*create_player_instance(int x, int y)
 	ins->obj.player.v_mv = 0;
 	ins->obj.player.prev_x = x;
 	ins->obj.player.prev_y = y;
+	ins->obj.player.route = create_list();
 	ins->dir = 1;
 	return (ins);
 }
 
-void		obj_player_step(t_instance *this)
+static void	player_move(t_instance *this)
 {
 	int h_mv;
 	int v_mv;
-	t_footprint *footprint;
-	t_instance	*ins;
 
 	this->obj.player.prev_x = this->x;
 	this->obj.player.prev_y = this->y;
@@ -48,14 +47,13 @@ void		obj_player_step(t_instance *this)
 
 	if (this->obj.player.attack == 0)
 	{
-		if (keyboard_check(KEY_SPACEBAR))
+		if (g()->global.inverted == 1 && keyboard_check(KEY_SPACEBAR))
 		{
 			if (this->dir == 1)
 				change_sprite(this, g()->asset.spr_player_attack_right);
 			else
 				change_sprite(this, g()->asset.spr_player_attack_left);
 			this->obj.player.attack = 1;
-
 		}
 		else if (v_mv == 0 && h_mv == 0)
 		{
@@ -75,20 +73,29 @@ void		obj_player_step(t_instance *this)
 		this->y += v_mv * 2;
 	}
 
+	this->obj.player.h_mv = h_mv;
+	this->obj.player.v_mv = v_mv;
+	if (this->obj.player.attack == 1 && this->img_node->next == 0)
+		this->obj.player.attack = 0;
+}
+
+static void	player_footprint(t_instance *this)
+{
+	t_footprint *footprint;
+
 	footprint = malloc(sizeof(t_footprint));
 	footprint->x = this->x - this->spr->offset_x;
 	footprint->y = this->y - this->spr->offset_y;
 	footprint->img = this->img_node->data;
-	if (g()->global.inverted == 0)
-		push_list(this->obj.player., footprint);
-	else
-		push_list(g()->global.reverse, footprint);
+	push_list(this->obj.player.route, footprint);
+}
 
-	if (this->obj.player.attack == 1 && this->img_node->next == 0)
-		this->obj.player.attack = 0;
-	this->obj.player.h_mv = h_mv;
-	this->obj.player.v_mv = v_mv;
+void		obj_player_step(t_instance *this)
+{
 
+	t_instance	*ins;
+	player_move(this);
+	player_footprint(this);
 	ins = place_meeting(this, this->x, this->y, ZOMBIE);
 	if (this->obj.player.attack && ins)
 		ins->obj.zombie.die = 1;

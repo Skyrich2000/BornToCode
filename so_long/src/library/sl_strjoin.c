@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sl_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 23:22:34 by ycha              #+#    #+#             */
-/*   Updated: 2021/01/08 16:06:15 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/20 02:36:59 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "library.h"
 
-static int		sl_strlen(char *s)
+int		sl_strlen(char *s)
 {
 	int	len;
 

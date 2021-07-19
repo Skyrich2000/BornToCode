@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:08 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/17 03:05:53 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/20 03:27:07 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ t_instance	*position_meeting(int x, int y, int type)
 
 void		destroy_instance(t_instance *id)
 {
+	printf("destory %d\n", id->type);
 	pop_list(id->node);
 	free(id);
 }

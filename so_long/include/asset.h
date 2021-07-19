@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/17 04:09:48 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/20 03:10:05 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ typedef struct		s_global
 	int				deathcount;
 	int				inverted;
 	int				status;
-	int				steps;
 	int				time;
+	int				total_time;
+
+	int				steps;
 }					t_global;
 
 typedef struct		s_footprint
@@ -70,11 +72,12 @@ typedef struct		s_obj_player
 typedef struct		s_obj_zombie
 {
 	int				die;
-	t_list			*route
+	t_list			*route;
 }					t_obj_zombie;
 
 typedef struct		s_obj_avatar
 {
+	t_list			*route;
 	t_list			*node;
 }					t_obj_avatar;
 

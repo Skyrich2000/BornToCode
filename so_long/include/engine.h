@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:32 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/17 04:07:03 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/20 03:09:53 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "../srcs/mlx/mlx.h"
+# include <fcntl.h>
+# include "../src/mlx/mlx.h"
 # include "asset.h"
 #include "library.h"
 
@@ -118,7 +119,7 @@ void		delete_sprite(t_sprite *spr);
 void		change_sprite(t_instance *id, t_sprite *spr);
 
 t_scene		*add_scene(t_canvas *background, void (*start)(void), void (*controller)(void), void (*end)(void));
-void		scene_end();
+void		scene_default_end();
 
 // user usable function
 int			keyboard_check(int keycode);
@@ -133,7 +134,9 @@ void		draw_subimg(void *img, int x, int y);
 void		draw_sprite(t_sprite *spr, t_list *img_node, int x, int y);
 void		draw_background(t_canvas *background);
 
+void		scene_start();
 void		scene_restart();
+void		scene_end();
 
 // debug
 

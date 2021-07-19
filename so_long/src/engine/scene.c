@@ -14,7 +14,7 @@ t_scene		*add_scene(t_canvas *background, void (*start)(void), void (*controller
 	return (new);
 }
 
-void		scene_end()
+void		scene_default_end()
 {
 	int i;
 
@@ -24,6 +24,16 @@ void		scene_end()
 		while (g()->instances[i]->next)
 			destroy_instance(g()->instances[i]->next->data);
 	}
+}
+
+void		scene_start()
+{
+	g()->scene->start();
+}
+
+void		scene_end()
+{
+	g()->scene->end();
 }
 
 void		scene_restart()

@@ -6,35 +6,37 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/16 07:48:16 by ycha              #+#    #+#              #
-#    Updated: 2021/07/17 04:28:05 by ycha             ###   ########.fr        #
+#    Updated: 2021/07/20 03:10:47 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= so_long
 
-SRCS	= ./srcs/main.c ./srcs/debug.c\
-			./srcs/engine/game.c \
-			./srcs/engine/sprite.c \
-			./srcs/engine/draw.c \
-			./srcs/engine/keyboard.c \
-			./srcs/engine/instance.c \
-			./srcs/engine/list.c \
-			./srcs/engine/scene.c \
-			./srcs/asset/asset.c \
-			./srcs/asset/background/background_black.c \
-			./srcs/asset/object/obj_player.c \
-			./srcs/asset/object/obj_zombie.c \
-			./srcs/asset/object/obj_avatar.c \
-			./srcs/asset/scene/scene_play.c \
-			./srcs/asset/sprite/spr_player.c \
-			./srcs/asset/sprite/spr_zombie.c \
-			./srcs/library/sl_free.c \
-			./srcs/library/sl_itoa.c \
-			./srcs/library/sl_strjoin.c
+SRC		= main.c debug.c\
+			engine/game.c \
+			engine/sprite.c \
+			engine/draw.c \
+			engine/keyboard.c \
+			engine/instance.c \
+			engine/list.c \
+			engine/scene.c \
+			asset/asset.c \
+			asset/background/background_black.c \
+			asset/object/obj_player.c \
+			asset/object/obj_zombie.c \
+			asset/object/obj_avatar.c \
+			asset/scene/scene_play.c \
+			asset/sprite/spr_player.c \
+			asset/sprite/spr_zombie.c \
+			library/sl_free.c \
+			library/sl_itoa.c \
+			library/sl_strjoin.c
 
+SRC_DIR =	./src/
+SRCS	= 	$(addprefix $(SRC_DIR), $(SRC))
 CC		=	gcc
-INCLUDE =	-Iinclude -Isrcs/mlx
-CLIB	=	-Lsrcs/mlx -lmlx -framework OpenGL -framework Appkit
+INCLUDE =	-Iinclude -Isrc/mlx
+CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit
 CFLAGS	=	-Wall -Werror -Wextra $(INCLUDE)
 
 OBJS	=	$(SRCS:.c=.o)
