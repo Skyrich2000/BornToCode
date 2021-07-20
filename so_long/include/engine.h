@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:32 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/20 22:56:45 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/21 04:27:28 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct		s_sprite
 	t_list			*imgs;
 	int				width;
 	int				height;
-	int				subimg;
 	int				img_speed;
 	int				offset_x;
 	int				offset_y;
@@ -66,7 +65,6 @@ typedef struct		s_instance
 	t_object		obj;
 	t_sprite		*spr;
 	t_list			*img_node;
-	int				img_speed;
 	int				draw_time;
 	int				x;
 	int				y;
@@ -100,7 +98,7 @@ typedef struct		s_game
 	t_asset			asset;
 	t_list			*instances[OBJ_SIZE];
 	t_scene			*scene;
-	int				keys[127];
+	int				keys[420];
 }					t_game;
 
 // engine function

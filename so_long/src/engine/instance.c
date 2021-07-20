@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:08 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/20 22:31:37 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/21 02:45:35 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance
 	new->type = data[0];
 	new->spr = spr;
 	new->img_node = new->spr->imgs->next;
-	new->img_speed = spr->img_speed;
 	new->x = data[1];
 	new->y = data[2];
 	new->dir = 1;

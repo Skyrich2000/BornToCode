@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/20 22:54:48 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/21 04:16:24 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 # include "engine.h"
 
 # define WALL			0
-# define KEY			1
+# define BOX			1
+# define KEY			2
 # define EXIT			3
 # define ZOMBIE			4
 # define ZOMBIE_TRIGGER	5
@@ -60,6 +61,7 @@ typedef struct s_footprint
 	t_list			*img_node;
 }	t_footprint;
 
+// TODO: save collision id
 typedef struct s_obj_player
 {
 	int				hp;
@@ -69,19 +71,15 @@ typedef struct s_obj_player
 	int				prev_x;
 	int				prev_y;
 	t_list			*route;
+	t_instance		*collision_zombie;
+	t_instance		*collision_box;
 }	t_obj_player;
 
-typedef struct s_obj_zombie
+typedef struct s_obj_prop
 {
-	int				die;
+	int				status;
 	t_list			*route;
-}	t_obj_zombie;
-
-typedef struct s_obj_zombie_trigger
-{
-	t_instance		*player;
-	t_instance		*zombie;
-}	t_obj_zombie_trigger;
+}	t_obj_prop;
 
 typedef struct s_obj_avatar
 {
@@ -92,8 +90,8 @@ typedef struct s_obj_avatar
 typedef union u_object
 {
 	t_obj_player			player;
-	t_obj_zombie			zombie;
-	t_obj_zombie_trigger	zombie_trigger;
+	t_obj_prop				zombie;
+	t_obj_prop				box;
 	t_obj_avatar			avatar;
 }	t_object;
 
@@ -110,11 +108,13 @@ typedef struct s_asset
 	t_sprite		*spr_player_die_right;
 	t_sprite		*spr_player_die_left;
 
-	t_sprite		*spr_zombie_idle_right;
-	t_sprite		*spr_zombie_idle_left;
-	t_sprite		*spr_zombie_die_right;
-	t_sprite		*spr_zombie_die_left;
+	t_sprite		*spr_zombie_idle_right_reverse;
+	t_sprite		*spr_zombie_idle_left_reverse;
+	t_sprite		*spr_zombie_die_right_reverse;
+	t_sprite		*spr_zombie_die_left_reverse;
 
+	t_sprite		*spr_box;
+	t_sprite		*spr_box_break;
 	t_sprite		*spr_wall;
 	t_sprite		*spr_key;
 	t_sprite		*spr_exit;
@@ -138,6 +138,7 @@ int			init_spr_player();
 int			init_spr_zombie();
 int			init_spr_empty();
 int			init_spr_wall();
+int			init_spr_box();
 int			init_spr_key();
 int			init_spr_exit();
 
@@ -156,6 +157,13 @@ void		obj_zombie_trigger_step(t_instance *this);
 t_instance	*create_avatar_instance(t_list *route, int dir);
 void		obj_avatar_step(t_instance *this);
 void		obj_avatar_draw(t_instance *this);
+
+t_instance	*create_wall_instance(int x, int y);
+void		obj_wall_draw(t_instance *this);
+
+t_instance	*create_box_instance(int x, int y);
+void		obj_box_step(t_instance *this);
+void		obj_box_draw(t_instance *this);
 
 // scene
 int			init_scene_play();

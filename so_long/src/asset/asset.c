@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:50 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/20 15:41:39 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/21 03:36:42 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int		init_asset()
 			init_spr_player() && \
 			init_spr_zombie() && \
 			init_spr_empty() && \
+			init_spr_wall() && \
+			init_spr_box() && \
 			init_scene_play());
 }
 
