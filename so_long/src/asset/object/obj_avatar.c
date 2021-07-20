@@ -1,7 +1,9 @@
 #include "engine.h"
 
-// dir 이 0 이면 순행
-// dir 이 1 이면 역행
+/*
+** dir 이 0 이면 순행
+** dir 이 1 이면 역행
+*/
 t_instance *create_avatar_instance(t_list *route, int dir)
 {
 	t_list		*node;
@@ -31,6 +33,7 @@ t_instance *create_avatar_instance(t_list *route, int dir)
 */
 void		obj_avatar_step(t_instance *this)
 {
+	t_footprint *fp;
 	t_list	*prev_node;
 
 	prev_node = this->obj.avatar.node;
@@ -40,13 +43,14 @@ void		obj_avatar_step(t_instance *this)
 		this->obj.avatar.node = this->obj.avatar.node->next;
 	if (!this->obj.avatar.node)
 		this->obj.avatar.node = prev_node;
+	fp = this->obj.avatar.node->data;
+	this->x = fp->x;
+	this->y = fp->y;
+	this->spr = fp->spr;
+	this->img_node = fp->img_node;
 }
 
 void		obj_avatar_draw(t_instance *this)
 {
-	t_footprint *fp;
-
-	fp = this->obj.avatar.node->data;
-	if (fp)
-		draw_subimg(fp->img, fp->x, fp->y);
+	draw_sprite(this->spr, this->img_node, this->x, this->y);
 }

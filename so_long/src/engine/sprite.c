@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprite.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:16 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/16 07:49:17 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/20 17:09:27 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ int			add_sprite_subimage(t_sprite *spr, char *path, int start, int end)
 		num = sl_itoa(end);
 		path_all[0] = sl_strjoin(path, num);
 		path_all[1] = sl_strjoin(path_all[0], ".xpm");
+		printf("LOAD: %s\n", path_all[1]);
 		img = mlx_xpm_file_to_image(g()->mlx, path_all[1], &spr->width, &spr->height);
+		if (!img)
+			return (ERROR);
 		if (!push_list(spr->imgs, img))
 			return (ERROR);
 		spr->subimg++;

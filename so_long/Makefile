@@ -6,7 +6,7 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/16 07:48:16 by ycha              #+#    #+#              #
-#    Updated: 2021/07/20 03:10:47 by ycha             ###   ########.fr        #
+#    Updated: 2021/07/20 16:33:13 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,12 @@ SRC		= main.c debug.c\
 			asset/background/background_black.c \
 			asset/object/obj_player.c \
 			asset/object/obj_zombie.c \
+			asset/object/obj_zombie_trigger.c \
 			asset/object/obj_avatar.c \
 			asset/scene/scene_play.c \
 			asset/sprite/spr_player.c \
 			asset/sprite/spr_zombie.c \
+			asset/sprite/spr_empty.c \
 			library/sl_free.c \
 			library/sl_itoa.c \
 			library/sl_strjoin.c

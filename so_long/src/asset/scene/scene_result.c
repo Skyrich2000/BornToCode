@@ -4,7 +4,7 @@ int		sl_pow(int base, int exp)
 {
 	if (exp == 0)
 		return (1);
-	return (base * sl_pow(base, exp -1));
+	return (base * sl_pow(base, exp - 1));
 }
 
 int		sl_rev_atoi(char *str)
@@ -30,7 +30,6 @@ int	cmp_rank(char *org, int new)
 	return (sl_rev_atoi(org) > new);
 }
 
-
 void	result(char *userid, int step, int deathcount)
 {
 	int fd;
@@ -41,12 +40,13 @@ void	result(char *userid, int step, int deathcount)
 	char *s_deathcount;	// deathcount를 string으로 바꿔줌
 
 	// 1. file read
-	fd = open("./dashboard.rnk", O_RDONLY, 0777);
+	fd = open("./dashboard.rnk", O_RDONLY | O_CREAT, 0777);
 	if (fd == -1)
 		return ;
 	if (read(fd, &buf, 1000) == -1)
 		return ;
 	split = sl_split(buf, '\n');
+	printf("-> %s\n", split[0]);
 	close(fd);
 
 	// 2. file write (O_TRUNC 해서 기존 파일 지워버림)
@@ -54,22 +54,33 @@ void	result(char *userid, int step, int deathcount)
 	idx = -1;
 	s_step = sl_itoa(step);
 	s_deathcount = sl_itoa(deathcount);
-	while (split[++idx])
+	if (!*split)
 	{
-		if (cmp_rank(split[idx], deathcount))
+		write(fd, userid, sl_strlen(userid));
+		write(fd, " ", 1);
+		write(fd, s_step, sl_strlen(s_step));
+		write(fd, " ", 1);
+		write(fd, s_deathcount, sl_strlen(s_deathcount));
+	}
+	else
+	{
+		while (++idx < sl_check_size(buf, '\n'))
 		{
-			write(fd, userid, sl_strlen(userid));
-			write(fd, " ", 1);
-			write(fd, s_step, sl_strlen(s_step));
-			write(fd, " ", 1);
-			write(fd, s_deathcount, sl_strlen(s_deathcount));
-		}
-		else
+			if (cmp_rank(split[idx], deathcount))
+			{
+				write(fd, userid, sl_strlen(userid));
+				write(fd, " ", 1);
+				write(fd, s_step, sl_strlen(s_step));
+				write(fd, " ", 1);
+				write(fd, s_deathcount, sl_strlen(s_deathcount));
+				write(fd, "\n", 1);
+			}
 			write(fd, split[idx], sl_strlen(split[idx]));
+			write(fd, "\n", 1);
+		}
 	}
 	free(s_step);
 	free(s_deathcount);
 	sl_free_split(split);
 	close(fd);
 }
-

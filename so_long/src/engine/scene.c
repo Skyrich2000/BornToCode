@@ -28,12 +28,20 @@ void		scene_default_end()
 
 void		scene_start()
 {
+	if (DEBUG)
+		printf("scene start\n");
 	g()->scene->start();
+	if (DEBUG)
+		printf("scene start done\n");
 }
 
 void		scene_end()
 {
+	if (DEBUG)
+		printf("scene end\n");
 	g()->scene->end();
+	if (DEBUG)
+		printf("scene end done\n");
 }
 
 void		scene_restart()

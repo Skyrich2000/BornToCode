@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:32 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/20 03:09:53 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/20 22:56:45 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,17 @@
 # include "asset.h"
 #include "library.h"
 
+# define DEBUG 0
+
 # define OK 1
 # define ERROR 0
 
 # define WIDTH 600
 # define HEIGHT 300
+
+# define C_RED 0xFF0000
+# define C_YELLOW 0xFFFF00
+# define C_GREEN 0x00FF00
 
 typedef struct		s_list
 {
@@ -99,7 +105,7 @@ typedef struct		s_game
 
 // engine function
 t_game		*g();
-void		init_game();
+int			init_game();
 int			loop();
 void		start_game(t_scene *scene);
 
@@ -126,10 +132,15 @@ int			keyboard_check(int keycode);
 
 t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance *this), void (*draw)(t_instance *this));
 int			point_distance(int x1, int y1, int x2, int y2);
-t_instance	*place_meeting(t_instance *id, int x, int y, int type);
-t_instance	*position_meeting(int x, int y, int type);
+int			place_meeting(t_instance *id, int x, int y, t_instance *other);
+t_instance	*place_meeting_type(t_instance *id, int x, int y, int type);
+t_instance	*position_meeting_type(int x, int y, int type);
 void		destroy_instance(t_instance *id);
 
+void		draw_line(int pos[2], int dir[2], int len, int color);
+void		draw_box(t_box	box, int color);
+void		draw_point(int x, int y, int color);
+void		draw_debug();
 void		draw_subimg(void *img, int x, int y);
 void		draw_sprite(t_sprite *spr, t_list *img_node, int x, int y);
 void		draw_background(t_canvas *background);

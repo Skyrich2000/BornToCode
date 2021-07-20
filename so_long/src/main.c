@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:43 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/17 03:59:09 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/20 17:01:18 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 
 int main()
 {
-	init_game();
-	if (!init_asset())
+	if (init_game() && init_asset())
 	{
-		printf("loading failed\n");
-		return (0);
+		printf("loading done!\n");
+		start_game(g()->asset.scene_play);
 	}
-
-	printf("loading done!\n");
-	start_game(g()->asset.scene_play);
+	else
+		printf("loading failed\n");
 	return (0);
 }

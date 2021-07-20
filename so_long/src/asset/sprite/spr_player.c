@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spr_player.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 22:18:07 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/17 22:18:10 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/20 21:43:51 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static int	init_spr_player_die()
 
 	game = g();
 	as = &game->asset;
-	as->spr_player_die_right = add_sprite(0, 0, 7, (t_box){0, 0, 32, 32});
-	as->spr_player_die_left = add_sprite(0, 0, 7, (t_box){0, 0, 32, 32});
+	as->spr_player_die_right = add_sprite(27, 54, 7, (t_box){12, 13, 40, 54});
+	as->spr_player_die_left = add_sprite(35, 54, 7, (t_box){23, 13, 52, 54});
 	if (!as->spr_player_die_right || \
 		!as->spr_player_die_left)
 		return (ERROR);
@@ -35,8 +35,8 @@ static int	init_spr_player_attack()
 	t_game	*game;
 
 	game = g();
-	game->asset.spr_player_attack_right = add_sprite(0, 0, 7, (t_box){0, 0, 32, 32});
-	game->asset.spr_player_attack_left = add_sprite(0, 0, 7, (t_box){0, 0, 32, 32});
+	game->asset.spr_player_attack_right = add_sprite(27, 54, 7, (t_box){12, 13, 64, 54});
+	game->asset.spr_player_attack_left = add_sprite(35, 54, 7, (t_box){0, 13, 52, 54});
 	if (!game->asset.spr_player_attack_right || \
 		!game->asset.spr_player_attack_left)
 		return (ERROR);
@@ -51,8 +51,8 @@ static int	init_spr_player_move()
 	t_game	*game;
 
 	game = g();
-	game->asset.spr_player_move_right = add_sprite(0, 0, 5, (t_box){0, 0, 32, 32});
-	game->asset.spr_player_move_left = add_sprite(0, 0, 5, (t_box){0, 0, 32, 32});
+	game->asset.spr_player_move_right = add_sprite(27, 54, 5, (t_box){12, 13, 40, 54});
+	game->asset.spr_player_move_left = add_sprite(35, 54, 5, (t_box){23, 13, 52, 54});
 	if (!game->asset.spr_player_move_right || \
 		!game->asset.spr_player_move_left)
 		return (ERROR);
@@ -67,8 +67,8 @@ static int	init_spr_player_idle()
 	t_game	*game;
 
 	game = g();
-	game->asset.spr_player_idle_right = add_sprite(0, 0, 10, (t_box){0, 0, 32, 32});
-	game->asset.spr_player_idle_left = add_sprite(0, 0, 10, (t_box){0, 0, 32, 32});
+	game->asset.spr_player_idle_right = add_sprite(27, 54, 10, (t_box){12, 13, 40, 54});
+	game->asset.spr_player_idle_left = add_sprite(35, 54, 10, (t_box){23, 13, 52, 54});
 	if (!game->asset.spr_player_idle_right || \
 		!game->asset.spr_player_idle_left)
 		return (ERROR);

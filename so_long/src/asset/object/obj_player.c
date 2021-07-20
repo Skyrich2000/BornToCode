@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:53 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/20 03:13:23 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/20 23:00:52 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_instance	*create_player_instance(int x, int y)
 	return (ins);
 }
 
-static void	player_move(t_instance *this)
+static void	p_move(t_instance *this)
 {
 	int h_mv;
 	int v_mv;
@@ -47,7 +47,7 @@ static void	player_move(t_instance *this)
 
 	if (this->obj.player.attack == 0)
 	{
-		if (g()->global.inverted == 1 && keyboard_check(KEY_SPACEBAR))
+		if (g()->global.status == 1 && keyboard_check(KEY_SPACEBAR))
 		{
 			if (this->dir == 1)
 				change_sprite(this, g()->asset.spr_player_attack_right);
@@ -79,30 +79,41 @@ static void	player_move(t_instance *this)
 		this->obj.player.attack = 0;
 }
 
-static void	player_footprint(t_instance *this)
+static void	p_footprint(t_instance *this)
 {
 	t_footprint *footprint;
 
 	footprint = malloc(sizeof(t_footprint));
-	footprint->x = this->x - this->spr->offset_x;
-	footprint->y = this->y - this->spr->offset_y;
-	footprint->img = this->img_node->data;
+	footprint->x = this->x;
+	footprint->y = this->y;
+	footprint->spr = this->spr;
+	footprint->img_node = this->img_node;
 	push_list(this->obj.player.route, footprint);
 }
 
 void		obj_player_step(t_instance *this)
 {
-
 	t_instance	*ins;
-	player_move(this);
-	player_footprint(this);
-	ins = place_meeting(this, this->x, this->y, ZOMBIE);
-	if (this->obj.player.attack && ins)
-		ins->obj.zombie.die = 1;
+
+	if (DEBUG)
+		printf("obj_player_step start\n");
+	p_move(this);
+	p_footprint(this);
+
+	if (this->obj.player.attack)
+	{
+		ins = place_meeting_type(this, this->x, this->y, ZOMBIE);
+		if (ins && ins->obj.zombie.die == 0)
+			ins->obj.zombie.die = 1;
+	}
+	if (DEBUG)
+		printf("obj_player_step end\n");
 }
 
 void		obj_player_draw(t_instance *this)
 {
+	if (DEBUG)
+		printf("obj_player_draw start\n");
 	draw_sprite(this->spr, this->img_node, this->x, this->y);
 	this->draw_time++;
 	if (this->draw_time > this->img_speed)
@@ -112,4 +123,6 @@ void		obj_player_draw(t_instance *this)
 	}
 	if (!this->img_node)
 		this->img_node = this->spr->imgs->next;
+	if (DEBUG)
+		printf("obj_player_draw end\n");
 }

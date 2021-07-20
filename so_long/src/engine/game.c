@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:06 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/17 03:11:04 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/20 22:54:20 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ t_game	*g()
 	return (&game);
 }
 
-void	init_game()
+// TODO: free list if malloc failed
+int		init_game()
 {
 	t_game	*game;
 	int		i;
@@ -33,7 +34,11 @@ void	init_game()
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "TENET");
 	i = -1;
 	while (++i < OBJ_SIZE)
+	{
 		game->instances[i] = create_list();
+		if (!game->instances[i])
+			return (ERROR);
+	}
 	i = -1;
 	while (++i < 127)
 		game->keys[i] = 0;
@@ -41,6 +46,7 @@ void	init_game()
 	mlx_hook(g()->win, 3, 0, key_release, 0);
 	mlx_hook(g()->win, 17, 0, exit_press, 0);
 	mlx_loop_hook(g()->mlx, loop, 0);
+	return (OK);
 }
 
 int		loop()
@@ -90,6 +96,8 @@ int		loop()
 				ins->draw(ins);
 		}
 	}
+	if (keyboard_check(KEY_P))
+		draw_debug();
 	return (OK);
 }
 
