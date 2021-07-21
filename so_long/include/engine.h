@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:32 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/22 02:12:34 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/22 03:32:18 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ void		delete_sprite(t_sprite *spr);
 void		change_sprite(t_instance *id, t_sprite *spr);
 
 t_scene		*add_scene(t_canvas *background, void (*start)(void), void (*controller)(void), void (*end)(void));
-void		scene_default_end();
 
 // user usable function
 int			keyboard_check(int keycode);
@@ -148,6 +147,7 @@ t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance
 int			point_distance(int x1, int y1, int x2, int y2);
 int			place_meeting(t_instance *id, int x, int y, t_instance *other);
 t_instance	*place_meeting_type(t_instance *id, int x, int y, int type);
+void		destroy_all_instance();
 void		destroy_instance(t_instance *id);
 
 void		draw_line(int pos[2], int dir[2], int len, int color);

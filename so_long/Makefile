@@ -6,57 +6,67 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/16 07:48:16 by ycha              #+#    #+#              #
-#    Updated: 2021/07/21 22:50:15 by ycha             ###   ########.fr        #
+#    Updated: 2021/07/22 03:50:26 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+.SUFFIXES : .c .o
 NAME	= so_long
 
-SRC		= main.c debug.c\
-			engine/game.c \
-			engine/sprite.c \
-			engine/draw.c \
-			engine/keyboard.c \
-			engine/instance.c \
-			engine/list.c \
-			engine/scene.c \
-			asset/asset.c \
-			asset/background/background_black.c \
-			asset/object/obj_player.c \
-			asset/object/obj_zombie.c \
-			asset/object/obj_wall.c \
-			asset/object/obj_box.c \
-			asset/script/scr_footprint.c \
-			asset/script/scr_animation.c \
-			asset/scene/scene_play.c \
-			asset/sprite/spr_player.c \
-			asset/sprite/spr_zombie.c \
-			asset/sprite/spr_empty.c \
-			asset/sprite/spr_wall.c \
-			asset/sprite/spr_box.c \
-			lib/sl_free.c \
-			lib/sl_itoa.c \
-			lib/sl_strjoin.c
+FILE	= main debug\
+			engine/game \
+			engine/sprite \
+			engine/draw \
+			engine/keyboard \
+			engine/instance \
+			engine/list \
+			engine/scene \
+			engine/font \
+			asset/asset \
+			asset/background/background_black \
+			asset/font/font_default \
+			asset/object/obj_player \
+			asset/object/obj_zombie \
+			asset/object/obj_wall \
+			asset/object/obj_box \
+			asset/script/scr_footprint \
+			asset/script/scr_animation \
+			asset/script/scr_get_route \
+			asset/scene/scene_play \
+			asset/sprite/spr_player \
+			asset/sprite/spr_zombie \
+			asset/sprite/spr_empty \
+			asset/sprite/spr_wall \
+			asset/sprite/spr_box \
+			asset/sprite/spr_exit \
+			asset/sprite/spr_gold \
+			asset/sprite/spr_inverter \
+			lib/sl_free \
+			lib/sl_itoa \
+			lib/sl_strjoin
 
 SRC_DIR =	./src/
-SRCS	= 	$(addprefix $(SRC_DIR), $(SRC))
+SRCS	= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILE)))
+OBJS	=	$(addprefix $(SRC_DIR), $(addsuffix .o, $(FILE)))
+
 CC		=	gcc
 INCLUDE =	-Iinclude -Isrc/mlx
 CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit
 CFLAGS	=	-Wall -Werror -Wextra $(INCLUDE)
 
-OBJS	=	$(SRCS:.c=.o)
-
 all		: $(NAME)
 
+.o		: .c
+	@$(CC) $(CFLAGS) $(CLIB) -c $< -o  $@
+
 $(NAME)	: $(OBJS)
-	$(CC) $(CFLAGS) $(CLIB) -o $@ $^
-	./so_long
+	@$(CC) $(CFLAGS) $(CLIB) -o $@ $^
+	@./so_long
 
 clean	:
-	rm -f $(OBJS)
+	@rm -f $(OBJS)
 
 fclean	: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re		: fclean all

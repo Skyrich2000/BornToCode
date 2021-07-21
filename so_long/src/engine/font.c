@@ -1,6 +1,5 @@
 #include "engine.h"
 
-// TODO: free before error return
 t_font	*add_font(char *path)
 {
 	t_font	*new;

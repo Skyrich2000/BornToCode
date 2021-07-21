@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:56 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/21 07:28:35 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/22 04:17:25 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ t_instance	*create_zombie_instance(int x, int y)
 	ins = create_instance(g()->asset.spr_zombie_die_right_reverse, (int [3]){ZOMBIE, x, y}, obj_zombie_step, obj_zombie_draw);
 	if (!ins)
 		return (ERROR);
-	ins->obj.zombie.avatar = 0;
-	ins->obj.zombie.status = 0;
 	ins->obj.zombie.route = create_list();
 	ins->obj.zombie.route_node = 0;
+	ins->condition = C_DEAD;
 	return (ins);
 }
 
@@ -31,19 +30,20 @@ static void	z_move(t_instance *this)
 {
 	t_instance *ins;
 
-	if (this->obj.zombie.status == 1) // dead reverse animation
+	//0010
+	if (this->condition & C_DEING)
 	{
 		if (this->dir == 1)
 			change_sprite(this, g()->asset.spr_zombie_die_right_reverse);
 		else
 			change_sprite(this, g()->asset.spr_zombie_die_left_reverse);
-		if (this->img_node->next == 0) // if dead reverse animation done
-			this->obj.zombie.status = 2;
+		if (this->img_node->next == 0)
+			this->condition = C_ALIVE;
 	}
-	else if (this->obj.zombie.status == 2) // alive
+	else if (this->condition & C_ALIVE)
 	{
 		ins = g()->instances[PLAYER]->next->data;
-		if (point_distance(this->x, this->y, ins->x, ins->y) < 50 * 50)
+		if (ins && point_distance(this->x, this->y, ins->x, ins->y) < 50 * 50)
 		{
 			this->dir = 0;
 			if (ins->x > this->x)
@@ -56,43 +56,33 @@ static void	z_move(t_instance *this)
 	}
 }
 
-/*
-** 0 : dead body
-** 1 : dead reverse animation
-** 2 : alive
-*/
 void		obj_zombie_step(t_instance *this)
 {
 	if (DEBUG)
 		printf("obj_zombie_step start\n");
-	if (this->obj.zombie.avatar == 0)
+
+	if (!(this->condition & C_AVATAR))
 	{
 		z_move(this);
-		if (g()->global.status == 1)
+		if (g()->global.state == S_INVERT)
 			scr_save_footprint(this, this->obj.zombie.route);
 	}
 	else
-		scr_load_footprint(this, &this->obj.zombie.route_node);
+		scr_load_footprint(this, &this->obj.zombie.route_node, 1);
+
 	if (DEBUG)
 		printf("obj_zombie_step end\n");
 }
 
-void        obj_zombie_draw(t_instance *this)
+void	obj_zombie_draw(t_instance *this)
 {
 	if (DEBUG)
 		printf("obj_zombie_draw start\n");
+
 	draw_sprite(this->spr, this->img_node, this->x, this->y);
-	if (this->obj.zombie.status != 0)
-	{
-		this->draw_time++;
-		if (this->draw_time > this->spr->img_speed)
-		{
-			this->img_node = this->img_node->next;
-			this->draw_time = 0;
-		}
-		if (!this->img_node)
-			this->img_node = this->spr->imgs->next;
-	}
+	if (!(this->condition & C_AVATAR || this->condition & C_DEAD))
+		scr_animation(this);
+
 	if (DEBUG)
 		printf("obj_zombie_draw end\n");
 }

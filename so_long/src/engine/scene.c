@@ -14,18 +14,6 @@ t_scene		*add_scene(t_canvas *background, void (*start)(void), void (*controller
 	return (new);
 }
 
-void		scene_default_end()
-{
-	int i;
-
-	i = -1;
-	while (++i < OBJ_SIZE)
-	{
-		while (g()->instances[i]->next)
-			destroy_instance(g()->instances[i]->next->data);
-	}
-}
-
 void		scene_start()
 {
 	if (DEBUG)

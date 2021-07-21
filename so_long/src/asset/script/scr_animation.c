@@ -2,6 +2,7 @@
 
 void		scr_animation(t_instance *this)
 {
+	this->draw_time++;
 	if (this->draw_time > this->spr->img_speed)
 	{
 		this->img_node = this->img_node->next;

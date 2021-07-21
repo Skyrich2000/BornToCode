@@ -9,7 +9,7 @@ void	scr_save_footprint(t_instance *this, t_list *route)
 	footprint->y = this->y;
 	footprint->spr = this->spr;
 	footprint->img_node = this->img_node;
-	footprint->status = this->obj.
+	footprint->condition = this->condition | C_AVATAR;
 	push_list(route, footprint);
 }
 
@@ -32,5 +32,6 @@ void	scr_load_footprint(t_instance *this, t_list **route_node, int inverted)
 		this->y = fp->y;
 		this->spr = fp->spr;
 		this->img_node = fp->img_node;
+		this->condition = fp->condition;
 	}
 }

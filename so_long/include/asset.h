@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/22 02:13:07 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/22 04:18:14 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 # define ASSET_H
 # include "engine.h"
 
-# define WALL			0
-# define BOX			1
-# define KEY			2
-# define EXIT			3
-# define ZOMBIE			4
-# define PLAYER			5
-# define OBJ_SIZE		6
+# define WALL				0
+# define BOX				1
+# define KEY				2
+# define EXIT				3
+# define ZOMBIE				4
+# define PLAYER				5
+# define OBJ_SIZE			6
 
 # define KEY_A				0
 # define KEY_S				1
@@ -34,11 +34,23 @@
 # define KEY_I				34
 # define KEY_P				35
 
+# define C_DEAD				1
+# define C_DEING			2
+# define C_ALIVE			4
+# define C_AVATAR			8
+
+# define S_STRAIGHT			0
+# define S_INVERT			1
+# define S_RESTRAIGHT		2
+# define S_GAMEOVER			3
+# define S_CLEAR			4
+
 typedef struct s_canvas		t_canvas;
 typedef struct s_scene		t_scene;
 typedef struct s_sprite		t_sprite;
 typedef struct s_instance	t_instance;
 typedef struct s_list		t_list;
+typedef struct s_font		t_font;
 
 typedef struct s_global
 {
@@ -161,8 +173,10 @@ void		obj_box_draw(t_instance *this);
 
 //script
 void		scr_save_footprint(t_instance *this, t_list *route);
-void		scr_load_footprint(t_instance *this, t_list **route_node);
+void		scr_load_footprint(t_instance *this, t_list **route_node, int inverted);
 void		scr_animation(t_instance *this);
+t_list		*scr_get_route(t_instance *id, int type);
+t_list		**scr_get_route_node(t_instance *id, int type);
 
 // scene
 int			init_scene_play();

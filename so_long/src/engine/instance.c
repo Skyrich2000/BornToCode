@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:08 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/21 06:10:20 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/22 02:57:57 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance
 	new->x = data[1];
 	new->y = data[2];
 	new->dir = 1;
+	new->condition = 0;
 	new->step = step;
 	new->draw = draw;
 	new->draw_time = 0;
@@ -71,6 +72,19 @@ t_instance	*place_meeting_type(t_instance *id, int x, int y, int type)
 		node = node->next;
 	}
 	return (ERROR);
+}
+
+
+void		destroy_all_instance()
+{
+	int i;
+
+	i = -1;
+	while (++i < OBJ_SIZE)
+	{
+		while (g()->instances[i]->next)
+			destroy_instance(g()->instances[i]->next->data);
+	}
 }
 
 void		destroy_instance(t_instance *id)

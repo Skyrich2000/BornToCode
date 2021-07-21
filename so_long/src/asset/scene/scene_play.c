@@ -25,13 +25,13 @@ void		scene_play_start()
 		"1111111111"
 	};
 	g()->global.deathcount = 0;
-	g()->global.inverted = 0;
-	g()->global.status = 0;
+	g()->global.inverted = S_STRAIGHT;
+	g()->global.state = S_STRAIGHT;
 	g()->global.time = 0;
 	g()->global.total_time = 0;
 
 	i = -1;
-	while (--i < 7)
+	while (++i < 	7)
 	{
 		j = -1;
 		while (map[i][++j])
@@ -39,7 +39,7 @@ void		scene_play_start()
 			if (map[i][j] == '1')
 				create_wall_instance(32 + j * 32, 32 + i * 32);
 			else if (map[i][j] == 'p')
-				create_player_instance(32 + j * 32, 32 + i * 32, 0);
+				g()->global.player = create_player_instance(32 + j * 32, 32 + i * 32, S_STRAIGHT);
 			else if (map[i][j] == 'z')
 				create_zombie_instance(32 + j * 32, 32 + i * 32);
 			else if (map[i][j] == 'b')
@@ -48,10 +48,29 @@ void		scene_play_start()
 	}
 }
 
-static void	s_straight()
+
+static void s_avatarize(int type)
 {
 	t_instance	*ins;
 	t_list		*node;
+	t_list		**route_node;
+
+	node = g()->instances[type]->next;
+	while (node)
+	{
+		ins = node->data;
+		node = node->next;
+		if (ins->condition & C_AVATAR)
+			continue;
+		ins->condition |= C_AVATAR;
+		route_node = scr_get_route_node(ins, type);
+		*route_node = scr_get_route(ins, type)->next;
+	}
+}
+
+static void	s_straight()
+{
+	t_instance	*ins;
 
 	g()->global.time += 1;
 	if (g()->global.time > 60 * 60)
@@ -62,50 +81,34 @@ static void	s_straight()
 	if (keyboard_check(KEY_I))
 	{
 		printf("inversion start\n");
-		g()->global.inverted = 1;
-		g()->global.status = 1;
+		g()->global.inverted = S_INVERT;
+		g()->global.state = S_INVERT;
 		g()->global.total_time = g()->global.time;
 
-		ins = g()->instances[PLAYER]->next->data;
-		ins->obj.player.avatar = 1;
-		ins->obj.player.route_node = ins->obj.player.route->next;
+		s_avatarize(PLAYER);
+		s_avatarize(BOX);
 
-		node = g()->instances[BOX]->next;
-		while (node)
-		{
-			ins = node->data;
-			ins->obj.box.avatar = 1;
-			ins->obj.box.route_node = ins->obj.box.route->next;
-			node = node->next;
-		}
+		ins = g()->global.player;
+		g()->global.player = create_player_instance(ins->x, ins->y, S_INVERT);
 	}
 }
 
 static void	s_inverted()
 {
-	t_instance *ins;
-	t_list *node;
+	t_instance	*ins;
 
 	g()->global.time -= 1;
 	if (g()->global.time < 0)
 	{
 		printf("re straight start\n");
-		g()->global.inverted = 0;
-		g()->global.status = 2;
+		g()->global.inverted = S_STRAIGHT;
+		g()->global.state = S_RESTRAIGHT;
 
-		ins = g()->instances[PLAYER]->next->data;
-		create_avatar_instance(ins->obj.player.route, 1);
-		create_player_instance(ins->x, ins->y);
-		destroy_instance(ins);
+		s_avatarize(PLAYER);
+		s_avatarize(ZOMBIE);
 
-		node = g()->instances[ZOMBIE]->next;
-		while (node)
-		{
-			ins = node->data;
-			node = node->next;
-			create_avatar_instance(ins->obj.zombie.route, 1);
-			destroy_instance(ins);
-		}
+		ins = g()->global.player;
+		g()->global.player = create_player_instance(ins->x, ins->y, S_STRAIGHT);
 	}
 }
 
@@ -116,21 +119,16 @@ static void s_restraight()
 	{
 		printf("clear \n");
 		g()->global.time = 0; // temp
-		g()->global.status = 3;
+		g()->global.state = S_CLEAR;
 	}
 }
 
 static void	s_clear()
 {
-	t_instance *ins;
-
 	g()->global.time += 1;
 	if (g()->global.time > 60 * 3)
 	{
 		printf("game restart \n");
-		ins = g()->instances[PLAYER]->next->data;
-		free_list(ins->obj.player.route, sl_free);
-		destroy_instance(ins);
 		scene_restart();
 	}
 }
@@ -139,14 +137,16 @@ void		scene_play_controller()
 {
 	if (DEBUG)
 		printf("scene_play_controller start\n");
-	if (g()->global.status == 0) // straight
+
+	if (g()->global.state == S_STRAIGHT)
 		s_straight();
-	else if (g()->global.status == 1) // inverted
+	else if (g()->global.state == S_INVERT)
 		s_inverted();
-	else if (g()->global.status == 2) // re straight
+	else if (g()->global.state == S_RESTRAIGHT)
 		s_restraight();
-	else if (g()->global.status == 3) // clear
+	else if (g()->global.state == S_CLEAR)
 		s_clear();
+
 	if (DEBUG)
 		printf("scene_play_controller end\n");
 }
@@ -156,14 +156,20 @@ void		scene_play_end()
 {
 	t_list		*node;
 	t_instance	*ins;
+	int			*type;
+	int			i;
 
-	scene_default_end();
-	node = g()->instances[AVATAR]->next;
-	while (node)
+	type = (int [3]){PLAYER, ZOMBIE, BOX};
+	i = -1;
+	while (++i < 3)
 	{
-		ins = node->data;
-		free_list(ins->obj.avatar.route, sl_free);
-		node = node->next;
+		node = g()->instances[type[i]]->next;
+		while (node)
+		{
+			ins = node->data;
+			node = node->next;
+			free_list(scr_get_route(ins, type[i]), sl_free);
+		}
 	}
+	destroy_all_instance();
 }
-
