@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/22 04:18:14 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/22 07:06:09 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,20 +101,30 @@ typedef union u_object
 	t_obj_prop		box;
 }	t_object;
 
+// 포인터 위치 절대 바꾸지 말 것 !!!!
 typedef struct s_asset
 {
 	t_canvas		*background_black;
 
 	t_font			*font_default;
 
-	t_sprite		*spr_player_idle_right;
-	t_sprite		*spr_player_idle_left;
-	t_sprite		*spr_player_move_right;
-	t_sprite		*spr_player_move_left;
-	t_sprite		*spr_player_attack_right;
-	t_sprite		*spr_player_attack_left;
-	t_sprite		*spr_player_die_right;
-	t_sprite		*spr_player_die_left;
+	t_sprite		*spr_player_blue_idle_right;
+	t_sprite		*spr_player_blue_idle_left;
+	t_sprite		*spr_player_blue_move_right;
+	t_sprite		*spr_player_blue_move_left;
+	t_sprite		*spr_player_blue_attack_right;
+	t_sprite		*spr_player_blue_attack_left;
+	t_sprite		*spr_player_blue_die_right;
+	t_sprite		*spr_player_blue_die_left;
+
+	t_sprite		*spr_player_red_idle_right;
+	t_sprite		*spr_player_red_idle_left;
+	t_sprite		*spr_player_red_move_right;
+	t_sprite		*spr_player_red_move_left;
+	t_sprite		*spr_player_red_attack_right;
+	t_sprite		*spr_player_red_attack_left;
+	t_sprite		*spr_player_red_die_right;
+	t_sprite		*spr_player_red_die_left;
 
 	t_sprite		*spr_zombie_idle_right_reverse;
 	t_sprite		*spr_zombie_idle_left_reverse;
@@ -126,8 +136,10 @@ typedef struct s_asset
 	t_sprite		*spr_box;
 	t_sprite		*spr_box_break;
 	t_sprite		*spr_gold;
-	t_sprite		*spr_inverter;
-	t_sprite		*spr_exit;
+	t_sprite		*spr_inverter_blue;
+	t_sprite		*spr_inverter_red;
+	t_sprite		*spr_exit_open;
+	t_sprite		*spr_exit_close;
 
 	t_scene			*scene_main;
 	t_scene			*scene_tutorial;
@@ -146,7 +158,8 @@ int			init_background_black();
 int			init_font_default();
 
 // sprite
-int			init_spr_player();
+int			init_spr_player_blue();
+int			init_spr_player_red();
 int			init_spr_zombie();
 int			init_spr_empty();
 int			init_spr_wall();

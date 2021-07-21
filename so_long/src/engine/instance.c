@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:08 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/22 02:57:57 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/22 06:59:55 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int			place_meeting(t_instance *id, int x, int y, t_instance *other)
 	box2.y1 = other->y - other->spr->offset_y + other->spr->mask.y1;
 	box2.x2 = other->x - other->spr->offset_x + other->spr->mask.x2;
 	box2.y2 = other->y - other->spr->offset_y + other->spr->mask.y2;
-	return (box.x2 >= box2.x1 && box2.x2 >= box.x1 && \
-			box.y2 >= box2.y1 && box2.y2 >= box.y1);
+	return (box.x2 > box2.x1 && box2.x2 > box.x1 && \
+			box.y2 > box2.y1 && box2.y2 > box.y1);
 }
 
 t_instance	*place_meeting_type(t_instance *id, int x, int y, int type)

@@ -2,10 +2,14 @@
 
 int init_spr_exit()
 {
-	g()->asset.spr_exit = add_sprite(16, 32, 10, (t_box){ 0, 0, 32, 32 });
-	if (!g()->asset.spr_exit)
+	g()->asset.spr_exit_open = add_sprite(16, 32, 10, (t_box){ 0, 0, 32, 32 });
+	g()->asset.spr_exit_close = add_sprite(16, 32, 10, (t_box){ 0, 0, 32, 32 });
+	if (!g()->asset.spr_exit_open || \
+		!g()->asset.spr_exit_close)
 		return (ERROR);
-	if (!add_sprite_subimage(g()->asset.spr_exit, "./res/xpm/empty_", 0, 0))
+	if (!add_sprite_subimage(g()->asset.spr_exit_open, "./res/xpm/exit/exit_", 1, 1) || \
+		!add_sprite_subimage(g()->asset.spr_exit_close, "./res/xpm/exit/exit_", 0, 0))
+
 		return (ERROR);
 	return (OK);
 }

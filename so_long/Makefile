@@ -1,72 +1,64 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/07/16 07:48:16 by ycha              #+#    #+#              #
-#    Updated: 2021/07/22 03:50:26 by ycha             ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-.SUFFIXES : .c .o
-NAME	= so_long
-
-FILE	= main debug\
-			engine/game \
-			engine/sprite \
-			engine/draw \
-			engine/keyboard \
-			engine/instance \
-			engine/list \
-			engine/scene \
-			engine/font \
-			asset/asset \
-			asset/background/background_black \
-			asset/font/font_default \
-			asset/object/obj_player \
-			asset/object/obj_zombie \
-			asset/object/obj_wall \
-			asset/object/obj_box \
-			asset/script/scr_footprint \
-			asset/script/scr_animation \
-			asset/script/scr_get_route \
-			asset/scene/scene_play \
-			asset/sprite/spr_player \
-			asset/sprite/spr_zombie \
-			asset/sprite/spr_empty \
-			asset/sprite/spr_wall \
-			asset/sprite/spr_box \
-			asset/sprite/spr_exit \
-			asset/sprite/spr_gold \
-			asset/sprite/spr_inverter \
-			lib/sl_free \
-			lib/sl_itoa \
-			lib/sl_strjoin
-
-SRC_DIR =	./src/
-SRCS	= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILE)))
-OBJS	=	$(addprefix $(SRC_DIR), $(addsuffix .o, $(FILE)))
+NAME	=	so_long
 
 CC		=	gcc
-INCLUDE =	-Iinclude -Isrc/mlx
+INCLUDE = 	-Iinclude -Isrc/mlx
+CFLAGS	=	-Wall -Wextra -Werror $(INCLUDE)
+SRC		=	main.c debug.c \
+			engine/game.c \
+			engine/sprite.c \
+			engine/draw.c \
+			engine/keyboard.c \
+			engine/instance.c \
+			engine/list.c \
+			engine/scene.c \
+			engine/font.c \
+			asset/asset.c \
+			asset/background/background_black.c \
+			asset/font/font_default.c \
+			asset/object/obj_player.c \
+			asset/object/obj_zombie.c \
+			asset/object/obj_wall.c \
+			asset/object/obj_box.c \
+			asset/script/scr_footprint.c \
+			asset/script/scr_animation.c \
+			asset/script/scr_get_route.c \
+			asset/scene/scene_play.c \
+			asset/sprite/spr_player_red.c \
+			asset/sprite/spr_player_blue.c \
+			asset/sprite/spr_zombie.c \
+			asset/sprite/spr_empty.c \
+			asset/sprite/spr_wall.c \
+			asset/sprite/spr_box.c \
+			asset/sprite/spr_exit.c \
+			asset/sprite/spr_gold.c \
+			asset/sprite/spr_inverter.c \
+			lib/sl_free.c \
+			lib/sl_itoa.c \
+			lib/sl_strjoin.c
+
+SRC_DIR = ./src/
 CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit
-CFLAGS	=	-Wall -Werror -Wextra $(INCLUDE)
+SRCS = $(addprefix $(SRC_DIR),$(SRC))
 
-all		: $(NAME)
+OBJ = $(SRCS:.c=.o)
 
-.o		: .c
-	@$(CC) $(CFLAGS) $(CLIB) -c $< -o  $@
+all		:	$(NAME)
 
-$(NAME)	: $(OBJS)
-	@$(CC) $(CFLAGS) $(CLIB) -o $@ $^
-	@./so_long
+%.o		:	$(SRC_DIR)/%.c
+			$(CC) $(CFLAGS) $(CLIB) -c $< -o $@
+
+$(NAME): $(OBJ)
+	@$(CC) $(CFLAGS) $(CLIB) $(SRCS) -o $(NAME)
+
+
+bonus	: all
 
 clean	:
-	@rm -f $(OBJS)
+			rm -f $(OBJ)
 
-fclean	: clean
-	@rm -f $(NAME)
+fclean	:	clean
+			rm -f $(NAME)
 
-re		: fclean all
+re		:	fclean	all
+
+.PHONY	:	all clean fclean re bonus

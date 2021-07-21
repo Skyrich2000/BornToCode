@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:50 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/21 06:14:41 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/22 05:29:23 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int		init_asset()
 {
 	return (init_background_black() && \
 			init_font_default() && \
-			init_spr_player() && \
+			init_spr_player_red() && \
+			init_spr_player_blue() && \
 			init_spr_zombie() && \
 			init_spr_empty() && \
 			init_spr_wall() && \
@@ -30,7 +31,7 @@ int		init_asset()
 
 void	free_asset()
 {
-	delete_sprite(g()->asset.spr_player_idle_right);
-	delete_sprite(g()->asset.spr_player_move_right);
+	// // delete_sprite(g()->asset.spr_player_idle_right);
+	// delete_sprite(g()->asset.spr_player_move_right);
 	free(g()->asset.background_black);
 }

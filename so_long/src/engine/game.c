@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:06 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/20 22:54:20 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/22 08:11:24 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ int		init_game()
 
 	game = g();
 	sl_bzero(game, sizeof(t_game));
+	game->view.view_wview = WINDOW_WIDTH;
+	game->view.view_hview = WINDOW_HEIGHT;
 	game->mlx = mlx_init();
-	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "TENET");
+	game->win = mlx_new_window(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "TENET");
 	i = -1;
 	while (++i < OBJ_SIZE)
 	{
@@ -98,6 +100,7 @@ int		loop()
 	}
 	if (keyboard_check(KEY_P))
 		draw_debug();
+	draw_text(g()->asset.font_default, "TENET", (int[2]){g()->view.view_xview + g()->view.view_wview, g()->view.view_yview + g()->view.view_hview}, (int [2]){A_RIGHT, A_BOTTOM});
 	return (OK);
 }
 

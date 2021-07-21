@@ -31,21 +31,24 @@ void		scene_play_start()
 	g()->global.total_time = 0;
 
 	i = -1;
-	while (++i < 	7)
+	while (++i < 7)
 	{
 		j = -1;
 		while (map[i][++j])
 		{
 			if (map[i][j] == '1')
-				create_wall_instance(32 + j * 32, 32 + i * 32);
+				create_wall_instance(j * 32, i * 32);
 			else if (map[i][j] == 'p')
-				g()->global.player = create_player_instance(32 + j * 32, 32 + i * 32, S_STRAIGHT);
+				g()->global.player = create_player_instance(j * 32, i * 32, S_STRAIGHT);
 			else if (map[i][j] == 'z')
-				create_zombie_instance(32 + j * 32, 32 + i * 32);
+				create_zombie_instance(j * 32, i * 32);
 			else if (map[i][j] == 'b')
-				create_box_instance(32 + j * 32, 32 + i * 32);
+				create_box_instance(j * 32, i * 32);
 		}
 	}
+
+	g()->view.view_xview = -16 + j * 32 / 2 - g()->view.view_wview / 2;
+	g()->view.view_yview = -32 + i * 32 / 2 - g()->view.view_hview / 2;
 }
 
 
@@ -61,7 +64,7 @@ static void s_avatarize(int type)
 		ins = node->data;
 		node = node->next;
 		if (ins->condition & C_AVATAR)
-			continue;
+			continue ;
 		ins->condition |= C_AVATAR;
 		route_node = scr_get_route_node(ins, type);
 		*route_node = scr_get_route(ins, type)->next;

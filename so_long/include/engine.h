@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:32 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/22 03:32:18 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/22 08:06:34 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,17 @@
 # define OK 1
 # define ERROR 0
 
-# define WIDTH 480
-# define HEIGHT 320
+# define WINDOW_WIDTH 480
+# define WINDOW_HEIGHT 320
 
 # define C_RED 0xFF0000
 # define C_YELLOW 0xFFFF00
 # define C_GREEN 0x00FF00
+# define C_BLUE	0x0000FF
 
 # define A_LEFT 0
 # define A_UP 0
-# define A_CENTER 2
+# define A_CENTER 0.5
 # define A_RIGHT 1
 # define A_BOTTOM 1
 
@@ -77,8 +78,8 @@ typedef struct s_canvas
 typedef struct s_font
 {
 	void			*img[127];
-	int				width;
-	int				height;
+	int				size;
+	int				real_size;
 }	t_font;
 
 typedef struct s_instance
@@ -104,6 +105,14 @@ typedef struct s_scene
 	void			(*end)(void);
 }	t_scene;
 
+typedef struct s_view
+{
+	int				view_wview;
+	int				view_hview;
+	int				view_xview;
+	int				view_yview;
+}	t_view;
+
 typedef struct s_game
 {
 	void			*mlx;
@@ -112,6 +121,7 @@ typedef struct s_game
 	t_asset			asset;
 	t_list			*instances[OBJ_SIZE];
 	t_scene			*scene;
+	t_view			view;
 	int				keys[420];
 }	t_game;
 
@@ -131,7 +141,7 @@ t_list		*push_list(t_list *list, void *data);
 void		*pop_list(t_list *node);
 void		free_list(t_list *list, void (*del)(void *));
 
-t_font		*add_font(char *path);
+t_font		*add_font(char *path, int size);
 
 t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed, t_box mask);
 int			add_sprite_subimage(t_sprite *spr, char *path, int start, int end);
@@ -157,7 +167,7 @@ void		draw_debug();
 void		draw_img(void *img, int x, int y);
 void		draw_sprite(t_sprite *spr, t_list *img_node, int x, int y);
 void		draw_background(t_canvas *background);
-void		draw_font(t_font *font, char *str, int pos[2], int align[2]);
+int			draw_text(t_font *font, char *str, int pos[2], int align[2]);
 
 void		scene_start();
 void		scene_restart();

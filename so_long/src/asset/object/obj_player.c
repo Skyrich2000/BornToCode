@@ -6,18 +6,35 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:53 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/22 04:26:12 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/22 07:39:02 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 #include "asset.h"
 
+#define	SPR_IDLE	0
+#define	SPR_MOVE	1
+#define	SPR_ATTACK	2
+
+t_sprite *scr_get_spr_player(int type, int inverted, int dir)
+{
+	int			idx;
+	void		*asset;
+	t_sprite	*spr;
+
+	idx = 2 + (!inverted) * 8 + type * 2 + (dir != 1);
+	asset = &(g()->asset);
+	spr = *(t_sprite **)(asset + sizeof(void *) * idx);
+	return (spr);
+}
+
 t_instance	*create_player_instance(int x, int y, int inverted)
 {
 	t_instance *ins;
 
-	ins = create_instance(g()->asset.spr_player_idle_right, (int [3]){PLAYER, x, y}, obj_player_step, obj_player_draw);
+	//printf("func -> %p\n", scr_get_spr_player(SPR_IDLE, inverted, 1));
+	ins = create_instance(scr_get_spr_player(SPR_IDLE, inverted, 1), (int [3]){PLAYER, x, y}, obj_player_step, obj_player_draw);
 	if (!ins)
 		return (ERROR);
 	ins->obj.player.inverted = inverted;
@@ -36,22 +53,23 @@ t_instance	*create_player_instance(int x, int y, int inverted)
 	return (ins);
 }
 
-static void p_collision(t_instance *this)
+static int	p_collision_box(t_instance *this)
 {
 	t_instance *wall;
-	t_instance *zombie;
 	t_instance *box;
 
 	wall = place_meeting_type(this, this->x, this->y, WALL);
 	box = place_meeting_type(this, this->x, this->y, BOX);
-	if (wall || (box && box->condition & C_ALIVE))
-	{
-		this->x = this->obj.player.prev_x;
-		this->y = this->obj.player.prev_y;
-	}
 	this->obj.player.collision_box = box;
+	return (wall || (box && box->condition & C_ALIVE));
+}
+
+static void p_collision_zombie(t_instance *this)
+{
+	t_instance *zombie;
 
 	zombie = place_meeting_type(this, this->x, this->y, ZOMBIE);
+	this->obj.player.collision_zombie = zombie;
 	if (zombie)
 	{
 		if (zombie != this->obj.player.revive_zombie && \
@@ -63,7 +81,6 @@ static void p_collision(t_instance *this)
 	}
 	else
 		this->obj.player.revive_zombie = 0;
-	this->obj.player.collision_zombie = zombie;
 }
 
 static void	p_move(t_instance *this)
@@ -84,30 +101,21 @@ static void	p_move(t_instance *this)
 	{
 		if (keyboard_check(KEY_SPACEBAR))
 		{
-			if (this->dir == 1)
-				change_sprite(this, g()->asset.spr_player_attack_right);
-			else
-				change_sprite(this, g()->asset.spr_player_attack_left);
+			change_sprite(this, scr_get_spr_player(SPR_ATTACK, this->obj.player.inverted, this->dir));
 			this->obj.player.attack = 1;
 			if (g()->global.state == S_INVERT)
 				this->draw_time = -20;
 		}
 		else if (v_mv == 0 && h_mv == 0)
-		{
-			if (this->dir == 1)
-				change_sprite(this, g()->asset.spr_player_idle_right);
-			else
-				change_sprite(this, g()->asset.spr_player_idle_left);
-		}
+			change_sprite(this, scr_get_spr_player(SPR_IDLE, this->obj.player.inverted, this->dir));
 		else
-		{
-			if (this->dir == 1)
-				change_sprite(this, g()->asset.spr_player_move_right);
-			else
-				change_sprite(this, g()->asset.spr_player_move_left);
-		}
+			change_sprite(this, scr_get_spr_player(SPR_MOVE, this->obj.player.inverted, this->dir));
 		this->x += h_mv * 2;
+		if (p_collision_box(this))
+			this->x = this->obj.player.prev_x;
 		this->y += v_mv * 2;
+		if (p_collision_box(this))
+			this->y = this->obj.player.prev_y;
 	}
 
 	this->obj.player.h_mv = h_mv;
@@ -137,13 +145,10 @@ static void	p_attack(t_instance *this)
 		if (box)
 		{
 			if (box->condition & C_ALIVE && g()->global.state == S_STRAIGHT)
-			{
 				box->condition = C_DEING;
-			}
 		}
 	}
 }
-
 
 void		obj_player_step(t_instance *this)
 {
@@ -153,8 +158,8 @@ void		obj_player_step(t_instance *this)
 	if (!(this->condition & C_AVATAR))
 	{
 		p_move(this);
-		p_collision(this);
 		p_attack(this);
+		p_collision_zombie(this);
 		scr_save_footprint(this, this->obj.player.route);
 	}
 	else
@@ -174,6 +179,5 @@ void		obj_player_draw(t_instance *this)
 	if (!(this->condition & C_AVATAR))
 		scr_animation(this);
 
-	if (DEBUG)
-		printf("obj_player_draw end\n");
+	if (DEBUG) printf("obj_player_draw end\n");
 }

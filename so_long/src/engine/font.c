@@ -1,10 +1,10 @@
 #include "engine.h"
 
-t_font	*add_font(char *path)
+t_font	*add_font(char *path, int size)
 {
 	t_font	*new;
-	char	*num;
-	char	*path_all[2];
+	char	*path_all[3];
+	int		temp[2];
 	void	*img;
 	int		i;
 
@@ -12,18 +12,24 @@ t_font	*add_font(char *path)
 	if (!new)
 		return (ERROR);
 	i = -1;
-	while (++i <= 127)
+	while (++i < 127)
 	{
-		num = sl_itoa(i);
-		path_all[0] = sl_strjoin(path, num);
-		path_all[1] = sl_strjoin(path_all[0], ".xpm");
-		img = mlx_xpm_file_to_image(g()->mlx, path_all[1], &new->width, &new->height);
-		if (DEBUG && img)	// for debug
-			printf("LOAD: %s\n", path_all[1]);
+		path_all[0] = sl_itoa(i);
+		path_all[1] = sl_strjoin(path, path_all[0]);
+		path_all[2] = sl_strjoin(path_all[1], ".xpm");
+		img = mlx_xpm_file_to_image(g()->mlx, path_all[2], &temp[0], &temp[1]);
+		if (img)
+		{
+			new->real_size = temp[0];
+			if (DEBUG)	// for debug
+				printf("LOAD: %s\n", path_all[2]);
+		}
 		new->img[i] = img;
 		free(path_all[0]);
 		free(path_all[1]);
-		free(num);
+		free(path_all[2]);
 	}
+	new->size = size;
 	return (new);
 }
+
