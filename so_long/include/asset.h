@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/21 04:16:24 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/22 02:13:07 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@
 # define KEY			2
 # define EXIT			3
 # define ZOMBIE			4
-# define ZOMBIE_TRIGGER	5
-# define AVATAR			6
-# define PLAYER			7
-# define OBJ_SIZE		8
+# define PLAYER			5
+# define OBJ_SIZE		6
 
 # define KEY_A				0
 # define KEY_S				1
@@ -44,9 +42,10 @@ typedef struct s_list		t_list;
 
 typedef struct s_global
 {
+	t_instance		*player;
 	int				deathcount;
 	int				inverted;
-	int				status;
+	int				state;
 	int				time;
 	int				total_time;
 
@@ -57,47 +56,44 @@ typedef struct s_footprint
 {
 	int				x;
 	int				y;
+	int				condition;
 	t_sprite		*spr;
 	t_list			*img_node;
 }	t_footprint;
 
-// TODO: save collision id
 typedef struct s_obj_player
 {
-	int				hp;
+	int				inverted;
 	int				attack;
 	int				h_mv;
 	int				v_mv;
 	int				prev_x;
 	int				prev_y;
 	t_list			*route;
+	t_list			*route_node;
 	t_instance		*collision_zombie;
 	t_instance		*collision_box;
+	t_instance		*revive_zombie;
 }	t_obj_player;
 
 typedef struct s_obj_prop
 {
-	int				status;
 	t_list			*route;
+	t_list			*route_node;
 }	t_obj_prop;
-
-typedef struct s_obj_avatar
-{
-	t_list			*route;
-	t_list			*node;
-}	t_obj_avatar;
 
 typedef union u_object
 {
-	t_obj_player			player;
-	t_obj_prop				zombie;
-	t_obj_prop				box;
-	t_obj_avatar			avatar;
+	t_obj_player	player;
+	t_obj_prop		zombie;
+	t_obj_prop		box;
 }	t_object;
 
 typedef struct s_asset
 {
 	t_canvas		*background_black;
+
+	t_font			*font_default;
 
 	t_sprite		*spr_player_idle_right;
 	t_sprite		*spr_player_idle_left;
@@ -113,12 +109,13 @@ typedef struct s_asset
 	t_sprite		*spr_zombie_die_right_reverse;
 	t_sprite		*spr_zombie_die_left_reverse;
 
+	t_sprite		*spr_empty;
+	t_sprite		*spr_wall;
 	t_sprite		*spr_box;
 	t_sprite		*spr_box_break;
-	t_sprite		*spr_wall;
-	t_sprite		*spr_key;
+	t_sprite		*spr_gold;
+	t_sprite		*spr_inverter;
 	t_sprite		*spr_exit;
-	t_sprite		*spr_empty;
 
 	t_scene			*scene_main;
 	t_scene			*scene_tutorial;
@@ -133,17 +130,21 @@ void		free_asset();
 //background
 int			init_background_black();
 
+// font
+int			init_font_default();
+
 // sprite
 int			init_spr_player();
 int			init_spr_zombie();
 int			init_spr_empty();
 int			init_spr_wall();
 int			init_spr_box();
-int			init_spr_key();
+int			init_spr_gold();
+int			init_spr_inverter();
 int			init_spr_exit();
 
 // object
-t_instance	*create_player_instance(int x, int y);
+t_instance	*create_player_instance(int x, int y, int inverted);
 void		obj_player_step(t_instance *this);
 void		obj_player_draw(t_instance *this);
 
@@ -151,19 +152,17 @@ t_instance	*create_zombie_instance(int x, int y);
 void		obj_zombie_step(t_instance *this);
 void		obj_zombie_draw(t_instance *this);
 
-t_instance	*create_zombie_trigger_instance(int x, int y, t_instance *zombie);
-void		obj_zombie_trigger_step(t_instance *this);
-
-t_instance	*create_avatar_instance(t_list *route, int dir);
-void		obj_avatar_step(t_instance *this);
-void		obj_avatar_draw(t_instance *this);
-
 t_instance	*create_wall_instance(int x, int y);
 void		obj_wall_draw(t_instance *this);
 
 t_instance	*create_box_instance(int x, int y);
 void		obj_box_step(t_instance *this);
 void		obj_box_draw(t_instance *this);
+
+//script
+void		scr_save_footprint(t_instance *this, t_list *route);
+void		scr_load_footprint(t_instance *this, t_list **route_node);
+void		scr_animation(t_instance *this);
 
 // scene
 int			init_scene_play();

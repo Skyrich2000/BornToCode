@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:56 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/21 04:03:21 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/21 07:28:35 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,17 @@ t_instance	*create_zombie_instance(int x, int y)
 	ins = create_instance(g()->asset.spr_zombie_die_right_reverse, (int [3]){ZOMBIE, x, y}, obj_zombie_step, obj_zombie_draw);
 	if (!ins)
 		return (ERROR);
+	ins->obj.zombie.avatar = 0;
 	ins->obj.zombie.status = 0;
 	ins->obj.zombie.route = create_list();
+	ins->obj.zombie.route_node = 0;
 	return (ins);
 }
 
-static void z_footprint(t_instance *this)
-{
-	t_footprint	*footprint;
-
-	footprint = malloc(sizeof(t_footprint));
-	footprint->x = this->x;
-	footprint->y = this->y;
-	footprint->spr = this->spr;
-	footprint->img_node = this->img_node;
-	push_list(this->obj.zombie.route, footprint);
-}
-
-/*
-** 0 : dead body
-** 1 : dead reverse animation
-** 2 : alive
-*/
-void		obj_zombie_step(t_instance *this)
+static void	z_move(t_instance *this)
 {
 	t_instance *ins;
 
-	if (DEBUG)
-		printf("obj_zombie_step start\n");
 	if (this->obj.zombie.status == 1) // dead reverse animation
 	{
 		if (this->dir == 1)
@@ -71,8 +54,25 @@ void		obj_zombie_step(t_instance *this)
 		else
 			change_sprite(this, g()->asset.spr_zombie_idle_left_reverse);
 	}
-	if (g()->global.status == 1)
-		z_footprint(this);
+}
+
+/*
+** 0 : dead body
+** 1 : dead reverse animation
+** 2 : alive
+*/
+void		obj_zombie_step(t_instance *this)
+{
+	if (DEBUG)
+		printf("obj_zombie_step start\n");
+	if (this->obj.zombie.avatar == 0)
+	{
+		z_move(this);
+		if (g()->global.status == 1)
+			scr_save_footprint(this, this->obj.zombie.route);
+	}
+	else
+		scr_load_footprint(this, &this->obj.zombie.route_node);
 	if (DEBUG)
 		printf("obj_zombie_step end\n");
 }

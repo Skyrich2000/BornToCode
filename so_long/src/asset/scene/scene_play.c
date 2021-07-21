@@ -30,8 +30,8 @@ void		scene_play_start()
 	g()->global.time = 0;
 	g()->global.total_time = 0;
 
-	i = 7;
-	while (--i >= 0)
+	i = -1;
+	while (--i < 7)
 	{
 		j = -1;
 		while (map[i][++j])
@@ -39,7 +39,7 @@ void		scene_play_start()
 			if (map[i][j] == '1')
 				create_wall_instance(32 + j * 32, 32 + i * 32);
 			else if (map[i][j] == 'p')
-				create_player_instance(32 + j * 32, 32 + i * 32);
+				create_player_instance(32 + j * 32, 32 + i * 32, 0);
 			else if (map[i][j] == 'z')
 				create_zombie_instance(32 + j * 32, 32 + i * 32);
 			else if (map[i][j] == 'b')
@@ -55,7 +55,10 @@ static void	s_straight()
 
 	g()->global.time += 1;
 	if (g()->global.time > 60 * 60)
+	{
+		printf("time over..?");
 		scene_restart();
+	}
 	if (keyboard_check(KEY_I))
 	{
 		printf("inversion start\n");
@@ -64,26 +67,17 @@ static void	s_straight()
 		g()->global.total_time = g()->global.time;
 
 		ins = g()->instances[PLAYER]->next->data;
-		create_avatar_instance(ins->obj.player.route, 0);
-		create_player_instance(ins->x, ins->y);
-		destroy_instance(ins);
+		ins->obj.player.avatar = 1;
+		ins->obj.player.route_node = ins->obj.player.route->next;
 
 		node = g()->instances[BOX]->next;
 		while (node)
 		{
 			ins = node->data;
+			ins->obj.box.avatar = 1;
+			ins->obj.box.route_node = ins->obj.box.route->next;
 			node = node->next;
-			create_avatar_instance(ins->obj.box.route, 0);
-			destroy_instance(ins);
 		}
-
-		// node = g()->instances[ZOMBIE_TRIGGER]->next;
-		// while (node)
-		// {
-		// 	ins = node->data;
-		// 	ins->obj.zombie_trigger.player = avatar;
-		// 	node = node->next;
-		// }
 	}
 }
 

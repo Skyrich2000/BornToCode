@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:08 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/21 02:45:35 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/21 06:10:20 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance
 	if (!node)
 		return (ERROR);
 	new->node = node;
-	new->type = data[0];
 	new->spr = spr;
 	new->img_node = new->spr->imgs->next;
 	new->x = data[1];
@@ -54,7 +53,6 @@ int			place_meeting(t_instance *id, int x, int y, t_instance *other)
 	box2.y1 = other->y - other->spr->offset_y + other->spr->mask.y1;
 	box2.x2 = other->x - other->spr->offset_x + other->spr->mask.x2;
 	box2.y2 = other->y - other->spr->offset_y + other->spr->mask.y2;
-	// printf("box 1 (%d %d), (%d %d), box 2 (%d %d), (%d %d)\n", box.x1, box.y1, box.x2, box.y2, box2.x1, box2.y1, box2.x2, box2.y2);
 	return (box.x2 >= box2.x1 && box2.x2 >= box.x1 && \
 			box.y2 >= box2.y1 && box2.y2 >= box.y1);
 }
@@ -75,31 +73,8 @@ t_instance	*place_meeting_type(t_instance *id, int x, int y, int type)
 	return (ERROR);
 }
 
-t_instance	*position_meeting_type(int x, int y, int type)
-{
-	t_instance	*ins;
-	t_list		*node;
-	t_box		box;
-
-	node = g()->instances[type]->next;
-	while (node)
-	{
-		ins = node->data;
-		box.x1 = ins->x - ins->spr->offset_x + ins->spr->mask.x1;
-		box.y1 = ins->y - ins->spr->offset_y + ins->spr->mask.y1;
-		box.x2 = ins->x - ins->spr->offset_x + ins->spr->mask.x2;
-		box.y2 = ins->y - ins->spr->offset_y + ins->spr->mask.y2;
-		if (box.x1 < x && x < box.x2 && box.y1 < y && y < box.y2)
-			return (ins);
-		node = node->next;
-	}
-	return (ERROR);
-}
-
 void		destroy_instance(t_instance *id)
 {
-	if (DEBUG)
-		printf("destory %d\n", id->type);
 	pop_list(id->node);
 	free(id);
 }

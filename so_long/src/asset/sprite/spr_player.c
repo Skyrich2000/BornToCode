@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 22:18:07 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/21 03:17:14 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/21 05:07:31 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static int	init_spr_player_die()
 	if (!as->spr_player_die_right || \
 		!as->spr_player_die_left)
 		return (ERROR);
-	if (!add_sprite_subimage(as->spr_player_die_right, "./res/xpm_right/player_", 18, 22) || \
-		!add_sprite_subimage(as->spr_player_die_left, "./res/xpm_left/player_", 18, 22))
+	if (!add_sprite_subimage(as->spr_player_die_right, "./res/xpm/player_right/player_", 18, 22) || \
+		!add_sprite_subimage(as->spr_player_die_left, "./res/xpm/player_left/player_", 18, 22))
 		return (ERROR);
 	return (OK);
 }
@@ -42,8 +42,8 @@ static int	init_spr_player_attack()
 	if (!game->asset.spr_player_attack_right || \
 		!game->asset.spr_player_attack_left)
 		return (ERROR);
-	if (!add_sprite_subimage(game->asset.spr_player_attack_right, "./res/xpm_right/player_", 23, 27) || \
-		!add_sprite_subimage(game->asset.spr_player_attack_left, "./res/xpm_left/player_", 23, 27))
+	if (!add_sprite_subimage(game->asset.spr_player_attack_right, "./res/xpm/player_right/player_", 23, 27) || \
+		!add_sprite_subimage(game->asset.spr_player_attack_left, "./res/xpm/player_left/player_", 23, 27))
 		return (ERROR);
 	return (OK);
 }
@@ -58,8 +58,8 @@ static int	init_spr_player_move()
 	if (!game->asset.spr_player_move_right || \
 		!game->asset.spr_player_move_left)
 		return (ERROR);
-	if (!add_sprite_subimage(game->asset.spr_player_move_right, "./res/xpm_right/player_", 9, 14) || \
-		!add_sprite_subimage(game->asset.spr_player_move_left, "./res/xpm_left/player_", 9, 14))
+	if (!add_sprite_subimage(game->asset.spr_player_move_right, "./res/xpm/player_right/player_", 9, 14) || \
+		!add_sprite_subimage(game->asset.spr_player_move_left, "./res/xpm/player_left/player_", 9, 14))
 		return (ERROR);
 	return (OK);
 }
@@ -74,8 +74,8 @@ static int	init_spr_player_idle()
 	if (!game->asset.spr_player_idle_right || \
 		!game->asset.spr_player_idle_left)
 		return (ERROR);
-	if (!add_sprite_subimage(game->asset.spr_player_idle_right, "./res/xpm_right/player_", 0, 8) || \
-		!add_sprite_subimage(game->asset.spr_player_idle_left, "./res/xpm_left/player_", 0, 8))
+	if (!add_sprite_subimage(game->asset.spr_player_idle_right, "./res/xpm/player_right/player_", 0, 8) || \
+		!add_sprite_subimage(game->asset.spr_player_idle_left, "./res/xpm/player_left/player_", 0, 8))
 		return (ERROR);
 	return (OK);
 }

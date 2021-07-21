@@ -6,61 +6,65 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:53 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/21 04:14:36 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/21 23:06:26 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 #include "asset.h"
 
-t_instance	*create_player_instance(int x, int y)
+t_instance	*create_player_instance(int x, int y, int inverted)
 {
 	t_instance *ins;
 
 	ins = create_instance(g()->asset.spr_player_idle_right, (int [3]){PLAYER, x, y}, obj_player_step, obj_player_draw);
 	if (!ins)
 		return (ERROR);
-	ins->obj.player.hp = 0;
+	ins->obj.player.avatar = 0;
+	ins->obj.player.inverted = inverted;
 	ins->obj.player.attack = 0;
 	ins->obj.player.h_mv = 0;
 	ins->obj.player.v_mv = 0;
 	ins->obj.player.prev_x = x;
 	ins->obj.player.prev_y = y;
 	ins->obj.player.route = create_list();
+	ins->obj.player.route_node = 0;
+	ins->obj.player.collision_zombie = 0;
+	ins->obj.player.collision_box = 0;
+	ins->obj.player.revive_zombie = 0;
 	ins->dir = 1;
 	return (ins);
 }
 
 static void p_collision(t_instance *this)
 {
-	t_instance *ins;
-	t_list	*node;
+	t_instance *wall;
+	t_instance *zombie;
+	t_instance *box;
 
-	if (place_meeting_type(this, this->x, this->y, WALL))
+	wall = place_meeting_type(this, this->x, this->y, WALL);
+	box = place_meeting_type(this, this->x, this->y, BOX);
+	if (wall || (box && box->spr != g()->asset.spr_empty))
 	{
 		this->x = this->obj.player.prev_x;
 		this->y = this->obj.player.prev_y;
-		return ;
 	}
-	node = g()->instances[BOX]->next;
-	while (node)
-	{
-		ins = node->data;
-		if (place_meeting(this, this->x, this->y, ins) && ins->obj.box.status != 2)
-		{
-			this->x = this->obj.player.prev_x;
-			this->y = this->obj.player.prev_y;
-			return ;
-		}
-		node = node->next;
-	}
+	this->obj.player.collision_box = box;
 
-	ins = place_meeting_type(this, this->x, this->y, ZOMBIE);
-	if (ins && ins->obj.zombie.status == 2)
+	zombie = place_meeting_type(this, this->x, this->y, ZOMBIE);
+	if (zombie)
 	{
-		printf("GAME OVER");
-		scene_restart();
+		if (zombie != this->obj.player.revive_zombie && \
+			(zombie->spr == g()->asset.spr_zombie_idle_right_reverse || \
+			zombie->spr == g()->asset.spr_zombie_idle_left_reverse))
+		{
+			printf("GAME OVER");
+			scene_restart();
+		}
 	}
+	else
+		this->obj.player.revive_zombie = 0;
+	this->obj.player.collision_zombie = zombie;
 }
 
 static void	p_move(t_instance *this)
@@ -70,10 +74,10 @@ static void	p_move(t_instance *this)
 
 	this->obj.player.prev_x = this->x;
 	this->obj.player.prev_y = this->y;
-	if (keyboard_check(KEY_D) || keyboard_check(KEY_RIGHT))
+	if ((keyboard_check(KEY_D) || keyboard_check(KEY_RIGHT)))
 		this->dir = 1;
-	else if (keyboard_check(KEY_A) || keyboard_check(KEY_LEFT))
-		this->dir = -1;
+	else if ((keyboard_check(KEY_A) || keyboard_check(KEY_LEFT)))
+		this->dir = 1;
 	h_mv = (keyboard_check(KEY_D) || keyboard_check(KEY_RIGHT)) - (keyboard_check(KEY_A) || keyboard_check(KEY_LEFT));
 	v_mv = (keyboard_check(KEY_S) || keyboard_check(KEY_DOWN)) - (keyboard_check(KEY_W) || keyboard_check(KEY_UP));
 
@@ -113,40 +117,30 @@ static void	p_move(t_instance *this)
 		this->obj.player.attack = 0;
 }
 
-static void	p_footprint(t_instance *this)
-{
-	t_footprint *footprint;
-
-	footprint = malloc(sizeof(t_footprint));
-	footprint->x = this->x;
-	footprint->y = this->y;
-	footprint->spr = this->spr;
-	footprint->img_node = this->img_node;
-	push_list(this->obj.player.route, footprint);
-}
-
 static void	p_attack(t_instance *this)
 {
-	t_instance *ins;
+	t_instance *zombie;
+	t_instance *box;
 
+	zombie = this->obj.player.collision_zombie;
+	box = this->obj.player.collision_box;
 	if (this->obj.player.attack)
 	{
-		ins = place_meeting_type(this, this->x, this->y, ZOMBIE);
-		if (ins)
+		if (zombie)
 		{
-			if (ins->obj.zombie.status == 0 && g()->global.status == 1)
+			if (zombie->obj.zombie.status == 0 && g()->global.status == 1)
 			{
-				ins->dir = this->x > ins->x;
-				ins->obj.zombie.status = 1;
+				zombie->dir = this->x > zombie->x;
+				zombie->obj.zombie.status = 1;
+				this->obj.player.revive_zombie = zombie;
 			}
 		}
-
-		ins = place_meeting_type(this, this->x, this->y, BOX);
-		if (ins)
+		if (box)
 		{
-			if (ins->obj.box.status == 0 && g()->global.status == 0)
+			if (box->obj.box.status == 0 && g()->global.status == 0)
 			{
-				ins->obj.box.status = 1;
+				chage
+				box->obj.box.status = 1;
 			}
 		}
 	}
@@ -156,10 +150,17 @@ void		obj_player_step(t_instance *this)
 {
 	if (DEBUG)
 		printf("obj_player_step start\n");
-	p_move(this);
-	p_collision(this);
-	p_footprint(this);
-	p_attack(this);
+
+	if (this->obj.player.avatar == 0)
+	{
+		p_move(this);
+		p_collision(this);
+		p_attack(this);
+		scr_save_footprint(this, this->obj.player.route);
+	}
+	else
+		scr_load_footprint(this, &this->obj.player.route_node);
+
 	if (DEBUG)
 		printf("obj_player_step end\n");
 }
@@ -168,15 +169,12 @@ void		obj_player_draw(t_instance *this)
 {
 	if (DEBUG)
 		printf("obj_player_draw start\n");
+
 	draw_sprite(this->spr, this->img_node, this->x, this->y);
-	this->draw_time++;
-	if (this->draw_time > this->spr->img_speed)
-	{
-		this->img_node = this->img_node->next;
-		this->draw_time = 0;
-	}
-	if (!this->img_node)
-		this->img_node = this->spr->imgs->next;
+
+	if (this->obj.player.avatar == 0)
+		scr_animation(this);
+
 	if (DEBUG)
 		printf("obj_player_draw end\n");
 }
