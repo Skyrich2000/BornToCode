@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:32 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/22 08:06:34 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/24 05:26:49 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,37 @@
 # include "asset.h"
 #include "library.h"
 
-# define DEBUG 0
+# define DEBUG			0
 
-# define OK 1
-# define ERROR 0
+# define OK				1
+# define ERROR			0
 
-# define WINDOW_WIDTH 480
-# define WINDOW_HEIGHT 320
+# define WINDOW_WIDTH	480
+# define WINDOW_HEIGHT	356
 
-# define C_RED 0xFF0000
-# define C_YELLOW 0xFFFF00
-# define C_GREEN 0x00FF00
-# define C_BLUE	0x0000FF
+# define KEY_A				0
+# define KEY_S				1
+# define KEY_D				2
+# define KEY_W				13
+# define KEY_R				15
+# define KEY_SPACEBAR		49
+# define KEY_LEFT			123
+# define KEY_DOWN			125
+# define KEY_RIGHT			124
+# define KEY_UP				126
+# define KEY_I				34
+# define KEY_P				35
 
-# define A_LEFT 0
-# define A_UP 0
-# define A_CENTER 0.5
-# define A_RIGHT 1
-# define A_BOTTOM 1
+# define C_RED			0xFF0000
+# define C_YELLOW		0xFFFF00
+# define C_GREEN		0x00FF00
+# define C_BLUE			0x0000FF
+
+# define A_LEFT			0.0f
+# define A_UP			0.0f
+# define A_CENTER		0.5f
+# define A_RIGHT		1.0f
+# define A_BOTTOM		1.0f
 
 typedef struct s_list
 {
@@ -93,6 +106,7 @@ typedef struct s_instance
 	int				y;
 	int				dir;
 	int				condition;
+	int				signal;
 	void			(*step)(struct s_instance *this);
 	void			(*draw)(struct s_instance *this);
 }	t_instance;
@@ -102,6 +116,7 @@ typedef struct s_scene
 	t_canvas		*background;
 	void			(*start)(void);
 	void			(*controller)(void);
+	void			(*ui)(void);
 	void			(*end)(void);
 }	t_scene;
 
@@ -145,10 +160,11 @@ t_font		*add_font(char *path, int size);
 
 t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed, t_box mask);
 int			add_sprite_subimage(t_sprite *spr, char *path, int start, int end);
+int			add_sprite_subimage_png(t_sprite *spr, char *path, int start, int end);
 void		delete_sprite(t_sprite *spr);
 void		change_sprite(t_instance *id, t_sprite *spr);
 
-t_scene		*add_scene(t_canvas *background, void (*start)(void), void (*controller)(void), void (*end)(void));
+t_scene		*add_scene(t_canvas *background, void (*start)(void), void (*controller)(void), void (*ui)(void), void (*end)(void));
 
 // user usable function
 int			keyboard_check(int keycode);
@@ -167,7 +183,7 @@ void		draw_debug();
 void		draw_img(void *img, int x, int y);
 void		draw_sprite(t_sprite *spr, t_list *img_node, int x, int y);
 void		draw_background(t_canvas *background);
-int			draw_text(t_font *font, char *str, int pos[2], int align[2]);
+int			draw_text(t_font *font, char *str, int pos[2], float align[2]);
 
 void		scene_start();
 void		scene_restart();

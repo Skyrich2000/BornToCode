@@ -7,8 +7,8 @@ int			init_spr_box()
 	if (!g()->asset.spr_box || \
 		!g()->asset.spr_box_break)
 		return (ERROR);
-	if (!add_sprite_subimage(g()->asset.spr_box, "./res/xpm/box/box_", 0, 0) ||
-		!add_sprite_subimage(g()->asset.spr_box_break, "./res/xpm/box/box_", 1, 4))
+	if (!add_sprite_subimage(g()->asset.spr_box, "./res/png/box/box_", 0, 0) ||
+		!add_sprite_subimage(g()->asset.spr_box_break, "./res/png/box/box_", 1, 4))
 		return (ERROR);
 	return (OK);
 }

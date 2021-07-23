@@ -1,6 +1,6 @@
 #include "engine.h"
 
-t_scene		*add_scene(t_canvas *background, void (*start)(void), void (*controller)(void), void (*end)(void))
+t_scene		*add_scene(t_canvas *background, void (*start)(void), void (*controller)(void), void (*ui)(void), void (*end)(void))
 {
 	t_scene *new;
 
@@ -10,6 +10,7 @@ t_scene		*add_scene(t_canvas *background, void (*start)(void), void (*controller
 	new->background = background;
 	new->start = start;
 	new->controller = controller;
+	new->ui = ui;
 	new->end = end;
 	return (new);
 }

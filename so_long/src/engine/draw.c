@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:02 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/22 08:16:29 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/23 21:40:01 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	draw_debug()
 	}
 }
 
-int		draw_text(t_font *font, char *str, int pos[2], int align[2])
+int		draw_text(t_font *font, char *str, int pos[2], float align[2])
 {
 	int		x;
 	int		y;

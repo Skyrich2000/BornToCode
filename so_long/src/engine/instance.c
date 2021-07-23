@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:08 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/22 06:59:55 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/24 06:32:24 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance
 	new->y = data[2];
 	new->dir = 1;
 	new->condition = 0;
+	new->signal = 0;
 	new->step = step;
 	new->draw = draw;
 	new->draw_time = 0;
@@ -89,6 +90,10 @@ void		destroy_all_instance()
 
 void		destroy_instance(t_instance *id)
 {
-	pop_list(id->node);
-	free(id);
+	if (id)
+	{
+		pop_list(id->node);
+		free(id);
+		id = 0;
+	}
 }

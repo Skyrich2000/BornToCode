@@ -16,8 +16,8 @@ t_font	*add_font(char *path, int size)
 	{
 		path_all[0] = sl_itoa(i);
 		path_all[1] = sl_strjoin(path, path_all[0]);
-		path_all[2] = sl_strjoin(path_all[1], ".xpm");
-		img = mlx_xpm_file_to_image(g()->mlx, path_all[2], &temp[0], &temp[1]);
+		path_all[2] = sl_strjoin(path_all[1], ".png");
+		img = mlx_png_file_to_image(g()->mlx, path_all[2], &temp[0], &temp[1]);
 		if (img)
 		{
 			new->real_size = temp[0];

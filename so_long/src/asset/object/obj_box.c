@@ -31,7 +31,7 @@ void		obj_box_step(t_instance *this)
 		if (g()->global.state == S_STRAIGHT)
 			scr_save_footprint(this, this->obj.box.route);
 	}
-	else
+	else if (g()->global.state != S_GAMEOVER)
 		scr_load_footprint(this, &this->obj.box.route, 0);
 
 	if (DEBUG)

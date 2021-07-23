@@ -7,8 +7,8 @@ int init_spr_exit()
 	if (!g()->asset.spr_exit_open || \
 		!g()->asset.spr_exit_close)
 		return (ERROR);
-	if (!add_sprite_subimage(g()->asset.spr_exit_open, "./res/xpm/exit/exit_", 1, 1) || \
-		!add_sprite_subimage(g()->asset.spr_exit_close, "./res/xpm/exit/exit_", 0, 0))
+	if (!add_sprite_subimage(g()->asset.spr_exit_open, "./res/png/exit/exit_", 1, 1) || \
+		!add_sprite_subimage(g()->asset.spr_exit_close, "./res/png/exit/exit_", 0, 0))
 
 		return (ERROR);
 	return (OK);
