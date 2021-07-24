@@ -3,15 +3,13 @@
 void	scr_state_ready()
 {
 	g()->global.time += 1;
-	if (g()->global.time > 60 * 3)
+	if (g()->global.time > 60 * 2)
 	{
-		g()->global.time = 0;
 		g()->global.state = S_STRAIGHT;
 		g()->global.player->signal = 0;
 	}
 }
 
-// TODO: trigger 에 넣어야함
 void	scr_state_straight()
 {
 	//t_instance *ins;

@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/24 19:02:25 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/24 22:43:09 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_obj_zombie
 
 typedef struct s_obj_inverter
 {
+	int				time;
 	int				inverted;
 	int				out_dir[20];
 	t_instance		*triggers[20];
@@ -143,7 +144,9 @@ typedef struct s_asset
 {
 	t_background	*background_map1;
 
-	t_font			*font_default;
+	t_font			*font_su;
+	t_font			*font_fat_small;
+	t_font			*font_fat_big;
 
 	t_sprite		*spr_player_blue_idle_right;
 	t_sprite		*spr_player_blue_idle_left;
@@ -199,7 +202,8 @@ void		free_asset();
 int			init_background_map1();
 
 // font
-int			init_font_default();
+int			init_font_su();
+int			init_font_fat();
 
 // sprite
 int			init_spr_player_blue();
@@ -266,6 +270,7 @@ int			scr_reverse_mv_signal(int signal);
 int			scr_convert_mv_signal(int signal);
 void		scr_inverter_create_trigger(t_instance *this);
 void		scr_inverter_destroy_trigger(t_instance *this, int exclusive_signal);
+void		scr_inverter_wait(t_instance *this);
 void		scr_inverter_before(t_instance *this);
 void		scr_inverter_active(t_instance *this);
 // scene

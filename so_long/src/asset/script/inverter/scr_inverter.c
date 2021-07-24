@@ -48,6 +48,20 @@ void		scr_inverter_destroy_trigger(t_instance *this, int exclusive_signal)
 	}
 }
 
+void		scr_inverter_wait(t_instance *this)
+{
+	int	in_mv;
+	int out_mv;
+	int dir;
+
+	printf("wait! \n");
+	in_mv = this->signal & 0b11110;
+	out_mv = this->obj.inverter.out_dir[in_mv];
+
+	// TODO: if dir is 0
+	dir = (in_mv & (0b00110)) | (out_mv & (0b00110));
+	g()->global.player->signal = SIG_AUTO | scr_convert_mv_signal(dir);	
+}
 
 void		scr_inverter_before(t_instance *this)
 {

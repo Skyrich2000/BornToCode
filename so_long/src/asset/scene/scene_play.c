@@ -96,23 +96,20 @@ void		scene_play_controller()
 
 void		scene_play_ui()
 {
-	int		flag;
 	char	*str[2];
 
 	if (g()->global.state == S_STRAIGHT || g()->global.state == S_READY)
 		draw_sprite(g()->asset.spr_light, g()->asset.spr_light->imgs->next, g()->global.player->x, g()->global.player->y);
-	flag = g()->global.state == S_STRAIGHT || g()->global.state == S_INVERT || g()->global.state == S_RESTRAIGHT;
-	if (flag)
-	{
-		str[0] = sl_itoa(g()->global.time);
-		str[1] = sl_strjoin("TIME:", str[0]);
-		draw_text(g()->asset.font_default, str[1], (int[2]){g()->view.view_xview + g()->view.view_wview, g()->view.view_yview + g()->view.view_hview}, (float [2]){A_RIGHT, A_BOTTOM});
-		free(str[0]);
-		free(str[1]);
-	}
+
+	str[0] = sl_itoa(g()->global.time);
+	str[1] = sl_strjoin("TIME:", str[0]);
+	draw_text(g()->asset.font_fat_small, str[1], (int[2]){g()->view.view_xview + g()->view.view_wview, g()->view.view_yview + g()->view.view_hview}, (float [2]){A_RIGHT, A_BOTTOM});
+	free(str[0]);
+	free(str[1]);
+
 	str[0] = sl_itoa(g()->global.deathcount);
 	str[1] = sl_strjoin("DEAD:", str[0]);
-	draw_text(g()->asset.font_default, str[1], (int[2]){g()->view.view_xview, g()->view.view_yview}, (float [2]){A_LEFT, A_UP});
+	draw_text(g()->asset.font_fat_big, str[1], (int[2]){g()->view.view_xview, g()->view.view_yview}, (float [2]){A_LEFT, A_UP});
 	free(str[0]);
 	free(str[1]);
 
