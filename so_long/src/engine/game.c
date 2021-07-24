@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:06 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/24 06:30:44 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/24 18:44:49 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ int		init_game()
 	game->view.view_hview = WINDOW_HEIGHT;
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "VENEV");
+	game->canvas.img = mlx_new_image(g()->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	game->canvas.x = 0;
+	game->canvas.y = 0;
 	i = -1;
 	while (++i < OBJ_SIZE)
 	{
@@ -76,6 +79,9 @@ int		loop()
 	i = -1;
 	if (g()->scene->controller)
 		g()->scene->controller();
+	g()->canvas.x = g()->view.view_xview;
+	g()->canvas.y = g()->view.view_yview;
+	draw_background(&g()->canvas);
 	draw_background(g()->scene->background);
 	while (++i < OBJ_SIZE)
 	{
@@ -84,10 +90,10 @@ int		loop()
 		{
 			ins = (t_instance *)node->data;
 			node = node->next;
+			if (ins->draw)
+				ins->draw(ins);
 			if (ins->step)
 				ins->step(ins);
-			if (ins && ins->draw)
-				ins->draw(ins);
 		}
 	}
 	if (g()->scene->ui)

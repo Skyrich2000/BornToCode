@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/24 05:22:57 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/24 19:02:25 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_sprite		t_sprite;
 typedef struct s_instance	t_instance;
 typedef struct s_list		t_list;
 typedef struct s_font		t_font;
+typedef struct s_background	t_background;
 
 typedef struct s_global
 {
@@ -62,6 +63,7 @@ typedef struct s_global
 	int				state;
 	int				time;
 	int				total_time;
+	int				invert_signal;
 
 	int				steps;
 }	t_global;
@@ -108,6 +110,7 @@ typedef struct s_obj_inverter
 {
 	int				inverted;
 	int				out_dir[20];
+	t_instance		*triggers[20];
 	t_instance		*dummy;
 }	t_obj_inverter;
 
@@ -115,6 +118,7 @@ typedef struct s_obj_trigger
 {
 	t_instance		*target;
 	int				signal;
+	int				inverted;
 }				t_obj_trigger;
 
 typedef struct s_obj_prop
@@ -137,7 +141,7 @@ typedef union u_object
 // 포인터 위치 절대 바꾸지 말 것 !!!!
 typedef struct s_asset
 {
-	t_canvas		*background_black;
+	t_background	*background_map1;
 
 	t_font			*font_default;
 
@@ -192,7 +196,7 @@ int			init_asset();
 void		free_asset();
 
 //background
-int			init_background_black();
+int			init_background_map1();
 
 // font
 int			init_font_default();
@@ -226,7 +230,7 @@ void		obj_gold_draw(t_instance *this);
 t_instance	*create_inverter_instance(int x, int y, int inverted, int from_dir[5]);
 void		obj_inverter_step(t_instance *this);
 void		obj_inverter_draw(t_instance *this);
-t_instance	*create_trigger_instance(int pos[2], t_sprite *mask, t_instance *target, int signal);
+t_instance	*create_trigger_instance(int pos[2], int inverted, t_instance *target, int signal);
 t_instance	*create_dummy_instance(int x, int y, int inverted, int time);
 void		obj_dummy_step(t_instance *this);
 void		obj_dummy_draw(t_instance *this);
@@ -237,7 +241,7 @@ void		scr_load_footprint(t_instance *this, t_list **route_node, int inverted);
 void		scr_animation(t_instance *this);
 t_list		*scr_get_route(t_instance *id, int type);
 t_list		**scr_get_route_node(t_instance *id, int type);
-void		scr_trigger(t_instance *trigger);
+void		scr_trigger(t_instance *trigger, t_instance *player);
 void		scr_dummy_move_auto(t_instance *this);
 void		scr_player_attack(t_instance *this);
 void		scr_player_check_selfs(t_instance *this);
@@ -260,7 +264,8 @@ void		scr_state_clear();
 void		scr_state_gameover();
 int			scr_reverse_mv_signal(int signal);
 int			scr_convert_mv_signal(int signal);
-void		scr_inverter_trigger(t_instance *this);
+void		scr_inverter_create_trigger(t_instance *this);
+void		scr_inverter_destroy_trigger(t_instance *this, int exclusive_signal);
 void		scr_inverter_before(t_instance *this);
 void		scr_inverter_active(t_instance *this);
 // scene

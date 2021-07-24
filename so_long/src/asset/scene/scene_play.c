@@ -4,7 +4,7 @@ int			init_scene_play()
 {
 	t_scene	*new;
 
-	new = add_scene(g()->asset.background_black, scene_play_start, scene_play_controller, scene_play_ui, scene_play_end);
+	new = add_scene(g()->asset.background_map1, scene_play_start, scene_play_controller, scene_play_ui, scene_play_end);
 	if (!new)
 		return (ERROR);
 	g()->asset.scene_play = new;
@@ -21,7 +21,7 @@ void		scene_play_start()
 		"11111111111111",
 		"10000010000001",
 		"10111011011101",
-		"1011100zb11101",
+		"10111000b11101",
 		"10111011011101",
 		"100000010g0001",
 		"11111111111111"
@@ -48,20 +48,20 @@ void		scene_play_start()
 		}
 	}
 
-	g()->global.player = create_player_instance(1 * 32, 5 * 32, S_STRAIGHT);
+	g()->global.player = create_player_instance(2 * 32, 5 * 32, S_STRAIGHT);
 	g()->global.player->signal = SIG_AUTO | SIG_DIR_RIGHT;
 
-	out_dir[SIG_MV_RIGHT] = 0;
-	out_dir[SIG_MV_LEFT] = SIG_MV_DOWN;
-	out_dir[SIG_MV_UP] = 0;
-	out_dir[SIG_MV_DOWN] = SIG_MV_LEFT;
+	out_dir[SIG_MV_RIGHT] = SIG_MV_DOWN;
+	out_dir[SIG_MV_LEFT] = 0;
+	out_dir[SIG_MV_UP] = SIG_MV_LEFT;
+	out_dir[SIG_MV_DOWN] = 0;
 	create_inverter_instance(12 * 32, 1 * 32, S_STRAIGHT, out_dir);
 
-	//out_dir[SIG_MV_RIGHT] = SIG_MV_UP;
-	//out_dir[SIG_MV_LEFT] = 0;
-	//out_dir[SIG_MV_UP] = SIG_MV_RIGHT;
-	//out_dir[SIG_MV_DOWN] = 0;
-	//create_inverter_instance(1 * 32, 5 * 32, S_INVERT, out_dir);
+	out_dir[SIG_MV_RIGHT] = 0;
+	out_dir[SIG_MV_LEFT] = SIG_MV_UP;
+	out_dir[SIG_MV_UP] = 0;
+	out_dir[SIG_MV_DOWN] = SIG_MV_RIGHT;
+	create_inverter_instance(1 * 32, 5 * 32, S_INVERT, out_dir);
 
 	ins = create_dummy_instance(1 * 32, 5 * 32, S_STRAIGHT, 60 * 3);
 	ins->signal = SIG_AUTO | SIG_MV_RIGHT | SIG_DIR_RIGHT;

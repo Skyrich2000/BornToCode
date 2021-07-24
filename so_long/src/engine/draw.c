@@ -6,15 +6,15 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:02 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/23 21:40:01 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/24 16:14:27 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 
-void	draw_background(t_canvas *background)
+void	draw_background(t_background *back)
 {
-	mlx_put_image_to_window(g()->mlx, g()->win, background->img, 0, 0);
+	mlx_put_image_to_window(g()->mlx, g()->win, back->img, back->x - g()->view.view_xview, back->y - g()->view.view_yview);
 }
 
 void	draw_line(int pos[2], int dir[2], int len, int color)

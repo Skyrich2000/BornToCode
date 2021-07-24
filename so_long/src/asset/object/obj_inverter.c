@@ -15,7 +15,7 @@ t_instance *create_inverter_instance(int x, int y, int inverted, int out_dir[20]
 	ins->obj.inverter.out_dir[SIG_MV_UP] = out_dir[SIG_MV_UP];
 	ins->obj.inverter.out_dir[SIG_MV_DOWN] = out_dir[SIG_MV_DOWN];
 	ins->condition = C_ALIVE;
-	scr_inverter_trigger(ins);
+	scr_inverter_create_trigger(ins);
 	return (ins);
 }
 

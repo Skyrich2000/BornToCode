@@ -26,12 +26,17 @@ void	scr_player_collision_inverter(t_instance *this)
 	t_instance	*ins;
 
 	ins = place_meeting_type(this, this->x, this->y, INVERTER);
+	//if (ins)
+	//{
+	//	printf("player inverted %d\n", this->obj.player.inverted);
+	//	printf("inverter inverted %d\n", ins->obj.inverter.inverted);
+	//}
 	if (ins && ins->condition & C_ALIVE && ins->obj.inverter.inverted == this->obj.player.inverted)
 	{
 		ins->condition = C_DEING;
-		if (g()->global.state == S_STRAIGHT)
+		//if (g()->global.state == S_STRAIGHT)
 		{
-			ins->signal = SIG_ACTIVE | (this->signal & 0b11110);
+			ins->signal = SIG_ACTIVE | this->signal;
 		}
 	}
 }
@@ -42,7 +47,7 @@ void	scr_player_collision_trigger(t_instance *this)
 
 	ins = place_meeting_type(this, this->x, this->y, TRIGGER);
 	if (ins)
-		scr_trigger(ins);
+		scr_trigger(ins, this);
 }
 
 

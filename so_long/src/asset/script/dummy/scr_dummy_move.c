@@ -9,7 +9,7 @@ void	scr_dummy_move_auto(t_instance *this)
 	int dir;
 
 	this->obj.dummy.time++;
-	if (this->obj.dummy.time > this->obj.dummy.alive_time)
+	if (this->obj.dummy.alive_time != -1 && this->obj.dummy.time > this->obj.dummy.alive_time)
 		destroy_instance(this);
 	this->x += (((this->signal & SIG_MV_RIGHT) > 0) - ((this->signal & SIG_MV_LEFT) > 0)) * 2;
 	this->y += (((this->signal & SIG_MV_DOWN) > 0) - ((this->signal & SIG_MV_UP) > 0)) * 2;

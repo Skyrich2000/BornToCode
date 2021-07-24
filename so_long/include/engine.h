@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:32 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/24 05:26:49 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/24 18:47:36 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ typedef struct s_sprite
 	t_box			mask;
 }	t_sprite;
 
-typedef struct s_canvas
+typedef struct s_background
 {
 	void			*img;
-	void			*addr;
-	int				bits_per_pixel;
-	int				line_length;
-	int				endian;
-}	t_canvas;
+	int				x;
+	int				y;
+	int				width;
+	int				height;
+}				t_background;
 
 // TODO: add space asset
 typedef struct s_font
@@ -113,7 +113,7 @@ typedef struct s_instance
 
 typedef struct s_scene
 {
-	t_canvas		*background;
+	t_background	*background;
 	void			(*start)(void);
 	void			(*controller)(void);
 	void			(*ui)(void);
@@ -132,6 +132,7 @@ typedef struct s_game
 {
 	void			*mlx;
 	void			*win;
+	t_background	canvas;
 	t_global		global;
 	t_asset			asset;
 	t_list			*instances[OBJ_SIZE];
@@ -164,7 +165,7 @@ int			add_sprite_subimage_png(t_sprite *spr, char *path, int start, int end);
 void		delete_sprite(t_sprite *spr);
 void		change_sprite(t_instance *id, t_sprite *spr);
 
-t_scene		*add_scene(t_canvas *background, void (*start)(void), void (*controller)(void), void (*ui)(void), void (*end)(void));
+t_scene		*add_scene(t_background *background, void (*start)(void), void (*controller)(void), void (*ui)(void), void (*end)(void));
 
 // user usable function
 int			keyboard_check(int keycode);
@@ -182,7 +183,7 @@ void		draw_point(int x, int y, int color);
 void		draw_debug();
 void		draw_img(void *img, int x, int y);
 void		draw_sprite(t_sprite *spr, t_list *img_node, int x, int y);
-void		draw_background(t_canvas *background);
+void		draw_background(t_background *background);
 int			draw_text(t_font *font, char *str, int pos[2], float align[2]);
 
 void		scene_start();

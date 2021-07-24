@@ -6,7 +6,7 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/16 07:48:16 by ycha              #+#    #+#              #
-#    Updated: 2021/07/24 05:28:00 by ycha             ###   ########.fr        #
+#    Updated: 2021/07/24 16:13:44 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ FILE	= main debug \
 			engine/scene \
 			engine/font \
 			asset/asset \
-			asset/background/background_black \
+			asset/background/background_map1 \
 			asset/font/font_default \
 			asset/object/obj_player \
 			asset/object/obj_zombie \

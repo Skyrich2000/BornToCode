@@ -14,13 +14,22 @@ void	scr_state_ready()
 // TODO: trigger 에 넣어야함
 void	scr_state_straight()
 {
-	int signal;
-	(void)signal;
+	//t_instance *ins;
+
 	g()->global.time += 1;
 	if (g()->global.time > 60 * 60)
 	{
 		printf("time over..?");
 		scene_restart();
+	}
+	if (g()->global.invert_signal == 1)
+	{
+		g()->global.state = S_INVERT;
+		g()->global.total_time = g()->global.time;
+		g()->global.invert_signal = 0;
+
+		scr_avatarize(BOX);
+		scr_avatarize(GOLD);
 	}
 }
 
@@ -30,13 +39,12 @@ void	scr_state_inverted()
 	t_list		*node;
 
 	g()->global.time -= 1;
-	if (g()->global.time < 0)
+	if (g()->global.invert_signal == 1)
 	{
 		printf("re straight start\n");
-		g()->global.inverted = S_STRAIGHT;
 		g()->global.state = S_RESTRAIGHT;
+		g()->global.invert_signal = 0;
 
-		scr_avatarize(PLAYER);
 		scr_avatarize(ZOMBIE);
 		node = g()->instances[ZOMBIE]->next;
 		while (node)
@@ -46,9 +54,6 @@ void	scr_state_inverted()
 			if (ins->condition & C_DEAD)
 				ins->condition = C_ALIVE;
 		}
-
-		ins = g()->global.player;
-		g()->global.player = create_player_instance(ins->x, ins->y, S_STRAIGHT);
 	}
 }
 
