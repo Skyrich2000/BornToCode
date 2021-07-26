@@ -1,36 +1,11 @@
 #include "engine.h"
 
-int		sl_pow(int base, int exp)
-{
-	if (exp == 0)
-		return (1);
-	return (base * sl_pow(base, exp - 1));
-}
-
-int		sl_rev_atoi(char *str)
-{
-	int	n;
-	int	idx;
-	int	result;
-
-	n = 0;
-	result = 0;
-	idx = strlen(str) - 1;
-	while ('0' <= str[idx] && str[idx] <= '9')
-	{
-		result += (str[idx] - '0') * sl_pow(10, n);
-		--idx;
-		++n;
-	}
-	return (result);
-}
-
 int	cmp_rank(char *org, int new)
 {
 	return (sl_rev_atoi(org) > new);
 }
 
-void	result(char *userid, int step, int deathcount)
+void	result(char *userid, int time, int deathcount)
 {
 	int fd;
 	int idx;
@@ -52,7 +27,7 @@ void	result(char *userid, int step, int deathcount)
 	// 2. file write (O_TRUNC 해서 기존 파일 지워버림)
 	fd = open("./dashboard.rnk", O_WRONLY | O_TRUNC, 0777);
 	idx = -1;
-	s_step = sl_itoa(step);
+	s_step = sl_itoa(time);
 	s_deathcount = sl_itoa(deathcount);
 	if (!*split)
 	{
@@ -61,6 +36,7 @@ void	result(char *userid, int step, int deathcount)
 		write(fd, s_step, sl_strlen(s_step));
 		write(fd, " ", 1);
 		write(fd, s_deathcount, sl_strlen(s_deathcount));
+		write(fd, "\n", 1);
 	}
 	else
 	{

@@ -28,7 +28,7 @@ void		obj_box_step(t_instance *this)
 		}
 		else if (this->condition & C_DEAD)
 			change_sprite(this, g()->asset.spr_empty);
-		if (g()->global.state == S_STRAIGHT)
+		if (g()->global.state == S_STRAIGHT || g()->global.state == S_READY)
 			scr_save_footprint(this, this->obj.box.route);
 	}
 	else if (g()->global.state != S_GAMEOVER)

@@ -13,7 +13,6 @@ void	scr_state_ready()
 void	scr_state_straight()
 {
 	//t_instance *ins;
-
 	g()->global.time += 1;
 	if (g()->global.time > 60 * 60)
 	{
@@ -61,25 +60,23 @@ void	scr_state_restraight()
 	if (g()->global.time >= g()->global.total_time)
 	{
 		printf("clear \n");
-		g()->global.time = 0; // temp
+		g()->global.delay = 0; // temp
 		g()->global.state = S_CLEAR;
 	}
 }
 
 void	scr_state_clear()
 {
-	g()->global.time += 1;
-	if (g()->global.time > 60 * 3)
+	g()->global.delay += 1;
+	if (g()->global.delay > 60 * 3)
 	{
-		printf("game restart \n");
-		scene_restart();
 	}
 }
 
 void	scr_state_gameover()
 {
-	g()->global.time += 1;
-	if (g()->global.time > 60 * 3)
+	g()->global.delay += 1;
+	if (g()->global.delay > 60 * 3)
 	{
 		printf("game restart \n");
 		scene_restart();

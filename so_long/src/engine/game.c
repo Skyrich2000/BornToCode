@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:06 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/24 18:44:49 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/25 06:15:25 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ int		loop()
 void	start_game(t_scene *scene)
 {
 	g()->scene = scene;
-	if (scene->start)
-		scene->start();
+	g()->scene->start();
 	mlx_loop(g()->mlx);
 }

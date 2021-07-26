@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:32 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/24 18:47:36 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/25 06:34:27 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ typedef struct s_background
 	int				height;
 }				t_background;
 
-// TODO: add space asset
 typedef struct s_font
 {
 	void			*img[127];
@@ -141,52 +140,63 @@ typedef struct s_game
 	int				keys[420];
 }	t_game;
 
-// engine function
+/* ************************************************************************** */
+
+// gmae main fucntion
 t_game		*g();
 int			init_game();
 int			loop();
 void		start_game(t_scene *scene);
-
+// key hook function
 int			exit_press(void);
 int			key_press(int keycode);
 int			key_release(int keycode);
 
-// dev function
+/* ************************************************************************** */
+
+// list function
 t_list		*create_list();
 t_list		*push_list(t_list *list, void *data);
 void		*pop_list(t_list *node);
 void		free_list(t_list *list, void (*del)(void *));
-
+// manage font asset
 t_font		*add_font(char *path, int size);
-
+// manage image asset
 t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed, t_box mask);
-int			add_sprite_subimage(t_sprite *spr, char *path, int start, int end);
-int			add_sprite_subimage_png(t_sprite *spr, char *path, int start, int end);
-void		delete_sprite(t_sprite *spr);
-void		change_sprite(t_instance *id, t_sprite *spr);
+t_background	*add_background(char *path, int x, int y);
 
+int			add_sprite_subimage(t_sprite *spr, char *path, int start, int end);
+void		delete_sprite(t_sprite *spr);
+// manage scene asset
 t_scene		*add_scene(t_background *background, void (*start)(void), void (*controller)(void), void (*ui)(void), void (*end)(void));
 
-// user usable function
-int			keyboard_check(int keycode);
+/* ************************************************************************** */
 
+// check if keyboard is press
+int			keyboard_check(int keycode);
+// sprite function
+void		change_sprite(t_instance *id, t_sprite *spr);
+// instance function
 t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance *this), void (*draw)(t_instance *this));
-int			point_distance(int x1, int y1, int x2, int y2);
 int			place_meeting(t_instance *id, int x, int y, t_instance *other);
 t_instance	*place_meeting_type(t_instance *id, int x, int y, int type);
-void		destroy_all_instance();
 void		destroy_instance(t_instance *id);
-
-void		draw_line(int pos[2], int dir[2], int len, int color);
-void		draw_box(t_box	box, int color);
-void		draw_point(int x, int y, int color);
-void		draw_debug();
+void		destroy_all_instance();
+// math function
+int			point_distance(int x1, int y1, int x2, int y2);
+// draw function
 void		draw_img(void *img, int x, int y);
 void		draw_sprite(t_sprite *spr, t_list *img_node, int x, int y);
 void		draw_background(t_background *background);
 int			draw_text(t_font *font, char *str, int pos[2], float align[2]);
-
+// draw function for debug
+void		draw_point(int x, int y, int color);
+void		draw_line(int pos[2], int dir[2], int len, int color);
+void		draw_box(t_box	box, int color);
+void		draw_debug();
+// scene manage function
 void		scene_start();
+void		scene_change(t_scene *scene);
 void		scene_restart();
 void		scene_end();
 

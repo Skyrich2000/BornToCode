@@ -35,16 +35,16 @@ char	*sl_substr(char *s, unsigned int start, size_t len)
 	return (dest);
 }
 
-static int	sl_strchr(char *s, int c)
-{
-	int	i;
+// static int	sl_strchr(char *s, int c)
+// {
+// 	int	i;
 
-	i = -1;
-	while (s[++i])
-		if (s[i] == c)
-			return (1);
-	return (0);
-}
+// 	i = -1;
+// 	while (s[++i])
+// 		if (s[i] == c)
+// 			return (1);
+// 	return (0);
+// }
 
 static size_t	sl_check_size(char *s, char c)
 {
@@ -92,7 +92,7 @@ char	**sl_split(char *s, char c)
 	char	*from;
 	int		i;
 
-	ret = (char **)sl_calloc((sl_check_size(s, c) + 1), sizeof(char *));
+	ret = malloc((sl_check_size(s, c) + 1) * sizeof(char *));
 	if (!s || !ret)
 		return (NULL);
 	i = 0;

@@ -48,7 +48,6 @@ void	scr_player_collision_trigger(t_instance *this)
 	ins = place_meeting_type(this, this->x, this->y, TRIGGER);
 	if (ins)
 	{
-		printf("trigger!\n");
 		scr_trigger(ins, this);
 	}
 }

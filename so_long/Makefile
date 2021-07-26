@@ -6,7 +6,7 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/16 07:48:16 by ycha              #+#    #+#              #
-#    Updated: 2021/07/24 16:13:44 by ycha             ###   ########.fr        #
+#    Updated: 2021/07/25 06:40:53 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	= so_long
 
 FILE	= main debug \
 			engine/game \
-			engine/sprite \
+			engine/image \
 			engine/draw \
 			engine/keyboard \
 			engine/instance \
@@ -22,8 +22,11 @@ FILE	= main debug \
 			engine/scene \
 			engine/font \
 			asset/asset \
-			asset/background/background_map1 \
-			asset/font/font_default \
+			asset/background/background \
+			asset/font/font_su \
+			asset/font/font_fat \
+			asset/map/map_0 \
+			asset/map/map \
 			asset/object/obj_player \
 			asset/object/obj_zombie \
 			asset/object/obj_wall \
@@ -45,6 +48,7 @@ FILE	= main debug \
 			asset/script/play/scr_state \
 			asset/script/trigger/scr_trigger \
 			asset/script/zombie/scr_zombie_move \
+			asset/script/map/build_char_map \
 			asset/script/scr_footprint \
 			asset/script/scr_animation \
 			asset/script/scr_get_route \
@@ -52,6 +56,7 @@ FILE	= main debug \
 			asset/sprite/spr_player_blue \
 			asset/sprite/spr_zombie \
 			asset/sprite/spr_empty \
+			asset/sprite/spr_light \
 			asset/sprite/spr_wall \
 			asset/sprite/spr_box \
 			asset/sprite/spr_exit \
@@ -59,7 +64,9 @@ FILE	= main debug \
 			asset/sprite/spr_inverter \
 			lib/sl_free \
 			lib/sl_itoa \
-			lib/sl_strjoin
+			lib/sl_strjoin \
+			lib/sl_split \
+			lib/sl_rev_atoi
 
 SRC_DIR =	./src/
 SRCS	= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILE)))

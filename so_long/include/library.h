@@ -11,5 +11,6 @@ void		sl_bzero(void *s, int n);
 void		sl_free(void *data);
 char		**sl_free_split(char **s);
 char		**sl_split(char *s, char c);
+int			sl_rev_atoi(char *str);
 
 #endif

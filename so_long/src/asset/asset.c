@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:50 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/24 22:45:41 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/25 06:04:38 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,17 @@
 
 int		init_asset()
 {
-	return (init_background_map1() && \
+	return (init_background_main() && \
+			init_background_default() && \
+			init_background_map() && \
 			init_font_su() && \
 			init_font_fat() && \
+			init_map() && \
 			init_spr_player_red() && \
 			init_spr_player_blue() && \
 			init_spr_zombie() && \
 			init_spr_empty() && \
+			init_spr_light() && \
 			init_spr_wall() && \
 			init_spr_box() && \
 			init_spr_gold() && \

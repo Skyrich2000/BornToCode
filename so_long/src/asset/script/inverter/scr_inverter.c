@@ -58,9 +58,9 @@ void		scr_inverter_wait(t_instance *this)
 	in_mv = this->signal & 0b11110;
 	out_mv = this->obj.inverter.out_dir[in_mv];
 
-	// TODO: if dir is 0
 	dir = (in_mv & (0b00110)) | (out_mv & (0b00110));
-	g()->global.player->signal = SIG_AUTO | scr_convert_mv_signal(dir);	
+
+	g()->global.player->signal = SIG_AUTO | scr_convert_mv_signal(dir);
 }
 
 void		scr_inverter_before(t_instance *this)
@@ -76,7 +76,6 @@ void		scr_inverter_before(t_instance *this)
 	in_mv = this->signal & 0b11110;
 	out_mv = this->obj.inverter.out_dir[in_mv];
 
-	// TODO: if dir is 0
 	dir = (in_mv & (0b00110)) | (out_mv & (0b00110));
 	g()->global.player->signal = SIG_AUTO | in_mv | scr_convert_mv_signal(dir);
 
@@ -101,6 +100,7 @@ void		scr_inverter_active(t_instance *this)
 	g()->global.invert_signal = 1;
 	g()->global.player->signal = 0;
 
+
 	scr_avatarize(PLAYER);
 
 	in_mv = this->signal & 0b11110;
@@ -115,5 +115,5 @@ void		scr_inverter_active(t_instance *this)
 
 	h_mv = (((out_mv & SIG_MV_RIGHT) > 0) - ((out_mv & SIG_MV_LEFT) > 0));
 	v_mv = (((out_mv & SIG_MV_DOWN) > 0) - ((out_mv & SIG_MV_UP) > 0));
-	create_trigger_instance((int [2]){this->x + h_mv * 96, this->y + v_mv * 96}, !this->obj.inverter.inverted, g()->global.player, 0);
+	create_trigger_instance((int [2]){this->x + h_mv * 96, this->y + v_mv * 90}, !this->obj.inverter.inverted, g()->global.player, 0);
 }

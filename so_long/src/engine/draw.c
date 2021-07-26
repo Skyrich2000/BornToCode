@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:02 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/24 16:14:27 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/24 23:13:37 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,16 @@ int		draw_text(t_font *font, char *str, int pos[2], float align[2])
 {
 	int		x;
 	int		y;
+	int		correction;
 	int		i;
 
 	i = -1;
-	x = pos[0] - font->real_size / 2 + font->size / 2 -  font->size * sl_strlen(str) * align[0];
-	y = pos[1] - font->real_size / 2 + font->size / 2 - font->size * align[1];
+	correction = -font->real_size / 2 + font->size / 2;
+	x = pos[0] - font->size * sl_strlen(str) * align[0];
+	y = pos[1] - font->size * align[1];
 	while (str[++i])
 	{
-		draw_img(font->img[(int)str[i]], x + font->size * i, y);
+		draw_img(font->img[(int)str[i]], x + correction + font->size * i, y + correction);
 	}
 	return (y + font->size / 2);
 }

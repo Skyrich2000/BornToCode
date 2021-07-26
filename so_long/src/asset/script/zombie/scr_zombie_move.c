@@ -5,7 +5,6 @@ void	scr_zombie_move(t_instance *this)
 {
 	t_instance *ins;
 
-	//0010
 	if (this->condition & C_DEING)
 	{
 		if (this->dir == 1)

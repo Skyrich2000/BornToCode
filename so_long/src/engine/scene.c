@@ -38,3 +38,11 @@ void		scene_restart()
 	g()->scene->end();
 	g()->scene->start();
 }
+
+void		scene_change(t_scene *scene)
+{
+	g()->scene->end();
+	g()->scene = scene;
+	g()->scene->start();
+}
+
