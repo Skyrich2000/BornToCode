@@ -21,6 +21,8 @@ void		scr_build_map(char **map)
 				create_gold_instance(j * 32, i * 32);
 			else if (map[i][j] == 'p')
 				g()->global.player = create_player_instance(j * 32, i * 32, S_STRAIGHT);
+			else if (map[i][j] == 'e')
+				create_exit_instance(j * 32, i * 32);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:50 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/27 09:47:28 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/27 17:41:37 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int		init_asset()
 			init_spr_gold() && \
 			init_spr_inverter() && \
 			init_spr_exit() && \
-			init_scene_play());
+			init_scene_play() && \
+			init_scene_nickname());
 }
 
 void	free_asset()

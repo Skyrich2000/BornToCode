@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:32 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/27 09:46:27 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/27 17:40:54 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@
 # define KEY_UP				126
 # define KEY_I				34
 # define KEY_P				35
+# define KEY_ENTER			36
+# define KEY_BACKSPACE		51
 
 # define C_RED			0xFF0000
 # define C_YELLOW		0xFFFF00

@@ -2,23 +2,9 @@
 
 int			init_scene_main()
 {
-	t_scene	*new;
-	t_background *bg;
-
-	bg = (t_background *)malloc(sizeof(t_background));
-	if (!bg)
+	g()->asset.scene_main = add_scene(g()->asset.background_main, scene_main_start, scene_main_controller, scene_main_ui, scene_main_end);
+	if (!g()->asset.scene_main)
 		return (ERROR);
-	bg->img = mlx_png_file_to_image(g()->mlx, "./res/png/background/background_main_0.png", &bg->width, &bg->height);
-	bg->x = -32;
-	bg->y = -64;
-
-	// 1. 잠자기
-	// 2. 나무는 sprite로 만들귀
-	// 3. background 생성하는거 옮기기
-	new = add_scene(bg, scene_main_start, scene_main_controller, scene_main_ui, scene_main_end);
-	if (!new)
-		return (ERROR);
-	g()->asset.scene_main = new;
 	return (OK);
 }
 

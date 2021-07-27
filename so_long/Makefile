@@ -6,7 +6,7 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/16 07:48:16 by ycha              #+#    #+#              #
-#    Updated: 2021/07/27 16:35:19 by ycha             ###   ########.fr        #
+#    Updated: 2021/07/28 00:40:08 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ OBJECT		=	obj_player \
 				obj_trigger \
 				obj_dummy
 
-SCENE		=	scene_play
+SCENE		=	scene_play \
+				scene_nickname
 
 SCRIPT		=	dummy/scr_dummy_move \
 				inverter/scr_inverter_signal \
@@ -82,7 +83,6 @@ LIB			=	sl_free \
 				sl_rev_atoi
 
 FILE		=	main \
-				debug \
 				asset/asset \
 				$(addprefix engine/, $(ENGINE)) \
 				$(addprefix asset/background/, $(BACKGROUND)) \

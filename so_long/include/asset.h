@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/27 09:51:06 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/28 01:32:03 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define BUFFER_SIZE		1000000
 
 # define MAP_SIZE			4
+# define NICK_SIZE			8
 
 # define BOX				0
 # define EXIT				1
@@ -41,7 +42,7 @@
 # define S_GAMEOVER			3
 # define S_CLEAR			4
 
-# define SIG_MV_AUTO			1
+# define SIG_MV_AUTO		1
 # define SIG_MV_RIGHT		2
 # define SIG_MV_LEFT		4
 # define SIG_MV_UP			8
@@ -61,6 +62,9 @@ typedef struct s_background	t_background;
 
 typedef struct s_global
 {
+	int				nick_index;
+	char			nick[NICK_SIZE + 1];
+
 	t_instance		*player;
 	int				deathcount;
 	int				inverted;
@@ -190,8 +194,8 @@ typedef struct s_asset
 	t_sprite		*spr_inverter_idle;
 	t_sprite		*spr_inverter_red;
 	t_sprite		*spr_inverter_blue;
-	t_sprite		*spr_exit_open;
-	t_sprite		*spr_exit_close;
+	t_sprite		*spr_exit;
+	t_sprite		*spr_plane;
 
 	t_scene			*scene_main;
 	t_scene			*scene_nickname;
@@ -270,6 +274,10 @@ t_instance	*create_trigger_instance(int pos[2], int inverted, t_instance *target
 t_instance	*create_dummy_instance(int x, int y, int inverted, int time);
 void		obj_dummy_step(t_instance *this);
 void		obj_dummy_draw(t_instance *this);
+// object exit
+t_instance	*create_exit_instance(int x, int y);
+void		obj_exit_step(t_instance *this);
+void		obj_exit_draw(t_instance *this);
 
 /* ************************************************************************** */
 

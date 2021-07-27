@@ -53,7 +53,7 @@ void		scene_play_ui()
 
 	if (g()->global.state == S_READY)
 		draw_sprite(g()->asset.spr_light_dark, g()->asset.spr_light_dark->imgs->next, g()->global.player->x, g()->global.player->y);
-	if (g()->global.state == S_STRAIGHT)
+	if (g()->global.state == S_STRAIGHT || g()->global.state == S_INVERT)
 		draw_sprite(g()->asset.spr_light, g()->asset.spr_light->imgs->next, g()->global.player->x, g()->global.player->y);
 
 	if (g()->global.state == S_READY)
@@ -80,6 +80,8 @@ void		scene_play_ui()
 	draw_text(g()->asset.font_fat_big, str[1], (int[2]){g()->view.view_xview, g()->view.view_yview}, (float [2]){A_LEFT, A_UP});
 	free(str[0]);
 	free(str[1]);
+
+	draw_text(g()->asset.font_fat_big, g()->global.nick, (int[2]){g()->view.view_xview, g()->view.view_yview + g()->view.view_hview}, (float [2]){A_LEFT, A_BOTTOM});
 
 	g()->view.view_xview = -16 + 14 * 32 / 2 - g()->view.view_wview / 2;
 	g()->view.view_yview = -32 + 7 * 32 / 2 - g()->view.view_hview / 2;

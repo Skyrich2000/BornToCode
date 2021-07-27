@@ -2,14 +2,13 @@
 
 int init_spr_exit()
 {
-	g()->asset.spr_exit_open = add_sprite(16, 32, 10, (t_box){ 0, 0, 32, 32 });
-	g()->asset.spr_exit_close = add_sprite(16, 32, 10, (t_box){ 0, 0, 32, 32 });
-	if (!g()->asset.spr_exit_open || \
-		!g()->asset.spr_exit_close)
+	g()->asset.spr_exit = add_sprite(16, 32, 10, (t_box){ 0, 0, 32, 32 });
+	g()->asset.spr_plane = add_sprite(32, 32, 10, (t_box){ 0, 0, 32, 32 });
+	if (!g()->asset.spr_exit || \
+		!g()->asset.spr_plane)
 		return (ERROR);
-	if (!add_sprite_subimage(g()->asset.spr_exit_open, "./res/png/exit/exit_", 1, 1) || \
-		!add_sprite_subimage(g()->asset.spr_exit_close, "./res/png/exit/exit_", 0, 0))
-
+	if (!add_sprite_subimage(g()->asset.spr_exit, "./res/png/exit/exit_", 0, 0) || \
+		!add_sprite_subimage(g()->asset.spr_plane, "./res/png/plane/plane_", 3, 3))
 		return (ERROR);
 	return (OK);
 }
