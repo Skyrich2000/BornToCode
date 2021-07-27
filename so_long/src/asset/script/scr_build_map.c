@@ -1,6 +1,6 @@
 #include "engine.h"
 
-void		scr_build_char_map(char **map)
+void		scr_build_map(char **map)
 {
 	int i;
 	int j;

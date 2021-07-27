@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/25 05:52:04 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/27 09:51:06 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define S_GAMEOVER			3
 # define S_CLEAR			4
 
-# define SIG_AUTO			1
+# define SIG_MV_AUTO			1
 # define SIG_MV_RIGHT		2
 # define SIG_MV_LEFT		4
 # define SIG_MV_UP			8
@@ -199,7 +199,7 @@ typedef struct s_asset
 	t_scene			*scene_rank;
 
 	t_background	*background_main;
-	t_background	*background_default;
+	t_background	*background_menu;
 	t_background	*background_map_0;
 	t_background	*background_map_1;
 	t_background	*background_map_2;
@@ -215,7 +215,7 @@ int			init_asset();
 void		free_asset();
 // init background
 int			init_background_main();
-int			init_background_default();
+int			init_background_menu();
 int			init_background_map();
 // init font
 int			init_font_su();
@@ -324,7 +324,8 @@ void		scr_inverter_wait(t_instance *this);
 void		scr_inverter_before(t_instance *this);
 void		scr_inverter_active(t_instance *this);
 // script for build map from char**
-void		scr_build_char_map(char **map);
+void		scr_build_map(char **map);
+
 /* ************************************************************************** */
 
 // scene main

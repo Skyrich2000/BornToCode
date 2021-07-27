@@ -6,67 +6,93 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/16 07:48:16 by ycha              #+#    #+#              #
-#    Updated: 2021/07/25 06:40:53 by ycha             ###   ########.fr        #
+#    Updated: 2021/07/27 16:35:19 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= so_long
+NAME		=	so_long
 
-FILE	= main debug \
-			engine/game \
-			engine/image \
-			engine/draw \
-			engine/keyboard \
-			engine/instance \
-			engine/list \
-			engine/scene \
-			engine/font \
-			asset/asset \
-			asset/background/background \
-			asset/font/font_su \
-			asset/font/font_fat \
-			asset/map/map_0 \
-			asset/map/map \
-			asset/object/obj_player \
-			asset/object/obj_zombie \
-			asset/object/obj_wall \
-			asset/object/obj_box \
-			asset/object/obj_gold \
-			asset/object/obj_inverter \
-			asset/object/obj_trigger \
-			asset/object/obj_dummy \
-			asset/scene/scene_play \
-			asset/script/dummy/scr_dummy_move \
-			asset/script/inverter/scr_inverter \
-			asset/script/player/scr_player_attack \
-			asset/script/player/scr_player_check_selfs \
-			asset/script/player/scr_player_collision \
-			asset/script/player/scr_player_get_spr \
-			asset/script/player/scr_player_move \
-			asset/script/player/scr_player_die \
-			asset/script/play/scr_avatarize \
-			asset/script/play/scr_state \
-			asset/script/trigger/scr_trigger \
-			asset/script/zombie/scr_zombie_move \
-			asset/script/map/build_char_map \
-			asset/script/scr_footprint \
-			asset/script/scr_animation \
-			asset/script/scr_get_route \
-			asset/sprite/spr_player_red \
-			asset/sprite/spr_player_blue \
-			asset/sprite/spr_zombie \
-			asset/sprite/spr_empty \
-			asset/sprite/spr_light \
-			asset/sprite/spr_wall \
-			asset/sprite/spr_box \
-			asset/sprite/spr_exit \
-			asset/sprite/spr_gold \
-			asset/sprite/spr_inverter \
-			lib/sl_free \
-			lib/sl_itoa \
-			lib/sl_strjoin \
-			lib/sl_split \
-			lib/sl_rev_atoi
+ENGINE		=	game \
+				image \
+				draw \
+				keyboard \
+				instance \
+				list \
+				scene \
+				font
+
+BACKGROUND	=	background_main \
+				background_menu \
+				background_map
+
+FONT		=	font_su \
+				font_fat
+
+MAP			=	map \
+				map_0 \
+				map_1 \
+				map_2 \
+				map_3
+
+OBJECT		=	obj_player \
+				obj_zombie \
+				obj_wall \
+				obj_box \
+				obj_gold \
+				obj_inverter \
+				obj_trigger \
+				obj_dummy
+
+SCENE		=	scene_play
+
+SCRIPT		=	dummy/scr_dummy_move \
+				inverter/scr_inverter_signal \
+				inverter/scr_inverter_trigger \
+				player/scr_player_attack \
+				player/scr_player_check_selfs \
+				player/scr_player_collision \
+				player/scr_player_get_spr \
+				player/scr_player_move \
+				player/scr_player_die \
+				trigger/scr_trigger \
+				zombie/scr_zombie_move \
+				play/scr_avatarize \
+				play/scr_state \
+				scr_footprint \
+				scr_animation \
+				scr_get_route \
+				scr_build_map \
+				scr_signal
+
+SPRITE		=	spr_player_red \
+				spr_player_blue \
+				spr_zombie \
+				spr_empty \
+				spr_light \
+				spr_wall \
+				spr_box \
+				spr_exit \
+				spr_gold \
+				spr_inverter
+
+LIB			=	sl_free \
+				sl_itoa \
+				sl_strjoin \
+				sl_split \
+				sl_rev_atoi
+
+FILE		=	main \
+				debug \
+				asset/asset \
+				$(addprefix engine/, $(ENGINE)) \
+				$(addprefix asset/background/, $(BACKGROUND)) \
+				$(addprefix asset/font/, $(FONT)) \
+				$(addprefix asset/map/, $(MAP)) \
+				$(addprefix asset/object/, $(OBJECT)) \
+				$(addprefix asset/scene/, $(SCENE)) \
+				$(addprefix asset/script/, $(SCRIPT)) \
+				$(addprefix asset/sprite/, $(SPRITE)) \
+				$(addprefix lib/, $(LIB))
 
 SRC_DIR =	./src/
 SRCS	= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILE)))

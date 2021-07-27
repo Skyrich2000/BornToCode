@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:32 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/25 06:34:27 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/27 09:46:27 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,9 +164,7 @@ t_font		*add_font(char *path, int size);
 // manage image asset
 t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed, t_box mask);
 t_background	*add_background(char *path, int x, int y);
-
 int			add_sprite_subimage(t_sprite *spr, char *path, int start, int end);
-void		delete_sprite(t_sprite *spr);
 // manage scene asset
 t_scene		*add_scene(t_background *background, void (*start)(void), void (*controller)(void), void (*ui)(void), void (*end)(void));
 

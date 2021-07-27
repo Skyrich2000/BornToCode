@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iamge.c                                            :+:      :+:    :+:   */
+/*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:16 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/25 06:41:00 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/27 09:46:19 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,6 @@ int			add_sprite_subimage(t_sprite *spr, char *path, int start, int end)
 		free(num);
 	}
 	return (OK);
-}
-
-void		delete_sprite(t_sprite *spr)
-{
-	free_list(spr->imgs, 0);
-	free(spr);
 }
 
 void		change_sprite(t_instance *id, t_sprite *spr)

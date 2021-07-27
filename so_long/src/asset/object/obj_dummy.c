@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:56 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/25 02:30:46 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/27 09:48:30 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void		obj_dummy_step(t_instance *this)
 	if (DEBUG)
 		printf("obj_dummy_step start\n");
 
-	if (this->signal & SIG_AUTO)
+	if (this->signal & SIG_MV_AUTO)
 		scr_dummy_move_auto(this);
 
 	if (DEBUG)

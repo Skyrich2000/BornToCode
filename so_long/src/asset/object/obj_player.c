@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:53 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/25 00:07:31 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/27 09:48:30 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		obj_player_step(t_instance *this)
 	if (DEBUG)
 		printf("obj_player_step start\n");
 
-	if (this->signal & SIG_AUTO)
+	if (this->signal & SIG_MV_AUTO)
 	{
 		scr_player_move_auto(this);
 		scr_player_collision_trigger(this);

@@ -70,6 +70,13 @@ void	scr_state_clear()
 	g()->global.delay += 1;
 	if (g()->global.delay > 60 * 3)
 	{
+		if (g()->global.map_index < MAP_SIZE - 1)
+		{
+			g()->global.map_index++;
+			scene_restart();
+		}
+		else
+			scene_change(g()->asset.scene_rank);
 	}
 }
 

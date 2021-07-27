@@ -57,14 +57,14 @@ void		obj_inverter_step(t_instance *this)
 		{
 			if (this->obj.inverter.time < g()->global.time)
 			{
-				if (!(g()->global.player->signal & SIG_AUTO))
+				if (!(g()->global.player->signal & SIG_MV_AUTO))
 					scr_inverter_wait(this);
 			}
 			else
 			{
 				scr_inverter_before(this);
 				this->signal = SIG_ACTIVE |
-					(this->signal & (0b11110 | SIG_DIR_LEFT | SIG_DIR_RIGHT));
+					(g()->global.player->signal & (0b11110 | SIG_DIR_LEFT | SIG_DIR_RIGHT));
 			}
 		}
 		if (g()->global.time <= 0)

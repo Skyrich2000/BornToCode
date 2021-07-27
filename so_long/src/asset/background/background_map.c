@@ -13,20 +13,3 @@ int		init_background_map()
 		return (ERROR);
 	return (OK);
 }
-
-int		init_background_main()
-{
-	g()->asset.background_main = add_background("./res/png/background/background_main_0.png", -16, -32);
-	if (!g()->asset.background_main)
-		return (ERROR);
-	return (OK);
-}
-
-
-int		init_background_default()
-{
-	g()->asset.background_default = add_background("./res/png/background/background_1.png", -16, -32);
-	if (!g()->asset.background_default)
-		return (ERROR);
-	return (OK);
-}

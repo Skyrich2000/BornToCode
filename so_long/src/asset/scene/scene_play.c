@@ -4,7 +4,7 @@ int			init_scene_play()
 {
 	t_scene	*new;
 
-	new = add_scene(g()->asset.background_default, scene_play_start, scene_play_controller, scene_play_ui, scene_play_end);
+	new = add_scene(g()->asset.background_menu, scene_play_start, scene_play_controller, scene_play_ui, scene_play_end);
 	if (!new)
 		return (ERROR);
 	g()->asset.scene_play = new;
@@ -29,7 +29,7 @@ void		scene_play_controller()
 
 	if (g()->global.state == S_READY)
 		scr_state_ready();
-	if (g()->global.state == S_STRAIGHT)
+	else if (g()->global.state == S_STRAIGHT)
 		scr_state_straight();
 	else if (g()->global.state == S_INVERT)
 		scr_state_inverted();
@@ -40,8 +40,8 @@ void		scene_play_controller()
 	else if (g()->global.state == S_GAMEOVER)
 		scr_state_gameover();
 
-	if (keyboard_check(KEY_R))
-		scene_restart();
+	if (g()->global.state != S_READY && keyboard_check(KEY_R))
+		scr_player_die();
 
 	if (DEBUG)
 		printf("scene_play_controller end\n");
