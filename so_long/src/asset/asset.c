@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:50 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/27 17:41:37 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/28 05:11:56 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 int		init_asset()
 {
 	return (init_background_main() && \
-			init_background_menu() && \
+			init_background_nick() && \
+			init_background_rank() && \
 			init_background_map() && \
 			init_font_su() && \
 			init_font_fat() && \
@@ -31,8 +32,12 @@ int		init_asset()
 			init_spr_gold() && \
 			init_spr_inverter() && \
 			init_spr_exit() && \
+			init_spr_plane() && \
+			init_spr_logo() && \
+			init_scene_main() && \
+			init_scene_nick() && \
 			init_scene_play() && \
-			init_scene_nickname());
+			init_scene_rank());
 }
 
 void	free_asset()

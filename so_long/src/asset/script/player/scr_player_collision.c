@@ -17,8 +17,27 @@ void	scr_player_collision_gold(t_instance *this)
 	t_instance	*ins;
 
 	ins = place_meeting_type(this, this->x, this->y, GOLD);
-	if (ins && ins->condition & C_ALIVE)
+	if (ins && ins->condition & C_ALIVE && \
+		g()->global.state == S_STRAIGHT)
+	{
 		ins->condition = C_DEING;
+		--g()->global.gold_num;
+	}
+}
+
+void	scr_player_collision_exit(t_instance *this)
+{
+	t_instance	*ins;
+
+	ins = place_meeting_type(this, this->x, this->y, EXIT);
+	if (ins && ins->condition & C_ALIVE && \
+		g()->global.state == S_RESTRAIGHT && \
+		g()->global.gold_num == 0)
+	{
+		create_plane_instance();
+		this->signal = SIG_MV_AUTO;
+		ins->condition = C_DEAD;
+	}
 }
 
 void	scr_player_collision_inverter(t_instance *this)
@@ -26,18 +45,11 @@ void	scr_player_collision_inverter(t_instance *this)
 	t_instance	*ins;
 
 	ins = place_meeting_type(this, this->x, this->y, INVERTER);
-	//if (ins)
-	//{
-	//	printf("player inverted %d\n", this->obj.player.inverted);
-	//	printf("inverter inverted %d\n", ins->obj.inverter.inverted);
-	//}
-	if (ins && ins->condition & C_ALIVE && ins->obj.inverter.inverted == this->obj.player.inverted)
+	if (ins && ins->condition & C_ALIVE && \
+		ins->obj.inverter.inverted == this->obj.player.inverted)
 	{
 		ins->condition = C_DEING;
-		//if (g()->global.state == S_STRAIGHT)
-		{
-			ins->signal = SIG_ACTIVE | this->signal;
-		}
+		ins->signal = SIG_ACTIVE | this->signal;
 	}
 }
 
@@ -46,10 +58,9 @@ void	scr_player_collision_trigger(t_instance *this)
 	t_instance	*ins;
 
 	ins = place_meeting_type(this, this->x, this->y, TRIGGER);
-	if (ins)
-	{
-		scr_trigger(ins, this);
-	}
+	if (ins && \
+		this->obj.player.inverted == ins->obj.trigger.inverted)
+		scr_trigger(ins);
 }
 
 

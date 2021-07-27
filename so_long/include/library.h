@@ -12,5 +12,6 @@ void		sl_free(void *data);
 char		**sl_free_split(char **s);
 char		**sl_split(char *s, char c);
 int			sl_rev_atoi(char *str);
+int			sl_check_size(char *s, char c);
 
 #endif

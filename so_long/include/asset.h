@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/28 01:32:03 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/28 05:59:11 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 # define ASSET_H
 # include "engine.h"
 
-# define BUFFER_SIZE		1000000
+# define BUFFER_SIZE		1000
 
 # define MAP_SIZE			4
-# define NICK_SIZE			8
+# define NICK_SIZE			10
 
 # define BOX				0
 # define EXIT				1
@@ -28,7 +28,8 @@
 # define ZOMBIE				6
 # define PLAYER				7
 # define GOLD				8
-# define OBJ_SIZE			9
+# define PLANE				9
+# define OBJ_SIZE			10
 
 # define C_DEAD				1
 # define C_DEING			2
@@ -65,6 +66,9 @@ typedef struct s_global
 	int				nick_index;
 	char			nick[NICK_SIZE + 1];
 
+	char			**rank_list;
+	int				rank_list_y;
+
 	t_instance		*player;
 	int				deathcount;
 	int				inverted;
@@ -73,6 +77,7 @@ typedef struct s_global
 	int				delay;
 	int				total_time;
 	int				invert_signal;
+	int				gold_num;
 
 	int				steps;
 	int				map_index;
@@ -152,10 +157,6 @@ typedef union u_object
 // 포인터 위치 절대 바꾸지 말 것 !!!!
 typedef struct s_asset
 {
-	t_font			*font_su;
-	t_font			*font_fat_small;
-	t_font			*font_fat_big;
-
 	t_sprite		*spr_player_blue_idle_right;
 	t_sprite		*spr_player_blue_idle_left;
 	t_sprite		*spr_player_blue_move_right;
@@ -196,14 +197,21 @@ typedef struct s_asset
 	t_sprite		*spr_inverter_blue;
 	t_sprite		*spr_exit;
 	t_sprite		*spr_plane;
+	t_sprite		*spr_logo;
 
 	t_scene			*scene_main;
-	t_scene			*scene_nickname;
+	t_scene			*scene_nick;
 	t_scene			*scene_play;
 	t_scene			*scene_rank;
 
+	t_font			*font_su;
+	t_font			*font_fat_xsmall;
+	t_font			*font_fat_small;
+	t_font			*font_fat_big;
+
 	t_background	*background_main;
-	t_background	*background_menu;
+	t_background	*background_nick;
+	t_background	*background_rank;
 	t_background	*background_map_0;
 	t_background	*background_map_1;
 	t_background	*background_map_2;
@@ -219,7 +227,8 @@ int			init_asset();
 void		free_asset();
 // init background
 int			init_background_main();
-int			init_background_menu();
+int			init_background_nick();
+int			init_background_rank();
 int			init_background_map();
 // init font
 int			init_font_su();
@@ -235,9 +244,11 @@ int			init_spr_box();
 int			init_spr_gold();
 int			init_spr_inverter();
 int			init_spr_exit();
+int			init_spr_plane();
+int			init_spr_logo();
 // init scene
 int			init_scene_main();
-int			init_scene_nickname();
+int			init_scene_nick();
 int			init_scene_play();
 int			init_scene_rank();
 // init map
@@ -276,8 +287,11 @@ void		obj_dummy_step(t_instance *this);
 void		obj_dummy_draw(t_instance *this);
 // object exit
 t_instance	*create_exit_instance(int x, int y);
-void		obj_exit_step(t_instance *this);
 void		obj_exit_draw(t_instance *this);
+// object plane
+t_instance	*create_plane_instance();
+void		obj_plane_step(t_instance *this);
+void		obj_plane_draw(t_instance *this);
 
 /* ************************************************************************** */
 
@@ -290,7 +304,7 @@ void		scr_animation(t_instance *this);
 t_list		*scr_get_route(t_instance *id, int type);
 t_list		**scr_get_route_node(t_instance *id, int type);
 // script for trigger
-void		scr_trigger(t_instance *trigger, t_instance *player);
+void		scr_trigger(t_instance *trigger);
 // script to move dummy
 void		scr_dummy_move_auto(t_instance *this);
 // script for player to attack
@@ -303,6 +317,7 @@ void		scr_player_collision_gold(t_instance *this);
 void		scr_player_collision_inverter(t_instance *this);
 void		scr_player_collision_trigger(t_instance *this);
 void		scr_player_collision_zombie(t_instance *this);
+void		scr_player_collision_exit(t_instance *this);
 // script to get player sprite pointer
 t_sprite	*scr_player_get_spr(int type, int inverted, int dir);
 // scripts to move player
@@ -334,6 +349,7 @@ void		scr_inverter_active(t_instance *this);
 // script for build map from char**
 void		scr_build_map(char **map);
 
+void	scr_save_rank(char *userid, int time, int deathcount);
 /* ************************************************************************** */
 
 // scene main
@@ -342,10 +358,10 @@ void		scene_main_controller();
 void		scene_main_ui();
 void		scene_main_end();
 // scene nickname
-void		scene_nickname_start();
-void		scene_nickname_controller();
-void		scene_nickname_ui();
-void		scene_nickname_end();
+void		scene_nick_start();
+void		scene_nick_controller();
+void		scene_nick_ui();
+void		scene_nick_end();
 // scene play
 void		scene_play_start();
 void		scene_play_controller();

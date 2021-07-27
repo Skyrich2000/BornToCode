@@ -46,7 +46,7 @@ char	*sl_substr(char *s, unsigned int start, size_t len)
 // 	return (0);
 // }
 
-static size_t	sl_check_size(char *s, char c)
+int		sl_check_size(char *s, char c)
 {
 	size_t	cnt;
 	int		i;

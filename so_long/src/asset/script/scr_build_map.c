@@ -18,7 +18,10 @@ void		scr_build_map(char **map)
 			else if (map[i][j] == 'b')
 				create_box_instance(j * 32, i * 32);
 			else if (map[i][j] == 'g')
+			{
+				g()->global.gold_num++;
 				create_gold_instance(j * 32, i * 32);
+			}
 			else if (map[i][j] == 'p')
 				g()->global.player = create_player_instance(j * 32, i * 32, S_STRAIGHT);
 			else if (map[i][j] == 'e')

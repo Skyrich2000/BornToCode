@@ -61,7 +61,10 @@ void	scr_state_restraight()
 	{
 		printf("clear \n");
 		g()->global.delay = 0; // temp
-		g()->global.state = S_CLEAR;
+		if (g()->global.player != 0)
+			scr_player_die();
+		else
+			g()->global.state = S_CLEAR;
 	}
 }
 
@@ -70,13 +73,16 @@ void	scr_state_clear()
 	g()->global.delay += 1;
 	if (g()->global.delay > 60 * 3)
 	{
-		if (g()->global.map_index < MAP_SIZE - 1)
+		g()->global.map_index++;
+		if (g()->global.map_index >= 1) //MAP_SIZE)
 		{
-			g()->global.map_index++;
-			scene_restart();
+			scr_save_rank(g()->global.nick, g()->global.time, g()->global.deathcount);
+			scene_change(g()->asset.scene_rank);
 		}
 		else
-			scene_change(g()->asset.scene_rank);
+		{
+			scene_restart();
+		}
 	}
 }
 

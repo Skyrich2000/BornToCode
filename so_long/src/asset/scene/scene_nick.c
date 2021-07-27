@@ -1,20 +1,23 @@
 #include "engine.h"
 
-int			init_scene_nickname()
+int			init_scene_nick()
 {
-	g()->asset.scene_nickname = add_scene(g()->asset.background_menu, scene_nickname_start, scene_nickname_controller, scene_nickname_ui, scene_nickname_end);
-	if (!g()->asset.scene_nickname)
+	g()->asset.scene_nick = add_scene(g()->asset.background_nick, scene_nick_start, scene_nick_controller, scene_nick_ui, scene_nick_end);
+	if (!g()->asset.scene_nick)
 		return (ERROR);
 	return (OK);
 }
 
-void		scene_nickname_start()
+void		scene_nick_start()
 {
+	g()->view.view_xview = 0;
+	g()->view.view_yview = 0;
 	g()->global.nick_index = 0;
-	sl_memcpy(g()->global.nick, "        ", 9);
+	sl_memcpy(g()->global.nick, "                 ", NICK_SIZE);
+	g()->global.nick[NICK_SIZE] = '\0';
 }
 
-void		scene_nickname_controller()
+void		scene_nick_controller()
 {
 	int i;
 	char *ascii;
@@ -24,7 +27,7 @@ void		scene_nickname_controller()
 	ascii = (char [50]){'A', 'S', 'D', 'F', 'H', 'G', 'Z', 'X', 'C', 'V', '\0', 'B', 'Q', 'W', 'E', 'R', 'Y', 'T', '1', '2', '3', '4', '6', '5', '=', '9', '7', '-', '8', '0', '}', 'O', 'U', '{', 'I', 'P', '\0', 'L', 'J', '\"', 'K', ':', '\0', '\0', '?', 'N', 'M', '.', '\0', '\0'};
 
 	if (DEBUG)
-		printf("scene_nickname_controller start\n");
+		printf("scene_nick_controller start\n");
 
 	g()->global.time++;
 	if (g()->global.time > 20 && g()->global.nick_index < NICK_SIZE)
@@ -74,18 +77,21 @@ void		scene_nickname_controller()
 	prev_backspace = keyboard_check(KEY_BACKSPACE);
 
 	if (DEBUG)
-		printf("scene_nickname_controller end\n");
+		printf("scene_nick_controller end\n");
 }
 
-void		scene_nickname_ui()
+void		scene_nick_ui()
 {
+	draw_text(g()->asset.font_fat_small, \
+		"INPUT YOUR NICKNAME", \
+		(int [2]){g()->view.view_xview + g()->view.view_wview / 2, g()->view.view_yview + g()->view.view_hview / 2 - 40}, \
+		(float [2]){A_CENTER, A_CENTER});
 	draw_text(g()->asset.font_fat_big, \
 		g()->global.nick, \
 		(int [2]){g()->view.view_xview + g()->view.view_wview / 2, g()->view.view_yview + g()->view.view_hview / 2}, \
 		(float [2]){A_CENTER, A_CENTER});
 }
 
-void		scene_nickname_end()
+void		scene_nick_end()
 {
-	destroy_all_instance();
 }

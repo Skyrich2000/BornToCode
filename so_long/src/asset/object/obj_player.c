@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:53 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/27 09:48:30 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/28 02:47:41 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void		obj_player_step(t_instance *this)
 			scr_player_attack(this);
 			scr_player_collision_gold(this);
 			scr_player_collision_trigger(this);
+			scr_player_collision_exit(this);
 			scr_player_check_selfs(this);
 			scr_save_footprint(this, this->obj.player.route);
 		}

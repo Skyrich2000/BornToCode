@@ -2,24 +2,30 @@
 
 int			init_scene_play()
 {
-	t_scene	*new;
-
-	new = add_scene(g()->asset.background_menu, scene_play_start, scene_play_controller, scene_play_ui, scene_play_end);
-	if (!new)
+	g()->asset.scene_play = add_scene(g()->asset.background_nick, scene_play_start, scene_play_controller, scene_play_ui, scene_play_end);
+	if (!g()->asset.scene_play)
 		return (ERROR);
-	g()->asset.scene_play = new;
 	return (OK);
 }
 
 void		scene_play_start()
 {
+	if (DEBUG)
+		printf("scene_play_start start\n");
+
 	g()->global.inverted = S_STRAIGHT;
 	g()->global.state = S_READY;
 	g()->global.time = 0;
 	g()->global.delay = 0;
 	g()->global.total_time = 0;
 	g()->global.invert_signal = 0;
+	g()->global.gold_num = 0;
 	g()->asset.maps[g()->global.map_index]();
+	g()->view.view_xview = -16 + 14 * 32 / 2 - g()->view.view_wview / 2;
+	g()->view.view_yview = -32 + 7 * 32 / 2 - g()->view.view_hview / 2;
+
+	if (DEBUG)
+		printf("scene_play_start start\n");
 }
 
 void		scene_play_controller()
@@ -52,9 +58,9 @@ void		scene_play_ui()
 	char	*str[2];
 
 	if (g()->global.state == S_READY)
-		draw_sprite(g()->asset.spr_light_dark, g()->asset.spr_light_dark->imgs->next, g()->global.player->x, g()->global.player->y);
+		draw_sprite(g()->asset.spr_light_dark, g()->asset.spr_light_dark->imgs->next, g()->global.player->x + 3, g()->global.player->y - 19);
 	if (g()->global.state == S_STRAIGHT || g()->global.state == S_INVERT)
-		draw_sprite(g()->asset.spr_light, g()->asset.spr_light->imgs->next, g()->global.player->x, g()->global.player->y);
+		draw_sprite(g()->asset.spr_light, g()->asset.spr_light->imgs->next, g()->global.player->x + 3, g()->global.player->y - 10);
 
 	if (g()->global.state == S_READY)
 		draw_text(g()->asset.font_fat_small, "S_READY", (int[2]){g()->view.view_xview + g()->view.view_wview, g()->view.view_yview}, (float [2]){A_RIGHT, A_UP});
@@ -82,9 +88,6 @@ void		scene_play_ui()
 	free(str[1]);
 
 	draw_text(g()->asset.font_fat_big, g()->global.nick, (int[2]){g()->view.view_xview, g()->view.view_yview + g()->view.view_hview}, (float [2]){A_LEFT, A_BOTTOM});
-
-	g()->view.view_xview = -16 + 14 * 32 / 2 - g()->view.view_wview / 2;
-	g()->view.view_yview = -32 + 7 * 32 / 2 - g()->view.view_hview / 2;
 }
 
 void		scene_play_end()

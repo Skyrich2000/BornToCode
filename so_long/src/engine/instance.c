@@ -29,7 +29,7 @@ t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance
 	new->x = data[1];
 	new->y = data[2];
 	new->dir = 1;
-	new->condition = 0;
+	new->condition = C_ALIVE;
 	new->signal = 0;
 	new->step = step;
 	new->draw = draw;

@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:06 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/25 06:15:25 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/28 03:40:42 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		init_game()
 	game->view.view_wview = WINDOW_WIDTH;
 	game->view.view_hview = WINDOW_HEIGHT;
 	game->mlx = mlx_init();
-	game->win = mlx_new_window(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "VENEV");
+	game->win = mlx_new_window(game->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "TENET");
 	game->canvas.img = mlx_new_image(g()->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	game->canvas.x = 0;
 	game->canvas.y = 0;

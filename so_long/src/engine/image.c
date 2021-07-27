@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:16 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/27 09:46:19 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/28 04:01:07 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed, t_box mask)
 		return (ERROR);
 	new->imgs = create_list();
 	if (!new->imgs)
+	{
+		free(new);
 		return (ERROR);
+	}
 	new->img_speed = img_speed;
 	new->offset_x = offset_x;
 	new->offset_y = offset_y;
@@ -37,6 +40,11 @@ t_background	*add_background(char *path, int x, int y)
 	if (!new)
 		return (ERROR);
 	new->img = mlx_png_file_to_image(g()->mlx, path, &new->width, &new->height);
+	if (!new->img)
+	{
+		free(new);
+		return (ERROR);
+	}
 	new->x = x;
 	new->y = y;
 	return (new);
