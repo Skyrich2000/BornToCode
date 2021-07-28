@@ -6,14 +6,14 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:50 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/28 05:11:56 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/28 07:17:10 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 #include "asset.h"
 
-int		init_asset()
+int		init_asset(void)
 {
 	return (init_background_main() && \
 			init_background_nick() && \

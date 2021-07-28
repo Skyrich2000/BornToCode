@@ -74,7 +74,7 @@ void	scr_state_clear()
 	if (g()->global.delay > 60 * 3)
 	{
 		g()->global.map_index++;
-		if (g()->global.map_index >= 1) //MAP_SIZE)
+		if (g()->global.map_index >= 2) //MAP_SIZE)
 		{
 			scr_save_rank(g()->global.nick, g()->global.time, g()->global.deathcount);
 			scene_change(g()->asset.scene_rank);

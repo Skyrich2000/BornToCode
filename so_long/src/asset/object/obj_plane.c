@@ -16,18 +16,31 @@ t_instance *create_plane_instance()
 
 void		obj_plane_step(t_instance *this)
 {
+	if (DEBUG)
+		printf("obj_plane_step start\n");
+
 	if (g()->global.player && point_distance(g()->global.player->x, g()->global.player->y, this->x, this->y) < 15 * 15)
 	{
-		// g()->global.player->spr = g()->asset.spr_empty;
 		destroy_instance(g()->global.player);
 		g()->global.player = 0;
 	}
 	this->y -= 5;
-	if (this->y < -42)
+	if (this->y < g()->view.view_yview - 42)
+	{
+		if (g()->global.map_index == 0)
+			g()->global.state = S_CLEAR;
 		destroy_instance(this);
+	}
+
+	if (DEBUG)
+		printf("obj_plane_step end\n");
 }
 
 void		obj_plane_draw(t_instance *this)
 {
+	if (DEBUG)
+		printf("obj_plane_draw start\n");
 	draw_sprite(this->spr, this->spr->imgs->next, this->x, this->y);
+	if (DEBUG)
+		printf("obj_plane_draw start\n");
 }

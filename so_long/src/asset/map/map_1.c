@@ -1,6 +1,6 @@
 #include "engine.h"
 
-void		map_1()
+void		map_1(int *width, int *height)
 {
 	t_instance	*ins;
 	int			out_dir[20];
@@ -9,13 +9,13 @@ void		map_1()
 	map = sl_split("\
 11111111111111 \
 10000010000001 \
-10110011011101 \
-1011000zb11101 \
-10110011011101 \
-10p000010g0001 \
+10111011011101 \
+1011100ZB11101 \
+10111011011101 \
+10P000E10C0001 \
 11111111111111", ' ');
 
-	scr_build_map(map);
+	scr_build_map(map, width, height);
 	sl_free_split(map);
 
 	g()->scene->background = g()->asset.background_map_0;

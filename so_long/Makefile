@@ -6,7 +6,7 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/16 07:48:16 by ycha              #+#    #+#              #
-#    Updated: 2021/07/28 04:57:41 by ycha             ###   ########.fr        #
+#    Updated: 2021/07/28 23:54:42 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ ENGINE		=	game \
 				instance \
 				list \
 				scene \
+				input \
 				font
 
 BACKGROUND	=	background_main \
@@ -68,7 +69,8 @@ SCRIPT		=	dummy/scr_dummy_move \
 				scr_animation \
 				scr_get_route \
 				scr_build_map \
-				scr_signal
+				scr_signal \
+				scr_save_rank
 
 SPRITE		=	spr_player_red \
 				spr_player_blue \
@@ -87,7 +89,8 @@ LIB			=	sl_free \
 				sl_itoa \
 				sl_strjoin \
 				sl_split \
-				sl_rev_atoi
+				sl_rev_atoi \
+				sl_strchr
 
 FILE		=	main \
 				asset/asset \
@@ -137,7 +140,7 @@ $(NAME)	: $(OBJS)
 	@printf "░░░██║░░░███████╗██║░╚███║╔███████║╔████████\n"
 	@printf "░░░╚═╝░░░╚══════╝╚═╝░░╚══╝╚═══════╝╚═══════╝\n"
 	@printf "\n\n"
-	@./so_long
+	@./so_long map.ber
 
 clean	:
 	@rm -f $(OBJS)

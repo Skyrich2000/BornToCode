@@ -1,4 +1,4 @@
-#include "engine.h"
+#include "library.h"
 
 size_t	sl_strlcpy(char *dst, char *src, size_t dstsize)
 {
@@ -21,7 +21,6 @@ size_t	sl_strlcpy(char *dst, char *src, size_t dstsize)
 	return (i);
 }
 
-
 char	*sl_substr(char *s, unsigned int start, size_t len)
 {
 	char	*dest;
@@ -35,16 +34,17 @@ char	*sl_substr(char *s, unsigned int start, size_t len)
 	return (dest);
 }
 
-// static int	sl_strchr(char *s, int c)
-// {
-// 	int	i;
 
-// 	i = -1;
-// 	while (s[++i])
-// 		if (s[i] == c)
-// 			return (1);
-// 	return (0);
-// }
+int		sl_split_size(char **split)
+{
+	int i;
+
+	i = -1;
+	while (split[++i])
+		;
+	return (i);
+}
+
 
 int		sl_check_size(char *s, char c)
 {

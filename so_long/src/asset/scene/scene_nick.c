@@ -24,7 +24,7 @@ void		scene_nick_controller()
 	static char prev[50];
 	static char prev_backspace;
 
-	ascii = (char [50]){'A', 'S', 'D', 'F', 'H', 'G', 'Z', 'X', 'C', 'V', '\0', 'B', 'Q', 'W', 'E', 'R', 'Y', 'T', '1', '2', '3', '4', '6', '5', '=', '9', '7', '-', '8', '0', '}', 'O', 'U', '{', 'I', 'P', '\0', 'L', 'J', '\"', 'K', ':', '\0', '\0', '?', 'N', 'M', '.', '\0', '\0'};
+	ascii = (char [50]){'A', 'S', 'D', 'F', 'H', 'G', 'Z', 'X', 'C', 'V', '\0', 'B', 'Q', 'W', 'E', 'R', 'Y', 'T', '1', '2', '3', '4', '6', '5', '\0', '9', '7', '-', '8', '0', '}', 'O', 'U', '{', 'I', 'P', '\0', 'L', 'J', '\"', 'K', ':', '\0', '\0', '?', 'N', 'M', '.', '\0', '\0'};
 
 	if (DEBUG)
 		printf("scene_nick_controller start\n");
@@ -46,7 +46,10 @@ void		scene_nick_controller()
 		{
 			if (g()->global.nick[g()->global.nick_index] == '_')
 				g()->global.nick[g()->global.nick_index] = ' ';
+			printf("asdf\n");
 			scene_change(g()->asset.scene_play);
+			printf("asdf end\n");
+			return ;
 		}
 		else if (keyboard_check(KEY_BACKSPACE) && !prev_backspace)
 		{
@@ -94,4 +97,5 @@ void		scene_nick_ui()
 
 void		scene_nick_end()
 {
+	destroy_all_instance();
 }

@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/28 05:59:11 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/29 00:18:20 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,20 @@ typedef struct s_global
 	char			**rank_list;
 	int				rank_list_y;
 
-	t_instance		*player;
-	int				deathcount;
-	int				inverted;
-	int				state;
+	int				steps;
 	int				time;
 	int				delay;
+	int				deathcount;
 	int				total_time;
+	int				state;
+	int				inverted;
 	int				invert_signal;
 	int				gold_num;
+	t_instance		*player;
 
-	int				steps;
 	int				map_index;
+	int				map_width;
+	int				map_height;
 }	t_global;
 
 typedef struct s_footprint
@@ -154,7 +156,6 @@ typedef union u_object
 	t_obj_dummy		dummy;
 }	t_object;
 
-// 포인터 위치 절대 바꾸지 말 것 !!!!
 typedef struct s_asset
 {
 	t_sprite		*spr_player_blue_idle_right;
@@ -217,7 +218,7 @@ typedef struct s_asset
 	t_background	*background_map_2;
 	t_background	*background_map_3;
 
-	void			(*maps[MAP_SIZE])(void);
+	void			(*maps[MAP_SIZE])(int *w, int *h);
 }	t_asset;
 
 /* ************************************************************************** */
@@ -346,10 +347,10 @@ void		scr_inverter_destroy_trigger(t_instance *this, int exclusive_signal);
 void		scr_inverter_wait(t_instance *this);
 void		scr_inverter_before(t_instance *this);
 void		scr_inverter_active(t_instance *this);
-// script for build map from char**
-void		scr_build_map(char **map);
-
-void	scr_save_rank(char *userid, int time, int deathcount);
+// script for build map from char** return width and height of map
+void		scr_build_map(char **map, int *width, int *height);
+// script for save rank
+void		scr_save_rank(char *name, int time, int deathcount);
 /* ************************************************************************** */
 
 // scene main
@@ -375,9 +376,9 @@ void		scene_rank_end();
 
 /* ************************************************************************** */
 
-void		map_0();
-void		map_1();
-void		map_2();
-void		map_3();
+void		map_0(int *w, int *h);
+void		map_1(int *w, int *h);
+void		map_2(int *w, int *h);
+void		map_3(int *w, int *h);
 
 #endif

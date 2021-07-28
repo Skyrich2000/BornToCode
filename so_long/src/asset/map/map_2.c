@@ -1,6 +1,6 @@
 #include "engine.h"
 
-void		map_2()
+void		map_2(int *width, int *height)
 {
 	t_instance	*ins;
 	int			out_dir[20];
@@ -15,7 +15,7 @@ void		map_2()
 10p000010g0001 \
 11111111111111", ' ');
 
-	scr_build_map(map);
+	scr_build_map(map, width, height);
 	sl_free_split(map);
 
 	g()->scene->background = g()->asset.background_map_0;

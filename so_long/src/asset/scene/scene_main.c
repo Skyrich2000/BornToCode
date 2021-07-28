@@ -10,6 +10,7 @@ int			init_scene_main()
 
 void		scene_main_start()
 {
+	sl_bzero(&g()->global, sizeof(t_global));
 	g()->view.view_xview = 0;
 	g()->view.view_yview = 0;
 	g()->global.time = 0;
@@ -23,10 +24,16 @@ void		scene_main_controller()
 	g()->global.time++;
 
 	if (keyboard_check(KEY_ENTER))
+	{
 		scene_change(g()->asset.scene_nick);
+		return ;
+	}
 
 	if (keyboard_check(KEY_R))
+	{
 		scene_change(g()->asset.scene_rank);
+		return ;
+	}
 
 	if (DEBUG)
 		printf("scene_main_controller end\n");

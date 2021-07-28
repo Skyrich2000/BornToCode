@@ -13,5 +13,7 @@ char		**sl_free_split(char **s);
 char		**sl_split(char *s, char c);
 int			sl_rev_atoi(char *str);
 int			sl_check_size(char *s, char c);
+int			sl_split_size(char **split);
+char		*ft_strchr(const char *s, int c);
 
 #endif

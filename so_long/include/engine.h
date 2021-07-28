@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:32 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/28 06:02:07 by ycha             ###   ########.fr       */
+/*   Updated: 2021/07/29 02:28:14 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ typedef struct s_game
 	t_list			*instances[OBJ_SIZE];
 	t_scene			*scene;
 	t_view			view;
+	char			**ber;
 	int				keys[420];
 }	t_game;
 
@@ -149,6 +150,9 @@ t_game		*g();
 int			init_game();
 int			loop();
 void		start_game(t_scene *scene);
+// input function
+int			init_input(int ac, char **av);
+void		free_input();
 // key hook function
 int			exit_press(void);
 int			key_press(int keycode);

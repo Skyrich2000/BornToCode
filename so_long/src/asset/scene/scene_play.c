@@ -16,18 +16,20 @@ void		scene_play_start()
 	g()->global.inverted = S_STRAIGHT;
 	g()->global.state = S_READY;
 	g()->global.time = 0;
+	g()->global.steps = 0;
 	g()->global.delay = 0;
 	g()->global.total_time = 0;
 	g()->global.invert_signal = 0;
 	g()->global.gold_num = 0;
-	g()->asset.maps[g()->global.map_index]();
-	g()->view.view_xview = -16 + 14 * 32 / 2 - g()->view.view_wview / 2;
-	g()->view.view_yview = -32 + 7 * 32 / 2 - g()->view.view_hview / 2;
+	g()->asset.maps[g()->global.map_index](&g()->global.map_width, &g()->global.map_height);
+	g()->view.view_xview = -16 + g()->global.map_width * 32 / 2 - g()->view.view_wview / 2;
+	g()->view.view_yview = -32 + g()->global.map_height * 32 / 2 - g()->view.view_hview / 2;
 
 	if (DEBUG)
-		printf("scene_play_start start\n");
+		printf("scene_play_start end\n");
 }
 
+// TODO: move view port if map is big
 void		scene_play_controller()
 {
 	if (DEBUG)
@@ -55,12 +57,25 @@ void		scene_play_controller()
 
 void		scene_play_ui()
 {
+	if (DEBUG)
+		printf("scene_play_ui start\n");
 	char	*str[2];
 
-	if (g()->global.state == S_READY)
-		draw_sprite(g()->asset.spr_light_dark, g()->asset.spr_light_dark->imgs->next, g()->global.player->x + 3, g()->global.player->y - 19);
-	if (g()->global.state == S_STRAIGHT || g()->global.state == S_INVERT)
-		draw_sprite(g()->asset.spr_light, g()->asset.spr_light->imgs->next, g()->global.player->x + 3, g()->global.player->y - 10);
+	draw_img(g()->canvas.img, g()->global.map_width * 32 - 32 + 16, -32);
+	draw_img(g()->canvas.img, -16, g()->global.map_height * 32 - 32);
+
+	if (g()->global.map_index != 0)
+	{
+		if (g()->global.state == S_READY)
+			draw_sprite(g()->asset.spr_light_dark, g()->asset.spr_light_dark->imgs->next, g()->global.player->x + 3, g()->global.player->y - 19);
+		if (g()->global.state == S_STRAIGHT || g()->global.state == S_INVERT)
+				draw_sprite(g()->asset.spr_light, g()->asset.spr_light->imgs->next, g()->global.player->x + 3, g()->global.player->y - 10);
+	}
+	else if (g()->global.player)
+	{
+		g()->view.view_xview = g()->global.player->x - g()->view.view_wview / 2;
+		g()->view.view_yview = g()->global.player->y - g()->view.view_hview / 2;
+	}
 
 	if (g()->global.state == S_READY)
 		draw_text(g()->asset.font_fat_small, "S_READY", (int[2]){g()->view.view_xview + g()->view.view_wview, g()->view.view_yview}, (float [2]){A_RIGHT, A_UP});
@@ -88,6 +103,8 @@ void		scene_play_ui()
 	free(str[1]);
 
 	draw_text(g()->asset.font_fat_big, g()->global.nick, (int[2]){g()->view.view_xview, g()->view.view_yview + g()->view.view_hview}, (float [2]){A_LEFT, A_BOTTOM});
+	if (DEBUG)
+		printf("scene_play_ui end\n");
 }
 
 void		scene_play_end()
