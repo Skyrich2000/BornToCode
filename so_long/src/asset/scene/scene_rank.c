@@ -19,7 +19,7 @@ void		scene_rank_start()
 	fd = open("./dashboard.rnk", O_RDONLY | O_CREAT, 0777);
 	if (fd == -1 || read(fd, &buf, BUFFER_SIZE) == -1)
 		return ;
-	g()->global.rank_list_y = 0;
+	g()->global.rank_list_y = 150;
 	g()->global.rank_list = sl_split(buf, '\n');
 	close(fd);
 }

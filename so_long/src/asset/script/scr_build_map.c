@@ -12,7 +12,10 @@ void		scr_build_map(char **map, int *width, int *height)
 		while (map[i][++j])
 		{
 			if (map[i][j] == '1')
+			{
 				create_wall_instance(j * 32, i * 32);
+				create_wall_up_instance(j * 32, i * 32);
+			}
 			else if (map[i][j] == 'Z')
 				create_zombie_instance(j * 32, i * 32);
 			else if (map[i][j] == 'B')

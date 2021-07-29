@@ -27,9 +27,10 @@
 # define DUMMY				5
 # define ZOMBIE				6
 # define PLAYER				7
-# define GOLD				8
-# define PLANE				9
-# define OBJ_SIZE			10
+# define WALL_UP			8
+# define GOLD				9
+# define PLANE				10
+# define OBJ_SIZE			11
 
 # define C_DEAD				1
 # define C_DEING			2
@@ -189,6 +190,7 @@ typedef struct s_asset
 	t_sprite		*spr_light_dark;
 	t_sprite		*spr_empty;
 	t_sprite		*spr_wall;
+	t_sprite		*spr_wall_up;
 	t_sprite		*spr_box;
 	t_sprite		*spr_box_break;
 	t_sprite		*spr_gold;
@@ -268,6 +270,9 @@ void		obj_zombie_draw(t_instance *this);
 // object wall
 t_instance	*create_wall_instance(int x, int y);
 void		obj_wall_draw(t_instance *this);
+// object wall up
+t_instance	*create_wall_up_instance(int x, int y);
+void		obj_wall_up_draw(t_instance *this);
 // object box
 t_instance	*create_box_instance(int x, int y);
 void		obj_box_step(t_instance *this);

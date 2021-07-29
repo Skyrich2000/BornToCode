@@ -39,6 +39,7 @@ MAP			=	map \
 OBJECT		=	obj_player \
 				obj_zombie \
 				obj_wall \
+				obj_wall_up \
 				obj_box \
 				obj_gold \
 				obj_inverter \
