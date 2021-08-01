@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:06 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/28 07:49:46 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/01 15:24:51 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ int		loop()
 		g()->scene->ui();
 	if (keyboard_check(KEY_P))
 		draw_debug();
-	mlx_sync(MLX_SYNC_WIN_FLUSH_CMD, g()->win);
-	mlx_sync(MLX_SYNC_WIN_CMD_COMPLETED, g()->win);
+//	mlx_sync(MLX_SYNC_WIN_FLUSH_CMD, g()->win);
+//	mlx_sync(MLX_SYNC_WIN_CMD_COMPLETED, g()->win);
 	return (OK);
 }
 

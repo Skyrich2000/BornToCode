@@ -6,7 +6,7 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/16 07:48:16 by ycha              #+#    #+#              #
-#    Updated: 2021/07/28 23:54:42 by ycha             ###   ########.fr        #
+#    Updated: 2021/08/01 15:25:29 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,18 +105,19 @@ FILE		=	main \
 				$(addprefix asset/sprite/, $(SPRITE)) \
 				$(addprefix lib/, $(LIB))
 
-SRC_DIR =	./src/
-SRCS	= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILE)))
-OBJS	=	$(addprefix $(SRC_DIR), $(addsuffix .o, $(FILE)))
+SRC_DIR 	=	./src/
+SRCS		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILE)))
+OBJS		=	$(addprefix $(SRC_DIR), $(addsuffix .o, $(FILE)))
 
-CC		=	gcc
-INCLUDE =	-Iinclude -Isrc/mlx
-CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit
-CFLAGS	=	-Wall -Werror -Wextra $(INCLUDE)
+CC			=	gcc
+INCLUDE 	=	-Iinclude -Isrc/mlx
+CLIB		=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit
+CLIB_LINUX	=	-Lsrc/mlx -lmlx -lXext -lX11
+CFLAGS		=	-Wall -Werror -Wextra $(INCLUDE)
 
-SHELL	=	/bin/bash
-sp		=	/-\|/
-idx		=	0
+SHELL		=	/bin/bash
+sp			=	/-\|/
+idx			=	0
 
 all		: $(NAME)
 
@@ -132,6 +133,19 @@ all		: $(NAME)
 
 $(NAME)	: $(OBJS)
 	@$(CC) $(CFLAGS) $(CLIB) -o $@ $^
+	@install_name_tool -change libmlx.dylib src/mlx/libmlx.dylib $(NAME)
+	@printf "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\e[1;33mso\e[1;31m long\e[1;37m \e[0;32mis Ready 💚\e[0m\n\n\n"
+	@printf "████████╗███████╗███╗░░██╗╔███████╗░░░╔██░░░\n"
+	@printf "╚══██╔══╝██╔════╝████╗░██║╚════╗██║░░░║██░░░\n"
+	@printf "░░░██║░░░█████╗░░██╔██╗██║░░╔█████║░░░║██░░░\n"
+	@printf "░░░██║░░░██╔══╝░░██║╚████║░░╚══╗██║░░░║██░░░\n"
+	@printf "░░░██║░░░███████╗██║░╚███║╔███████║╔████████\n"
+	@printf "░░░╚═╝░░░╚══════╝╚═╝░░╚══╝╚═══════╝╚═══════╝\n"
+	@printf "\n\n"
+	@./so_long map.ber
+
+linux	: $(OBJS)
+	@$(CC) $(CFLAGS) $(CLIB_LINUX) -o $@ $^
 	@install_name_tool -change libmlx.dylib src/mlx/libmlx.dylib $(NAME)
 	@printf "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\e[1;33mso\e[1;31m long\e[1;37m \e[0;32mis Ready 💚\e[0m\n\n\n"
 	@printf "████████╗███████╗███╗░░██╗╔███████╗░░░╔██░░░\n"

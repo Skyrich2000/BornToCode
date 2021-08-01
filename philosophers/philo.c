@@ -67,7 +67,7 @@ void *philosopher(void *data)
 	{
 		pthread_mutex_lock(&g_mutex_lock);
 
-		if (state)
+		if (state == S_)
 
 		pthread_mutex_unlock(&g_mutex_lock);
 		usleep(100);
