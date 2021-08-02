@@ -112,7 +112,6 @@ OBJS		=	$(addprefix $(SRC_DIR), $(addsuffix .o, $(FILE)))
 CC			=	gcc
 INCLUDE 	=	-Iinclude -Isrc/mlx
 CLIB		=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit
-CLIB_LINUX	=	-Lsrc/mlx -lmlx -lXext -lX11
 CFLAGS		=	-Wall -Werror -Wextra $(INCLUDE)
 
 SHELL		=	/bin/bash
@@ -144,19 +143,6 @@ $(NAME)	: $(OBJS)
 	@printf "\n\n"
 	@./so_long map.ber
 
-linux	: $(OBJS)
-	@$(CC) $(CFLAGS) $(CLIB_LINUX) -o $@ $^
-	@install_name_tool -change libmlx.dylib src/mlx/libmlx.dylib $(NAME)
-	@printf "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\e[1;33mso\e[1;31m long\e[1;37m \e[0;32mis Ready 💚\e[0m\n\n\n"
-	@printf "████████╗███████╗███╗░░██╗╔███████╗░░░╔██░░░\n"
-	@printf "╚══██╔══╝██╔════╝████╗░██║╚════╗██║░░░║██░░░\n"
-	@printf "░░░██║░░░█████╗░░██╔██╗██║░░╔█████║░░░║██░░░\n"
-	@printf "░░░██║░░░██╔══╝░░██║╚████║░░╚══╗██║░░░║██░░░\n"
-	@printf "░░░██║░░░███████╗██║░╚███║╔███████║╔████████\n"
-	@printf "░░░╚═╝░░░╚══════╝╚═╝░░╚══╝╚═══════╝╚═══════╝\n"
-	@printf "\n\n"
-	@./so_long map.ber
-
 clean	:
 	@rm -f $(OBJS)
 
@@ -166,18 +152,3 @@ fclean	: clean
 re		: fclean all
 
 .PHONY	:	all clean fclean re bonus
-
-
-
-# i=1
-# j=0
-# max=20000
-
-# printf "\033[0;31m"
-# echo -n "Loading... "
-# echo -n ' '
-# while [ $j -lt $max ]
-# do
-#     printf "\b${sp:i++%${#sp}:1}"
-#     j=$(($j+1))
-# done
