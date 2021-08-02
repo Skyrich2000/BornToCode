@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:16 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/28 04:01:07 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/03 03:03:40 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,8 @@ t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed, t_box mask)
 
 	new = (t_sprite *)malloc(sizeof(t_sprite));
 	if (!new)
-		return (ERROR);
+		sl_exit(12);
 	new->imgs = create_list();
-	if (!new->imgs)
-	{
-		free(new);
-		return (ERROR);
-	}
 	new->img_speed = img_speed;
 	new->offset_x = offset_x;
 	new->offset_y = offset_y;
@@ -38,7 +33,7 @@ t_background	*add_background(char *path, int x, int y)
 
 	new = (t_background *)malloc(sizeof(t_background));
 	if (!new)
-		return (ERROR);
+		sl_exit(12);
 	new->img = mlx_png_file_to_image(g()->mlx, path, &new->width, &new->height);
 	if (!new->img)
 	{
@@ -72,8 +67,7 @@ int			add_sprite_subimage(t_sprite *spr, char *path, int start, int end)
 		img = mlx_png_file_to_image(g()->mlx, path_all[1], &spr->width, &spr->height);
 		if (!img)
 			return (ERROR);
-		if (!push_list(spr->imgs, img))
-			return (ERROR);
+		push_list(spr->imgs, img);
 		end += dir;
 		free(path_all[0]);
 		free(path_all[1]);

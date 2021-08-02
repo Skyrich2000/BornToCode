@@ -47,7 +47,10 @@ void	scr_player_move(t_instance *this)
 		else if (v_mv == 0 && h_mv == 0)
 			change_sprite(this, scr_player_get_spr(SPR_IDLE, this->obj.player.inverted, this->dir));
 		else
+		{
+			g()->global.steps++;
 			change_sprite(this, scr_player_get_spr(SPR_MOVE, this->obj.player.inverted, this->dir));
+		}
 		this->x += h_mv * 2;
 		if (scr_player_collision_box(this))
 			this->x = this->obj.player.prev_x;

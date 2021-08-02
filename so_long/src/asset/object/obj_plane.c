@@ -9,8 +9,6 @@ t_instance *create_plane_instance()
 	x = g()->global.player->x;
 	y = 500;
 	ins = create_instance(g()->asset.spr_plane, (int [3]){PLANE, x, y}, obj_plane_step, obj_plane_draw);
-	if (!ins)
-		return (ERROR);
 	return (ins);
 }
 
@@ -19,7 +17,7 @@ void		obj_plane_step(t_instance *this)
 	if (DEBUG)
 		printf("obj_plane_step start\n");
 
-	if (g()->global.player && point_distance(g()->global.player->x, g()->global.player->y, this->x, this->y) < 15 * 15)
+	if (g()->global.player && g()->global.player->y - 10 > this->y)
 	{
 		destroy_instance(g()->global.player);
 		g()->global.player = 0;

@@ -1,8 +1,21 @@
 #include "engine.h"
 
-int		cmp_rank(char *org, int new)
+static int		cmp_rank(char *org, int time, int deathcount)
 {
-	return (sl_rev_atoi(org) > new);
+	char **split;
+	int cmp_time;
+	int cmp_deathcount;
+
+	split = sl_split(org, ' ');
+	cmp_time = sl_atoi(split[1]);
+	cmp_deathcount = sl_atoi(split[2]);
+	sl_free_split(split);
+	if (cmp_deathcount > deathcount)
+		return (1);
+	else if (cmp_deathcount == deathcount)
+		return (cmp_time > time);
+	else
+		return (0);
 }
 
 void	scr_save_rank(char *name, int time, int deathcount)
@@ -44,7 +57,7 @@ void	scr_save_rank(char *name, int time, int deathcount)
 		flag = 0;
 		while (++idx < sl_split_size(split))
 		{
-			if (!flag && cmp_rank(split[idx], deathcount))
+			if (!flag && cmp_rank(split[idx], time, deathcount))
 			{
 				write(fd, name, sl_strlen(name));
 				write(fd, "           ", 11 - sl_strlen(name));

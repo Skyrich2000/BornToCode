@@ -27,7 +27,7 @@ char	*sl_substr(char *s, unsigned int start, size_t len)
 
 	dest = (char *)malloc(len + 1);
 	if (!s || !dest)
-		return (NULL);
+		sl_exit(12);
 	if ((int)start >= sl_strlen(s)
 		|| !(sl_strlcpy(dest, s + start, len + 1)))
 		dest[0] = '\0';
@@ -94,7 +94,7 @@ char	**sl_split(char *s, char c)
 
 	ret = malloc((sl_check_size(s, c) + 1) * sizeof(char *));
 	if (!s || !ret)
-		return (NULL);
+		sl_exit(12);
 	i = 0;
 	while (*s)
 	{

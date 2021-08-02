@@ -7,13 +7,13 @@ void		map_2(int *width, int *height)
 	char		**map;
 
 	map = sl_split("\
-11111111111111 \
-10000010000001 \
-10011011011101 \
-1001100zb11101 \
-10011011011101 \
-10p000010g0001 \
-11111111111111", ' ');
+11111111111 \
+10BEB000001 \
+10101010101 \
+10B0B0B0BC1 \
+10101010101 \
+10P000B0B01 \
+11111111111", ' ');
 
 	scr_build_map(map, width, height);
 	sl_free_split(map);
@@ -25,7 +25,7 @@ void		map_2(int *width, int *height)
 	out_dir[SIG_MV_LEFT] = 0;
 	out_dir[SIG_MV_UP] = SIG_MV_LEFT;
 	out_dir[SIG_MV_DOWN] = 0;
-	create_inverter_instance(12 * 32, 1 * 32, S_STRAIGHT, out_dir);
+	create_inverter_instance(9 * 32, 1 * 32, S_STRAIGHT, out_dir);
 
 	out_dir[SIG_MV_RIGHT] = 0;
 	out_dir[SIG_MV_LEFT] = SIG_MV_UP;

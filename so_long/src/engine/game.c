@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:06 by ycha              #+#    #+#             */
-/*   Updated: 2021/08/01 15:24:51 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/03 02:53:51 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,7 @@ int		init_game()
 	game->canvas.y = 0;
 	i = -1;
 	while (++i < OBJ_SIZE)
-	{
 		game->instances[i] = create_list();
-		if (!game->instances[i])
-			return (ERROR);
-	}
 	i = -1;
 	while (++i < 127)
 		game->keys[i] = 0;
@@ -100,8 +96,8 @@ int		loop()
 		g()->scene->ui();
 	if (keyboard_check(KEY_P))
 		draw_debug();
-//	mlx_sync(MLX_SYNC_WIN_FLUSH_CMD, g()->win);
-//	mlx_sync(MLX_SYNC_WIN_CMD_COMPLETED, g()->win);
+	mlx_sync(MLX_SYNC_WIN_FLUSH_CMD, g()->win);
+	mlx_sync(MLX_SYNC_WIN_CMD_COMPLETED, g()->win);
 	return (OK);
 }
 

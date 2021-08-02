@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:56 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/25 01:22:20 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/03 02:56:33 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ t_instance	*create_zombie_instance(int x, int y)
 	t_instance *ins;
 
 	ins = create_instance(g()->asset.spr_zombie_die_right_reverse, (int [3]){ZOMBIE, x, y}, obj_zombie_step, obj_zombie_draw);
-	if (!ins)
-		return (ERROR);
 	ins->obj.zombie.route = create_list();
 	ins->obj.zombie.route_node = 0;
 	ins->obj.zombie.reviver = 0;

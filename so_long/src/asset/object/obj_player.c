@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:53 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/28 22:47:56 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/03 02:56:02 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ t_instance	*create_player_instance(int x, int y, int inverted)
 	t_instance *ins;
 
 	ins = create_instance(scr_player_get_spr(SPR_IDLE, inverted, 1), (int [3]){PLAYER, x, y}, obj_player_step, obj_player_draw);
-	if (!ins)
-		return (ERROR);
 	ins->obj.player.inverted = inverted;
 	ins->obj.player.attack = 0;
 	ins->obj.player.h_mv = 0;

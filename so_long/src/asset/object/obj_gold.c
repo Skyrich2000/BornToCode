@@ -5,8 +5,6 @@ t_instance *create_gold_instance(int x, int y)
 	t_instance *ins;
 
 	ins = create_instance(g()->asset.spr_gold, (int[3]){GOLD, x, y}, obj_gold_step, obj_gold_draw);
-	if (!ins)
-		return (ERROR);
 	ins->obj.gold.route = create_list();
 	ins->obj.gold.route_node = 0;
 	ins->condition = C_ALIVE;

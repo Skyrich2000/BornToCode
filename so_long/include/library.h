@@ -1,7 +1,9 @@
 #ifndef LIBRARY_H
 # define LIBRARY_H
 
-# include "stdlib.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
 
 int			sl_strlen(char *s);
 char		*sl_strjoin(char *s1, char *s2);
@@ -15,5 +17,7 @@ int			sl_rev_atoi(char *str);
 int			sl_check_size(char *s, char c);
 int			sl_split_size(char **split);
 char		*ft_strchr(const char *s, int c);
+int			sl_atoi(const char *str);
+void		sl_exit(int errno);
 
 #endif

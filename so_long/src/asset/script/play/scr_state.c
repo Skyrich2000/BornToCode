@@ -14,7 +14,7 @@ void	scr_state_straight()
 {
 	//t_instance *ins;
 	g()->global.time += 1;
-	if (g()->global.time > 60 * 60)
+	if (g()->global.time > 4200)
 	{
 		printf("time over..?");
 		scene_restart();
@@ -74,9 +74,10 @@ void	scr_state_clear()
 	if (g()->global.delay > 60 * 3)
 	{
 		g()->global.map_index++;
-		if (g()->global.map_index >= 2) //MAP_SIZE)
+		g()->global.time_all_lv += g()->global.time;
+		if (g()->global.map_index >= 2 + 1) //MAP_SIZE)
 		{
-			scr_save_rank(g()->global.nick, g()->global.time, g()->global.deathcount);
+			scr_save_rank(g()->global.nick, g()->global.time_all_lv, g()->global.deathcount);
 			scene_change(g()->asset.scene_rank);
 		}
 		else

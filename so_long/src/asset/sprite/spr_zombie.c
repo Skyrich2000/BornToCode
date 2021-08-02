@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 22:18:07 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/21 05:08:09 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/03 03:00:13 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@ static int	init_spr_zombie_die(void)
 							add_sprite(32, 64, 5, (t_box){19, 35, 49, 64});
 	game->asset.spr_zombie_die_left_reverse = \
 							add_sprite(32, 64, 5, (t_box){14, 35, 44, 64});
-	if (!game->asset.spr_zombie_die_right_reverse || \
-		!game->asset.spr_zombie_die_left_reverse)
-		return (ERROR);
 	if (!add_sprite_subimage(game->asset.spr_zombie_die_right_reverse, \
 							"./res/png/zombie_right/zombie_", 24, 13) || \
 		!add_sprite_subimage(game->asset.spr_zombie_die_left_reverse, \
@@ -41,9 +38,6 @@ static int	init_spr_zombie_idle(void)
 							add_sprite(32, 64, 10, (t_box){19, 35, 49, 64});
 	game->asset.spr_zombie_idle_left_reverse = \
 							add_sprite(32, 64, 10, (t_box){14, 35, 44, 64});
-	if (!game->asset.spr_zombie_idle_right_reverse || \
-		!game->asset.spr_zombie_idle_left_reverse)
-		return (ERROR);
 	if (!add_sprite_subimage(game->asset.spr_zombie_idle_right_reverse, \
 							"./res/png/zombie_right/zombie_", 1, 0) || \
 		!add_sprite_subimage(game->asset.spr_zombie_idle_left_reverse, \

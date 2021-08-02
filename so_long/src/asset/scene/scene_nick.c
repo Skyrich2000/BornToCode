@@ -3,8 +3,6 @@
 int			init_scene_nick()
 {
 	g()->asset.scene_nick = add_scene(g()->asset.background_nick, scene_nick_start, scene_nick_controller, scene_nick_ui, scene_nick_end);
-	if (!g()->asset.scene_nick)
-		return (ERROR);
 	return (OK);
 }
 
@@ -44,11 +42,8 @@ void		scene_nick_controller()
 	{
 		if (keyboard_check(KEY_ENTER) && g()->global.nick_index)
 		{
-			if (g()->global.nick[g()->global.nick_index] == '_')
-				g()->global.nick[g()->global.nick_index] = ' ';
-			printf("asdf\n");
+			g()->global.nick[g()->global.nick_index] = '\0';
 			scene_change(g()->asset.scene_play);
-			printf("asdf end\n");
 			return ;
 		}
 		else if (keyboard_check(KEY_BACKSPACE) && !prev_backspace)

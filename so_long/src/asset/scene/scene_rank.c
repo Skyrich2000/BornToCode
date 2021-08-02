@@ -3,8 +3,6 @@
 int			init_scene_rank()
 {
 	g()->asset.scene_rank = add_scene(g()->asset.background_rank, scene_rank_start, scene_rank_controller, scene_rank_ui, scene_rank_end);
-	if (!g()->asset.scene_rank)
-		return (ERROR);
 	return (OK);
 }
 

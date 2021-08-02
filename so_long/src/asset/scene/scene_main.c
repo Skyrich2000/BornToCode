@@ -3,8 +3,6 @@
 int			init_scene_main()
 {
 	g()->asset.scene_main = add_scene(g()->asset.background_main, scene_main_start, scene_main_controller, scene_main_ui, scene_main_end);
-	if (!g()->asset.scene_main)
-		return (ERROR);
 	return (OK);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:56 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/27 09:48:30 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/03 02:55:17 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ t_instance	*create_dummy_instance(int x, int y, int inverted, int time)
 	t_instance	*ins;
 
 	ins = create_instance(g()->asset.spr_player_blue_move_right, (int [3]){DUMMY, x, y}, obj_dummy_step, obj_dummy_draw);
-	if (!ins)
-		return (ERROR);
 	ins->obj.dummy.inverted = inverted;
 	ins->obj.dummy.time = 0;
 	ins->obj.dummy.alive_time = time;

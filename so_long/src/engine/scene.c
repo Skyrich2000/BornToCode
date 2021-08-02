@@ -6,7 +6,7 @@ t_scene		*add_scene(t_background *background, void (*start)(void), void (*contro
 
 	new = (t_scene *)malloc(sizeof(t_scene));
 	if (!new)
-		return (ERROR);
+		sl_exit(12);
 	new->background = background;
 	new->start = start;
 	new->controller = controller;

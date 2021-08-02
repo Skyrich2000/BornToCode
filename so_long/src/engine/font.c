@@ -10,7 +10,7 @@ t_font	*add_font(char *path, int size)
 
 	new = (t_font *)malloc(sizeof(t_font));
 	if (!new)
-		return (ERROR);
+		sl_exit(12);
 	i = -1;
 	while (++i < 127)
 	{

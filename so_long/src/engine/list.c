@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:12 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/24 18:48:03 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/03 03:03:40 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_list	*create_list()
 
 	new = (t_list *)malloc(sizeof(t_list));
 	if (!new)
-		return (ERROR);
+		sl_exit(12);
 	new->data = 0;
 	new->prev = 0;
 	new->next = 0;
@@ -31,7 +31,7 @@ t_list	*push_list(t_list *list, void *data)
 
 	new = (t_list *)malloc(sizeof(t_list));
 	if (!new)
-		return (ERROR);
+		sl_exit(12);
 	new->data = data;
 	new->prev = list;
 	new->next = list->next;

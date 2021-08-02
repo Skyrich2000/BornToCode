@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 23:22:34 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/20 02:36:59 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/03 03:03:40 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*sl_strjoin(char *s1, char *s2)
 	n = sl_strlen(s1);
 	m = sl_strlen(s2);
 	if (!(ret = (char *)malloc(n + m + 1)))
-		return (0);
+		sl_exit(12);
 	sl_bzero(ret, n + m + 1);
 	if (s1)
 		sl_memcpy(ret, s1, n);

@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:50 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/28 07:17:10 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/03 03:44:55 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,9 @@ int		init_asset(void)
 			init_spr_exit() && \
 			init_spr_plane() && \
 			init_spr_logo() && \
+			init_spr_state() && \
 			init_scene_main() && \
 			init_scene_nick() && \
 			init_scene_play() && \
 			init_scene_rank());
-}
-
-void	free_asset()
-{
-	//free_list(g()->asset.spr_player_blue_attack_left->imgs, 0);
-	//free(g()->asset.spr_player_blue_attack_left);
 }

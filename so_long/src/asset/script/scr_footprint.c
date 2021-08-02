@@ -5,6 +5,8 @@ void	scr_save_footprint(t_instance *this, t_list *route)
 	t_footprint *footprint;
 
 	footprint = malloc(sizeof(t_footprint));
+	if (!footprint)
+		sl_exit(12);
 	footprint->x = this->x;
 	footprint->y = this->y;
 	footprint->spr = this->spr;

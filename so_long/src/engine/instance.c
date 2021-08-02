@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:08 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/28 07:54:43 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/03 03:03:40 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@ t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance
 
 	new = (t_instance *)malloc(sizeof(t_instance));
 	if (!new)
-		return (ERROR);
+		sl_exit(12);
 	node = push_list(g()->instances[data[0]], new);
-	if (!node)
-		return (ERROR);
 	new->node = node;
 	new->spr = spr;
 	new->img_node = new->spr->imgs->next;

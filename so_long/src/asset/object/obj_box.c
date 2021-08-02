@@ -5,8 +5,6 @@ t_instance *create_box_instance(int x, int y)
 	t_instance *ins;
 
 	ins = create_instance(g()->asset.spr_box, (int[3]){BOX, x, y}, obj_box_step, obj_box_draw);
-	if (!ins)
-		return (ERROR);
 	ins->obj.box.route = create_list();
 	ins->obj.box.route_node = 0;
 	ins->condition = C_ALIVE;

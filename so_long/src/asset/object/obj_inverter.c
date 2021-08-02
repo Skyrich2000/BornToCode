@@ -7,8 +7,6 @@ t_instance *create_inverter_instance(int x, int y, int inverted, int out_dir[20]
 	t_instance	*ins;
 
 	ins = create_instance(g()->asset.spr_inverter_idle, (int[3]){INVERTER, x, y}, obj_inverter_step, obj_inverter_draw);
-	if (!ins)
-		return (ERROR);
 	ins->obj.inverter.time = 20;
 	ins->obj.inverter.inverted = inverted;
 	ins->obj.inverter.out_dir[SIG_MV_LEFT] = out_dir[SIG_MV_LEFT];

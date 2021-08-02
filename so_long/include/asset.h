@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/29 00:18:20 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/03 03:57:05 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_global
 
 	int				steps;
 	int				time;
+	int				time_all_lv;
 	int				delay;
 	int				deathcount;
 	int				total_time;
@@ -202,6 +203,12 @@ typedef struct s_asset
 	t_sprite		*spr_plane;
 	t_sprite		*spr_logo;
 
+	t_sprite		*spr_ready;
+	t_sprite		*spr_straight;
+	t_sprite		*spr_invert;
+	t_sprite		*spr_clear;
+	t_sprite		*spr_gameover;
+
 	t_scene			*scene_main;
 	t_scene			*scene_nick;
 	t_scene			*scene_play;
@@ -227,7 +234,6 @@ typedef struct s_asset
 
 // init asset
 int			init_asset();
-void		free_asset();
 // init background
 int			init_background_main();
 int			init_background_nick();
@@ -249,6 +255,7 @@ int			init_spr_inverter();
 int			init_spr_exit();
 int			init_spr_plane();
 int			init_spr_logo();
+int			init_spr_state();
 // init scene
 int			init_scene_main();
 int			init_scene_nick();
