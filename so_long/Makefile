@@ -131,6 +131,7 @@ all		: $(NAME)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME)	: $(OBJS)
+	@$(MAKE) -C ./src/mlx
 	@$(CC) $(CFLAGS) $(CLIB) -o $@ $^
 	@install_name_tool -change libmlx.dylib src/mlx/libmlx.dylib $(NAME)
 	@printf "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\e[1;33mso\e[1;31m long\e[1;37m \e[0;32mis Ready 💚\e[0m\n\n\n"
@@ -145,6 +146,7 @@ $(NAME)	: $(OBJS)
 
 clean	:
 	@rm -f $(OBJS)
+	@make -C ./src/mlx clean
 
 fclean	: clean
 	@rm -f $(NAME)
