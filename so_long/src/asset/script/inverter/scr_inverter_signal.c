@@ -24,7 +24,6 @@ void		scr_inverter_before(t_instance *this)
 	int dir;
 	t_instance *ins;
 
-	printf("before! \n");
 	in_mv = this->signal & 0b11110;
 	out_mv = this->obj.inverter.out_dir[in_mv];
 
@@ -51,7 +50,7 @@ void		scr_inverter_active(t_instance *this)
 
 	printf("inversion start\n");
 	g()->global.inverted = !this->obj.inverter.inverted;
-	g()->global.invert_signal = 1;
+	g()->global.invert_signal = SIG_ACTIVE;
 	g()->global.player->signal = 0;
 
 

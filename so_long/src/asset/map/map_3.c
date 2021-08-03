@@ -9,16 +9,16 @@ void		map_3(int *width, int *height)
 	map = sl_split("\
 11111111111111 \
 10000010000001 \
-10111011010101 \
-1011100zb10101 \
-10111011010101 \
-10p000010g0001 \
+10111011011101 \
+1011100ZB11101 \
+10111011011101 \
+10P000E10C0001 \
 11111111111111", ' ');
 
 	scr_build_map(map, width, height);
 	sl_free_split(map);
 
-	g()->scene->background = g()->asset.background_map_0;
+	g()->scene->background = g()->asset.background_map_1;
 	g()->global.player->signal = SIG_MV_AUTO | SIG_DIR_RIGHT;
 
 	out_dir[SIG_MV_RIGHT] = SIG_MV_DOWN;

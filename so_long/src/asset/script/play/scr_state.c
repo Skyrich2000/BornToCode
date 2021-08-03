@@ -16,14 +16,14 @@ void	scr_state_straight()
 	g()->global.time += 1;
 	if (g()->global.time > 4200)
 	{
-		printf("time over..?");
+		printf("time over");
 		scene_restart();
 	}
-	if (g()->global.invert_signal == 1)
+	if (g()->global.invert_signal == SIG_ACTIVE)
 	{
 		g()->global.state = S_INVERT;
 		g()->global.total_time = g()->global.time;
-		g()->global.invert_signal = 0;
+		g()->global.invert_signal = SIG_NORMAL;
 
 		scr_avatarize(BOX);
 		scr_avatarize(GOLD);
@@ -36,11 +36,11 @@ void	scr_state_inverted()
 	t_list		*node;
 
 	g()->global.time -= 1;
-	if (g()->global.invert_signal == 1)
+	if (g()->global.invert_signal == SIG_ACTIVE)
 	{
 		printf("re straight start\n");
 		g()->global.state = S_RESTRAIGHT;
-		g()->global.invert_signal = 0;
+		g()->global.invert_signal = SIG_NORMAL;
 
 		scr_avatarize(ZOMBIE);
 		node = g()->instances[ZOMBIE]->next;
@@ -75,7 +75,7 @@ void	scr_state_clear()
 	{
 		g()->global.map_index++;
 		g()->global.time_all_lv += g()->global.time;
-		if (g()->global.map_index >= 2 + 1) //MAP_SIZE)
+		if (g()->global.map_index >= MAP_SIZE)
 		{
 			scr_save_rank(g()->global.nick, g()->global.time_all_lv, g()->global.deathcount);
 			scene_change(g()->asset.scene_rank);

@@ -6,7 +6,7 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/16 07:48:16 by ycha              #+#    #+#              #
-#    Updated: 2021/08/03 04:23:53 by ycha             ###   ########.fr        #
+#    Updated: 2021/08/03 19:52:45 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,9 @@ MAP			=	map.c \
 				map_0.c \
 				map_1.c \
 				map_2.c \
-				map_3.c
+				map_3.c \
+				map_4.c \
+				map_5.c
 
 OBJECT		=	obj_player.c \
 				obj_zombie.c \
@@ -122,6 +124,9 @@ idx			=	0
 
 all		: $(NAME)
 
+norm	:
+	norminette $(SCRS)
+
 %.o		: %.c
 	$(eval idx = $(shell expr $(idx) + 1))
 	$(eval t_idx = $(shell expr $(idx) % 4 + 1))
@@ -145,7 +150,7 @@ $(NAME)	: $(OBJS)
 	@printf "░░░██║░░░███████╗██║░╚███║╔███████║╔████████\n"
 	@printf "░░░╚═╝░░░╚══════╝╚═╝░░╚══╝╚═══════╝╚═══════╝\n"
 	@printf "\n\n"
-	@afplay bgm.mp3 & ./so_long map1.ber ; pkill afplay
+	@afplay bgm.mp3 & ./so_long map.ber ; pkill afplay
 
 run		:
 	@printf "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\e[1;33mso\e[1;31m long\e[1;37m \e[0;32mis Ready 💚\e[0m\n\n\n"
@@ -156,7 +161,7 @@ run		:
 	@printf "░░░██║░░░███████╗██║░╚███║╔███████║╔████████\n"
 	@printf "░░░╚═╝░░░╚══════╝╚═╝░░╚══╝╚═══════╝╚═══════╝\n"
 	@printf "\n\n"
-	@afplay bgm.mp3 & ./so_long map1.ber ; pkill afplay
+	@afplay bgm.mp3 & ./so_long map.ber ; pkill afplay
 
 clean	:
 	@rm -f $(OBJS)

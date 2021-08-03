@@ -8,7 +8,6 @@ int		scr_player_collision_box(t_instance *this)
 
 	wall = place_meeting_type(this, this->x, this->y, WALL);
 	box = place_meeting_type(this, this->x, this->y, BOX);
-	this->obj.player.collision_box = box;
 	return (wall || (box && box->condition & C_ALIVE));
 }
 
@@ -31,7 +30,7 @@ void	scr_player_collision_exit(t_instance *this)
 
 	ins = place_meeting_type(this, this->x, this->y, EXIT);
 	if (ins && ins->condition & C_ALIVE && \
-		(g()->global.state == S_RESTRAIGHT || g()->global.map_index == 0) && \
+		(g()->global.state == S_RESTRAIGHT || g()->global.invert_signal == SIG_NO_INVERT) && \
 		g()->global.gold_num == 0)
 	{
 		create_plane_instance();
@@ -69,7 +68,6 @@ void	scr_player_collision_zombie(t_instance *this)
 	t_instance *zombie;
 
 	zombie = place_meeting_type(this, this->x, this->y, ZOMBIE);
-	this->obj.player.collision_zombie = zombie;
 	if (zombie)
 	{
 		if (zombie->condition & C_ALIVE)

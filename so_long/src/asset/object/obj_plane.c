@@ -19,14 +19,14 @@ void		obj_plane_step(t_instance *this)
 
 	if (g()->global.player && g()->global.player->y - 10 > this->y)
 	{
+		if (g()->global.invert_signal == SIG_NO_INVERT)
+			g()->global.state = S_CLEAR;
 		destroy_instance(g()->global.player);
 		g()->global.player = 0;
 	}
 	this->y -= 5;
 	if (this->y < g()->view.view_yview - 42)
 	{
-		if (g()->global.map_index == 0)
-			g()->global.state = S_CLEAR;
 		destroy_instance(this);
 	}
 

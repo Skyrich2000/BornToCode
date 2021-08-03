@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:53 by ycha              #+#    #+#             */
-/*   Updated: 2021/08/03 02:56:02 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/03 19:16:48 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ t_instance	*create_player_instance(int x, int y, int inverted)
 	ins->obj.player.prev_y = y;
 	ins->obj.player.route = create_list();
 	ins->obj.player.route_node = 0;
-	ins->obj.player.collision_zombie = 0;
-	ins->obj.player.collision_box = 0;
 	ins->obj.player.reviving_zombie = 0;
 	ins->dir = 1;
 	ins->condition = C_ALIVE;

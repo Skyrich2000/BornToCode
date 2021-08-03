@@ -1,22 +1,27 @@
 #include "engine.h"
 
-void		map_1(int *width, int *height)
+void		map_5(int *width, int *height)
 {
 	int			out_dir[20];
 	char		**map;
 
 	map = sl_split("\
 11111111111111 \
-10000000000001 \
-10111111111101 \
-10111111111101 \
-10000E1P000001 \
+1000B011100001 \
+10111011101101 \
+101110001B0101 \
+100B0010Z001C1 \
+11101011111101 \
+1C0Z1011111101 \
+11110B000000Z1 \
+11110110111111 \
+1P00011000BZE1 \
 11111111111111", ' ');
 
 	scr_build_map(map, width, height);
 	sl_free_split(map);
 
-	g()->scene->background = g()->asset.background_map_1;
+	g()->scene->background = g()->asset.background_map_2;
 	g()->global.player->signal = SIG_MV_AUTO | SIG_DIR_RIGHT;
 
 	out_dir[SIG_MV_RIGHT] = SIG_MV_DOWN;

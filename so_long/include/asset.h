@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
-/*   Updated: 2021/08/03 03:57:05 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/03 20:18:23 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 # define BUFFER_SIZE		1000
 
-# define MAP_SIZE			4
+# define MAP_SIZE			6
 # define NICK_SIZE			10
 
 # define BOX				0
@@ -53,6 +53,8 @@
 # define SIG_DIR_LEFT		64
 # define SIG_BEFORE			128
 # define SIG_ACTIVE			256
+# define SIG_NORMAL			512
+# define SIG_NO_INVERT		1024
 
 typedef struct s_canvas		t_canvas;
 typedef struct s_scene		t_scene;
@@ -71,6 +73,7 @@ typedef struct s_global
 	int				rank_list_y;
 
 	int				steps;
+
 	int				time;
 	int				time_all_lv;
 	int				delay;
@@ -106,8 +109,6 @@ typedef struct s_obj_player
 	int				prev_y;
 	t_list			*route;
 	t_list			*route_node;
-	t_instance		*collision_zombie;
-	t_instance		*collision_box;
 	t_instance		*reviving_zombie;
 }	t_obj_player;
 
@@ -225,7 +226,6 @@ typedef struct s_asset
 	t_background	*background_map_0;
 	t_background	*background_map_1;
 	t_background	*background_map_2;
-	t_background	*background_map_3;
 
 	void			(*maps[MAP_SIZE])(int *w, int *h);
 }	t_asset;
@@ -392,5 +392,7 @@ void		map_0(int *w, int *h);
 void		map_1(int *w, int *h);
 void		map_2(int *w, int *h);
 void		map_3(int *w, int *h);
+void		map_4(int *w, int *h);
+void		map_5(int *w, int *h);
 
 #endif

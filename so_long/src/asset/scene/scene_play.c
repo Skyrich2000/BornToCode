@@ -17,7 +17,7 @@ void		scene_play_start()
 	g()->global.total_time = 0;
 	g()->global.state = S_READY;
 	g()->global.inverted = S_STRAIGHT;
-	g()->global.invert_signal = 0;
+	g()->global.invert_signal = SIG_NORMAL;
 	g()->global.gold_num = 0;
 	g()->asset.maps[g()->global.map_index](&g()->global.map_width, &g()->global.map_height);
 	g()->view.view_xview = -16 + g()->global.map_width * 32 / 2 - g()->view.view_wview / 2;
@@ -61,7 +61,7 @@ void		scene_play_ui()
 	draw_img(g()->canvas.img, g()->global.map_width * 32 - 32 + 16, -32);
 	draw_img(g()->canvas.img, -16, g()->global.map_height * 32 - 32);
 
-	if (g()->global.map_index != 0)
+	if (g()->global.invert_signal != SIG_NO_INVERT)
 	{
 		if (g()->global.state == S_READY)
 			draw_sprite(g()->asset.spr_light_dark, g()->asset.spr_light_dark->imgs->next, g()->global.player->x + 3, g()->global.player->y - 19);
@@ -106,7 +106,7 @@ void		scene_play_ui()
 	else if (g()->global.state == S_GAMEOVER)
 		spr = g()->asset.spr_gameover;
 
-	draw_img(spr->imgs->next->data, g()->view.view_xview + x1 + len * 19 + 6, g()->view.view_yview + up_pad + 1);
+	draw_sprite(spr, spr->imgs->next, g()->view.view_xview + x1 + len * 19 + 6, g()->view.view_yview + up_pad + 1);
 
 	draw_text(g()->asset.font_fat_small, "MAP", (int[2]){g()->view.view_xview + x2, g()->view.view_yview + up_pad}, (float [2]){A_CENTER, A_UP});
 

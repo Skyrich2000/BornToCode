@@ -5,8 +5,8 @@ void	scr_player_attack(t_instance *this)
 	t_instance *zombie;
 	t_instance *box;
 
-	zombie = this->obj.player.collision_zombie;
-	box = this->obj.player.collision_box;
+	zombie = place_meeting_type(this, this->x, this->y, ZOMBIE);
+	box = place_meeting_type(this, this->x, this->y, BOX);
 	if (this->obj.player.attack)
 	{
 		if (zombie)

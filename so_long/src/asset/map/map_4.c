@@ -1,17 +1,19 @@
 #include "engine.h"
 
-void		map_1(int *width, int *height)
+void		map_4(int *width, int *height)
 {
+	t_instance	*ins;
 	int			out_dir[20];
 	char		**map;
 
 	map = sl_split("\
-11111111111111 \
-10000000000001 \
-10111111111101 \
-10111111111101 \
-10000E1P000001 \
-11111111111111", ' ');
+11111111111 \
+10P00000001 \
+10111011101 \
+101000001C1 \
+10B011100Z1 \
+101000001E1 \
+11111111111", ' ');
 
 	scr_build_map(map, width, height);
 	sl_free_split(map);
@@ -23,11 +25,16 @@ void		map_1(int *width, int *height)
 	out_dir[SIG_MV_LEFT] = 0;
 	out_dir[SIG_MV_UP] = SIG_MV_LEFT;
 	out_dir[SIG_MV_DOWN] = 0;
-	create_inverter_instance(12 * 32, 1 * 32, S_STRAIGHT, out_dir);
+	create_inverter_instance(9 * 32, 1 * 32, S_STRAIGHT, out_dir);
 
 	out_dir[SIG_MV_RIGHT] = 0;
 	out_dir[SIG_MV_LEFT] = SIG_MV_DOWN;
 	out_dir[SIG_MV_UP] = SIG_MV_RIGHT;
 	out_dir[SIG_MV_DOWN] = 0;
 	create_inverter_instance(1 * 32, 1 * 32, S_INVERT, out_dir);
+
+	ins = create_dummy_instance(1 * 32, 1 * 32, S_STRAIGHT, 60);
+	ins->signal = SIG_MV_AUTO | SIG_MV_RIGHT | SIG_DIR_RIGHT;
+	ins = create_dummy_instance(1 * 32, 1 * 32, S_INVERT, 60);
+	ins->signal = SIG_MV_AUTO | SIG_MV_DOWN | SIG_DIR_RIGHT;
 }
