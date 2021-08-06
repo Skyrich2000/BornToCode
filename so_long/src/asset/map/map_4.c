@@ -2,13 +2,12 @@
 
 void		map_4(int *width, int *height)
 {
-	t_instance	*ins;
 	int			out_dir[20];
 	char		**map;
 
 	map = sl_split("\
 11111111111 \
-10P00000001 \
+10000P00001 \
 10111011101 \
 101000001C1 \
 10B011100Z1 \
@@ -32,9 +31,4 @@ void		map_4(int *width, int *height)
 	out_dir[SIG_MV_UP] = SIG_MV_RIGHT;
 	out_dir[SIG_MV_DOWN] = 0;
 	create_inverter_instance(1 * 32, 1 * 32, S_INVERT, out_dir);
-
-	ins = create_dummy_instance(1 * 32, 1 * 32, S_STRAIGHT, 60);
-	ins->signal = SIG_MV_AUTO | SIG_MV_RIGHT | SIG_DIR_RIGHT;
-	ins = create_dummy_instance(1 * 32, 1 * 32, S_INVERT, 60);
-	ins->signal = SIG_MV_AUTO | SIG_MV_DOWN | SIG_DIR_RIGHT;
 }

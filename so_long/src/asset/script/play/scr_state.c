@@ -2,8 +2,8 @@
 
 void	scr_state_ready()
 {
-	g()->global.time += 1;
-	if (g()->global.time > 60 * 2)
+	g()->global.delay += 1;
+	if (g()->global.delay > 60 * 2)
 	{
 		g()->global.state = S_STRAIGHT;
 		g()->global.player->signal = 0;
@@ -12,7 +12,6 @@ void	scr_state_ready()
 
 void	scr_state_straight()
 {
-	//t_instance *ins;
 	g()->global.time += 1;
 	if (g()->global.time > 4200)
 	{
@@ -22,7 +21,7 @@ void	scr_state_straight()
 	if (g()->global.invert_signal == SIG_ACTIVE)
 	{
 		g()->global.state = S_INVERT;
-		g()->global.total_time = g()->global.time;
+		g()->global.max_time = g()->global.time;
 		g()->global.invert_signal = SIG_NORMAL;
 
 		scr_avatarize(BOX);
@@ -36,9 +35,9 @@ void	scr_state_inverted()
 	t_list		*node;
 
 	g()->global.time -= 1;
+
 	if (g()->global.invert_signal == SIG_ACTIVE)
 	{
-		printf("re straight start\n");
 		g()->global.state = S_RESTRAIGHT;
 		g()->global.invert_signal = SIG_NORMAL;
 
@@ -56,15 +55,27 @@ void	scr_state_inverted()
 
 void	scr_state_restraight()
 {
+	t_list		*node;
+	t_instance	*ins;
+
 	g()->global.time += 1;
-	if (g()->global.time >= g()->global.total_time)
+	if (g()->global.time == g()->global.max_time)
 	{
-		printf("clear \n");
-		g()->global.delay = 0; // temp
-		if (g()->global.player != 0)
-			scr_player_die();
-		else
-			g()->global.state = S_CLEAR;
+		node = g()->instances[PLAYER]->next;
+		while (node)
+		{
+			ins = node->data;
+			node = node->next;
+			if (ins != g()->global.player)
+				destroy_instance(ins);
+		}
+		//destroy_instance(g()->instances[PLAYER]->next->next->data);
+		//destroy_instance(g()->instances[PLAYER]->next->next->data);
+	}
+	if (g()->global.time > g()->global.max_time && g()->global.player == 0)
+	{
+		g()->global.state = S_CLEAR;
+		g()->global.delay = 0;
 	}
 }
 
@@ -90,7 +101,7 @@ void	scr_state_clear()
 void	scr_state_gameover()
 {
 	g()->global.delay += 1;
-	if (g()->global.delay > 60 * 3)
+	if (g()->global.delay > 60 * 4)
 	{
 		printf("game restart \n");
 		scene_restart();

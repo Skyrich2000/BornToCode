@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:06 by ycha              #+#    #+#             */
-/*   Updated: 2021/08/03 02:53:51 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/05 02:29:24 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int		init_game()
 	game->canvas.img = mlx_new_image(g()->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	game->canvas.x = 0;
 	game->canvas.y = 0;
+	game->frame.count = 0;
+	game->frame.skip_frame = 0;
 	i = -1;
 	while (++i < OBJ_SIZE)
 		game->instances[i] = create_list();
@@ -73,7 +75,7 @@ int		loop()
 
 	print_fps();
 	i = -1;
-	if (g()->scene->controller)
+	if (!g()->frame.count && g()->scene->controller)
 		g()->scene->controller();
 	g()->canvas.x = g()->view.view_xview;
 	g()->canvas.y = g()->view.view_yview;
@@ -88,7 +90,7 @@ int		loop()
 			node = node->next;
 			if (ins->draw)
 				ins->draw(ins);
-			if (ins->step)
+			if (!g()->frame.count && ins->step)
 				ins->step(ins);
 		}
 	}
@@ -96,6 +98,10 @@ int		loop()
 		g()->scene->ui();
 	if (keyboard_check(KEY_P))
 		draw_debug();
+	if (g()->frame.count)
+		g()->frame.count -= 1;
+	else
+		g()->frame.count = g()->frame.skip_frame;
 	mlx_sync(MLX_SYNC_WIN_FLUSH_CMD, g()->win);
 	mlx_sync(MLX_SYNC_WIN_CMD_COMPLETED, g()->win);
 	return (OK);

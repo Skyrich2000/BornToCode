@@ -1,16 +1,16 @@
 #include "engine.h"
 
-void	scr_player_die()
+void	scr_player_die(int text)
 {
 	t_instance	*ins;
 	t_list		*node;
 
 	if (g()->global.state != S_GAMEOVER)
 	{
-		printf("GAME OVER!!!\n");
 		g()->global.deathcount++;
 		g()->global.delay = 0;
 		g()->global.state = S_GAMEOVER;
+		g()->global.text = text;
 		node = g()->instances[PLAYER]->next;
 		while (node)
 		{
@@ -19,5 +19,8 @@ void	scr_player_die()
 			ins->condition = C_DEING;
 			node = node->next;
 		}
+		node = g()->instances[PLAYER]->next;
+		while (g()->instances[DUMMY]->next)
+			destroy_instance(g()->instances[DUMMY]->next->data);
 	}
 }

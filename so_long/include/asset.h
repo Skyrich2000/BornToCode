@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
-/*   Updated: 2021/08/03 20:18:23 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/06 03:45:07 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 
 # define BUFFER_SIZE		1000
 
-# define MAP_SIZE			6
+# define MAP_SIZE			7
 # define NICK_SIZE			10
 
-# define BOX				0
-# define EXIT				1
-# define WALL				2
+# define EXIT				0
+# define WALL				1
+# define BOX				2
 # define TRIGGER			3
 # define INVERTER			4
 # define DUMMY				5
@@ -41,8 +41,8 @@
 # define S_STRAIGHT			0
 # define S_INVERT			1
 # define S_RESTRAIGHT		2
-# define S_GAMEOVER			3
-# define S_CLEAR			4
+# define S_CLEAR			3
+# define S_GAMEOVER			4
 
 # define SIG_MV_AUTO		1
 # define SIG_MV_RIGHT		2
@@ -55,6 +55,13 @@
 # define SIG_ACTIVE			256
 # define SIG_NORMAL			512
 # define SIG_NO_INVERT		1024
+# define SIG_WAIT			2048
+
+# define T_GAME_OVER		1
+# define T_TIME_OVER		2
+# define T_HIT_BY_ZOMBIE	3
+# define T_MEET_MYSELF		4
+# define T_WAIT				5
 
 typedef struct s_canvas		t_canvas;
 typedef struct s_scene		t_scene;
@@ -73,17 +80,18 @@ typedef struct s_global
 	int				rank_list_y;
 
 	int				steps;
-
 	int				time;
 	int				time_all_lv;
 	int				delay;
 	int				deathcount;
-	int				total_time;
+	int				max_time;
 	int				state;
+	int				text;
 	int				inverted;
 	int				invert_signal;
 	int				gold_num;
 	t_instance		*player;
+	int				darkness;
 
 	int				map_index;
 	int				map_width;
@@ -189,7 +197,7 @@ typedef struct s_asset
 	t_sprite		*spr_zombie_die_left_reverse;
 
 	t_sprite		*spr_light;
-	t_sprite		*spr_light_dark;
+	t_sprite		*spr_light_5;
 	t_sprite		*spr_empty;
 	t_sprite		*spr_wall;
 	t_sprite		*spr_wall_up;
@@ -336,8 +344,8 @@ t_sprite	*scr_player_get_spr(int type, int inverted, int dir);
 // scripts to move player
 void		scr_player_move_auto(t_instance *this);
 void		scr_player_move(t_instance *this);
-// script when player dies
-void		scr_player_die();
+// script kill all players when player dead
+void		scr_player_die(int text);
 // scirpt to mvoe zombie
 void		scr_zombie_move(t_instance *this);
 // script to make instance avatar
@@ -394,5 +402,9 @@ void		map_2(int *w, int *h);
 void		map_3(int *w, int *h);
 void		map_4(int *w, int *h);
 void		map_5(int *w, int *h);
+
+void		map_1_1(int *width, int *height);
+void		map_1_2(int *width, int *height);
+void		map_1_3(int *width, int *height);
 
 #endif

@@ -16,7 +16,7 @@ void	scr_zombie_move(t_instance *this)
 	}
 	else if (this->condition & C_ALIVE)
 	{
-		ins = g()->instances[PLAYER]->next->data;
+		ins = g()->global.player;
 		if (ins && point_distance(this->x, this->y, ins->x, ins->y) < 50 * 50)
 		{
 			this->dir = 0;

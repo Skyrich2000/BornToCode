@@ -6,7 +6,7 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/16 07:48:16 by ycha              #+#    #+#              #
-#    Updated: 2021/08/03 19:52:45 by ycha             ###   ########.fr        #
+#    Updated: 2021/08/04 21:06:37 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,9 @@ MAP			=	map.c \
 				map_2.c \
 				map_3.c \
 				map_4.c \
-				map_5.c
+				map_5.c \
+				map_1_2.c \
+				map_1_3.c
 
 OBJECT		=	obj_player.c \
 				obj_zombie.c \

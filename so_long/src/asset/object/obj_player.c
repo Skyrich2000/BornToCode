@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:53 by ycha              #+#    #+#             */
-/*   Updated: 2021/08/03 19:16:48 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/06 04:58:52 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void		obj_player_step(t_instance *this)
 			scr_player_attack(this);
 			scr_player_collision_gold(this);
 			scr_player_collision_trigger(this);
+			scr_player_collision_inverter(this);
 			scr_player_collision_exit(this);
 			scr_player_check_selfs(this);
 			scr_save_footprint(this, this->obj.player.route);
@@ -71,7 +72,15 @@ void		obj_player_step(t_instance *this)
 		}
 	}
 	else
-		scr_load_footprint(this, &this->obj.player.route_node, this->obj.player.inverted);
+	{
+		if (this->obj.player.inverted == S_STRAIGHT)
+		{
+			if (g()->global.time > 0)
+				scr_load_footprint(this, &this->obj.player.route_node, this->obj.player.inverted);
+		}
+		else
+			scr_load_footprint(this, &this->obj.player.route_node, this->obj.player.inverted);
+	}
 
 	if (this->condition & C_ALIVE)
 		scr_player_collision_zombie(this);

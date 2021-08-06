@@ -14,11 +14,13 @@ void		scene_play_start()
 	g()->global.steps = 0;
 	g()->global.time = 0;
 	g()->global.delay = 0;
-	g()->global.total_time = 0;
+	g()->global.max_time = 0;
 	g()->global.state = S_READY;
+	g()->global.text = 0;
 	g()->global.inverted = S_STRAIGHT;
 	g()->global.invert_signal = SIG_NORMAL;
 	g()->global.gold_num = 0;
+	g()->global.darkness = 0;
 	g()->asset.maps[g()->global.map_index](&g()->global.map_width, &g()->global.map_height);
 	g()->view.view_xview = -16 + g()->global.map_width * 32 / 2 - g()->view.view_wview / 2;
 	g()->view.view_yview = -32 + g()->global.map_height * 32 / 2 - g()->view.view_hview / 2;
@@ -47,29 +49,32 @@ void		scene_play_controller()
 		scr_state_gameover();
 
 	if (g()->global.state != S_READY && keyboard_check(KEY_R))
-		scr_player_die();
+		scr_player_die(T_GAME_OVER);
 
 	if (DEBUG)
 		printf("scene_play_controller end\n");
 }
 
+
+// TODO: make light more lighter
 void		scene_play_ui()
 {
+
 	if (DEBUG)
 		printf("scene_play_ui start\n");
 
 	draw_img(g()->canvas.img, g()->global.map_width * 32 - 32 + 16, -32);
 	draw_img(g()->canvas.img, -16, g()->global.map_height * 32 - 32);
 
-	if (g()->global.invert_signal != SIG_NO_INVERT)
-	{
-		if (g()->global.state == S_READY)
-			draw_sprite(g()->asset.spr_light_dark, g()->asset.spr_light_dark->imgs->next, g()->global.player->x + 3, g()->global.player->y - 19);
-		if (g()->global.state == S_STRAIGHT || g()->global.state == S_INVERT)
-			draw_sprite(g()->asset.spr_light, g()->asset.spr_light->imgs->next, g()->global.player->x + 3, g()->global.player->y - 19);
+	if (g()->global.state == S_STRAIGHT || g()->global.state == S_INVERT)
+		draw_sprite(g()->asset.spr_light, g()->asset.spr_light->imgs->next, g()->global.player->x + 3, g()->global.player->y - 19);
 
-	}
-	else if (g()->global.player)
+	int i;
+	i = g()->global.darkness;
+	while (--i > 0)
+		draw_sprite(g()->asset.spr_light_5, g()->asset.spr_light->imgs->next, g()->global.player->x + 3, g()->global.player->y - 19);
+
+	if (g()->global.player && g()->global.invert_signal == SIG_NO_INVERT)
 	{
 		g()->view.view_xview = g()->global.player->x - g()->view.view_wview / 2;
 		g()->view.view_yview = g()->global.player->y - g()->view.view_hview / 2;
@@ -126,9 +131,31 @@ void		scene_play_ui()
 	draw_text(g()->asset.font_fat_small, str[0], (int[2]){g()->view.view_xview + x4, g()->view.view_yview + down_pad}, (float [2]){A_RIGHT, A_UP});
 	free(str[0]);
 
-	str[0] = sl_itoa(g()->global.time);
-	draw_text(g()->asset.font_fat_big, str[0], (int[2]){g()->view.view_xview + g()->view.view_wview / 2, g()->view.view_yview + g()->view.view_hview - 16}, (float [2]){A_CENTER, A_BOTTOM});
-	free(str[0]);
+	if (g()->global.text == 0)
+	{
+		str[0] = sl_itoa(g()->global.time / 60);
+		str[1] = sl_itoa(g()->global.time % 60);
+		str[2] = sl_strjoin(str[0], ":");
+		str[3] = sl_strjoin(str[2], str[1]);
+		draw_text(g()->asset.font_fat_big, str[3], (int[2]){g()->view.view_xview + g()->view.view_wview / 2, g()->view.view_yview + g()->view.view_hview - 16}, (float [2]){A_CENTER, A_BOTTOM});
+		free(str[0]);
+		free(str[1]);
+		free(str[2]);
+		free(str[3]);
+	}
+	else
+	{
+		str[0] = "GAME OVER";
+		if (g()->global.text == T_TIME_OVER)
+			str[0] = "TIME OVER";
+		else if (g()->global.text == T_HIT_BY_ZOMBIE)
+			str[0] = "HIT BY ZOMBIE";
+		else if (g()->global.text == T_MEET_MYSELF)
+			str[0] = "MEET MYSELF";
+		else if (g()->global.text == T_WAIT)
+			str[0] = "WAIT";
+		draw_text(g()->asset.font_fat_big, str[0], (int[2]){g()->view.view_xview + g()->view.view_wview / 2, g()->view.view_yview + g()->view.view_hview - 16}, (float [2]){A_CENTER, A_BOTTOM});
+	}
 
 	if (DEBUG)
 		printf("scene_play_ui end\n");

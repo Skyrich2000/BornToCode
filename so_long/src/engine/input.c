@@ -115,6 +115,7 @@ int		init_input(int ac, char **av)
 		check_map_closed(width, height) && \
 		check_map_objects(width, height))
 		return (OK);
+	close(fd);
 	return (ERROR);
 }
 

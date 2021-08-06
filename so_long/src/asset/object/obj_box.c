@@ -26,11 +26,14 @@ void		obj_box_step(t_instance *this)
 		}
 		else if (this->condition & C_DEAD)
 			change_sprite(this, g()->asset.spr_empty);
-		if (g()->global.state == S_STRAIGHT || g()->global.state == S_READY)
+		if (g()->global.state == S_STRAIGHT)
 			scr_save_footprint(this, this->obj.box.route);
 	}
 	else if (g()->global.state != S_GAMEOVER)
-		scr_load_footprint(this, &this->obj.box.route, 0);
+	{
+		if (g()->global.time > 0)
+			scr_load_footprint(this, &this->obj.box.route, 0);
+	}
 
 	if (DEBUG)
 		printf("obj_box_step end\n");

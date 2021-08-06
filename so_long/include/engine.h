@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:32 by ycha              #+#    #+#             */
-/*   Updated: 2021/08/03 17:03:26 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/05 23:38:42 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,12 @@ typedef struct s_view
 	int				view_yview;
 }	t_view;
 
+typedef struct s_frame
+{
+	int				skip_frame;
+	int				count;
+}	t_frame;
+
 typedef struct s_game
 {
 	void			*mlx;
@@ -139,8 +145,9 @@ typedef struct s_game
 	t_list			*instances[OBJ_SIZE];
 	t_scene			*scene;
 	t_view			view;
-	char			**ber;
+	t_frame			frame;
 	int				keys[420];
+	char			**ber;
 }	t_game;
 
 /* ************************************************************************** */

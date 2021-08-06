@@ -7,14 +7,16 @@ t_instance *create_inverter_instance(int x, int y, int inverted, int out_dir[20]
 	t_instance	*ins;
 
 	ins = create_instance(g()->asset.spr_inverter_idle, (int[3]){INVERTER, x, y}, obj_inverter_step, obj_inverter_draw);
-	ins->obj.inverter.time = 20;
+	ins->obj.inverter.time = 0;
 	ins->obj.inverter.inverted = inverted;
+	ins->obj.inverter.dummy = 0;
 	ins->obj.inverter.out_dir[SIG_MV_LEFT] = out_dir[SIG_MV_LEFT];
 	ins->obj.inverter.out_dir[SIG_MV_RIGHT] = out_dir[SIG_MV_RIGHT];
 	ins->obj.inverter.out_dir[SIG_MV_UP] = out_dir[SIG_MV_UP];
 	ins->obj.inverter.out_dir[SIG_MV_DOWN] = out_dir[SIG_MV_DOWN];
 	ins->condition = C_ALIVE;
-	scr_inverter_create_trigger(ins);
+	if (inverted == S_STRAIGHT)
+		scr_inverter_create_trigger(ins);
 	return (ins);
 }
 
@@ -35,13 +37,17 @@ void		obj_inverter_step(t_instance *this)
 	else
 		change_sprite(this, g()->asset.spr_inverter_idle);
 
-	if (this->obj.inverter.inverted != g()->global.inverted)
-		return;
-
 	if (g()->global.state == S_GAMEOVER)
+	{
+		g()->frame.skip_frame = 0;
+		g()->global.darkness = 0;
 		return ;
+	}
 
-	if (this->obj.inverter.inverted == S_STRAIGHT)
+	if (g()->global.inverted == S_INVERT && g()->global.time == 0)
+		scr_inverter_create_trigger(this);
+
+	if (this->obj.inverter.inverted == g()->global.inverted)
 	{
 		if (this->signal & SIG_BEFORE)
 			scr_inverter_before(this);
@@ -49,32 +55,18 @@ void		obj_inverter_step(t_instance *this)
 			scr_inverter_active(this);
 		this->signal = 0;
 	}
-	else
+
+	if (this->obj.inverter.dummy)
 	{
-		if (this->signal & SIG_BEFORE)
-		{
-			if (this->obj.inverter.time < g()->global.time)
-			{
-				if (!(g()->global.player->signal & SIG_MV_AUTO))
-					scr_inverter_wait(this);
-			}
-			else
-			{
-				scr_inverter_before(this);
-				this->signal = SIG_ACTIVE |
-					(g()->global.player->signal & (0b11110 | SIG_DIR_LEFT | SIG_DIR_RIGHT));
-			}
-		}
-		if (g()->global.time <= 0)
-		{
-			if (this->signal & SIG_ACTIVE)
-			{
-				scr_inverter_active(this);
-				this->signal = 0;
-			}
-			else
-				scr_player_die();
-		}
+		g()->frame.skip_frame = this->obj.inverter.time / 4;
+		g()->global.darkness = this->obj.inverter.time / 3;
+		this->obj.inverter.time++;
+	}
+	else if (this->obj.inverter.time)
+	{
+		g()->frame.skip_frame = this->obj.inverter.time / 4;
+		g()->global.darkness = this->obj.inverter.time / 3;
+		this->obj.inverter.time--;
 	}
 
 	if (DEBUG)

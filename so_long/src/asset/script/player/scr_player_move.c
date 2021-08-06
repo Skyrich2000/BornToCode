@@ -5,6 +5,8 @@
 #define	SPR_ATTACK	3
 #define SPR_DIE		4
 
+#define MOVE_SPEED	2;
+
 void	scr_player_move_auto(t_instance *this)
 {
 	int h_mv;
@@ -12,8 +14,8 @@ void	scr_player_move_auto(t_instance *this)
 
 	h_mv = (((this->signal & SIG_MV_RIGHT) > 0) - ((this->signal & SIG_MV_LEFT) > 0));
 	v_mv = (((this->signal & SIG_MV_DOWN) > 0) - ((this->signal & SIG_MV_UP) > 0));
-	this->x += h_mv * 2;
-	this->y += v_mv * 2;
+	this->x += h_mv * MOVE_SPEED;
+	this->y += v_mv * MOVE_SPEED;
 	this->dir = ((this->signal & SIG_DIR_RIGHT) > 0) - ((this->signal & SIG_DIR_LEFT) > 0);
 	if (h_mv == 0 && v_mv == 0)
 		change_sprite(this, scr_player_get_spr(SPR_IDLE, this->obj.player.inverted, this->dir));
@@ -51,10 +53,10 @@ void	scr_player_move(t_instance *this)
 			g()->global.steps++;
 			change_sprite(this, scr_player_get_spr(SPR_MOVE, this->obj.player.inverted, this->dir));
 		}
-		this->x += h_mv * 2;
+		this->x += h_mv * MOVE_SPEED;
 		if (scr_player_collision_box(this))
 			this->x = this->obj.player.prev_x;
-		this->y += v_mv * 2;
+		this->y += v_mv * MOVE_SPEED;
 		if (scr_player_collision_box(this))
 			this->y = this->obj.player.prev_y;
 	}

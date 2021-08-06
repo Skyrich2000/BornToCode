@@ -26,9 +26,7 @@ void		obj_plane_step(t_instance *this)
 	}
 	this->y -= 5;
 	if (this->y < g()->view.view_yview - 42)
-	{
 		destroy_instance(this);
-	}
 
 	if (DEBUG)
 		printf("obj_plane_step end\n");
