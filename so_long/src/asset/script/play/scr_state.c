@@ -24,8 +24,8 @@ void	scr_state_straight()
 		g()->global.max_time = g()->global.time;
 		g()->global.invert_signal = SIG_NORMAL;
 
-		scr_avatarize(BOX);
-		scr_avatarize(GOLD);
+		scr_avatarize(BOX_RED);
+		scr_avatarize(GOLD_RED);
 	}
 }
 
@@ -41,8 +41,8 @@ void	scr_state_inverted()
 		g()->global.state = S_RESTRAIGHT;
 		g()->global.invert_signal = SIG_NORMAL;
 
-		scr_avatarize(ZOMBIE);
-		node = g()->instances[ZOMBIE]->next;
+		scr_avatarize(ZOMBIE_BLUE);
+		node = g()->instances[ZOMBIE_BLUE]->next;
 		while (node)
 		{
 			ins = node->data;

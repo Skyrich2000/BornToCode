@@ -17,6 +17,8 @@ t_instance *create_inverter_instance(int x, int y, int inverted, int out_dir[20]
 	ins->condition = C_ALIVE;
 	if (inverted == S_STRAIGHT)
 		scr_inverter_create_trigger(ins);
+	else
+		scr_inverter_create_wait(ins);
 	return (ins);
 }
 
@@ -45,7 +47,10 @@ void		obj_inverter_step(t_instance *this)
 	}
 
 	if (g()->global.inverted == S_INVERT && g()->global.time == 0)
+	{
+		scr_inverter_destroy_wait(this);
 		scr_inverter_create_trigger(this);
+	}
 
 	if (this->obj.inverter.inverted == g()->global.inverted)
 	{

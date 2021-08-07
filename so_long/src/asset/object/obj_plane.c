@@ -8,7 +8,7 @@ t_instance *create_plane_instance()
 
 	x = g()->global.player->x;
 	y = 500;
-	ins = create_instance(g()->asset.spr_plane, (int [3]){PLANE, x, y}, obj_plane_step, obj_plane_draw);
+	ins = create_instance(g()->asset.spr_plane, (int [3]){PLANE, x, y}, obj_plane_step, draw_self);
 	return (ins);
 }
 
@@ -30,13 +30,4 @@ void		obj_plane_step(t_instance *this)
 
 	if (DEBUG)
 		printf("obj_plane_step end\n");
-}
-
-void		obj_plane_draw(t_instance *this)
-{
-	if (DEBUG)
-		printf("obj_plane_draw start\n");
-	draw_sprite(this->spr, this->spr->imgs->next, this->x, this->y);
-	if (DEBUG)
-		printf("obj_plane_draw start\n");
 }

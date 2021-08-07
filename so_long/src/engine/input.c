@@ -118,9 +118,3 @@ int		init_input(int ac, char **av)
 	close(fd);
 	return (ERROR);
 }
-
-void	free_input()
-{
-	if (g()->ber)
-		sl_free_split(g()->ber);
-}

@@ -44,7 +44,7 @@ MAP			=	map.c \
 OBJECT		=	obj_player.c \
 				obj_zombie.c \
 				obj_wall.c \
-				obj_wall_up.c \
+				obj_wait.c \
 				obj_box.c \
 				obj_gold.c \
 				obj_inverter.c \
@@ -61,6 +61,7 @@ SCENE		=	scene_main.c \
 SCRIPT		=	dummy/scr_dummy_move.c \
 				inverter/scr_inverter_signal.c \
 				inverter/scr_inverter_trigger.c \
+				inverter/scr_inverter_wait.c \
 				player/scr_player_attack.c \
 				player/scr_player_check_selfs.c \
 				player/scr_player_collision.c \
@@ -117,8 +118,8 @@ OBJS		=	$(patsubst %.c,%.o,$(SRCS))
 
 CC			=	gcc
 INCLUDE 	=	-Iinclude -Isrc/mlx
-CLIB		=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit
-CFLAGS		=	-Wall -Werror -Wextra $(INCLUDE)
+CLIB		=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit -g
+CFLAGS		=	-Wall -Werror -Wextra -g $(INCLUDE)
 
 SHELL		=	/bin/bash
 sp			=	/-\|/

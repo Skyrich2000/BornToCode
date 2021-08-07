@@ -5,17 +5,29 @@ int		scr_player_collision_box(t_instance *this)
 {
 	t_instance *wall;
 	t_instance *box;
+	t_instance *wall_inv;
 
 	wall = place_meeting_type(this, this->x, this->y, WALL);
-	box = place_meeting_type(this, this->x, this->y, BOX);
-	return (wall || (box && box->condition & C_ALIVE));
+	box = place_meeting_type(this, this->x, this->y, BOX_RED);
+	wall_inv = place_meeting_type(this, this->x, this->y, WALL_INV);
+	return (wall || wall_inv || (box && box->condition & C_ALIVE));
+}
+
+void	scr_player_collision_wait(t_instance *this)
+{
+	if (place_meeting_type(this, this->x, this->y, WAIT))
+	{
+		g()->global.text = TXT_WAIT;
+	}
+	else
+		g()->global.text = 0;
 }
 
 void	scr_player_collision_gold(t_instance *this)
 {
 	t_instance	*ins;
 
-	ins = place_meeting_type(this, this->x, this->y, GOLD);
+	ins = place_meeting_type(this, this->x, this->y, GOLD_RED);
 	if (ins && ins->condition & C_ALIVE && \
 		g()->global.state == S_STRAIGHT)
 	{
@@ -48,16 +60,16 @@ void	scr_player_collision_inverter(t_instance *this)
 	{
 		printf("%d %d %d %d\n", ins->condition & C_ALIVE, ins->obj.inverter.inverted == this->obj.player.inverted, g()->global.inverted == S_INVERT, g()->global.time > 0);
 	}
-	if (ins && ins->condition & C_ALIVE && \
-		ins->obj.inverter.inverted == this->obj.player.inverted && \
-		g()->global.inverted == S_INVERT && g()->global.time > 0)
-	{
-		g()->global.text = T_WAIT;
-		printf("asdf\n");
-		return ;
-	}
-	else
-		g()->global.text = 0;
+	// if (ins && ins->condition & C_ALIVE && \
+	// 	ins->obj.inverter.inverted == this->obj.player.inverted && \
+	// 	g()->global.inverted == S_INVERT && g()->global.time > 0)
+	// {
+	// 	g()->global.text = TXT_WAIT;
+	// 	printf("asdf\n");
+	// 	return ;
+	// }
+	// else
+	// 	g()->global.text = 0;
 
 	if (ins && ins->condition & C_ALIVE && \
 		ins->obj.inverter.inverted == this->obj.player.inverted)
@@ -77,12 +89,11 @@ void	scr_player_collision_trigger(t_instance *this)
 		scr_trigger(ins);
 }
 
-
 void	scr_player_collision_zombie(t_instance *this)
 {
 	t_instance *zombie;
 
-	zombie = place_meeting_type(this, this->x, this->y, ZOMBIE);
+	zombie = place_meeting_type(this, this->x, this->y, ZOMBIE_BLUE);
 	if (zombie)
 	{
 		if (zombie->condition & C_ALIVE)
@@ -93,7 +104,7 @@ void	scr_player_collision_zombie(t_instance *this)
 			{
 				if (this->obj.player.inverted == 1 && g()->global.state == S_RESTRAIGHT && this == zombie->obj.zombie.reviver)
 					return ;
-				scr_player_die(T_HIT_BY_ZOMBIE);
+				scr_player_die(TXT_HIT_BY_ZOMBIE);
 			}
 		}
 	}

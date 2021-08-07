@@ -4,11 +4,23 @@ t_instance *create_wall_instance(int x, int y)
 {
 	t_instance *ins;
 
-	ins = create_instance(g()->asset.spr_wall, (int[3]){WALL, x, y}, 0, obj_wall_draw);
+	ins = create_instance(g()->asset.spr_wall, (int[3]){WALL, x, y}, 0, draw_self);
+	create_wall_up_instance(x, y);
 	return (ins);
 }
 
-void		obj_wall_draw(t_instance *this)
+t_instance *create_wall_up_instance(int x, int y)
 {
-	draw_sprite(this->spr, this->spr->imgs->next, this->x, this->y);
+	t_instance *ins;
+
+	ins = create_instance(g()->asset.spr_wall_up, (int[3]){WALL_UP, x, y}, 0, draw_self);
+	return (ins);
+}
+
+t_instance *create_wall_inv_instance(int x, int y)
+{
+	t_instance *ins;
+
+	ins = create_instance(g()->asset.spr_empty, (int[3]){WALL_INV, x, y}, 0, draw_self);
+	return (ins);
 }

@@ -21,16 +21,21 @@
 
 # define EXIT				0
 # define WALL				1
-# define BOX				2
-# define TRIGGER			3
-# define INVERTER			4
-# define DUMMY				5
-# define ZOMBIE				6
-# define PLAYER				7
-# define WALL_UP			8
-# define GOLD				9
-# define PLANE				10
-# define OBJ_SIZE			11
+# define WALL_INV			2
+# define BOX_RED			3
+# define BOX_BLUE			4
+# define TRIGGER			5
+# define WAIT				6
+# define INVERTER			7
+# define DUMMY				8
+# define ZOMBIE_BLUE		9
+# define ZOMBIE_RED			10
+# define GOLD_BLUE			11
+# define PLAYER				12
+# define WALL_UP			13
+# define GOLD_RED			14
+# define PLANE				15
+# define OBJ_SIZE			16
 
 # define C_DEAD				1
 # define C_DEING			2
@@ -57,11 +62,11 @@
 # define SIG_NO_INVERT		1024
 # define SIG_WAIT			2048
 
-# define T_GAME_OVER		1
-# define T_TIME_OVER		2
-# define T_HIT_BY_ZOMBIE	3
-# define T_MEET_MYSELF		4
-# define T_WAIT				5
+# define TXT_GAME_OVER		1
+# define TXT_TIME_OVER		2
+# define TXT_HIT_BY_ZOMBIE	3
+# define TXT_MEET_MYSELF	4
+# define TXT_WAIT				5
 
 typedef struct s_canvas		t_canvas;
 typedef struct s_scene		t_scene;
@@ -111,10 +116,6 @@ typedef struct s_obj_player
 {
 	int				inverted;
 	int				attack;
-	int				h_mv;
-	int				v_mv;
-	int				prev_x;
-	int				prev_y;
 	t_list			*route;
 	t_list			*route_node;
 	t_instance		*reviving_zombie;
@@ -140,6 +141,8 @@ typedef struct s_obj_inverter
 	int				inverted;
 	int				out_dir[20];
 	t_instance		*triggers[20];
+	t_instance		*waits[20];
+	t_instance		*wall_inv;
 	t_instance		*dummy;
 }	t_obj_inverter;
 
@@ -191,23 +194,31 @@ typedef struct s_asset
 	t_sprite		*spr_player_red_die_right;
 	t_sprite		*spr_player_red_die_left;
 
-	t_sprite		*spr_zombie_idle_right_reverse;
-	t_sprite		*spr_zombie_idle_left_reverse;
-	t_sprite		*spr_zombie_die_right_reverse;
-	t_sprite		*spr_zombie_die_left_reverse;
+	t_sprite		*spr_zombie_blue_idle_right_reverse;
+	t_sprite		*spr_zombie_blue_idle_left_reverse;
+	t_sprite		*spr_zombie_blue_die_right_reverse;
+	t_sprite		*spr_zombie_blue_die_left_reverse;
+	t_sprite		*spr_zombie_red_die_right_single;
 
 	t_sprite		*spr_light;
 	t_sprite		*spr_light_5;
+
 	t_sprite		*spr_empty;
 	t_sprite		*spr_wall;
 	t_sprite		*spr_wall_up;
-	t_sprite		*spr_box;
-	t_sprite		*spr_box_break;
-	t_sprite		*spr_gold;
-	t_sprite		*spr_gold_break;
+
+	t_sprite		*spr_box_red;
+	t_sprite		*spr_box_blue;
+	t_sprite		*spr_box_red_break;
+
+	t_sprite		*spr_gold_red;
+	t_sprite		*spr_gold_blue;
+	t_sprite		*spr_gold_red_break;
+
 	t_sprite		*spr_inverter_idle;
 	t_sprite		*spr_inverter_red;
 	t_sprite		*spr_inverter_blue;
+	
 	t_sprite		*spr_exit;
 	t_sprite		*spr_plane;
 	t_sprite		*spr_logo;
@@ -275,44 +286,45 @@ int			init_map();
 /* ************************************************************************** */
 
 // object player
-t_instance	*create_player_instance(int x, int y, int inverted);
+t_instance	*create_player_instance(int x, int y);
 void		obj_player_step(t_instance *this);
 void		obj_player_draw(t_instance *this);
-// object zombie
-t_instance	*create_zombie_instance(int x, int y);
-void		obj_zombie_step(t_instance *this);
-void		obj_zombie_draw(t_instance *this);
-// object wall
-t_instance	*create_wall_instance(int x, int y);
-void		obj_wall_draw(t_instance *this);
-// object wall up
-t_instance	*create_wall_up_instance(int x, int y);
-void		obj_wall_up_draw(t_instance *this);
-// object box
-t_instance	*create_box_instance(int x, int y);
-void		obj_box_step(t_instance *this);
-void		obj_box_draw(t_instance *this);
-// object gold
-t_instance	*create_gold_instance(int x, int y);
-void		obj_gold_step(t_instance *this);
-void		obj_gold_draw(t_instance *this);
+// object zombie red, blue
+t_instance	*create_zombie_red_instance(int x, int y);
+t_instance	*create_zombie_blue_instance(int x, int y);
+void		obj_zombie_blue_step(t_instance *this);
+void		obj_zombie_blue_draw(t_instance *this);
+// object box red, blue
+t_instance	*create_box_red_instance(int x, int y);
+t_instance	*create_box_blue_instance(int x, int y);
+void		obj_box_red_step(t_instance *this);
+void		obj_box_red_draw(t_instance *this);
+// object gold red, blue
+t_instance	*create_gold_red_instance(int x, int y);
+t_instance	*create_gold_blue_instance(int x, int y);
+void		obj_gold_red_step(t_instance *this);
+void		obj_gold_red_draw(t_instance *this);
 // object inverter
 t_instance	*create_inverter_instance(int x, int y, int inverted, int from_dir[5]);
 void		obj_inverter_step(t_instance *this);
 void		obj_inverter_draw(t_instance *this);
-// object trigger
-t_instance	*create_trigger_instance(int pos[2], int inverted, t_instance *target, int signal);
 // object dummy
 t_instance	*create_dummy_instance(int x, int y, int inverted, int time);
 void		obj_dummy_step(t_instance *this);
 void		obj_dummy_draw(t_instance *this);
-// object exit
-t_instance	*create_exit_instance(int x, int y);
-void		obj_exit_draw(t_instance *this);
 // object plane
 t_instance	*create_plane_instance();
 void		obj_plane_step(t_instance *this);
-void		obj_plane_draw(t_instance *this);
+// object wall, wall up, wall invisible
+t_instance	*create_wall_instance(int x, int y);
+t_instance	*create_wall_up_instance(int x, int y);
+t_instance	*create_wall_inv_instance(int x, int y);
+// object trigger
+t_instance	*create_trigger_instance(int pos[2], int inverted, t_instance *target, int signal);
+// object exit
+t_instance	*create_exit_instance(int x, int y);
+// object wait
+t_instance	*create_wait_instance(int x, int y);
 
 /* ************************************************************************** */
 
@@ -339,6 +351,7 @@ void		scr_player_collision_inverter(t_instance *this);
 void		scr_player_collision_trigger(t_instance *this);
 void		scr_player_collision_zombie(t_instance *this);
 void		scr_player_collision_exit(t_instance *this);
+void		scr_player_collision_wait(t_instance *this);
 // script to get player sprite pointer
 t_sprite	*scr_player_get_spr(int type, int inverted, int dir);
 // scripts to move player
@@ -363,6 +376,9 @@ int			scr_convert_mv_signal(int signal);
 // scripts to manage triggers from inverter
 void		scr_inverter_create_trigger(t_instance *this);
 void		scr_inverter_destroy_trigger(t_instance *this, int exclusive_signal);
+// scripts to manage wait objects and invisible wall objects
+void		scr_inverter_create_wait(t_instance *this);
+void		scr_inverter_destroy_wait(t_instance *this);
 // script when inverter received signal
 void		scr_inverter_wait(t_instance *this);
 void		scr_inverter_before(t_instance *this);
@@ -371,6 +387,7 @@ void		scr_inverter_active(t_instance *this);
 void		scr_build_map(char **map, int *width, int *height);
 // script for save rank
 void		scr_save_rank(char *name, int time, int deathcount);
+
 /* ************************************************************************** */
 
 // scene main

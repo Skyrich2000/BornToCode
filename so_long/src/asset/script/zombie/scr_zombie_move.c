@@ -8,9 +8,9 @@ void	scr_zombie_move(t_instance *this)
 	if (this->condition & C_DEING)
 	{
 		if (this->dir == 1)
-			change_sprite(this, g()->asset.spr_zombie_die_right_reverse);
+			change_sprite(this, g()->asset.spr_zombie_blue_die_right_reverse);
 		else
-			change_sprite(this, g()->asset.spr_zombie_die_left_reverse);
+			change_sprite(this, g()->asset.spr_zombie_blue_die_left_reverse);
 		if (this->img_node->next == 0)
 			this->condition = C_ALIVE;
 	}
@@ -24,8 +24,8 @@ void	scr_zombie_move(t_instance *this)
 				this->dir = 1;
 		}
 		if (this->dir == 1)
-			change_sprite(this, g()->asset.spr_zombie_idle_right_reverse);
+			change_sprite(this, g()->asset.spr_zombie_blue_idle_right_reverse);
 		else
-			change_sprite(this, g()->asset.spr_zombie_idle_left_reverse);
+			change_sprite(this, g()->asset.spr_zombie_blue_idle_left_reverse);
 	}
 }

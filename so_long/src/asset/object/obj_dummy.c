@@ -25,24 +25,12 @@ t_instance	*create_dummy_instance(int x, int y, int inverted, int time)
 
 void		obj_dummy_step(t_instance *this)
 {
-	if (DEBUG)
-		printf("obj_dummy_step start\n");
-
 	if (this->signal & SIG_MV_AUTO)
 		scr_dummy_move_auto(this);
-
-	if (DEBUG)
-		printf("obj_dummy_step end\n");
 }
 
 void	obj_dummy_draw(t_instance *this)
 {
-	if (DEBUG)
-		printf("obj_dummy_draw start\n");
-
-	draw_sprite(this->spr, this->img_node, this->x, this->y);
+	draw_self(this);
 	scr_animation(this);
-
-	if (DEBUG)
-		printf("obj_dummy_draw end\n");
 }

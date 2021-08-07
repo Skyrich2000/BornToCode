@@ -198,6 +198,7 @@ int			point_distance(int x1, int y1, int x2, int y2);
 // draw function
 void		draw_img(void *img, int x, int y);
 void		draw_sprite(t_sprite *spr, t_list *img_node, int x, int y);
+void		draw_self(t_instance *this);
 void		draw_background(t_background *background);
 void		draw_text(t_font *font, char *str, int pos[2], float align[2]);
 // draw function for debug

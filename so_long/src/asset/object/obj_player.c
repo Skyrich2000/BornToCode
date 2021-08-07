@@ -18,22 +18,19 @@
 #define	SPR_ATTACK	3
 #define SPR_DIE		4
 
-t_instance	*create_player_instance(int x, int y, int inverted)
+t_instance	*create_player_instance(int x, int y)
 {
 	t_instance *ins;
 
-	ins = create_instance(scr_player_get_spr(SPR_IDLE, inverted, 1), (int [3]){PLAYER, x, y}, obj_player_step, obj_player_draw);
-	ins->obj.player.inverted = inverted;
+	ins = create_instance(scr_player_get_spr(SPR_IDLE, g()->global.inverted, 1), (int [3]){PLAYER, x, y}, obj_player_step, obj_player_draw);
+	ins->obj.player.inverted = g()->global.inverted;
 	ins->obj.player.attack = 0;
-	ins->obj.player.h_mv = 0;
-	ins->obj.player.v_mv = 0;
-	ins->obj.player.prev_x = x;
-	ins->obj.player.prev_y = y;
 	ins->obj.player.route = create_list();
 	ins->obj.player.route_node = 0;
 	ins->obj.player.reviving_zombie = 0;
 	ins->dir = 1;
 	ins->condition = C_ALIVE;
+	g()->global.player = ins;
 	return (ins);
 }
 
@@ -58,6 +55,7 @@ void		obj_player_step(t_instance *this)
 			scr_player_move(this);
 			scr_player_attack(this);
 			scr_player_collision_gold(this);
+			scr_player_collision_wait(this);
 			scr_player_collision_trigger(this);
 			scr_player_collision_inverter(this);
 			scr_player_collision_exit(this);

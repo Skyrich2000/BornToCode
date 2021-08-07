@@ -45,11 +45,10 @@ t_background	*add_background(char *path, int x, int y)
 	return (new);
 }
 
-// TODO: free before error return
 int			add_sprite_subimage(t_sprite *spr, char *path, int start, int end)
 {
 	char	*num;
-	char	*path_all[2];
+	char	*str[2];
 	void	*img;
 	int		dir;
 
@@ -60,17 +59,17 @@ int			add_sprite_subimage(t_sprite *spr, char *path, int start, int end)
 	while (start != end)
 	{
 		num = sl_itoa(end);
-		path_all[0] = sl_strjoin(path, num);
-		path_all[1] = sl_strjoin(path_all[0], ".png");
+		str[0] = sl_strjoin(path, num);
+		str[1] = sl_strjoin(str[0], ".png");
 		if (DEBUG)
-			printf("LOAD: %s\n", path_all[1]);
-		img = mlx_png_file_to_image(g()->mlx, path_all[1], &spr->width, &spr->height);
+			printf("LOAD: %s\n", str[1]);
+		img = mlx_png_file_to_image(g()->mlx, str[1], &spr->width, &spr->height);
 		if (!img)
 			return (ERROR);
 		push_list(spr->imgs, img);
 		end += dir;
-		free(path_all[0]);
-		free(path_all[1]);
+		free(str[0]);
+		free(str[1]);
 		free(num);
 	}
 	return (OK);

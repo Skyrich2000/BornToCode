@@ -49,7 +49,7 @@ void		scene_play_controller()
 		scr_state_gameover();
 
 	if (g()->global.state != S_READY && keyboard_check(KEY_R))
-		scr_player_die(T_GAME_OVER);
+		scr_player_die(TXT_GAME_OVER);
 
 	if (DEBUG)
 		printf("scene_play_controller end\n");
@@ -146,13 +146,13 @@ void		scene_play_ui()
 	else
 	{
 		str[0] = "GAME OVER";
-		if (g()->global.text == T_TIME_OVER)
+		if (g()->global.text == TXT_TIME_OVER)
 			str[0] = "TIME OVER";
-		else if (g()->global.text == T_HIT_BY_ZOMBIE)
-			str[0] = "HIT BY ZOMBIE";
-		else if (g()->global.text == T_MEET_MYSELF)
+		else if (g()->global.text == TXT_HIT_BY_ZOMBIE)
+			str[0] = "HIT BY ZOMBIE_B";
+		else if (g()->global.text == TXT_MEET_MYSELF)
 			str[0] = "MEET MYSELF";
-		else if (g()->global.text == T_WAIT)
+		else if (g()->global.text == TXT_WAIT)
 			str[0] = "WAIT";
 		draw_text(g()->asset.font_fat_big, str[0], (int[2]){g()->view.view_xview + g()->view.view_wview / 2, g()->view.view_yview + g()->view.view_hview - 16}, (float [2]){A_CENTER, A_BOTTOM});
 	}
@@ -168,7 +168,7 @@ void		scene_play_end()
 	int			*type;
 	int			i;
 
-	type = (int [3]){PLAYER, ZOMBIE, BOX};
+	type = (int [3]){PLAYER, ZOMBIE_BLUE, BOX_RED};
 	i = -1;
 	while (++i < 3)
 	{

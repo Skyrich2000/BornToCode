@@ -71,7 +71,7 @@ void		scr_inverter_active(t_instance *this)
 
 	//change_sprite(g()->global.player, g()->asset.spr_empty);
 	//scr_save_footprint(g()->global.player, g()->global.player->obj.player.route);
-	g()->global.player = create_player_instance(this->x, this->y, !this->obj.inverter.inverted);
+	g()->global.player = create_player_instance(this->x, this->y);
 	g()->global.player->signal = SIG_MV_AUTO | out_mv | dir;
 	//change_sprite(g()->global.player, g()->asset.spr_empty);
 	//scr_save_footprint(g()->global.player, g()->global.player->obj.player.route);

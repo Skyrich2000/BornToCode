@@ -13,11 +13,11 @@
 #include "engine.h"
 #include "asset.h"
 
-t_instance	*create_zombie_instance(int x, int y)
+t_instance	*create_zombie_blue_instance(int x, int y)
 {
 	t_instance *ins;
 
-	ins = create_instance(g()->asset.spr_zombie_die_right_reverse, (int [3]){ZOMBIE, x, y}, obj_zombie_step, obj_zombie_draw);
+	ins = create_instance(g()->asset.spr_zombie_blue_die_right_reverse, (int [3]){ZOMBIE_BLUE, x, y}, obj_zombie_blue_step, obj_zombie_blue_draw);
 	ins->obj.zombie.route = create_list();
 	ins->obj.zombie.route_node = 0;
 	ins->obj.zombie.reviver = 0;
@@ -25,7 +25,16 @@ t_instance	*create_zombie_instance(int x, int y)
 	return (ins);
 }
 
-void		obj_zombie_step(t_instance *this)
+t_instance	*create_zombie_red_instance(int x, int y)
+{
+	t_instance *ins;
+
+	ins = create_instance(g()->asset.spr_zombie_red_die_right_single, (int [3]){ZOMBIE_RED, x, y}, 0, draw_self);
+	return (ins);
+}
+
+
+void		obj_zombie_blue_step(t_instance *this)
 {
 	if (DEBUG)
 		printf("obj_zombie_step start\n");
@@ -43,7 +52,7 @@ void		obj_zombie_step(t_instance *this)
 		printf("obj_zombie_step end\n");
 }
 
-void	obj_zombie_draw(t_instance *this)
+void	obj_zombie_blue_draw(t_instance *this)
 {
 	if (DEBUG)
 		printf("obj_zombie_draw start\n");

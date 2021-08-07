@@ -5,7 +5,12 @@
 #define	SPR_ATTACK	3
 #define SPR_DIE		4
 
-#define MOVE_SPEED	2;
+#define MOVE_SPEED	2
+
+#define X			0
+#define Y			1
+#define H			0
+#define V			1
 
 void	scr_player_move_auto(t_instance *this)
 {
@@ -23,46 +28,46 @@ void	scr_player_move_auto(t_instance *this)
 		change_sprite(this, scr_player_get_spr(SPR_MOVE, this->obj.player.inverted, this->dir));
 }
 
+static void	scr_player_move_inner(t_instance *this, int prev[2], int mv[2])
+{
+	if (keyboard_check(KEY_SPACEBAR))
+	{
+		change_sprite(this, scr_player_get_spr(SPR_ATTACK, this->obj.player.inverted, this->dir));
+		this->obj.player.attack = 1;
+		if (g()->global.state == S_INVERT)
+			this->draw_time = -20;
+	}
+	else if (mv[V] == 0 && mv[H] == 0)
+		change_sprite(this, scr_player_get_spr(SPR_IDLE, this->obj.player.inverted, this->dir));
+	else
+	{
+		g()->global.steps++;
+		change_sprite(this, scr_player_get_spr(SPR_MOVE, this->obj.player.inverted, this->dir));
+	}
+	this->x += mv[H] * MOVE_SPEED;
+	if (scr_player_collision_box(this))
+		this->x = prev[X];
+	this->y += mv[V] * MOVE_SPEED;
+	if (scr_player_collision_box(this))
+		this->y = prev[Y];
+}
+
 void	scr_player_move(t_instance *this)
 {
-	int h_mv;
-	int v_mv;
+	int prev[2];
+	int mv[2];
 
-	this->obj.player.prev_x = this->x;
-	this->obj.player.prev_y = this->y;
+	prev[X] = this->x;
+	prev[Y] = this->y;
 	if ((keyboard_check(KEY_D) || keyboard_check(KEY_RIGHT)))
 		this->dir = 1;
 	else if ((keyboard_check(KEY_A) || keyboard_check(KEY_LEFT)))
 		this->dir = -1;
-	h_mv = (keyboard_check(KEY_D) || keyboard_check(KEY_RIGHT)) - (keyboard_check(KEY_A) || keyboard_check(KEY_LEFT));
-	v_mv = (keyboard_check(KEY_S) || keyboard_check(KEY_DOWN)) - (keyboard_check(KEY_W) || keyboard_check(KEY_UP));
+	mv[H] = (keyboard_check(KEY_D) || keyboard_check(KEY_RIGHT)) - (keyboard_check(KEY_A) || keyboard_check(KEY_LEFT));
+	mv[V] = (keyboard_check(KEY_S) || keyboard_check(KEY_DOWN)) - (keyboard_check(KEY_W) || keyboard_check(KEY_UP));
 
 	if (this->obj.player.attack == 0)
-	{
-		if (keyboard_check(KEY_SPACEBAR))
-		{
-			change_sprite(this, scr_player_get_spr(SPR_ATTACK, this->obj.player.inverted, this->dir));
-			this->obj.player.attack = 1;
-			if (g()->global.state == S_INVERT)
-				this->draw_time = -20;
-		}
-		else if (v_mv == 0 && h_mv == 0)
-			change_sprite(this, scr_player_get_spr(SPR_IDLE, this->obj.player.inverted, this->dir));
-		else
-		{
-			g()->global.steps++;
-			change_sprite(this, scr_player_get_spr(SPR_MOVE, this->obj.player.inverted, this->dir));
-		}
-		this->x += h_mv * MOVE_SPEED;
-		if (scr_player_collision_box(this))
-			this->x = this->obj.player.prev_x;
-		this->y += v_mv * MOVE_SPEED;
-		if (scr_player_collision_box(this))
-			this->y = this->obj.player.prev_y;
-	}
-
-	this->obj.player.h_mv = h_mv;
-	this->obj.player.v_mv = v_mv;
-	if (this->obj.player.attack == 1 && this->img_node->next == 0)
+		scr_player_move_inner(this, prev, mv);
+	else if (this->img_node->next == 0)
 		this->obj.player.attack = 0;
 }
