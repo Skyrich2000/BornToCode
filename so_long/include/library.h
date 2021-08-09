@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   asset.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
+/*   Updated: 2021/08/06 03:45:07 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIBRARY_H
 # define LIBRARY_H
 
@@ -19,6 +31,7 @@ int			sl_split_size(char **split);
 char		*ft_strchr(const char *s, int c);
 int			sl_atoi(const char *str);
 void		sl_exit(int errno);
-int         sl_abs(int a);
+int			sl_abs(int a);
+size_t      sl_strlcpy(char *dst, char *src, size_t dstsize);
 
 #endif

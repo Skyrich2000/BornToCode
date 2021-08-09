@@ -12,7 +12,7 @@
 
 #include "library.h"
 
-void	sl_free(void *data)
+int	sl_abs(int a)
 {
-	free(data);
+	return (a * ((a > 0) * 2 - 1));
 }

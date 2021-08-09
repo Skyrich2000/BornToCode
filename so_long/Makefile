@@ -103,6 +103,8 @@ LIB			=	sl_free.c \
 				sl_rev_atoi.c \
 				sl_strchr.c \
 				sl_atoi.c \
+				sl_abs.c \
+				sl_strlcpy.c \
 				sl_exit.c
 
 SRCS		=	src/main.c \

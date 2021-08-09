@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   asset.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
+/*   Updated: 2021/08/06 03:45:07 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "library.h"
 
-int sl_atoi(const char *str)
+int	sl_atoi(const char *str)
 {
-	int sign;
-	long long result;
+	int			sign;
+	long long	result;
 
 	sign = 1;
 	result = 0;
@@ -16,14 +28,7 @@ int sl_atoi(const char *str)
 	{
 		result *= 10;
 		result += (*str - '0');
-		if (result < 0)
-			return ((sign == 1) ? -1 : 0);
 		str++;
 	}
 	return (result * sign);
-}
-
-int sl_abs(int a)
-{
-	return (a * ((a > 0) * 2 - 1));
 }

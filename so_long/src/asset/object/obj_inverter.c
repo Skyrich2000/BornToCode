@@ -10,9 +10,9 @@ t_instance *create_inverter_instance(int x, int y, int inverted, int out_dir[20]
 	ins->obj.inverter.time = 0;
 	ins->obj.inverter.inverted = inverted;
 	ins->obj.inverter.dummy = 0;
-	bzero(ins->obj.inverter.out_dir, sizeof(ins->obj.inverter.out_dir));
-	bzero(ins->obj.inverter.triggers, sizeof(ins->obj.inverter.triggers));
-	bzero(ins->obj.inverter.waits, sizeof(ins->obj.inverter.waits));
+	sl_bzero(ins->obj.inverter.out_dir, sizeof(ins->obj.inverter.out_dir));
+	sl_bzero(ins->obj.inverter.triggers, sizeof(ins->obj.inverter.triggers));
+	sl_bzero(ins->obj.inverter.waits, sizeof(ins->obj.inverter.waits));
 	ins->obj.inverter.out_dir[SIG_MV_LEFT] = out_dir[SIG_MV_LEFT];
 	ins->obj.inverter.out_dir[SIG_MV_RIGHT] = out_dir[SIG_MV_RIGHT];
 	ins->obj.inverter.out_dir[SIG_MV_UP] = out_dir[SIG_MV_UP];

@@ -1,25 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sl_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/06 18:35:18 by ycha              #+#    #+#             */
+/*   Updated: 2021/08/03 03:03:40 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "library.h"
-
-size_t	sl_strlcpy(char *dst, char *src, size_t dstsize)
-{
-	size_t	i;
-
-	i = 0;
-	if (!src)
-		return (0);
-	if (dstsize)
-	{
-		while (i < dstsize - 1 && src[i])
-		{
-			dst[i] = src[i];
-			++i;
-		}
-		dst[i] = '\0';
-	}
-	while (src[i])
-		++i;
-	return (i);
-}
 
 char	*sl_substr(char *s, unsigned int start, size_t len)
 {
@@ -34,10 +25,9 @@ char	*sl_substr(char *s, unsigned int start, size_t len)
 	return (dest);
 }
 
-
-int		sl_split_size(char **split)
+int	sl_split_size(char **split)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (split[++i])
@@ -45,8 +35,7 @@ int		sl_split_size(char **split)
 	return (i);
 }
 
-
-int		sl_check_size(char *s, char c)
+int	sl_check_size(char *s, char c)
 {
 	size_t	cnt;
 	int		i;

@@ -217,7 +217,7 @@ typedef struct s_asset
 	t_sprite		*spr_inverter_idle;
 	t_sprite		*spr_inverter_red;
 	t_sprite		*spr_inverter_blue;
-	
+
 	t_sprite		*spr_exit;
 	t_sprite		*spr_plane;
 	t_sprite		*spr_logo;
@@ -251,36 +251,36 @@ typedef struct s_asset
 /* ************************************************************************** */
 
 // init asset
-int			init_asset();
+int			init_asset(void);
 // init background
-int			init_background_main();
-int			init_background_nick();
-int			init_background_rank();
-int			init_background_map();
+int			init_background_main(void);
+int			init_background_nick(void);
+int			init_background_rank(void);
+int			init_background_map(void);
 // init font
-int			init_font_su();
-int			init_font_fat();
+int			init_font_su(void);
+int			init_font_fat(void);
 // init sprite
-int			init_spr_player_blue();
-int			init_spr_player_red();
-int			init_spr_zombie();
-int			init_spr_empty();
-int			init_spr_wall();
-int			init_spr_light();
-int			init_spr_box();
-int			init_spr_gold();
-int			init_spr_inverter();
-int			init_spr_exit();
-int			init_spr_plane();
-int			init_spr_logo();
-int			init_spr_state();
+int			init_spr_player_blue(void);
+int			init_spr_player_red(void);
+int			init_spr_zombie(void);
+int			init_spr_empty(void);
+int			init_spr_wall(void);
+int			init_spr_light(void);
+int			init_spr_box(void);
+int			init_spr_gold(void);
+int			init_spr_inverter(void);
+int			init_spr_exit(void);
+int			init_spr_plane(void);
+int			init_spr_logo(void);
+int			init_spr_state(void);
 // init scene
-int			init_scene_main();
-int			init_scene_nick();
-int			init_scene_play();
-int			init_scene_rank();
+int			init_scene_main(void);
+int			init_scene_nick(void);
+int			init_scene_play(void);
+int			init_scene_rank(void);
 // init map
-int			init_map();
+int			init_map(void);
 
 /* ************************************************************************** */
 
@@ -302,7 +302,7 @@ t_instance	*create_gold_red_instance(int x, int y);
 void		obj_gold_red_step(t_instance *this);
 void		obj_gold_red_draw(t_instance *this);
 // object inverter
-t_instance	*create_inverter_instance(int x, int y, int inverted, int from_dir[5]);
+t_instance	*create_inverter_instance(int x, int y, int inverted, int dir[5]);
 void		obj_inverter_step(t_instance *this);
 void		obj_inverter_draw(t_instance *this);
 // object dummy
@@ -310,14 +310,15 @@ t_instance	*create_dummy_instance(int x, int y, int inverted, int time);
 void		obj_dummy_step(t_instance *this);
 void		obj_dummy_draw(t_instance *this);
 // object plane
-t_instance	*create_plane_instance();
+t_instance	*create_plane_instance(void);
 void		obj_plane_step(t_instance *this);
 // object wall, wall up, wall invisible
 t_instance	*create_wall_instance(int x, int y);
 t_instance	*create_wall_up_instance(int x, int y);
 t_instance	*create_wall_inv_instance(int x, int y);
 // object trigger
-t_instance	*create_trigger_instance(int pos[2], int inverted, t_instance *target, int signal);
+t_instance	*create_trigger_instance(int pos[2], int inverted, \
+											t_instance *target, int sigal);
 // object exit
 t_instance	*create_exit_instance(int x, int y);
 // object wait
@@ -327,7 +328,7 @@ t_instance	*create_wait_instance(int x, int y);
 
 // scripts to save or load footprint
 void		scr_save_footprint(t_instance *this, t_list *route);
-void		scr_load_footprint(t_instance *this, t_list **route_node, int inverted);
+void		scr_load_footprint(t_instance *this, t_list **route, int inverted);
 // script to animation
 void		scr_animation(t_instance *this);
 // scripts to get route or route node
@@ -361,18 +362,18 @@ void		scr_zombie_move(t_instance *this);
 // script to make instance avatar
 void		scr_avatarize(int type);
 // scripts for manage global state of game
-void		scr_state_ready();
-void		scr_state_straight();
-void		scr_state_inverted();
-void		scr_state_restraight();
-void		scr_state_clear();
-void		scr_state_gameover();
+void		scr_state_ready(void);
+void		scr_state_straight(void);
+void		scr_state_inverted(void);
+void		scr_state_restraight(void);
+void		scr_state_clear(void);
+void		scr_state_gameover(void);
 // script to calculate signal
 int			scr_reverse_mv_signal(int signal);
 int			scr_convert_mv_signal(int signal);
 // scripts to manage triggers from inverter
 void		scr_inverter_create_trigger(t_instance *this);
-void		scr_inverter_destroy_trigger(t_instance *this, int exclusive_signal);
+void		scr_inverter_destroy_trigger(t_instance *this, int exclusive_sig);
 // scripts to manage wait objects and invisible wall objects
 void		scr_inverter_create_wait(t_instance *this);
 void		scr_inverter_destroy_wait(t_instance *this);
@@ -387,25 +388,25 @@ void		scr_save_rank(char *name, int time, int deathcount);
 /* ************************************************************************** */
 
 // scene main
-void		scene_main_start();
-void		scene_main_controller();
-void		scene_main_ui();
-void		scene_main_end();
+void		scene_main_start(void);
+void		scene_main_controller(void);
+void		scene_main_ui(void);
+void		scene_main_end(void);
 // scene nickname
-void		scene_nick_start();
-void		scene_nick_controller();
-void		scene_nick_ui();
-void		scene_nick_end();
+void		scene_nick_start(void);
+void		scene_nick_controller(void);
+void		scene_nick_ui(void);
+void		scene_nick_end(void);
 // scene play
-void		scene_play_start();
-void		scene_play_controller();
-void		scene_play_ui();
-void		scene_play_end();
+void		scene_play_start(void);
+void		scene_play_controller(void);
+void		scene_play_ui(void);
+void		scene_play_end(void);
 // scene rank
-void		scene_rank_start();
-void		scene_rank_controller();
-void		scene_rank_ui();
-void		scene_rank_end();
+void		scene_rank_start(void);
+void		scene_rank_controller(void);
+void		scene_rank_ui(void);
+void		scene_rank_end(void);
 
 /* ************************************************************************** */
 

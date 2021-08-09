@@ -12,7 +12,7 @@
 
 #include "library.h"
 
-int		sl_strlen(char *s)
+int	sl_strlen(char *s)
 {
 	int	len;
 
@@ -56,7 +56,8 @@ char	*sl_strjoin(char *s1, char *s2)
 
 	n = sl_strlen(s1);
 	m = sl_strlen(s2);
-	if (!(ret = (char *)malloc(n + m + 1)))
+	ret = (char *)malloc(n + m + 1);
+	if (!ret)
 		sl_exit(12);
 	sl_bzero(ret, n + m + 1);
 	if (s1)
