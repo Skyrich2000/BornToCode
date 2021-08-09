@@ -22,3 +22,8 @@ int sl_atoi(const char *str)
 	}
 	return (result * sign);
 }
+
+int sl_abs(int a)
+{
+	return (a * ((a > 0) * 2 - 1));
+}

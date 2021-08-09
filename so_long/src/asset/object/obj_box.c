@@ -17,6 +17,7 @@ t_instance *create_box_blue_instance(int x, int y)
 
 	ins = create_instance(g()->asset.spr_box_blue, (int[3]){BOX_BLUE, x, y}, 0, draw_self);
 	create_wall_inv_instance(x, y);
+	create_wall_inv_instance(x, y - 8); // 위치 조정
 	return (ins);
 }
 

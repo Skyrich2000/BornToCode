@@ -19,5 +19,6 @@ int			sl_split_size(char **split);
 char		*ft_strchr(const char *s, int c);
 int			sl_atoi(const char *str);
 void		sl_exit(int errno);
+int         sl_abs(int a);
 
 #endif

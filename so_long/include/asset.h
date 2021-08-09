@@ -16,7 +16,7 @@
 
 # define BUFFER_SIZE		1000
 
-# define MAP_SIZE			7
+# define MAP_SIZE			12
 # define NICK_SIZE			10
 
 # define EXIT				0
@@ -60,13 +60,13 @@
 # define SIG_ACTIVE			256
 # define SIG_NORMAL			512
 # define SIG_NO_INVERT		1024
-# define SIG_WAIT			2048
 
 # define TXT_GAME_OVER		1
 # define TXT_TIME_OVER		2
 # define TXT_HIT_BY_ZOMBIE	3
 # define TXT_MEET_MYSELF	4
-# define TXT_WAIT				5
+# define TXT_TENET_ERROR	5
+# define TXT_WAIT			6
 
 typedef struct s_canvas		t_canvas;
 typedef struct s_scene		t_scene;
@@ -98,6 +98,10 @@ typedef struct s_global
 	t_instance		*player;
 	int				darkness;
 
+	int				view_xview_aim;
+	int				view_yview_aim;
+
+	int				tutorial;
 	int				map_index;
 	int				map_width;
 	int				map_height;
@@ -380,7 +384,6 @@ void		scr_inverter_destroy_trigger(t_instance *this, int exclusive_signal);
 void		scr_inverter_create_wait(t_instance *this);
 void		scr_inverter_destroy_wait(t_instance *this);
 // script when inverter received signal
-void		scr_inverter_wait(t_instance *this);
 void		scr_inverter_before(t_instance *this);
 void		scr_inverter_active(t_instance *this);
 // script for build map from char** return width and height of map
@@ -413,15 +416,17 @@ void		scene_rank_end();
 
 /* ************************************************************************** */
 
-void		map_0(int *w, int *h);
-void		map_1(int *w, int *h);
-void		map_2(int *w, int *h);
-void		map_3(int *w, int *h);
-void		map_4(int *w, int *h);
-void		map_5(int *w, int *h);
-
-void		map_1_1(int *width, int *height);
-void		map_1_2(int *width, int *height);
-void		map_1_3(int *width, int *height);
+void		map_0_0(int *width, int *height);
+void		map_0_1(int *width, int *height);
+void		map_0_2(int *width, int *height);
+void		map_0_3(int *width, int *height);
+void		map_0_4(int *width, int *height);
+void		map_0_5(int *width, int *height);
+void		map_0_6(int *width, int *height);
+void		map_1(int *width, int *height);
+void		map_2(int *width, int *height);
+void		map_3(int *width, int *height);
+void		map_4(int *width, int *height);
+void		map_5(int *width, int *height);
 
 #endif

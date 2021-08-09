@@ -56,21 +56,6 @@ void	scr_player_collision_inverter(t_instance *this)
 	t_instance	*ins;
 
 	ins = place_meeting_type(this, this->x, this->y, INVERTER);
-	if (ins)
-	{
-		printf("%d %d %d %d\n", ins->condition & C_ALIVE, ins->obj.inverter.inverted == this->obj.player.inverted, g()->global.inverted == S_INVERT, g()->global.time > 0);
-	}
-	// if (ins && ins->condition & C_ALIVE && \
-	// 	ins->obj.inverter.inverted == this->obj.player.inverted && \
-	// 	g()->global.inverted == S_INVERT && g()->global.time > 0)
-	// {
-	// 	g()->global.text = TXT_WAIT;
-	// 	printf("asdf\n");
-	// 	return ;
-	// }
-	// else
-	// 	g()->global.text = 0;
-
 	if (ins && ins->condition & C_ALIVE && \
 		ins->obj.inverter.inverted == this->obj.player.inverted)
 	{
@@ -104,6 +89,8 @@ void	scr_player_collision_zombie(t_instance *this)
 			{
 				if (this->obj.player.inverted == 1 && g()->global.state == S_RESTRAIGHT && this == zombie->obj.zombie.reviver)
 					return ;
+				g()->global.view_xview_aim = this->x - g()->view.view_wview / 2;
+				g()->global.view_yview_aim = this->y - g()->view.view_hview / 2;
 				scr_player_die(TXT_HIT_BY_ZOMBIE);
 			}
 		}

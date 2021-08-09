@@ -19,7 +19,6 @@ void		scr_inverter_create_wait(t_instance *this)
 		}
 		mv = mv << 1;
 	}
-	create_wall_inv_instance(this->x, this->y);
 }
 
 void		scr_inverter_destroy_wait(t_instance *this)
@@ -33,5 +32,4 @@ void		scr_inverter_destroy_wait(t_instance *this)
 			destroy_instance(this->obj.inverter.waits[mv]);
 		mv = mv << 1;
 	}
-	destroy_instance(this->obj.inverter.wall_inv);
 }

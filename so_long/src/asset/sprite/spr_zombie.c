@@ -45,7 +45,7 @@ static int	init_spr_zombie_idle(void)
 		!add_sprite_subimage(game->asset.spr_zombie_blue_idle_left_reverse, \
 							"./res/png/zombie_left/zombie_", 1, 0) || \
 		!add_sprite_subimage(game->asset.spr_zombie_red_die_right_single, \
-							"./res/png/zombie_right/zombie_", 1, 0))
+							"./res/png/zombie_red/zombie_", 0, 0))
 		return (ERROR);
 	return (OK);
 }

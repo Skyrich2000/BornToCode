@@ -1,5 +1,7 @@
 #include "engine.h"
 
+#define VIEW_SPEED	10
+
 int			init_scene_play()
 {
 	g()->asset.scene_play = add_scene(g()->asset.background_nick, scene_play_start, scene_play_controller, scene_play_ui, scene_play_end);
@@ -11,6 +13,7 @@ void		scene_play_start()
 	if (DEBUG)
 		printf("scene_play_start start\n");
 
+	g()->global.tutorial = 0;
 	g()->global.steps = 0;
 	g()->global.time = 0;
 	g()->global.delay = 0;
@@ -22,9 +25,10 @@ void		scene_play_start()
 	g()->global.gold_num = 0;
 	g()->global.darkness = 0;
 	g()->asset.maps[g()->global.map_index](&g()->global.map_width, &g()->global.map_height);
-	g()->view.view_xview = -16 + g()->global.map_width * 32 / 2 - g()->view.view_wview / 2;
-	g()->view.view_yview = -32 + g()->global.map_height * 32 / 2 - g()->view.view_hview / 2;
-
+	g()->global.view_xview_aim = -16 + g()->global.map_width * 32 / 2 - g()->view.view_wview / 2;
+	g()->global.view_yview_aim = -32 + g()->global.map_height * 32 / 2 - g()->view.view_hview / 2;
+	g()->view.view_xview = g()->global.view_xview_aim;
+	g()->view.view_yview = g()->global.view_yview_aim;
 	if (DEBUG)
 		printf("scene_play_start end\n");
 }
@@ -49,7 +53,18 @@ void		scene_play_controller()
 		scr_state_gameover();
 
 	if (g()->global.state != S_READY && keyboard_check(KEY_R))
+	{
+		if (g()->global.player)
+		{
+			g()->global.view_xview_aim = g()->global.player->x - g()->view.view_wview / 2;
+			g()->global.view_yview_aim = g()->global.player->y - g()->view.view_hview / 2;
+		}
 		scr_player_die(TXT_GAME_OVER);
+	}
+
+	g()->view.view_xview += (g()->global.view_xview_aim - g()->view.view_xview) / VIEW_SPEED;
+	g()->view.view_yview += (g()->global.view_yview_aim - g()->view.view_yview) / VIEW_SPEED;
+
 
 	if (DEBUG)
 		printf("scene_play_controller end\n");
@@ -76,13 +91,13 @@ void		scene_play_ui()
 
 	if (g()->global.player && g()->global.invert_signal == SIG_NO_INVERT)
 	{
-		g()->view.view_xview = g()->global.player->x - g()->view.view_wview / 2;
-		g()->view.view_yview = g()->global.player->y - g()->view.view_hview / 2;
+		g()->global.view_xview_aim = g()->global.player->x - g()->view.view_wview / 2;
+		g()->global.view_yview_aim = g()->global.player->y - g()->view.view_hview / 2;
 	}
 
 	// nick(state), map, step, death
 	// 1280 		 0	 0		  0
-	char	*str[4];
+	char	*str[5];
 	int		len = sl_strlen(g()->global.nick);
 	int		up_pad = 10;
 	int		down_pad = up_pad + 19 + 10;
@@ -93,9 +108,14 @@ void		scene_play_ui()
 
 	draw_text(g()->asset.font_fat_small, g()->global.nick, (int[2]){g()->view.view_xview + x1, g()->view.view_yview + up_pad}, (float [2]){A_LEFT, A_UP});
 
-	str[0] = sl_itoa(g()->global.time_all_lv);
-	draw_text(g()->asset.font_fat_small, str[0], (int[2]){g()->view.view_xview + x1, g()->view.view_yview + down_pad}, (float [2]){A_LEFT, A_UP});
-	free(str[0]);
+	if (g()->global.tutorial)
+		draw_text(g()->asset.font_fat_small, "TUTORIAL", (int[2]){g()->view.view_xview + x1, g()->view.view_yview + down_pad}, (float [2]){A_LEFT, A_UP});
+	else
+	{
+		str[0] = sl_itoa(g()->global.time_all_lv);
+		draw_text(g()->asset.font_fat_small, str[0], (int[2]){g()->view.view_xview + x1, g()->view.view_yview + down_pad}, (float [2]){A_LEFT, A_UP});
+		free(str[0]);
+	}
 
 	t_sprite *spr;
 
@@ -134,14 +154,16 @@ void		scene_play_ui()
 	if (g()->global.text == 0)
 	{
 		str[0] = sl_itoa(g()->global.time / 60);
-		str[1] = sl_itoa(g()->global.time % 60);
-		str[2] = sl_strjoin(str[0], ":");
+		str[1] = sl_itoa((double)(sl_abs(g()->global.time) % 60) / 60 * 100);
+		str[2] = sl_strjoin(str[0], "\'");
 		str[3] = sl_strjoin(str[2], str[1]);
-		draw_text(g()->asset.font_fat_big, str[3], (int[2]){g()->view.view_xview + g()->view.view_wview / 2, g()->view.view_yview + g()->view.view_hview - 16}, (float [2]){A_CENTER, A_BOTTOM});
+		str[4] = sl_strjoin(str[3], "\"");
+		draw_text(g()->asset.font_fat_big, str[4], (int[2]){g()->view.view_xview + g()->view.view_wview / 2, g()->view.view_yview + g()->view.view_hview - 16}, (float [2]){A_CENTER, A_BOTTOM});
 		free(str[0]);
 		free(str[1]);
 		free(str[2]);
 		free(str[3]);
+		free(str[4]);
 	}
 	else
 	{
@@ -149,9 +171,11 @@ void		scene_play_ui()
 		if (g()->global.text == TXT_TIME_OVER)
 			str[0] = "TIME OVER";
 		else if (g()->global.text == TXT_HIT_BY_ZOMBIE)
-			str[0] = "HIT BY ZOMBIE_B";
+			str[0] = "HIT BY TOAST";
 		else if (g()->global.text == TXT_MEET_MYSELF)
 			str[0] = "MEET MYSELF";
+		else if (g()->global.text == TXT_TENET_ERROR)
+			str[0] = "TOAST IS NOT DEAD";
 		else if (g()->global.text == TXT_WAIT)
 			str[0] = "WAIT";
 		draw_text(g()->asset.font_fat_big, str[0], (int[2]){g()->view.view_xview + g()->view.view_wview / 2, g()->view.view_yview + g()->view.view_hview - 16}, (float [2]){A_CENTER, A_BOTTOM});

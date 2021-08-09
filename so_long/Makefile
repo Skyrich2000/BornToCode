@@ -32,14 +32,18 @@ FONT		=	font_su.c \
 				font_fat.c
 
 MAP			=	map.c \
-				map_0.c \
+				map_0_0.c \
+				map_0_1.c \
+				map_0_2.c \
+				map_0_3.c \
+				map_0_4.c \
+				map_0_5.c \
+				map_0_6.c \
 				map_1.c \
 				map_2.c \
 				map_3.c \
 				map_4.c \
-				map_5.c \
-				map_1_2.c \
-				map_1_3.c
+				map_5.c
 
 OBJECT		=	obj_player.c \
 				obj_zombie.c \
@@ -153,7 +157,7 @@ $(NAME)	: $(OBJS)
 	@printf "░░░██║░░░███████╗██║░╚███║╔███████║╔████████\n"
 	@printf "░░░╚═╝░░░╚══════╝╚═╝░░╚══╝╚═══════╝╚═══════╝\n"
 	@printf "\n\n"
-	@afplay bgm.mp3 & ./so_long map.ber ; pkill afplay
+	@afplay bgm.mp3 -v 0.3 & ./so_long map.ber ; pkill afplay
 
 run		:
 	@printf "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\e[1;33mso\e[1;31m long\e[1;37m \e[0;32mis Ready 💚\e[0m\n\n\n"
@@ -164,7 +168,7 @@ run		:
 	@printf "░░░██║░░░███████╗██║░╚███║╔███████║╔████████\n"
 	@printf "░░░╚═╝░░░╚══════╝╚═╝░░╚══╝╚═══════╝╚═══════╝\n"
 	@printf "\n\n"
-	@afplay bgm.mp3 & ./so_long map.ber ; pkill afplay
+	@afplay bgm.mp3 -v 0.3 & ./so_long map.ber ; pkill afplay
 
 clean	:
 	@rm -f $(OBJS)
