@@ -25,15 +25,6 @@ t_instance	*create_zombie_blue_instance(int x, int y)
 	return (ins);
 }
 
-t_instance	*create_zombie_red_instance(int x, int y)
-{
-	t_instance *ins;
-
-	ins = create_instance(g()->asset.spr_zombie_red_die_right_single, (int [3]){ZOMBIE_RED, x, y}, 0, draw_self);
-	return (ins);
-}
-
-
 void		obj_zombie_blue_step(t_instance *this)
 {
 	if (DEBUG)

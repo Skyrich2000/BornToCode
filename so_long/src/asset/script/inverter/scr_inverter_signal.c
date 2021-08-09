@@ -20,11 +20,11 @@ void		scr_inverter_before(t_instance *this)
 
 	h_mv = (((in_mv & SIG_MV_RIGHT) > 0) - ((in_mv & SIG_MV_LEFT) > 0));
 	v_mv = (((in_mv & SIG_MV_DOWN) > 0) - ((in_mv & SIG_MV_UP) > 0));
-	dis = (this->x - g()->global.player->x) * h_mv + (this->y - g()->global.player->y) * v_mv - v_mv * 13;
+	dis = (this->x - g()->global.player->x) * h_mv + (this->y - g()->global.player->y) * v_mv;
 
 	h_mv = (((out_mv & SIG_MV_RIGHT) > 0) - ((out_mv & SIG_MV_LEFT) > 0));
 	v_mv = (((out_mv & SIG_MV_DOWN) > 0) - ((out_mv & SIG_MV_UP) > 0));
-	ins = create_dummy_instance(this->x + h_mv * dis, this->y + v_mv * dis, !this->obj.inverter.inverted, -1);
+	ins = create_dummy_instance(this->x + h_mv * (dis - 10), this->y + v_mv * dis, !this->obj.inverter.inverted, -1);
 	ins->signal = SIG_MV_AUTO | scr_reverse_mv_signal(out_mv) | scr_convert_mv_signal(dir);
 
 	this->obj.inverter.dummy = ins;

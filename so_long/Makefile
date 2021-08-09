@@ -38,7 +38,6 @@ MAP			=	map.c \
 				map_0_3.c \
 				map_0_4.c \
 				map_0_5.c \
-				map_0_6.c \
 				map_1.c \
 				map_2.c \
 				map_3.c \

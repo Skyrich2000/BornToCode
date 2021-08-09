@@ -7,11 +7,9 @@ void		scr_build_map(char **map, int *j, int *i)
 	sl_bzero(func, sizeof(func));
 	func[(int)'1'] = create_wall_instance;
 	func[(int)'Z'] = create_zombie_blue_instance;
-	func[(int)'3'] = create_zombie_red_instance;
 	func[(int)'B'] = create_box_red_instance;
 	func[(int)'4'] = create_box_blue_instance;
 	func[(int)'C'] = create_gold_red_instance;
-	func[(int)'5'] = create_gold_blue_instance;
 	func[(int)'E'] = create_exit_instance;
 	func[(int)'P'] = create_player_instance;
 	*i = -1;

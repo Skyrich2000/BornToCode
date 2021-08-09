@@ -10,7 +10,6 @@ t_instance *create_inverter_instance(int x, int y, int inverted, int out_dir[20]
 	ins->obj.inverter.time = 0;
 	ins->obj.inverter.inverted = inverted;
 	ins->obj.inverter.dummy = 0;
-	ins->obj.inverter.wall_inv = 0;
 	bzero(ins->obj.inverter.out_dir, sizeof(ins->obj.inverter.out_dir));
 	bzero(ins->obj.inverter.triggers, sizeof(ins->obj.inverter.triggers));
 	bzero(ins->obj.inverter.waits, sizeof(ins->obj.inverter.waits));
@@ -18,8 +17,8 @@ t_instance *create_inverter_instance(int x, int y, int inverted, int out_dir[20]
 	ins->obj.inverter.out_dir[SIG_MV_RIGHT] = out_dir[SIG_MV_RIGHT];
 	ins->obj.inverter.out_dir[SIG_MV_UP] = out_dir[SIG_MV_UP];
 	ins->obj.inverter.out_dir[SIG_MV_DOWN] = out_dir[SIG_MV_DOWN];
-	ins->obj.inverter.wall_inv = create_wall_inv_instance(ins->x, ins->y);
 	ins->condition = C_ALIVE;
+	create_wall_inv_instance(ins->x, ins->y);
 	if (inverted == S_STRAIGHT)
 		scr_inverter_create_trigger(ins);
 	else

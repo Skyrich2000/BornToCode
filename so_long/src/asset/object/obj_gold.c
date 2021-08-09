@@ -12,14 +12,6 @@ t_instance *create_gold_red_instance(int x, int y)
 	return (ins);
 }
 
-t_instance *create_gold_blue_instance(int x, int y)
-{
-	t_instance *ins;
-
-	ins = create_instance(g()->asset.spr_gold_blue, (int[3]){GOLD_BLUE, x, y}, 0, draw_self);
-	return (ins);
-}
-
 void		obj_gold_red_step(t_instance *this)
 {
 	if (DEBUG)

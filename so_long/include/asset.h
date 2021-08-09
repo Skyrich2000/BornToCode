@@ -16,7 +16,7 @@
 
 # define BUFFER_SIZE		1000
 
-# define MAP_SIZE			12
+# define MAP_SIZE			11
 # define NICK_SIZE			10
 
 # define EXIT				0
@@ -29,13 +29,11 @@
 # define INVERTER			7
 # define DUMMY				8
 # define ZOMBIE_BLUE		9
-# define ZOMBIE_RED			10
-# define GOLD_BLUE			11
-# define PLAYER				12
-# define WALL_UP			13
-# define GOLD_RED			14
-# define PLANE				15
-# define OBJ_SIZE			16
+# define PLAYER				10
+# define WALL_UP			11
+# define GOLD_RED			12
+# define PLANE				13
+# define OBJ_SIZE			14
 
 # define C_DEAD				1
 # define C_DEING			2
@@ -146,7 +144,6 @@ typedef struct s_obj_inverter
 	int				out_dir[20];
 	t_instance		*triggers[20];
 	t_instance		*waits[20];
-	t_instance		*wall_inv;
 	t_instance		*dummy;
 }	t_obj_inverter;
 
@@ -202,7 +199,6 @@ typedef struct s_asset
 	t_sprite		*spr_zombie_blue_idle_left_reverse;
 	t_sprite		*spr_zombie_blue_die_right_reverse;
 	t_sprite		*spr_zombie_blue_die_left_reverse;
-	t_sprite		*spr_zombie_red_die_right_single;
 
 	t_sprite		*spr_light;
 	t_sprite		*spr_light_5;
@@ -216,7 +212,6 @@ typedef struct s_asset
 	t_sprite		*spr_box_red_break;
 
 	t_sprite		*spr_gold_red;
-	t_sprite		*spr_gold_blue;
 	t_sprite		*spr_gold_red_break;
 
 	t_sprite		*spr_inverter_idle;
@@ -293,8 +288,7 @@ int			init_map();
 t_instance	*create_player_instance(int x, int y);
 void		obj_player_step(t_instance *this);
 void		obj_player_draw(t_instance *this);
-// object zombie red, blue
-t_instance	*create_zombie_red_instance(int x, int y);
+// object zombie blue
 t_instance	*create_zombie_blue_instance(int x, int y);
 void		obj_zombie_blue_step(t_instance *this);
 void		obj_zombie_blue_draw(t_instance *this);
@@ -303,9 +297,8 @@ t_instance	*create_box_red_instance(int x, int y);
 t_instance	*create_box_blue_instance(int x, int y);
 void		obj_box_red_step(t_instance *this);
 void		obj_box_red_draw(t_instance *this);
-// object gold red, blue
+// object gold red
 t_instance	*create_gold_red_instance(int x, int y);
-t_instance	*create_gold_blue_instance(int x, int y);
 void		obj_gold_red_step(t_instance *this);
 void		obj_gold_red_draw(t_instance *this);
 // object inverter
@@ -422,7 +415,6 @@ void		map_0_2(int *width, int *height);
 void		map_0_3(int *width, int *height);
 void		map_0_4(int *width, int *height);
 void		map_0_5(int *width, int *height);
-void		map_0_6(int *width, int *height);
 void		map_1(int *width, int *height);
 void		map_2(int *width, int *height);
 void		map_3(int *width, int *height);

@@ -38,14 +38,10 @@ static int	init_spr_zombie_idle(void)
 							add_sprite(32, 64, 10, (t_box){19, 35, 49, 64});
 	game->asset.spr_zombie_blue_idle_left_reverse = \
 							add_sprite(32, 64, 10, (t_box){14, 35, 44, 64});
-	game->asset.spr_zombie_red_die_right_single = \
-							add_sprite(32, 64, 10, (t_box){14, 35, 44, 64});
 	if (!add_sprite_subimage(game->asset.spr_zombie_blue_idle_right_reverse, \
 							"./res/png/zombie_right/zombie_", 1, 0) || \
 		!add_sprite_subimage(game->asset.spr_zombie_blue_idle_left_reverse, \
-							"./res/png/zombie_left/zombie_", 1, 0) || \
-		!add_sprite_subimage(game->asset.spr_zombie_red_die_right_single, \
-							"./res/png/zombie_red/zombie_", 0, 0))
+							"./res/png/zombie_left/zombie_", 1, 0))
 		return (ERROR);
 	return (OK);
 }
