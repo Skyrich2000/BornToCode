@@ -13,7 +13,7 @@
 #include "engine.h"
 #include "asset.h"
 
-int		init_asset(void)
+int	init_asset(void)
 {
 	return (init_background_main() && \
 			init_background_nick() && \

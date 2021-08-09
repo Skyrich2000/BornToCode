@@ -179,10 +179,17 @@ fclean	: clean
 re		: fclean all
 
 norm	:
-	@python3 -m norminette include/*
+	@python3 -m norminette include/*.h
 	@python3 -m norminette src/main.c
-	python3 -m norminette src/asset/*
-	@python3 -m norminette src/engine/*
-	@python3 -m norminette src/lib/*
+	@python3 -m norminette src/asset/asset.c
+	@python3 -m norminette src/asset/background/*.c
+	@python3 -m norminette src/asset/font/*.c
+	@python3 -m norminette src/asset/map/*.c
+	@python3 -m norminette src/asset/object/*.c
+	@python3 -m norminette src/asset/scene/*.c
+	@python3 -m norminette src/asset/script/*.c
+	@python3 -m norminette src/asset/sprite/*.c
+	@python3 -m norminette src/engine/*.c
+	@python3 -m norminette src/lib/*.c
 
 .PHONY	:	all clean fclean re bonus norm
