@@ -15,7 +15,8 @@
 void	draw_img(void *img, int x, int y)
 {
 	if (img)
-		mlx_put_image_to_window(g()->mlx, g()->win, img, x - g()->view.view_xview, y - g()->view.view_yview);
+		mlx_put_image_to_window(g()->mlx, g()->win, img, \
+						x - g()->view.view_xview, y - g()->view.view_yview);
 }
 
 void	draw_background(t_background *back)
@@ -46,5 +47,6 @@ void	draw_text(t_font *font, char *str, int pos[2], float align[2])
 	x = pos[0] - font->size * sl_strlen(str) * align[0];
 	y = pos[1] - font->size * align[1];
 	while (str[++i])
-		draw_img(font->img[(int)str[i]], x + correction + font->size * i, y + correction);
+		draw_img(font->img[(int)str[i]], \
+						x + correction + font->size * i, y + correction);
 }

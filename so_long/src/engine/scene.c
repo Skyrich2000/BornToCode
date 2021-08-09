@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/07/16 07:49:02 by ycha              #+#    #+#             */
+/*   Updated: 2021/08/03 03:27:27 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "engine.h"
 
-t_scene		*add_scene(t_background *background, void (*start)(void), void (*controller)(void), void (*ui)(void), void (*end)(void))
+t_scene	*add_scene(t_background *background, void (*start)(void), \
+		void (*controller)(void), void (*ui)(void), void (*end)(void))
 {
-	t_scene *new;
+	t_scene	*new;
 
 	new = (t_scene *)malloc(sizeof(t_scene));
 	if (!new)
@@ -15,7 +28,7 @@ t_scene		*add_scene(t_background *background, void (*start)(void), void (*contro
 	return (new);
 }
 
-void		scene_start()
+void	scene_start(void)
 {
 	if (DEBUG)
 		printf("scene start\n");
@@ -24,7 +37,7 @@ void		scene_start()
 		printf("scene start done\n");
 }
 
-void		scene_end()
+void	scene_end(void)
 {
 	if (DEBUG)
 		printf("scene end\n");
@@ -33,16 +46,15 @@ void		scene_end()
 		printf("scene end done\n");
 }
 
-void		scene_restart()
+void	scene_restart(void)
 {
 	g()->scene->end();
 	g()->scene->start();
 }
 
-void		scene_change(t_scene *scene)
+void	scene_change(t_scene *scene)
 {
 	g()->scene->end();
 	g()->scene = scene;
 	g()->scene->start();
 }
-

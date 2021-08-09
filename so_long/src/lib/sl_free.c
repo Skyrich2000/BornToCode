@@ -16,3 +16,10 @@ void	sl_free(void *data)
 {
 	free(data);
 }
+
+void	sl_free_arr3(char *str[3])
+{
+	free(str[0]);
+	free(str[1]);
+	free(str[2]);
+}

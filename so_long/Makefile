@@ -21,6 +21,7 @@ ENGINE		=	game.c \
 				list.c \
 				scene.c \
 				input.c \
+				math.c \
 				font.c
 
 BACKGROUND	=	background_main.c \
@@ -132,9 +133,6 @@ idx			=	0
 
 all		: $(NAME)
 
-norm	:
-	norminette $(SCRS)
-
 %.o		: %.c
 	$(eval idx = $(shell expr $(idx) + 1))
 	$(eval t_idx = $(shell expr $(idx) % 4 + 1))
@@ -180,4 +178,11 @@ fclean	: clean
 
 re		: fclean all
 
-.PHONY	:	all clean fclean re bonus
+norm	:
+	@python3 -m norminette include/*
+	@python3 -m norminette src/main.c
+	python3 -m norminette src/asset/*
+	@python3 -m norminette src/engine/*
+	@python3 -m norminette src/lib/*
+
+.PHONY	:	all clean fclean re bonus norm

@@ -12,9 +12,9 @@
 
 #include "engine.h"
 
-t_list	*create_list()
+t_list	*create_list(void)
 {
-	t_list *new;
+	t_list	*new;
 
 	new = (t_list *)malloc(sizeof(t_list));
 	if (!new)
@@ -27,7 +27,7 @@ t_list	*create_list()
 
 t_list	*push_list(t_list *list, void *data)
 {
-	t_list *new;
+	t_list	*new;
 
 	new = (t_list *)malloc(sizeof(t_list));
 	if (!new)
@@ -43,7 +43,7 @@ t_list	*push_list(t_list *list, void *data)
 
 void	*pop_list(t_list *node)
 {
-	void *data;
+	void	*data;
 
 	data = node->data;
 	node->prev->next = node->next;

@@ -32,6 +32,7 @@ char		*ft_strchr(const char *s, int c);
 int			sl_atoi(const char *str);
 void		sl_exit(int errno);
 int			sl_abs(int a);
-size_t      sl_strlcpy(char *dst, char *src, size_t dstsize);
+size_t		sl_strlcpy(char *dst, char *src, size_t dstsize);
+void		sl_free_arr3(char *str[3]);
 
 #endif

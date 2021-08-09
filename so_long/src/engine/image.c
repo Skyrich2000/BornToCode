@@ -14,7 +14,7 @@
 
 t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed, t_box mask)
 {
-	t_sprite *new;
+	t_sprite	*new;
 
 	new = (t_sprite *)malloc(sizeof(t_sprite));
 	if (!new)
@@ -29,7 +29,7 @@ t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed, t_box mask)
 
 t_background	*add_background(char *path, int x, int y)
 {
-	t_background *new;
+	t_background	*new;
 
 	new = (t_background *)malloc(sizeof(t_background));
 	if (!new)
@@ -45,10 +45,9 @@ t_background	*add_background(char *path, int x, int y)
 	return (new);
 }
 
-int			add_sprite_subimage(t_sprite *spr, char *path, int start, int end)
+int	add_sprite_subimage(t_sprite *spr, char *path, int start, int end)
 {
-	char	*num;
-	char	*str[2];
+	char	*str[3];
 	void	*img;
 	int		dir;
 
@@ -58,24 +57,23 @@ int			add_sprite_subimage(t_sprite *spr, char *path, int start, int end)
 	start += dir;
 	while (start != end)
 	{
-		num = sl_itoa(end);
-		str[0] = sl_strjoin(path, num);
-		str[1] = sl_strjoin(str[0], ".png");
+		str[0] = sl_itoa(end);
+		str[1] = sl_strjoin(path, str[0]);
+		str[2] = sl_strjoin(str[1], ".png");
 		if (DEBUG)
-			printf("LOAD: %s\n", str[1]);
-		img = mlx_png_file_to_image(g()->mlx, str[1], &spr->width, &spr->height);
+			printf("LOAD: %s\n", str[2]);
+		img = mlx_png_file_to_image(g()->mlx, str[2], \
+									&spr->width, &spr->height);
 		if (!img)
 			return (ERROR);
 		push_list(spr->imgs, img);
 		end += dir;
-		free(str[0]);
-		free(str[1]);
-		free(num);
+		sl_free_arr3(str);
 	}
 	return (OK);
 }
 
-void		change_sprite(t_instance *id, t_sprite *spr)
+void	change_sprite(t_instance *id, t_sprite *spr)
 {
 	if (id->spr == spr)
 		return ;

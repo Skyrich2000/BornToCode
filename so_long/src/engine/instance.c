@@ -12,7 +12,8 @@
 
 #include "engine.h"
 
-t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance *this), void (*draw)(t_instance *this))
+t_instance	*create_instance(t_sprite *spr, int data[3], \
+				void (*step)(t_instance *this), void (*draw)(t_instance *this))
 {
 	t_list		*node;
 	t_instance	*new;
@@ -32,15 +33,10 @@ t_instance  *create_instance(t_sprite *spr, int data[3], void (*step)(t_instance
 	new->step = step;
 	new->draw = draw;
 	new->draw_time = 0;
-    return (new);
+	return (new);
 }
 
-int			point_distance(int x1, int y1, int x2, int y2)
-{
-	return ((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-}
-
-int			place_meeting(t_instance *id, int x, int y, t_instance *other)
+int	place_meeting(t_instance *id, int x, int y, t_instance *other)
 {
 	t_box		box;
 	t_box		box2;
@@ -73,10 +69,9 @@ t_instance	*place_meeting_type(t_instance *id, int x, int y, int type)
 	return (ERROR);
 }
 
-
-void		destroy_all_instance()
+void	destroy_all_instance(void)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < OBJ_SIZE)
@@ -86,7 +81,7 @@ void		destroy_all_instance()
 	}
 }
 
-void		destroy_instance(t_instance *id)
+void	destroy_instance(t_instance *id)
 {
 	if (id)
 	{

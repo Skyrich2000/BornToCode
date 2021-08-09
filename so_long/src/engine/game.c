@@ -11,19 +11,15 @@
 /* ************************************************************************** */
 
 #include "engine.h"
-#include <time.h>
 
-time_t start;
-
-t_game	*g()
+t_game	*g(void)
 {
-	static t_game game;
+	static t_game	game;
 
 	return (&game);
 }
 
-// TODO: free list if malloc failed
-int		init_game()
+int	init_game(void)
 {
 	t_game	*game;
 	int		i;
@@ -52,35 +48,13 @@ int		init_game()
 	return (OK);
 }
 
-static void	print_fps()
-{
-	static int	fps = 0;
-	time_t		end;
-
-	fps++;
-	time(&end);
-	if (start == 0 || (float)(end - start) >= 1.0)
-	{
-		printf("fps : %d\n", fps);
-		fps = 0;
-		time(&start);
-	}
-}
-
-int		loop()
+void	loop_instance(void)
 {
 	int			i;
 	t_list		*node;
 	t_instance	*ins;
 
-	print_fps();
 	i = -1;
-	if (!g()->frame.count && g()->scene->controller)
-		g()->scene->controller();
-	g()->canvas.x = g()->view.view_xview;
-	g()->canvas.y = g()->view.view_yview;
-	draw_background(&g()->canvas);
-	draw_background(g()->scene->background);
 	while (++i < OBJ_SIZE)
 	{
 		node = g()->instances[i]->next;
@@ -94,6 +68,17 @@ int		loop()
 				ins->step(ins);
 		}
 	}
+}
+
+int	loop(void)
+{
+	if (!g()->frame.count && g()->scene->controller)
+		g()->scene->controller();
+	g()->canvas.x = g()->view.view_xview;
+	g()->canvas.y = g()->view.view_yview;
+	draw_background(&g()->canvas);
+	draw_background(g()->scene->background);
+	loop_instance();
 	if (g()->scene->ui)
 		g()->scene->ui();
 	if (keyboard_check(KEY_P))

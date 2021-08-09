@@ -1,40 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keyboard.c                                         :+:      :+:    :+:   */
+/*   instance.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/16 07:49:11 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/24 00:50:27 by ycha             ###   ########.fr       */
+/*   Created: 2021/07/16 07:49:08 by ycha              #+#    #+#             */
+/*   Updated: 2021/08/03 03:03:40 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 
-int	keyboard_check(int keycode)
+int	point_distance(int x1, int y1, int x2, int y2)
 {
-	return (g()->keys[keycode]);
-}
-
-int	key_press(int keycode)
-{
-	if (keycode == 53)
-	{
-		mlx_destroy_window(g()->mlx, g()->win);
-		exit(0);
-	}
-	g()->keys[keycode] = 1;
-	return (OK);
-}
-
-int	key_release(int keycode)
-{
-	g()->keys[keycode] = 0;
-	return (OK);
-}
-
-int	exit_press(void)
-{
-	exit(0);
+	return ((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 }
