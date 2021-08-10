@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   obj_exit.c                                         :+:      :+:    :+:   */
+/*   scr_nick_blink.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/10 17:23:09 by su                #+#    #+#             */
-/*   Updated: 2021/08/10 17:23:11 by su               ###   ########.fr       */
+/*   Created: 2021/08/10 16:45:41 by su                #+#    #+#             */
+/*   Updated: 2021/08/10 18:59:27 by su               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
+#include "asset.h"
 
-t_instance	*create_exit_instance(int x, int y)
+void	scr_nick_blink(void)
 {
-	t_instance	*ins;
-
-	ins = create_instance(g()->asset.spr_exit, \
-						(int [3]){EXIT, x, y}, 0, draw_self);
-	return (ins);
+	if (g()->global.time > 20 && g()->global.nick_index < NICK_SIZE)
+	{
+		g()->global.time = 0;
+		if (g()->global.nick[g()->global.nick_index] == '_')
+			g()->global.nick[g()->global.nick_index] = ' ';
+		else
+			g()->global.nick[g()->global.nick_index] = '_';
+	}
 }

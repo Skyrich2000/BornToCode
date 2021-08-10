@@ -37,8 +37,6 @@ t_instance	*create_box_blue_instance(int x, int y)
 
 void	obj_box_red_step(t_instance *this)
 {
-	if (DEBUG)
-		printf("obj_box_step start\n");
 	if (!(this->condition & C_AVATAR))
 	{
 		if (this->condition & C_DEING)
@@ -57,8 +55,6 @@ void	obj_box_red_step(t_instance *this)
 		if (g()->global.time > 0)
 			scr_load_footprint(this, &this->obj.box.route, 0);
 	}
-	if (DEBUG)
-		printf("obj_box_step end\n");
 }
 
 void	obj_box_red_draw(t_instance *this)

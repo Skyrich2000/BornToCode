@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
+/*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:16 by ycha              #+#    #+#             */
-/*   Updated: 2021/08/03 03:03:40 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/10 17:32:43 by su               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ int	add_sprite_subimage(t_sprite *spr, char *path, int start, int end)
 		str[0] = sl_itoa(end);
 		str[1] = sl_strjoin(path, str[0]);
 		str[2] = sl_strjoin(str[1], ".png");
-		if (DEBUG)
-			printf("LOAD: %s\n", str[2]);
+		DEBUG && printf("LOAD: %s\n", str[2]);
 		img = mlx_png_file_to_image(g()->mlx, str[2], \
 									&spr->width, &spr->height);
 		if (!img)

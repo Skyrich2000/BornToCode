@@ -1,12 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   scene_nick.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/10 17:12:30 by su                #+#    #+#             */
+/*   Updated: 2021/08/10 19:10:54 by su               ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "engine.h"
 
-int			init_scene_nick()
+int	init_scene_nick(void)
 {
-	g()->asset.scene_nick = add_scene(g()->asset.background_nick, scene_nick_start, scene_nick_controller, scene_nick_ui, scene_nick_end);
+	g()->asset.scene_nick = \
+					add_scene(g()->asset.background_nick, \
+					scene_nick_start, \
+					scene_nick_controller, \
+					scene_nick_ui, \
+					scene_nick_end);
 	return (OK);
 }
 
-void		scene_nick_start()
+void	scene_nick_start(void)
 {
 	g()->view.view_xview = 0;
 	g()->view.view_yview = 0;
@@ -15,82 +32,40 @@ void		scene_nick_start()
 	g()->global.nick[NICK_SIZE] = '\0';
 }
 
-void		scene_nick_controller()
+void	scene_nick_controller(void)
 {
-	int i;
-	char *ascii;
-	static char prev[50];
-	static char prev_backspace;
+	char		*ascii;
+	static char	prev[50];
+	static char	prev_backspace;
 
-	ascii = (char [50]){'A', 'S', 'D', 'F', 'H', 'G', 'Z', 'X', 'C', 'V', '\0', 'B', 'Q', 'W', 'E', 'R', 'Y', 'T', '1', '2', '3', '4', '6', '5', '\0', '9', '7', '-', '8', '0', ']', 'O', 'U', '[', 'I', 'P', '\0', 'L', 'J', '\"', 'K', ':', '\0', '\0', '?', 'N', 'M', '.', '\0', '\0'};
-
-	if (DEBUG)
-		printf("scene_nick_controller start\n");
-
+	ascii = (char [50]){'A', 'S', 'D', 'F', 'H', 'G', 'Z', 'X', 'C', 'V', '\0', \
+					'B', 'Q', 'W', 'E', 'R', 'Y', 'T', '1', '2', '3', '4', \
+					'6', '5', '\0', '9', '7', '-', '8', '0', ']', 'O', 'U', \
+					'[', 'I', 'P', '\0', 'L', 'J', '\"', 'K', ':', '\0', \
+					'\0', '?', 'N', 'M', '.', '\0', '\0'};
+	DEBUG && printf("scene_nick_controller start\n");
 	g()->global.time++;
-	if (g()->global.time > 20 && g()->global.nick_index < NICK_SIZE)
-	{
-		g()->global.time = 0;
-		if (g()->global.nick[g()->global.nick_index] == '_')
-			g()->global.nick[g()->global.nick_index] = ' ';
-		else
-			g()->global.nick[g()->global.nick_index] = '_';
-	}
-
-	i = -1;
-	while (++i < 50)
-	{
-		if (keyboard_check(KEY_ENTER) && g()->global.nick_index)
-		{
-			g()->global.nick[g()->global.nick_index] = '\0';
-			scene_change(g()->asset.scene_play);
-			return ;
-		}
-		else if (keyboard_check(KEY_BACKSPACE) && !prev_backspace)
-		{
-			if (g()->global.nick_index <= 0)
-				printf("\a\n");
-			else
-			{
-				if (g()->global.nick[g()->global.nick_index] == '_')
-					g()->global.nick[g()->global.nick_index] = ' ';
-				g()->global.nick[--g()->global.nick_index] = ' ';
-			}
-			break ;
-		}
-		else if (keyboard_check(i) && !prev[i] && ascii[i] != '\0')
-		{
-			if (g()->global.nick_index >= NICK_SIZE)
-				printf("\a\n");
-			else
-				g() -> global.nick[g()->global.nick_index++] = ascii[i];
-		}
-	}
-
-	i = -1;
-	while (++i < 50)
-	{
-		prev[i] = keyboard_check(i);
-	}
-	prev_backspace = keyboard_check(KEY_BACKSPACE);
-
-	if (DEBUG)
-		printf("scene_nick_controller end\n");
+	scr_nick_blink();
+	scr_nick_keycheck(ascii, prev, prev_backspace);
+	scr_nick_keysave(prev, &prev_backspace);
+	DEBUG && printf("scene_nick_controller end\n");
 }
 
-void		scene_nick_ui()
+void	scene_nick_ui(void)
 {
 	draw_text(g()->asset.font_fat_small, \
 		"INPUT YOUR NICKNAME", \
-		(int [2]){g()->view.view_xview + g()->view.view_wview / 2, g()->view.view_yview + g()->view.view_hview / 2 - 40}, \
+		(int [2]){g()->view.view_xview + g()->view.view_wview / 2, \
+					g()->view.view_yview + g()->view.view_hview / 2 - 40}, \
 		(float [2]){A_CENTER, A_CENTER});
 	draw_text(g()->asset.font_fat_big, \
 		g()->global.nick, \
-		(int [2]){g()->view.view_xview + g()->view.view_wview / 2, g()->view.view_yview + g()->view.view_hview / 2}, \
+		(int [2]){g()->view.view_xview + g()->view.view_wview / 2, \
+					g()->view.view_yview + g()->view.view_hview / 2}, \
 		(float [2]){A_CENTER, A_CENTER});
 }
 
-void		scene_nick_end()
+void	scene_nick_end(void)
 {
 	destroy_all_instance();
 }

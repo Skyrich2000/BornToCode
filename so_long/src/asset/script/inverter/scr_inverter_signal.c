@@ -6,7 +6,7 @@
 /*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 16:51:46 by su                #+#    #+#             */
-/*   Updated: 2021/08/10 17:10:30 by su               ###   ########.fr       */
+/*   Updated: 2021/08/10 18:55:58 by su               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 #define	V		1
 #define	IN		2
 #define	OUT		3
+
+static void	set_mv(int mv_signal, int *h_mv, int *v_mv)
+{
+	*h_mv = \
+		(((mv_signal & SIG_MV_RIGHT) > 0) - ((mv_signal & SIG_MV_LEFT) > 0));
+	*v_mv = \
+		(((mv_signal & SIG_MV_DOWN) > 0) - ((mv_signal & SIG_MV_UP) > 0));
+}
 
 void	scr_inverter_before(t_instance *this)
 {
@@ -30,12 +38,10 @@ void	scr_inverter_before(t_instance *this)
 	dir = (mv[IN] & (0b00110)) | (mv[OUT] & (0b00110));
 	g()->global.player->signal = \
 							SIG_MV_AUTO | mv[IN] | scr_convert_mv_signal(dir);
-	mv[H] = (((mv[IN] & SIG_MV_RIGHT) > 0) - ((mv[IN] & SIG_MV_LEFT) > 0));
-	mv[V] = (((mv[IN] & SIG_MV_DOWN) > 0) - ((mv[IN] & SIG_MV_UP) > 0));
+	set_mv(mv[IN], &mv[H], &mv[V]);
 	dis = (this->x - g()->global.player->x) * mv[H] + \
-									(this->y - g()->global.player->y) * mv[V];
-	mv[H] = (((mv[OUT] & SIG_MV_RIGHT) > 0) - ((mv[OUT] & SIG_MV_LEFT) > 0));
-	mv[V] = (((mv[OUT] & SIG_MV_DOWN) > 0) - ((mv[OUT] & SIG_MV_UP) > 0));
+					(this->y - g()->global.player->y) * mv[V];
+	set_mv(mv[OUT], &mv[H], &mv[V]);
 	ins = create_dummy_instance(this->x + mv[H] * (dis - 10), \
 					this->y + mv[V] * dis, !this->obj.inverter.inverted, -1);
 	ins->signal = SIG_MV_AUTO | \
@@ -55,8 +61,8 @@ void	scr_inverter_active(t_instance *this)
 	g()->global.inverted = !this->obj.inverter.inverted;
 	g()->global.invert_signal = SIG_ACTIVE;
 	g()->global.player->signal = 0;
-	scr_avatarize(PLAYER);
 	g()->frame.skip_frame = 0;
+	scr_avatarize(PLAYER);
 	in_mv = this->signal & 0b11110;
 	out_mv = this->obj.inverter.out_dir[in_mv];
 	dir = this->signal & (SIG_DIR_LEFT | SIG_DIR_RIGHT);
@@ -64,8 +70,7 @@ void	scr_inverter_active(t_instance *this)
 	this->obj.inverter.dummy = 0;
 	g()->global.player = create_player_instance(this->x, this->y);
 	g()->global.player->signal = SIG_MV_AUTO | out_mv | dir;
-	h_mv = (((out_mv & SIG_MV_RIGHT) > 0) - ((out_mv & SIG_MV_LEFT) > 0));
-	v_mv = (((out_mv & SIG_MV_DOWN) > 0) - ((out_mv & SIG_MV_UP) > 0));
+	set_mv(out_mv, &h_mv, &v_mv);
 	create_trigger_instance((int [2]){this->x + h_mv * 96, this->y + v_mv * 90}, \
 						!this->obj.inverter.inverted, g()->global.player, 0);
 }

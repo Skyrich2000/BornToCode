@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
+#    By: su <su@student.42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/16 07:48:16 by ycha              #+#    #+#              #
-#    Updated: 2021/08/04 21:06:37 by ycha             ###   ########.fr        #
+#    Updated: 2021/08/10 19:41:43 by su               ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,17 +45,17 @@ MAP			=	map.c \
 				map_4.c \
 				map_5.c
 
-OBJECT		=	obj_player.c \
-				obj_zombie.c \
-				obj_wall.c \
-				obj_wait.c \
-				obj_box.c \
-				obj_gold.c \
-				obj_inverter.c \
-				obj_trigger.c \
+OBJECT		=	obj_box.c \
 				obj_dummy.c \
 				obj_exit.c \
-				obj_plane.c
+				obj_gold.c \
+				obj_inverter.c \
+				obj_plane.c \
+				obj_player.c \
+				obj_trigger.c \
+				obj_wait.c \
+				obj_wall.c \
+				obj_zombie.c \
 
 SCENE		=	scene_main.c \
 				scene_nick.c \
@@ -66,47 +66,57 @@ SCRIPT		=	dummy/scr_dummy_move.c \
 				inverter/scr_inverter_signal.c \
 				inverter/scr_inverter_trigger.c \
 				inverter/scr_inverter_wait.c \
+				inverter/scr_inverter_step.c \
+				nick_controller/scr_nick_blink.c \
+				nick_controller/scr_nick_key.c \
+				play_controller/scr_alive_zombie.c \
+				play_controller/scr_avatarize.c \
+				play_controller/scr_state1.c \
+				play_controller/scr_state2.c \
+				play_ui/scr_ui_bottom.c \
+				play_ui/scr_ui_light.c \
+				play_ui/scr_ui_top.c \
 				player/scr_player_attack.c \
 				player/scr_player_check_selfs.c \
-				player/scr_player_collision.c \
+				player/scr_player_collision1.c \
+				player/scr_player_collision2.c \
+				player/scr_player_die.c \
+				player/scr_player_step.c \
 				player/scr_player_get_spr.c \
 				player/scr_player_move.c \
-				player/scr_player_die.c \
 				trigger/scr_trigger.c \
 				zombie/scr_zombie_move.c \
-				play/scr_avatarize.c \
-				play/scr_state.c \
-				scr_footprint.c \
 				scr_animation.c \
-				scr_get_route.c \
 				scr_build_map.c \
-				scr_signal.c \
-				scr_save_rank.c
+				scr_footprint.c \
+				scr_get_route.c \
+				scr_save_rank.c \
+				scr_signal.c
 
-SPRITE		=	spr_player_red.c \
-				spr_player_blue.c \
-				spr_zombie.c \
+SPRITE		=	spr_box.c \
 				spr_empty.c \
-				spr_light.c \
-				spr_wall.c \
-				spr_box.c \
 				spr_exit.c \
-				spr_plane.c \
-				spr_logo.c \
-				spr_state.c \
 				spr_gold.c \
-				spr_inverter.c
+				spr_inverter.c \
+				spr_light.c \
+				spr_logo.c \
+				spr_plane.c \
+				spr_player_blue.c \
+				spr_player_red.c \
+				spr_state.c \
+				spr_wall.c \
+				spr_zombie.c \
 
-LIB			=	sl_free.c \
-				sl_itoa.c \
-				sl_strjoin.c \
-				sl_split.c \
-				sl_rev_atoi.c \
-				sl_strchr.c \
+LIB			=	sl_abs.c \
 				sl_atoi.c \
-				sl_abs.c \
+				sl_exit.c \
+				sl_free.c \
+				sl_itoa.c \
+				sl_rev_atoi.c \
+				sl_split.c \
+				sl_strchr.c \
+				sl_strjoin.c \
 				sl_strlcpy.c \
-				sl_exit.c
 
 SRCS		=	src/main.c \
 				src/asset/asset.c \
@@ -156,7 +166,7 @@ $(NAME)	: $(OBJS)
 	@printf "░░░██║░░░███████╗██║░╚███║╔███████║╔████████\n"
 	@printf "░░░╚═╝░░░╚══════╝╚═╝░░╚══╝╚═══════╝╚═══════╝\n"
 	@printf "\n\n"
-	@afplay bgm.mp3 -v 0.3 & ./so_long map.ber ; pkill afplay
+#	@afplay bgm.mp3 -v 0.3 & ./so_long map.ber ; pkill afplay
 
 run		:
 	@printf "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\e[1;33mso\e[1;31m long\e[1;37m \e[0;32mis Ready 💚\e[0m\n\n\n"
@@ -167,7 +177,7 @@ run		:
 	@printf "░░░██║░░░███████╗██║░╚███║╔███████║╔████████\n"
 	@printf "░░░╚═╝░░░╚══════╝╚═╝░░╚══╝╚═══════╝╚═══════╝\n"
 	@printf "\n\n"
-	@afplay bgm.mp3 -v 0.3 & ./so_long map.ber ; pkill afplay
+#	@afplay bgm.mp3 -v 0.3 & ./so_long map.ber ; pkill afplay
 
 clean	:
 	@rm -f $(OBJS)

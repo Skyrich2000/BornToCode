@@ -6,7 +6,7 @@
 /*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 16:36:14 by su                #+#    #+#             */
-/*   Updated: 2021/08/10 16:44:43 by su               ###   ########.fr       */
+/*   Updated: 2021/08/10 18:46:08 by su               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	scr_player_move_auto(t_instance *this)
 
 static void	scr_player_move_inner(t_instance *this, int prev[2], int mv[2])
 {
-	if (keyboard_check(KEY_SPACEBAR))
+	if (keyboard_check(KEY_SPACEBAR) && g()->global.state != S_RESTRAIGHT)
 	{
 		change_sprite(this, scr_player_get_spr(SPR_ATTACK, \
 										this->obj.player.inverted, this->dir));

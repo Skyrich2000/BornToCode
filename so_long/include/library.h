@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asset.h                                            :+:      :+:    :+:   */
+/*   library.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
+/*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:29 by ycha              #+#    #+#             */
-/*   Updated: 2021/08/06 03:45:07 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/10 19:01:46 by su               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ void		sl_exit(int errno);
 int			sl_abs(int a);
 size_t		sl_strlcpy(char *dst, char *src, size_t dstsize);
 void		sl_free_arr3(char *str[3]);
+void		sl_free_arr5(char *str[5]);
 
 #endif

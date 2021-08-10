@@ -1,6 +1,7 @@
 
 ## TODO
 
+* 순위가 잘 기록되는지 확인할것
 * 재순행 공격 못하게 막기
 
 * 게임 로직
@@ -80,7 +81,7 @@
 11111111111", ' ');
 
 	* map 1 : 이제 근본 맵 시작
-	
+
 ```c
 func[(int)'1'] = create_wall_instance;
 func[(int)'Z'] = create_zombie_blue_instance;
@@ -89,7 +90,7 @@ func[(int)'4'] = create_box_blue_instance;
 func[(int)'C'] = create_gold_red_instance;
 func[(int)'E'] = create_exit_instance;
 func[(int)'P'] = create_player_instance;
-```	
+```
 
 # engine
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
+/*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:02 by ycha              #+#    #+#             */
-/*   Updated: 2021/08/03 03:27:27 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/10 19:48:43 by su               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,31 +30,33 @@ t_scene	*add_scene(t_background *background, void (*start)(void), \
 
 void	scene_start(void)
 {
-	if (DEBUG)
-		printf("scene start\n");
-	g()->scene->start();
-	if (DEBUG)
-		printf("scene start done\n");
+	DEBUG && printf("scene start\n");
+	if (g()->scene->start)
+		g()->scene->start();
+	DEBUG && printf("scene start done\n");
 }
 
 void	scene_end(void)
 {
-	if (DEBUG)
-		printf("scene end\n");
-	g()->scene->end();
-	if (DEBUG)
-		printf("scene end done\n");
+	DEBUG && printf("scene end\n");
+	if (g()->scene->end)
+		g()->scene->end();
+	DEBUG && printf("scene end done\n");
 }
 
 void	scene_restart(void)
 {
-	g()->scene->end();
-	g()->scene->start();
+	if (g()->scene->end)
+		g()->scene->end();
+	if (g()->scene->start)
+		g()->scene->start();
 }
 
 void	scene_change(t_scene *scene)
 {
-	g()->scene->end();
+	if (g()->scene->end)
+		g()->scene->end();
 	g()->scene = scene;
-	g()->scene->start();
+	if (g()->scene->start)
+		g()->scene->start();
 }

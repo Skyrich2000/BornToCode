@@ -1,10 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   obj_trigger.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/10 17:25:35 by su                #+#    #+#             */
+/*   Updated: 2021/08/10 17:26:03 by su               ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "engine.h"
 
-t_instance *create_trigger_instance(int pos[2], int inverted, t_instance *target, int signal)
+t_instance	*create_trigger_instance(int pos[2], int inverted, \
+												t_instance *target, int signal)
 {
-	t_instance *ins;
+	t_instance	*ins;
 
-	ins = create_instance(g()->asset.spr_empty, (int[3]){TRIGGER, pos[0], pos[1]}, 0, 0);
+	ins = create_instance(g()->asset.spr_empty, \
+									(int [3]){TRIGGER, pos[0], pos[1]}, 0, 0);
 	ins->obj.trigger.target = target;
 	ins->obj.trigger.signal = signal;
 	ins->obj.trigger.inverted = inverted;

@@ -1,18 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   scene_play.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/10 17:17:40 by su                #+#    #+#             */
+/*   Updated: 2021/08/10 18:44:01 by su               ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "engine.h"
 
 #define VIEW_SPEED	10
 
-int			init_scene_play()
+int	init_scene_play(void)
 {
-	g()->asset.scene_play = add_scene(g()->asset.background_nick, scene_play_start, scene_play_controller, scene_play_ui, scene_play_end);
+	g()->asset.scene_play = \
+			add_scene(g()->asset.background_nick, \
+			scene_play_start, \
+			scene_play_controller, \
+			scene_play_ui, \
+			scene_play_end);
 	return (OK);
 }
 
-void		scene_play_start()
+void	scene_play_start(void)
 {
-	if (DEBUG)
-		printf("scene_play_start start\n");
-
+	DEBUG && printf("scene_play_start start\n");
 	g()->global.tutorial = 0;
 	g()->global.steps = 0;
 	g()->global.time = 0;
@@ -24,21 +39,20 @@ void		scene_play_start()
 	g()->global.invert_signal = SIG_NORMAL;
 	g()->global.gold_num = 0;
 	g()->global.darkness = 0;
-	g()->asset.maps[g()->global.map_index](&g()->global.map_width, &g()->global.map_height);
-	g()->global.view_xview_aim = -16 + g()->global.map_width * 32 / 2 - g()->view.view_wview / 2;
-	g()->global.view_yview_aim = -32 + g()->global.map_height * 32 / 2 - g()->view.view_hview / 2;
+	g()->asset.maps[g()->global.map_index](&g()->global.map_width, \
+											&g()->global.map_height);
+	g()->global.view_xview_aim = \
+			-16 + g()->global.map_width * 32 / 2 - g()->view.view_wview / 2;
+	g()->global.view_yview_aim = \
+			-32 + g()->global.map_height * 32 / 2 - g()->view.view_hview / 2;
 	g()->view.view_xview = g()->global.view_xview_aim;
 	g()->view.view_yview = g()->global.view_yview_aim;
-	if (DEBUG)
-		printf("scene_play_start end\n");
+	DEBUG && printf("scene_play_start end\n");
 }
 
-// TODO: move view port if map is big
-void		scene_play_controller()
+void	scene_play_controller(void)
 {
-	if (DEBUG)
-		printf("scene_play_controller start\n");
-
+	DEBUG && printf("scene_play_controller start\n");
 	if (g()->global.state == S_READY)
 		scr_state_ready();
 	else if (g()->global.state == S_STRAIGHT)
@@ -51,147 +65,48 @@ void		scene_play_controller()
 		scr_state_clear();
 	else if (g()->global.state == S_GAMEOVER)
 		scr_state_gameover();
-
 	if (g()->global.state != S_READY && keyboard_check(KEY_R))
-	{
-		if (g()->global.player)
-		{
-			g()->global.view_xview_aim = g()->global.player->x - g()->view.view_wview / 2;
-			g()->global.view_yview_aim = g()->global.player->y - g()->view.view_hview / 2;
-		}
-		scr_player_die(TXT_GAME_OVER);
-	}
-
-	g()->view.view_xview += (g()->global.view_xview_aim - g()->view.view_xview) / VIEW_SPEED;
-	g()->view.view_yview += (g()->global.view_yview_aim - g()->view.view_yview) / VIEW_SPEED;
-
-
-	if (DEBUG)
-		printf("scene_play_controller end\n");
+		scr_player_die(TXT_GAME_OVER, g()->global.player);
+	g()->view.view_xview += \
+			(g()->global.view_xview_aim - g()->view.view_xview) / VIEW_SPEED;
+	g()->view.view_yview += \
+			(g()->global.view_yview_aim - g()->view.view_yview) / VIEW_SPEED;
+	DEBUG && printf("scene_play_controller end\n");
 }
 
-
-// TODO: make light more lighter
-void		scene_play_ui()
+void	scene_play_ui(void)
 {
+	int		len;
+	int		up_pad;
+	int		down_pad;
 
-	if (DEBUG)
-		printf("scene_play_ui start\n");
-
+	DEBUG && printf("scene_play_ui start\n");
+	len = sl_strlen(g()->global.nick);
+	up_pad = 10;
+	down_pad = up_pad + 19 + 10;
 	draw_img(g()->canvas.img, g()->global.map_width * 32 - 32 + 16, -32);
 	draw_img(g()->canvas.img, -16, g()->global.map_height * 32 - 32);
-
-	if (g()->global.state == S_STRAIGHT || g()->global.state == S_INVERT)
-		draw_sprite(g()->asset.spr_light, g()->asset.spr_light->imgs->next, g()->global.player->x + 3, g()->global.player->y - 19);
-
-	int i;
-	i = g()->global.darkness;
-	while (--i > 0)
-		draw_sprite(g()->asset.spr_light_5, g()->asset.spr_light->imgs->next, g()->global.player->x + 3, g()->global.player->y - 19);
-
-	if (g()->global.player && g()->global.invert_signal == SIG_NO_INVERT)
-	{
-		g()->global.view_xview_aim = g()->global.player->x - g()->view.view_wview / 2;
-		g()->global.view_yview_aim = g()->global.player->y - g()->view.view_hview / 2;
-	}
-
-	// nick(state), map, step, death
-	// 1280 		 0	 0		  0
-	char	*str[5];
-	int		len = sl_strlen(g()->global.nick);
-	int		up_pad = 10;
-	int		down_pad = up_pad + 19 + 10;
-	int		x1 = 10;
-	int		x2 = len * 19 + (640 - len * 19) / 7 * 2;
-	int		x3 = len * 19 + (640 - len * 19) / 7 * 4;
-	int		x4 = 640 - 10;
-
-	draw_text(g()->asset.font_fat_small, g()->global.nick, (int[2]){g()->view.view_xview + x1, g()->view.view_yview + up_pad}, (float [2]){A_LEFT, A_UP});
-
-	if (g()->global.tutorial)
-		draw_text(g()->asset.font_fat_small, "TUTORIAL", (int[2]){g()->view.view_xview + x1, g()->view.view_yview + down_pad}, (float [2]){A_LEFT, A_UP});
-	else
-	{
-		str[0] = sl_itoa(g()->global.time_all_lv);
-		draw_text(g()->asset.font_fat_small, str[0], (int[2]){g()->view.view_xview + x1, g()->view.view_yview + down_pad}, (float [2]){A_LEFT, A_UP});
-		free(str[0]);
-	}
-
-	t_sprite *spr;
-
-	spr = g()->asset.spr_ready;
-	if (g()->global.state == S_STRAIGHT)
-		spr = g()->asset.spr_straight;
-	else if (g()->global.state == S_INVERT)
-		spr = g()->asset.spr_invert;
-	else if (g()->global.state == S_RESTRAIGHT)
-		spr = g()->asset.spr_straight;
-	else if (g()->global.state == S_CLEAR)
-		spr = g()->asset.spr_clear;
-	else if (g()->global.state == S_GAMEOVER)
-		spr = g()->asset.spr_gameover;
-
-	draw_sprite(spr, spr->imgs->next, g()->view.view_xview + x1 + len * 19 + 6, g()->view.view_yview + up_pad + 1);
-
-	draw_text(g()->asset.font_fat_small, "MAP", (int[2]){g()->view.view_xview + x2, g()->view.view_yview + up_pad}, (float [2]){A_CENTER, A_UP});
-
-	str[0] = sl_itoa(g()->global.map_index);
-	draw_text(g()->asset.font_fat_small, str[0], (int[2]){g()->view.view_xview + x2, g()->view.view_yview + down_pad}, (float [2]){A_CENTER, A_UP});
-	free(str[0]);
-
-	draw_text(g()->asset.font_fat_small, "STEP", (int[2]){g()->view.view_xview + x3, g()->view.view_yview + up_pad}, (float [2]){A_CENTER, A_UP});
-
-	str[0] = sl_itoa(g()->global.steps);
-	draw_text(g()->asset.font_fat_small, str[0], (int[2]){g()->view.view_xview + x3, g()->view.view_yview + down_pad}, (float [2]){A_CENTER, A_UP});
-	free(str[0]);
-
-	draw_text(g()->asset.font_fat_small, "DEATH", (int[2]){g()->view.view_xview + x4, g()->view.view_yview + up_pad}, (float [2]){A_RIGHT, A_UP});
-
-	str[0] = sl_itoa(g()->global.deathcount);
-	draw_text(g()->asset.font_fat_small, str[0], (int[2]){g()->view.view_xview + x4, g()->view.view_yview + down_pad}, (float [2]){A_RIGHT, A_UP});
-	free(str[0]);
-
+	scr_ui_light();
+	scr_ui_nick(10, up_pad, down_pad);
+	scr_ui_state(10, len, up_pad);
+	scr_ui_map(len * 19 + (640 - len * 19) / 7 * 2, up_pad, down_pad);
+	scr_ui_step(len * 19 + (640 - len * 19) / 7 * 4, up_pad, down_pad);
+	scr_ui_death(640 - 10, up_pad, down_pad);
 	if (g()->global.text == 0)
-	{
-		str[0] = sl_itoa(g()->global.time / 60);
-		str[1] = sl_itoa((double)(sl_abs(g()->global.time) % 60) / 60 * 100);
-		str[2] = sl_strjoin(str[0], "\'");
-		str[3] = sl_strjoin(str[2], str[1]);
-		str[4] = sl_strjoin(str[3], "\"");
-		draw_text(g()->asset.font_fat_big, str[4], (int[2]){g()->view.view_xview + g()->view.view_wview / 2, g()->view.view_yview + g()->view.view_hview - 16}, (float [2]){A_CENTER, A_BOTTOM});
-		free(str[0]);
-		free(str[1]);
-		free(str[2]);
-		free(str[3]);
-		free(str[4]);
-	}
+		scr_ui_time();
 	else
-	{
-		str[0] = "GAME OVER";
-		if (g()->global.text == TXT_TIME_OVER)
-			str[0] = "TIME OVER";
-		else if (g()->global.text == TXT_HIT_BY_ZOMBIE)
-			str[0] = "HIT BY TOAST";
-		else if (g()->global.text == TXT_MEET_MYSELF)
-			str[0] = "MEET MYSELF";
-		else if (g()->global.text == TXT_TENET_ERROR)
-			str[0] = "TOAST IS NOT DEAD";
-		else if (g()->global.text == TXT_WAIT)
-			str[0] = "WAIT";
-		draw_text(g()->asset.font_fat_big, str[0], (int[2]){g()->view.view_xview + g()->view.view_wview / 2, g()->view.view_yview + g()->view.view_hview - 16}, (float [2]){A_CENTER, A_BOTTOM});
-	}
-
-	if (DEBUG)
-		printf("scene_play_ui end\n");
+		scr_ui_text();
+	DEBUG && printf("scene_play_ui end\n");
 }
 
-void		scene_play_end()
+void	scene_play_end(void)
 {
 	t_list		*node;
 	t_instance	*ins;
 	int			*type;
 	int			i;
 
+	DEBUG && printf("scene_play_end start\n");
 	type = (int [3]){PLAYER, ZOMBIE_BLUE, BOX_RED};
 	i = -1;
 	while (++i < 3)
@@ -205,4 +120,5 @@ void		scene_play_end()
 		}
 	}
 	destroy_all_instance();
+	DEBUG && printf("scene_play_end end\n");
 }

@@ -1,0 +1,8 @@
+{
+	"files.associations": {
+		"*.ejs": "html",
+		"*.h": "swift",
+		"ostream": "c",
+		"__locale": "c"
+	}
+}

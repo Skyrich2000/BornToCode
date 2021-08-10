@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
+/*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:49:02 by ycha              #+#    #+#             */
-/*   Updated: 2021/08/03 03:27:27 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/10 18:23:52 by su               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	draw_text(t_font *font, char *str, int pos[2], float align[2])
 
 	i = -1;
 	correction = -font->real_size / 2 + font->size / 2;
-	x = pos[0] - font->size * sl_strlen(str) * align[0];
+	x = pos[0] - font->size * sl_strlen(str) *align[0];
 	y = pos[1] - font->size * align[1];
 	while (str[++i])
 		draw_img(font->img[(int)str[i]], \

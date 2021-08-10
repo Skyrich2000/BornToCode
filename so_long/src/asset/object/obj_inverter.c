@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   obj_inverter.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/10 17:23:57 by su                #+#    #+#             */
+/*   Updated: 2021/08/10 19:42:02 by su               ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "engine.h"
 
-// out_dir[SIG_MV_LEFR] = SIG_MV_DOWN
-// out_dir[SIG_MV_DOWN] = SIG_MV_LEFT
-t_instance *create_inverter_instance(int x, int y, int inverted, int out_dir[20])
+t_instance	*create_inverter_instance(int x, int y, \
+												int inverted, int out_dir[20])
 {
 	t_instance	*ins;
 
-	ins = create_instance(g()->asset.spr_inverter_idle, (int[3]){INVERTER, x, y}, obj_inverter_step, obj_inverter_draw);
+	ins = create_instance(g()->asset.spr_inverter_idle, \
+			(int [3]){INVERTER, x, y}, obj_inverter_step, obj_inverter_draw);
 	ins->obj.inverter.time = 0;
 	ins->obj.inverter.inverted = inverted;
 	ins->obj.inverter.dummy = 0;
@@ -20,42 +32,26 @@ t_instance *create_inverter_instance(int x, int y, int inverted, int out_dir[20]
 	ins->condition = C_ALIVE;
 	create_wall_inv_instance(ins->x, ins->y);
 	if (inverted == S_STRAIGHT)
-		scr_inverter_create_trigger(ins);
+		scr_inverter_start(ins);
 	else
 		scr_inverter_create_wait(ins);
 	return (ins);
 }
 
-void		obj_inverter_step(t_instance *this)
+void	obj_inverter_step(t_instance *this)
 {
-	t_sprite	*spr;
-
-	if (DEBUG)
-		printf("obj_inverter_step start\n");
-
-	if (g()->global.inverted == this->obj.inverter.inverted)
-	{
-		spr = g()->asset.spr_inverter_red;
-		if (this->obj.inverter.inverted)
-			spr = g()->asset.spr_inverter_blue;
-		change_sprite(this, spr);
-	}
-	else
-		change_sprite(this, g()->asset.spr_inverter_idle);
-
+	DEBUG && printf("obj_inverter_step start\n");
 	if (g()->global.state == S_GAMEOVER)
 	{
 		g()->frame.skip_frame = 0;
 		g()->global.darkness = 0;
 		return ;
 	}
-
-	if (this->obj.inverter.inverted == S_INVERT && g()->global.inverted == S_INVERT && g()->global.time == 0)
-	{
-		scr_inverter_destroy_wait(this);
-		scr_inverter_create_trigger(this);
-	}
-
+	scr_inverter_change_sprite(this);
+	if (this->obj.inverter.inverted == S_INVERT && \
+		g()->global.inverted == S_INVERT && \
+		g()->global.time == 0)
+		scr_inverter_start(this);
 	if (this->obj.inverter.inverted == g()->global.inverted)
 	{
 		if (this->signal & SIG_BEFORE)
@@ -64,32 +60,12 @@ void		obj_inverter_step(t_instance *this)
 			scr_inverter_active(this);
 		this->signal = 0;
 	}
-
-	if (this->obj.inverter.dummy)
-	{
-		g()->frame.skip_frame = this->obj.inverter.time / 4;
-		g()->global.darkness = this->obj.inverter.time / 3;
-		this->obj.inverter.time++;
-	}
-	else if (this->obj.inverter.time)
-	{
-		g()->frame.skip_frame = this->obj.inverter.time / 4;
-		g()->global.darkness = this->obj.inverter.time / 3;
-		this->obj.inverter.time--;
-	}
-
-	if (DEBUG)
-		printf("obj_inverter_step end\n");
+	scr_inverter_skip_frame(this);
+	DEBUG && printf("obj_inverter_step end\n");
 }
 
-void		obj_inverter_draw(t_instance *this)
+void	obj_inverter_draw(t_instance *this)
 {
-	if (DEBUG)
-		printf("obj_inverter_draw start\n");
-
 	draw_sprite(this->spr, this->img_node, this->x, this->y);
 	scr_animation(this);
-
-	if (DEBUG)
-		printf("obj_inverter_draw end\n");
 }

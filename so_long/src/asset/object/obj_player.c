@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_player.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
+/*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 07:48:53 by ycha              #+#    #+#             */
-/*   Updated: 2021/08/06 04:58:52 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/10 19:37:15 by su               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,13 @@
 
 t_instance	*create_player_instance(int x, int y)
 {
-	t_instance *ins;
+	t_instance	*ins;
 
-	ins = create_instance(scr_player_get_spr(SPR_IDLE, g()->global.inverted, 1), (int [3]){PLAYER, x, y}, obj_player_step, obj_player_draw);
+	ins = create_instance(scr_player_get_spr(SPR_IDLE, \
+												g()->global.inverted, 1), \
+												(int [3]){PLAYER, x, y}, \
+												obj_player_step, \
+												obj_player_draw);
 	ins->obj.player.inverted = g()->global.inverted;
 	ins->obj.player.attack = 0;
 	ins->obj.player.route = create_list();
@@ -34,69 +38,26 @@ t_instance	*create_player_instance(int x, int y)
 	return (ins);
 }
 
-void		obj_player_step(t_instance *this)
+void	obj_player_step(t_instance *this)
 {
-	if (DEBUG)
-		printf("obj_player_step start\n");
-
+	DEBUG && printf("obj_player_step start\n");
 	if (this->signal & SIG_MV_AUTO)
-	{
-		scr_player_move_auto(this);
-		scr_player_collision_trigger(this);
-		scr_player_collision_inverter(this);
-		if (!(this->signal & 0b11110))
-			scr_player_check_selfs(this);
-		scr_save_footprint(this, this->obj.player.route);
-	}
+		scr_player_step_signal(this);
 	else if (!(this->condition & C_AVATAR))
-	{
-		if (this->condition & C_ALIVE)
-		{
-			scr_player_move(this);
-			scr_player_attack(this);
-			scr_player_collision_gold(this);
-			scr_player_collision_wait(this);
-			scr_player_collision_trigger(this);
-			scr_player_collision_inverter(this);
-			scr_player_collision_exit(this);
-			scr_player_check_selfs(this);
-			scr_save_footprint(this, this->obj.player.route);
-		}
-		else if (this->condition & C_DEING)
-		{
-			change_sprite(this, scr_player_get_spr(SPR_DIE, this->obj.player.inverted, this->dir));
-			if (this->img_node->next == 0)
-				this->condition = C_DEAD;
-		}
-	}
+		scr_player_step_normal(this);
 	else
-	{
-		if (this->obj.player.inverted == S_STRAIGHT)
-		{
-			if (g()->global.time > 0)
-				scr_load_footprint(this, &this->obj.player.route_node, this->obj.player.inverted);
-		}
-		else
-			scr_load_footprint(this, &this->obj.player.route_node, this->obj.player.inverted);
-	}
-
+		scr_player_step_avatar(this);
 	if (this->condition & C_ALIVE)
 		scr_player_collision_zombie(this);
-
-	if (DEBUG)
-		printf("obj_player_step end\n");
+	DEBUG && printf("obj_player_step end\n");
 }
 
-void		obj_player_draw(t_instance *this)
+void	obj_player_draw(t_instance *this)
 {
-	if (DEBUG)
-		printf("obj_player_draw start\n");
-
+	DEBUG && printf("obj_player_draw start\n");
 	draw_sprite(this->spr, this->img_node, this->x, this->y);
-
 	if (!(this->condition & C_AVATAR))
 		if (!(this->condition & C_DEAD))
 			scr_animation(this);
-
-	if (DEBUG) printf("obj_player_draw end\n");
+	DEBUG && printf("obj_player_draw end\n");
 }

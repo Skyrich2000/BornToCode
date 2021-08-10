@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   obj_gold.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/10 17:23:17 by su                #+#    #+#             */
+/*   Updated: 2021/08/10 17:32:20 by su               ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "engine.h"
 
-t_instance *create_gold_red_instance(int x, int y)
+t_instance	*create_gold_red_instance(int x, int y)
 {
-	t_instance *ins;
+	t_instance	*ins;
 
-	ins = create_instance(g()->asset.spr_gold_red, (int[3]){GOLD_RED, x, y}, obj_gold_red_step, obj_gold_red_draw);
+	ins = create_instance(g()->asset.spr_gold_red, \
+			(int [3]){GOLD_RED, x, y}, obj_gold_red_step, obj_gold_red_draw);
 	ins->obj.gold.route = create_list();
 	ins->obj.gold.route_node = 0;
 	ins->condition = C_ALIVE;
@@ -12,11 +25,8 @@ t_instance *create_gold_red_instance(int x, int y)
 	return (ins);
 }
 
-void		obj_gold_red_step(t_instance *this)
+void	obj_gold_red_step(t_instance *this)
 {
-	if (DEBUG)
-		printf("obj_gold_step start\n");
-
 	if (!(this->condition & C_AVATAR))
 	{
 		if (this->condition & C_DEING)
@@ -35,12 +45,9 @@ void		obj_gold_red_step(t_instance *this)
 		if (g()->global.time > 0)
 			scr_load_footprint(this, &this->obj.gold.route, 0);
 	}
-
-	if (DEBUG)
-		printf("obj_gold_step end\n");
 }
 
-void		obj_gold_red_draw(t_instance *this)
+void	obj_gold_red_draw(t_instance *this)
 {
 	draw_sprite(this->spr, this->img_node, this->x, this->y);
 	if (!(this->condition & C_AVATAR))
