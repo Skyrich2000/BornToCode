@@ -52,7 +52,8 @@ void	scr_player_collision_exit(t_instance *this)
 
 	ins = place_meeting_type(this, this->x, this->y, EXIT);
 	if (ins && ins->condition & C_ALIVE && \
-		(g()->global.state == S_RESTRAIGHT || g()->global.invert_signal == SIG_NO_INVERT) && \
+		(g()->global.state == S_RESTRAIGHT || \
+		g()->global.invert_signal == SIG_NO_INVERT) && \
 		g()->global.gold_num == 0)
 	{
 		create_plane_instance();

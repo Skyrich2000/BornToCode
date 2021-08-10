@@ -57,7 +57,6 @@ void	scr_inverter_active(t_instance *this)
 	int	out_mv;
 	int	dir;
 
-	printf("inversion start\n");
 	g()->global.inverted = !this->obj.inverter.inverted;
 	g()->global.invert_signal = SIG_ACTIVE;
 	g()->global.player->signal = 0;
@@ -71,6 +70,8 @@ void	scr_inverter_active(t_instance *this)
 	g()->global.player = create_player_instance(this->x, this->y);
 	g()->global.player->signal = SIG_MV_AUTO | out_mv | dir;
 	set_mv(out_mv, &h_mv, &v_mv);
-	create_trigger_instance((int [2]){this->x + h_mv * 96, this->y + v_mv * 90}, \
-						!this->obj.inverter.inverted, g()->global.player, 0);
+	create_trigger_instance((int [2]){this->x + h_mv * 96, \
+									this->y + v_mv * 90}, \
+									!this->obj.inverter.inverted, \
+									g()->global.player, 0);
 }

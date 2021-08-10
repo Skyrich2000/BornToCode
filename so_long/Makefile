@@ -116,21 +116,27 @@ LIB			=	sl_abs.c \
 				sl_split.c \
 				sl_strchr.c \
 				sl_strjoin.c \
-				sl_strlcpy.c \
+				sl_strlcpy.c
 
-SRCS		=	src/main.c \
-				src/asset/asset.c \
-				$(addprefix src/engine/, $(ENGINE)) \
-				$(addprefix src/asset/background/, $(BACKGROUND)) \
-				$(addprefix src/asset/font/, $(FONT)) \
-				$(addprefix src/asset/map/, $(MAP)) \
-				$(addprefix src/asset/object/, $(OBJECT)) \
-				$(addprefix src/asset/scene/, $(SCENE)) \
-				$(addprefix src/asset/script/, $(SCRIPT)) \
-				$(addprefix src/asset/sprite/, $(SPRITE)) \
-				$(addprefix src/lib/, $(LIB))
+FILE		=	main.c \
+				asset/asset.c \
+				$(addprefix engine/, $(ENGINE)) \
+				$(addprefix asset/background/, $(BACKGROUND)) \
+				$(addprefix asset/font/, $(FONT)) \
+				$(addprefix asset/map/, $(MAP)) \
+				$(addprefix asset/object/, $(OBJECT)) \
+				$(addprefix asset/scene/, $(SCENE)) \
+				$(addprefix asset/script/, $(SCRIPT)) \
+				$(addprefix asset/sprite/, $(SPRITE)) \
+				$(addprefix lib/, $(LIB))
 
-OBJS		=	$(patsubst %.c,%.o,$(SRCS))
+SRC_DIR		=	./src
+SRCS		=	$(addprefix $(SRC_DIR)/, $(FILE))
+
+OBJ_DIR		=	./obj
+OBJS		=	$(addprefix $(OBJ_DIR)/, $(patsubst %.c,%.o,$(FILE)))
+
+# Options =================================================
 
 CC			=	gcc
 INCLUDE 	=	-Iinclude -Isrc/mlx
@@ -141,9 +147,11 @@ SHELL		=	/bin/bash
 sp			=	/-\|/
 idx			=	0
 
-all		: $(NAME)
+# =========================================================
 
-%.o		: %.c
+all				: $(OBJ_DIR) $(NAME)
+
+$(OBJ_DIR)/%.o	: $(SRC_DIR)/%.c
 	$(eval idx = $(shell expr $(idx) + 1))
 	$(eval t_idx = $(shell expr $(idx) % 4 + 1))
 	$(eval chr = $(shell echo $(sp) | cut -c $(t_idx)))
@@ -151,9 +159,10 @@ all		: $(NAME)
 		echo -n "Loading ... ";\
 	fi
 	@printf "\b$(chr)"
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME)	: $(OBJS)
+$(NAME)			: $(OBJS)
 	@printf "\b "
 	@$(MAKE) -C ./src/mlx > /dev/null 2>&1
 	@$(CC) $(CFLAGS) $(CLIB) -o $@ $^
@@ -166,9 +175,8 @@ $(NAME)	: $(OBJS)
 	@printf "░░░██║░░░███████╗██║░╚███║╔███████║╔████████\n"
 	@printf "░░░╚═╝░░░╚══════╝╚═╝░░╚══╝╚═══════╝╚═══════╝\n"
 	@printf "\n\n"
-#	@afplay bgm.mp3 -v 0.3 & ./so_long map.ber ; pkill afplay
 
-run		:
+run				:
 	@printf "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\e[1;33mso\e[1;31m long\e[1;37m \e[0;32mis Ready 💚\e[0m\n\n\n"
 	@printf "████████╗███████╗███╗░░██╗╔███████╗░░░╔██░░░\n"
 	@printf "╚══██╔══╝██╔════╝████╗░██║╚════╗██║░░░║██░░░\n"
@@ -177,29 +185,29 @@ run		:
 	@printf "░░░██║░░░███████╗██║░╚███║╔███████║╔████████\n"
 	@printf "░░░╚═╝░░░╚══════╝╚═╝░░╚══╝╚═══════╝╚═══════╝\n"
 	@printf "\n\n"
-	@afplay bgm.mp3 -v 0.3 & ./so_long map.ber ; pkill afplay
+	@afplay ./res/bgm.mp3 -v 0.3 & ./so_long ./res/ber/map.ber ; pkill afplay
 
-clean	:
+clean			:
 	@rm -f $(OBJS)
 	@make -C ./src/mlx clean
 
-fclean	: clean
+fclean			: clean
 	@rm -f $(NAME)
 
-re		: fclean all
+re				: fclean all
 
-norm	:
-	@python3 -m norminette include/*.h
+norm			:
+	@python3 -m norminette include/*
 	@python3 -m norminette src/main.c
 	@python3 -m norminette src/asset/asset.c
-	@python3 -m norminette src/asset/background/*.c
-	@python3 -m norminette src/asset/font/*.c
-	@python3 -m norminette src/asset/map/*.c
-	@python3 -m norminette src/asset/object/*.c
-	@python3 -m norminette src/asset/scene/*.c
-	@python3 -m norminette src/asset/script/*.c
-	@python3 -m norminette src/asset/sprite/*.c
-	@python3 -m norminette src/engine/*.c
-	@python3 -m norminette src/lib/*.c
+	@python3 -m norminette src/asset/background/*
+	@python3 -m norminette src/asset/font/*
+	@python3 -m norminette src/asset/map/*
+	@python3 -m norminette src/asset/object/*
+	@python3 -m norminette src/asset/scene/*
+	@python3 -m norminette src/asset/script/*
+	@python3 -m norminette src/asset/sprite/*
+	@python3 -m norminette src/engine/*
+	@python3 -m norminette src/lib/*
 
-.PHONY	:	all clean fclean re bonus norm
+.PHONY			:	all clean fclean re bonus norm

@@ -31,7 +31,7 @@ void	scene_rank_start(void)
 	g()->view.view_xview = 0;
 	g()->view.view_yview = 0;
 	sl_bzero(buf, BUFFER_SIZE);
-	fd = open("./dashboard.rnk", O_RDONLY | O_CREAT, 0777);
+	fd = open("./res/dashboard.rnk", O_RDONLY | O_CREAT, 0777);
 	if (fd == -1 || read(fd, &buf, BUFFER_SIZE) == -1)
 		return ;
 	g()->global.rank_list_y = 150;

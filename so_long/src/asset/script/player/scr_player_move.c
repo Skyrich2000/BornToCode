@@ -45,7 +45,18 @@ void	scr_player_move_auto(t_instance *this)
 										this->obj.player.inverted, this->dir));
 }
 
-static void	scr_player_move_inner(t_instance *this, int prev[2], int mv[2])
+static void	_print_step(int step)
+{
+	char	*str;
+
+	str = sl_itoa(step);
+	write(1, "\b\b\b\b\b\b\b\b\b\b\b           \b\b\b\b\b\b\b\b\b\b\b", 33);
+	write(1, "Steps : ", 7);
+	write(1, str, sl_strlen(str));
+	free(str);
+}
+
+static void	_move_control(t_instance *this, int prev[2], int mv[2])
 {
 	if (keyboard_check(KEY_SPACEBAR) && g()->global.state != S_RESTRAIGHT)
 	{
@@ -60,7 +71,7 @@ static void	scr_player_move_inner(t_instance *this, int prev[2], int mv[2])
 										this->obj.player.inverted, this->dir));
 	else
 	{
-		g()->global.steps++;
+		_print_step(g()->global.steps++);
 		change_sprite(this, scr_player_get_spr(SPR_MOVE, \
 										this->obj.player.inverted, this->dir));
 	}
@@ -88,7 +99,7 @@ void	scr_player_move(t_instance *this)
 	mv[V] = (keyboard_check(KEY_S) || keyboard_check(KEY_DOWN)) - \
 			(keyboard_check(KEY_W) || keyboard_check(KEY_UP));
 	if (this->obj.player.attack == 0)
-		scr_player_move_inner(this, prev, mv);
+		_move_control(this, prev, mv);
 	else if (this->img_node->next == 0)
 		this->obj.player.attack = 0;
 }

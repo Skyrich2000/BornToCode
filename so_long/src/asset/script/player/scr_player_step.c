@@ -47,8 +47,8 @@ void	scr_player_step_normal(t_instance *this)
 		if (this->img_node->next == 0)
 			this->condition = C_DEAD;
 	}
-
 }
+
 void	scr_player_step_avatar(t_instance *this)
 {
 	if (this->obj.player.inverted == S_STRAIGHT)

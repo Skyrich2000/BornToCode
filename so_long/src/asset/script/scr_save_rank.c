@@ -64,8 +64,8 @@ void	scr_save_rank(char *name, int time, int deathcount)
 	char	**split;
 	char	*str[2];
 
-	split = file_read("./dashboard.rnk");
-	fd = open("./dashboard.rnk", O_WRONLY | O_TRUNC, 0777);
+	split = file_read("./res/dashboard.rnk");
+	fd = open("./res/dashboard.rnk", O_WRONLY | O_TRUNC, 0777);
 	idx = -1;
 	str[0] = sl_itoa(time);
 	str[1] = sl_itoa(deathcount);
