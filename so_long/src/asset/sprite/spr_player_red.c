@@ -81,9 +81,9 @@ static int	init_spr_player_idle(void)
 	game->asset.spr_player_red_idle_left = \
 								add_sprite(36, 50, 10, (t_box){26, 30, 46, 50});
 	if (!add_sprite_subimage(game->asset.spr_player_red_idle_right, \
-									"./res/png/player_red_right/player_", 0, 8) || \
+								"./res/png/player_red_right/player_", 0, 8) || \
 		!add_sprite_subimage(game->asset.spr_player_red_idle_left, \
-									"./res/png/player_red_left/player_", 0, 8))
+								"./res/png/player_red_left/player_", 0, 8))
 		return (ERROR);
 	return (OK);
 }

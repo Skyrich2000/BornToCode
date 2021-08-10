@@ -44,7 +44,7 @@ void	draw_text(t_font *font, char *str, int pos[2], float align[2])
 
 	i = -1;
 	correction = -font->real_size / 2 + font->size / 2;
-	x = pos[0] - font->size * sl_strlen(str) *align[0];
+	x = pos[0] - font->size * sl_strlen(str) * align[0];
 	y = pos[1] - font->size * align[1];
 	while (str[++i])
 		draw_img(font->img[(int)str[i]], \

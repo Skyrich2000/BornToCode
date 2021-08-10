@@ -60,10 +60,9 @@ void	scene_rank_ui(void)
 	char	*line[3];
 
 	draw_text(g()->asset.font_fat_big, "< RANK >", \
-				(int [2]){g()->view.view_xview + g()->view.view_wview / 2, \
+			(int [2]){g()->view.view_xview + g()->view.view_wview / 2, \
 						g()->view.view_yview + g()->view.view_hview / 2 + \
-											g()->global.rank_list_y - 20}, \
-				(float [2]){A_CENTER, A_CENTER});
+				g()->global.rank_list_y - 20}, (float [2]){A_CENTER, A_CENTER});
 	i = -1;
 	while (g()->global.rank_list[++i])
 	{
@@ -71,18 +70,17 @@ void	scene_rank_ui(void)
 		line[1] = sl_strjoin(line[0], ". ");
 		line[2] = sl_strjoin(line[1], g()->global.rank_list[i]);
 		draw_text(g()->asset.font_fat_small, line[2], \
-				(int [2]){g()->view.view_xview + g()->view.view_wview / 2 - 200, \
-							g()->view.view_yview + g()->view.view_hview / 2 + \
-										g()->global.rank_list_y + (i + 1) * 40}, \
-				(float [2]){A_LEFT, A_CENTER});
+			(int [2]){g()->view.view_xview + g()->view.view_wview / 2 - 200, \
+						g()->view.view_yview + g()->view.view_hview / 2 + \
+		g()->global.rank_list_y + (i + 1) * 40}, (float [2]){A_LEFT, A_CENTER});
 		sl_free_arr3(line);
 	}
 	draw_img(g()->canvas.img, g()->view.view_xview, \
 					g()->view.view_yview + g()->view.view_hview - 45);
 	draw_text(g()->asset.font_fat_small, "PRESS SPACE TO RETURN", \
-			  (int [2]){g()->view.view_xview + g()->view.view_wview / 2, \
+			(int [2]){g()->view.view_xview + g()->view.view_wview / 2, \
 						g()->view.view_yview + g()->view.view_hview}, \
-			  (float [2]){A_CENTER, A_BOTTOM});
+		  	(float [2]){A_CENTER, A_BOTTOM});
 }
 
 void	scene_rank_end(void)
