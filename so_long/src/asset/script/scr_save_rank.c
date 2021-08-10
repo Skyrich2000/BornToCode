@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   scr_save_rank.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/10 16:11:16 by su                #+#    #+#             */
+/*   Updated: 2021/08/10 16:11:38 by su               ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "engine.h"
 
-static int		cmp_rank(char *org, int time, int deathcount)
+static int	cmp_rank(char *org, int time, int deathcount)
 {
-	char **split;
-	int cmp_time;
-	int cmp_deathcount;
+	char	**split;
+	int		cmp_time;
+	int		cmp_deathcount;
 
 	split = sl_split(org, ' ');
 	cmp_time = sl_atoi(split[1]);
@@ -86,4 +98,3 @@ void	scr_save_rank(char *name, int time, int deathcount)
 	sl_free_split(split);
 	close(fd);
 }
-

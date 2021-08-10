@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   scr_footprint.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/10 16:11:46 by su                #+#    #+#             */
+/*   Updated: 2021/08/10 16:11:52 by su               ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "engine.h"
 
 void	scr_save_footprint(t_instance *this, t_list *route)
 {
-	t_footprint *footprint;
+	t_footprint	*footprint;
 
 	footprint = malloc(sizeof(t_footprint));
 	if (!footprint)
@@ -17,8 +29,8 @@ void	scr_save_footprint(t_instance *this, t_list *route)
 
 void	scr_load_footprint(t_instance *this, t_list **route_node, int inverted)
 {
-	t_footprint *fp;
-	t_list *prev_node;
+	t_footprint	*fp;
+	t_list		*prev_node;
 
 	prev_node = *route_node;
 	if (g()->global.inverted == inverted)
