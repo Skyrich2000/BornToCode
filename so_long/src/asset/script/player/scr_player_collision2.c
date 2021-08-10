@@ -6,7 +6,7 @@
 /*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 16:35:52 by su                #+#    #+#             */
-/*   Updated: 2021/08/10 16:42:46 by su               ###   ########.fr       */
+/*   Updated: 2021/08/10 17:03:02 by su               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,7 @@ void	scr_player_collision_zombie(t_instance *this)
 					g()->global.state == S_RESTRAIGHT && \
 					this == zombie->obj.zombie.reviver)
 					return ;
-				g()->global.view_xview_aim = this->x - g()->view.view_wview / 2;
-				g()->global.view_yview_aim = this->y - g()->view.view_hview / 2;
-				scr_player_die(TXT_HIT_BY_ZOMBIE);
+				scr_player_die(TXT_HIT_BY_ZOMBIE, this);
 			}
 		}
 	}
