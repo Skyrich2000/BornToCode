@@ -6,7 +6,7 @@
 /*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 16:54:38 by su                #+#    #+#             */
-/*   Updated: 2021/08/10 17:34:52 by su               ###   ########.fr       */
+/*   Updated: 2021/08/10 19:54:49 by su               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	scene_rank_ui(void)
 
 	draw_text(g()->asset.font_fat_big, "< RANK >", \
 				(int [2]){g()->view.view_xview + g()->view.view_wview / 2, \
-						g()->view.view_yview + g()->view.view_hview / 2 + g()->global.rank_list_y - 20}, \
+						g()->view.view_yview + g()->view.view_hview / 2 + \
+											g()->global.rank_list_y - 20}, \
 				(float [2]){A_CENTER, A_CENTER});
 	i = -1;
 	while (g()->global.rank_list[++i])
@@ -71,7 +72,8 @@ void	scene_rank_ui(void)
 		line[2] = sl_strjoin(line[1], g()->global.rank_list[i]);
 		draw_text(g()->asset.font_fat_small, line[2], \
 				(int [2]){g()->view.view_xview + g()->view.view_wview / 2 - 200, \
-							g()->view.view_yview + g()->view.view_hview / 2 + g()->global.rank_list_y + (i + 1) * 40}, \
+							g()->view.view_yview + g()->view.view_hview / 2 + \
+										g()->global.rank_list_y + (i + 1) * 40}, \
 				(float [2]){A_LEFT, A_CENTER});
 		sl_free_arr3(line);
 	}
