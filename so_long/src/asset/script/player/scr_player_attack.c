@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   scr_player_attack.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/10 16:35:38 by su                #+#    #+#             */
+/*   Updated: 2021/08/10 16:35:41 by su               ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "engine.h"
 
 void	scr_player_attack(t_instance *this)
 {
-	t_instance *zombie;
-	t_instance *box;
+	t_instance	*zombie;
+	t_instance	*box;
 
 	zombie = place_meeting_type(this, this->x, this->y, ZOMBIE_BLUE);
 	box = place_meeting_type(this, this->x, this->y, BOX_RED);
