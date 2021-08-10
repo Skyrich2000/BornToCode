@@ -6,7 +6,7 @@
 /*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 16:45:41 by su                #+#    #+#             */
-/*   Updated: 2021/08/10 17:52:23 by su               ###   ########.fr       */
+/*   Updated: 2021/08/10 20:26:28 by su               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_instance	*scr_alive_zombie(void)
 	t_instance	*ins;
 	t_list		*node;
 
+	dead_zombie = 0;
 	node = g()->instances[ZOMBIE_BLUE]->next;
 	while (node)
 	{
