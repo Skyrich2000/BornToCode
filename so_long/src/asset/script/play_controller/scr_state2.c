@@ -37,8 +37,5 @@ void	scr_state_gameover(void)
 {
 	g()->global.delay += 1;
 	if (g()->global.delay > 60 * 4)
-	{
-		printf("game restart \n");
 		scene_restart();
-	}
 }

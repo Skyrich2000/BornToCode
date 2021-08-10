@@ -30,6 +30,7 @@ void	map_0_5(int *width, int *height)
 	sl_free_split(map);
 	g()->scene->background = g()->asset.background_map_2;
 	g()->global.player->signal = SIG_MV_AUTO | SIG_DIR_RIGHT;
+	g()->global.tutorial = 1;
 	out_dir[SIG_MV_RIGHT] = 0;
 	out_dir[SIG_MV_LEFT] = SIG_MV_UP;
 	out_dir[SIG_MV_UP] = 0;

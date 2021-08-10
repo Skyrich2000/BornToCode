@@ -26,10 +26,7 @@ void	scr_state_straight(void)
 {
 	g()->global.time += 1;
 	if (g()->global.time > 4200)
-	{
-		printf("time over");
 		scr_player_die(TXT_TIME_OVER, g()->global.player);
-	}
 	if (g()->global.invert_signal == SIG_ACTIVE)
 	{
 		g()->global.state = S_INVERT;
@@ -46,10 +43,7 @@ void	scr_state_inverted(void)
 
 	g()->global.time -= 1;
 	if (g()->global.time < -4200)
-	{
-		printf("time over");
 		scr_player_die(TXT_TIME_OVER, g()->global.player);
-	}
 	if (g()->global.invert_signal == SIG_ACTIVE)
 	{
 		g()->global.state = S_RESTRAIGHT;

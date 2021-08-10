@@ -443,5 +443,6 @@ void		map_2(int *width, int *height);
 void		map_3(int *width, int *height);
 void		map_4(int *width, int *height);
 void		map_5(int *width, int *height);
+void		map_6(int *width, int *height);
 
 #endif

@@ -70,7 +70,7 @@ void	scr_inverter_active(t_instance *this)
 	g()->global.player = create_player_instance(this->x, this->y);
 	g()->global.player->signal = SIG_MV_AUTO | out_mv | dir;
 	set_mv(out_mv, &h_mv, &v_mv);
-	create_trigger_instance((int [2]){this->x + h_mv * 96, \
+	create_trigger_instance((int [2]){this->x + h_mv * 90, \
 									this->y + v_mv * 90}, \
 									!this->obj.inverter.inverted, \
 									g()->global.player, 0);

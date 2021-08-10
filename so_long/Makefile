@@ -43,7 +43,8 @@ MAP			=	map.c \
 				map_2.c \
 				map_3.c \
 				map_4.c \
-				map_5.c
+				map_5.c \
+				map_6.c
 
 OBJECT		=	obj_box.c \
 				obj_dummy.c \
@@ -175,6 +176,7 @@ $(NAME)			: $(OBJS)
 	@printf "░░░██║░░░███████╗██║░╚███║╔███████║╔████████\n"
 	@printf "░░░╚═╝░░░╚══════╝╚═╝░░╚══╝╚═══════╝╚═══════╝\n"
 	@printf "\n\n"
+	@afplay ./res/bgm.mp3 -v 0.3 & ./so_long ./res/ber/map.ber ; pkill afplay
 
 run				:
 	@printf "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\e[1;33mso\e[1;31m long\e[1;37m \e[0;32mis Ready 💚\e[0m\n\n\n"

@@ -30,7 +30,7 @@ void	scr_inverter_create_wait(t_instance *this)
 			v_mv = (((reverse_mv & SIG_MV_DOWN) > 0) - \
 									((reverse_mv & SIG_MV_UP) > 0));
 			this->obj.inverter.waits[mv] = \
-				create_wait_instance(this->x + h_mv * 32, this->y + v_mv * 32);
+				create_wait_instance(this->x + h_mv * 16, this->y + v_mv * 16);
 		}
 		mv = mv << 1;
 	}

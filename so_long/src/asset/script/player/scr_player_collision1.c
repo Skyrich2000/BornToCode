@@ -27,7 +27,8 @@ int	scr_player_collision_box(t_instance *this)
 
 void	scr_player_collision_wait(t_instance *this)
 {
-	if (place_meeting_type(this, this->x, this->y, WAIT))
+	if (this->obj.player.inverted == S_INVERT && \
+		place_meeting_type(this, this->x, this->y, WAIT))
 		g()->global.text = TXT_WAIT;
 	else
 		g()->global.text = 0;
