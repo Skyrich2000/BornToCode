@@ -141,7 +141,7 @@ OBJS		=	$(addprefix $(OBJ_DIR)/, $(patsubst %.c,%.o,$(FILE)))
 CC			=	gcc
 INCLUDE 	=	-Iinclude -Isrc/mlx
 CLIB		=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit -g
-CFLAGS		=	-Wall -Werror -Wextra -g $(INCLUDE)
+CFLAGS		=	-Wall -Werror -Wextra $(INCLUDE)
 
 SHELL		=	/bin/bash
 sp			=	/-\|/
