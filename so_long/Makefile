@@ -56,7 +56,7 @@ OBJECT		=	obj_box.c \
 				obj_trigger.c \
 				obj_wait.c \
 				obj_wall.c \
-				obj_zombie.c \
+				obj_zombie.c
 
 SCENE		=	scene_main.c \
 				scene_nick.c \
@@ -106,7 +106,7 @@ SPRITE		=	spr_box.c \
 				spr_player_red.c \
 				spr_state.c \
 				spr_wall.c \
-				spr_zombie.c \
+				spr_zombie.c
 
 LIB			=	sl_abs.c \
 				sl_atoi.c \
@@ -150,7 +150,7 @@ idx			=	0
 
 # =========================================================
 
-all				: $(OBJ_DIR) $(NAME)
+all				: $(NAME)
 
 $(OBJ_DIR)/%.o	: $(SRC_DIR)/%.c
 	$(eval idx = $(shell expr $(idx) + 1))
@@ -190,7 +190,7 @@ run				:
 	@afplay ./res/bgm.mp3 -v 0.3 & ./so_long ./res/ber/map.ber ; pkill afplay
 
 clean			:
-	@rm -f $(OBJS)
+	@rm -rf $(OBJ_DIR)
 	@make -C ./src/mlx clean
 
 fclean			: clean
