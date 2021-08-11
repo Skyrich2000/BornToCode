@@ -42,6 +42,8 @@ void	scr_ui_text(void)
 		str = "MEET MYSELF";
 	else if (g()->global.text == TXT_TENET_ERROR)
 		str = "TOAST IS NOT DEAD";
+	else if (g()->global.text == TXT_GOLD_LEFT)
+		str = "GOLD LEFT";
 	else if (g()->global.text == TXT_WAIT)
 		str = "WAIT";
 	draw_text(g()->asset.font_fat_big, str, \

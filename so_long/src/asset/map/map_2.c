@@ -38,5 +38,5 @@ void	map_2(int *width, int *height)
 	out_dir[SIG_MV_LEFT] = 0;
 	out_dir[SIG_MV_UP] = SIG_MV_UP;
 	out_dir[SIG_MV_DOWN] = SIG_MV_DOWN;
-	create_inverter_instance(1 * 32, 4 * 32, S_INVERT, out_dir);
+	create_inverter_instance(1 * 32, 3 * 32, S_INVERT, out_dir);
 }

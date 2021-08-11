@@ -49,7 +49,7 @@ void	scr_state_inverted(void)
 		g()->global.state = S_RESTRAIGHT;
 		g()->global.invert_signal = SIG_NORMAL;
 		scr_avatarize(ZOMBIE_BLUE);
-		dead_zombie = scr_alive_zombie();
+		dead_zombie = scr_find_dead_zombie();
 		if (dead_zombie)
 			scr_player_die(TXT_TENET_ERROR, dead_zombie);
 	}

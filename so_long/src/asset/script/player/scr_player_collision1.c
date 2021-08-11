@@ -54,12 +54,16 @@ void	scr_player_collision_exit(t_instance *this)
 	ins = place_meeting_type(this, this->x, this->y, EXIT);
 	if (ins && ins->condition & C_ALIVE && \
 		(g()->global.state == S_RESTRAIGHT || \
-		g()->global.invert_signal == SIG_NO_INVERT) && \
-		g()->global.gold_num == 0)
+		g()->global.invert_signal == SIG_NO_INVERT))
 	{
-		create_plane_instance();
-		this->signal = SIG_MV_AUTO;
-		ins->condition = C_DEAD;
+		if (g()->global.gold_num != 0)
+			scr_player_die(TXT_GOLD_LEFT, scr_find_alive_gold());
+		else
+		{
+			create_plane_instance();
+			this->signal = SIG_MV_AUTO;
+			ins->condition = C_DEAD;
+		}
 	}
 }
 

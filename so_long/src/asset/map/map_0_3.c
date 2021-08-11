@@ -18,13 +18,13 @@ void	map_0_3(int *width, int *height)
 	int		out_dir[20];
 
 	map = sl_split("\
-11111111111111111 \
-1E000000000000001 \
-11111111111111101 \
-100B00000000Z0101 \
-10040011111110101 \
-1P0B00C1Z00000Z01 \
-11111111111111111", ' ');
+1111111111111111 \
+1E00000000000001 \
+1111111111111101 \
+100B00000000Z101 \
+1004001111100101 \
+1P0B00C1Z0000001 \
+1111111111111111", ' ');
 	scr_build_map(map, width, height);
 	sl_free_split(map);
 	g()->scene->background = g()->asset.background_map_2;
@@ -39,5 +39,5 @@ void	map_0_3(int *width, int *height)
 	out_dir[SIG_MV_LEFT] = 0;
 	out_dir[SIG_MV_UP] = SIG_MV_UP;
 	out_dir[SIG_MV_DOWN] = SIG_MV_DOWN;
-	create_inverter_instance(15 * 32, 3 * 32, S_INVERT, out_dir);
+	create_inverter_instance(14 * 32, 3 * 32, S_INVERT, out_dir);
 }

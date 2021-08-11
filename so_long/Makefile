@@ -70,8 +70,7 @@ SCRIPT		=	dummy/scr_dummy_move.c \
 				inverter/scr_inverter_step.c \
 				nick_controller/scr_nick_blink.c \
 				nick_controller/scr_nick_key.c \
-				play_controller/scr_alive_zombie.c \
-				play_controller/scr_avatarize.c \
+				play_controller/scr_control_condition.c \
 				play_controller/scr_state1.c \
 				play_controller/scr_state2.c \
 				play_ui/scr_ui_bottom.c \

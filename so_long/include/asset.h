@@ -64,7 +64,8 @@
 # define TXT_HIT_BY_ZOMBIE	3
 # define TXT_MEET_MYSELF	4
 # define TXT_TENET_ERROR	5
-# define TXT_WAIT			6
+# define TXT_GOLD_LEFT		6
+# define TXT_WAIT			7
 
 typedef struct s_canvas		t_canvas;
 typedef struct s_scene		t_scene;
@@ -367,9 +368,10 @@ void		scr_player_move(t_instance *this);
 void		scr_player_die(int text, t_instance *focus);
 // scirpt to mvoe zombie
 void		scr_zombie_move(t_instance *this);
-// script to change instacne state
+// script to manange instacne state
 void		scr_avatarize(int type);
-t_instance	*scr_alive_zombie(void);
+t_instance	*scr_find_dead_zombie(void);
+t_instance	*scr_find_alive_gold(void);
 // scripts for manage global state of game
 void		scr_state_ready(void);
 void		scr_state_straight(void);
