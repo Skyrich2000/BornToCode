@@ -33,15 +33,25 @@ int		get_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-void	psleep(int end_time)
+void	psleep(t_resource *res, int end_time)
 {
 	while (get_time() < end_time)
+	{
+		if (get_value(&res->end))
+			return ;
 		usleep(10);
+	}
 }
 
 void	display_message(t_philosopher *philo, int type)
 {
 	pthread_mutex_lock(&philo->res->message_lock);
-	printf("%d %d %s", get_time() - philo->res->start, philo->index + 1, get_message(type));
+	if (!get_value(&philo->res->end))
+	{
+		if (type == MSG_ENOUGH)
+			printf("%dms All philosophers ate it all.\n", get_time() - philo->res->start);
+		else
+			printf("%dms %d %s", get_time() - philo->res->start, philo->index + 1, get_message(type));
+	}
 	pthread_mutex_unlock(&philo->res->message_lock);
 }

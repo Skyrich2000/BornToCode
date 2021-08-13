@@ -33,6 +33,7 @@
 #define	MSG_SLEEPING	2
 #define	MSG_THINKING	3
 #define	MSG_DEAD		4
+#define MSG_ENOUGH		5
 
 typedef struct s_arg
 {
@@ -53,28 +54,30 @@ typedef struct s_resource
 {
 	int				start;
 	t_data			*forks;
-	t_data			eat_count;
+	t_data			end;
 	pthread_mutex_t	message_lock;
 }	t_resource;
 
 typedef struct s_philosopher
 {
 	int				index;
-	int				die_time;
 	int				fork_index[2];
+	t_data			eat_count;
+	t_data			die_time;
 	t_resource		*res;
 	t_arg			*arg;
 
 	pthread_t		thread;
 }	t_philosopher;
 
-typedef struct s_moniter
+typedef struct s_monitor
 {
 	t_philosopher	*philos;
 	t_resource		*res;
+	t_arg			*arg;
 
 	pthread_t		thread;
-}	t_moniter;
+}	t_monitor;
 
 int		input(int ac, char **av, t_arg *arg);
 
@@ -84,12 +87,12 @@ int		get_value(t_data *data);
 void	delete_data(t_data *data);
 
 int		get_time();
-void	psleep(int end_time);
+void	psleep(t_resource *res, int end_time);
 void	display_message(t_philosopher *philo, int type);
 
-int		init_simulation(t_arg *arg, t_resource *res, t_philosopher **philos, t_moniter *moni);
-int		start_simulation(t_arg *arg, t_philosopher *philos, t_moniter *moni);
-int		end_simulation(t_arg *arg, t_resource *res, t_philosopher *philos, t_moniter *moni);
+int		init_simulation(t_arg *arg, t_resource *res, t_philosopher **philos, t_monitor *moni);
+int		start_simulation(t_arg *arg, t_philosopher *philos, t_monitor *moni);
+int		end_simulation(t_arg *arg, t_resource *res, t_philosopher *philos, t_monitor *moni);
 
 void	*philosopher(void *data);
 

@@ -12,21 +12,21 @@
 
 #include "philo.h"
 
-int     main(int ac, char **av)
+int	main(int ac, char **av)
 {
-		t_arg			arg;
-		t_resource		res;
-		t_moniter		moni;
-		t_philosopher	*philos;
+	t_arg			arg;
+	t_resource		res;
+	t_monitor		moni;
+	t_philosopher	*philos;
 
-        if (input(ac, av, &arg))
-        {
-                init_simulation(&arg, &res, &philos, &moni);
-                start_simulation(&arg, &res, philos, &moni);
-                end_simulation(&arg, &res, philos, &moni);
-        }
-        else
-                printf("ERROR\n");
-        return (0);
+	if (input(ac, av, &arg))
+	{
+		init_simulation(&arg, &res, &philos, &moni);
+		start_simulation(&arg, philos, &moni);
+		end_simulation(&arg, &res, philos, &moni);
+	}
+	else
+		printf("ERROR\n");
+	return (0);
 }
 

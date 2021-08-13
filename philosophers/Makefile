@@ -10,26 +10,34 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= philo
+NAME		= philo
 
-CFLAGS	= -Wall -Wextra -Werror -Iinclude
+CFLAGS		= -Wall -Wextra -Werror -Iinclude -g
 
-SRCS	= src/main.c \
-			src/lib/lib.c \
-			src/core/philo.c \
-			src/core/data.c \
-			src/core/input.c \
-			src/core/utils.c
+FILE		= src/main.c \
+				src/lib/lib.c \
+				src/core/philo.c \
+				src/core/data.c \
+				src/core/input.c \
+				src/core/utils.c
 
-OBJS	= $(SRCS:%.c=%.o)
+SRC_DIR		=	./src
+SRCS		=	$(addprefix $(SRC_DIR)/, $(FILE))
+
+OBJ_DIR		=	./obj
+OBJS		=	$(addprefix $(OBJ_DIR)/, $(patsubst %.c,%.o,$(FILE)))
 
 all: $(NAME)
+
+$(OBJ_DIR)/%.o	: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
 	gcc $(CFLAGS) -o $@ $^ -lpthread
 
 clean:
-	rm -f $(OBJS)
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
 	rm -f $(NAME)
