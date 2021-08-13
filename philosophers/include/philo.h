@@ -13,27 +13,26 @@
 #ifndef PHILO_H
 # define PHILO_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <unistd.h>
-#include <sys/time.h>
-#include "lib.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <pthread.h>
+# include <unistd.h>
+# include <sys/time.h>
 
-#define OK		1
-#define ERROR	0
-#define TRUE	1
-#define FALSE	0
+# define OK				1
+# define ERROR			0
+# define TRUE			1
+# define FALSE			0
 
-#define	LEFT	0
-#define RIGHT	1
+# define LEFT			0
+# define RIGHT			1
 
-#define	MSG_TAKE_FORK	0
-#define	MSG_EATING		1
-#define	MSG_SLEEPING	2
-#define	MSG_THINKING	3
-#define	MSG_DEAD		4
-#define MSG_ENOUGH		5
+# define MSG_TAKE_FORK	0
+# define MSG_EATING		1
+# define MSG_SLEEPING	2
+# define MSG_THINKING	3
+# define MSG_DEAD		4
+# define MSG_ENOUGH		5
 
 typedef struct s_arg
 {
@@ -47,7 +46,7 @@ typedef struct s_arg
 typedef struct s_data
 {
 	int				value;
-	pthread_mutex_t lock;
+	pthread_mutex_t	lock;
 }	t_data;
 
 typedef struct s_resource
@@ -86,14 +85,21 @@ void	set_value(t_data *data, int value);
 int		get_value(t_data *data);
 void	delete_data(t_data *data);
 
-int		get_time();
+int		get_time(void);
 void	psleep(t_resource *res, int end_time);
 void	display_message(t_philosopher *philo, int type);
 
-int		init_simulation(t_arg *arg, t_resource *res, t_philosopher **philos, t_monitor *moni);
-int		start_simulation(t_arg *arg, t_philosopher *philos, t_monitor *moni);
-int		end_simulation(t_arg *arg, t_resource *res, t_philosopher *philos, t_monitor *moni);
+void	init_simulation(t_arg *arg, \
+						t_resource *res, \
+						t_philosopher **philos, \
+						t_monitor *moni);
+void	start_simulation(t_arg *arg, t_philosopher *philos, t_monitor *moni);
+void	end_simulation(t_arg *arg, \
+						t_resource *res, \
+						t_philosopher *philos, \
+						t_monitor *moni);
 
 void	*philosopher(void *data);
+void	*monitor(void *data);
 
 #endif

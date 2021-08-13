@@ -15,7 +15,8 @@
 void	init_data(t_data *data)
 {
 	data->value = 0;
-	pthread_mutex_init(&data->lock, 0);
+	if (pthread_mutex_init(&data->lock, 0) < 0)
+		exit(1);
 }
 
 void	set_value(t_data *data, int value)
@@ -27,7 +28,7 @@ void	set_value(t_data *data, int value)
 
 int	get_value(t_data *data)
 {
-	int value;
+	int	value;
 
 	pthread_mutex_lock(&data->lock);
 	value = data->value;

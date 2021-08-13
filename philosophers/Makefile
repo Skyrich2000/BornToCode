@@ -14,12 +14,13 @@ NAME		= philo
 
 CFLAGS		= -Wall -Wextra -Werror -Iinclude -g
 
-FILE		= src/main.c \
-				src/lib/lib.c \
-				src/core/philo.c \
-				src/core/data.c \
-				src/core/input.c \
-				src/core/utils.c
+FILE		= main.c \
+				philo.c \
+				data.c \
+				input.c \
+				monitor.c \
+				simulation.c \
+				utils.c
 
 SRC_DIR		=	./src
 SRCS		=	$(addprefix $(SRC_DIR)/, $(FILE))
@@ -33,16 +34,20 @@ $(OBJ_DIR)/%.o	: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS)
+$(NAME)			: $(OBJS)
 	gcc $(CFLAGS) -o $@ $^ -lpthread
 
-clean:
+norm			:
+	@python3 -m norminette include/*
+	@python3 -m norminette src/*
+
+clean			:
 	rm -rf $(OBJ_DIR)
 
-fclean: clean
+fclean			: clean
 	rm -f $(NAME)
 
-re: fclean all
+re				: fclean all
 
 .PHONY: clean fclean all re
 

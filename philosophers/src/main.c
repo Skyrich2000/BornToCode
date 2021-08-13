@@ -26,7 +26,6 @@ int	main(int ac, char **av)
 		end_simulation(&arg, &res, philos, &moni);
 	}
 	else
-		printf("ERROR\n");
+		printf("Error\n");
 	return (0);
 }
-
