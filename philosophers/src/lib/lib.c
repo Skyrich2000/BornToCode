@@ -6,15 +6,11 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/04 02:14:10 by ycha              #+#    #+#             */
-/*   Updated: 2021/07/04 02:14:11 by ycha             ###   ########.fr       */
+/*   Updated: 2021/08/12 16:08:48 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdlib.h"
-#include "unistd.h"
-
-#define OK		1
-#define ERROR	0
+#include "philo.h"
 
 void	ft_putchar_fd(char c, int fd)
 {
