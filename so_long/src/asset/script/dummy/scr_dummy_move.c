@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
+#include "engine/engine.h"
 
 #define SPR_MOVE			1
 #define SPR_MOVE_REVERSE	2

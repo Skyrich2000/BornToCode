@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
-#include "asset.h"
+#include "engine/engine.h"
 
 void	scr_nick_keycheck(char *ascii, char prev[50], char prev_backspace)
 {

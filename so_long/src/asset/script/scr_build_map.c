@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
+#include "engine/engine.h"
 
 void	scr_build_map(char **map, int *j, int *i)
 {

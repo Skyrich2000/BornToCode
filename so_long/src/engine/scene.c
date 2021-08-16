@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
+#include "engine/engine.h"
+#include "engine/engine_scene.h"
 
 t_scene	*add_scene(t_background *background, void (*start)(void), \
 		void (*controller)(void), void (*ui)(void), void (*end)(void))

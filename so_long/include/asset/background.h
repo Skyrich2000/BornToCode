@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   math.c                                             :+:      :+:    :+:   */
+/*   asset.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/16 07:49:08 by ycha              #+#    #+#             */
-/*   Updated: 2021/08/11 19:28:31 by ycha             ###   ########.fr       */
+/*   Created: 2021/08/11 10:05:36 by ycha              #+#    #+#             */
+/*   Updated: 2021/08/11 10:05:46 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
+#ifndef BACKGROUND_H
+# define BACKGROUND_H
+# include "engine/engine.h"
 
-int	point_distance(int x1, int y1, int x2, int y2)
-{
-	return ((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-}
+// init background
+int			init_background_main(void);
+int			init_background_nick(void);
+int			init_background_rank(void);
+int			init_background_map(void);
+
+#endif

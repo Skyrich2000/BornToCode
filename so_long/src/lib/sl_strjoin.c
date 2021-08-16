@@ -10,43 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "library.h"
-
-int	sl_strlen(char *s)
-{
-	int	len;
-
-	len = 0;
-	if (!s)
-		return (0);
-	while (*s++)
-		len++;
-	return (len);
-}
-
-void	*sl_memcpy(void *dest, const void *src, size_t n)
-{
-	void	*temp;
-
-	if (src == 0 && dest == 0)
-		return (0);
-	temp = dest;
-	while (n--)
-		*(char *)dest++ = *(char *)src++;
-	return (temp);
-}
-
-void	sl_bzero(void *s, int n)
-{
-	char	*ptr;
-
-	ptr = (char *)s;
-	while (n--)
-	{
-		*ptr = 0;
-		ptr++;
-	}
-}
+#include "lib.h"
 
 char	*sl_strjoin(char *s1, char *s2)
 {

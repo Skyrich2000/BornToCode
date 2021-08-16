@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
+#include "engine/engine.h"
 
 t_instance	*create_gold_red_instance(int x, int y)
 {

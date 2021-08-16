@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "library.h"
+#include "lib.h"
 
 static int	sl_pow(int base, int exp)
 {

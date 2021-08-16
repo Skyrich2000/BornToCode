@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
+#include "engine/engine.h"
 
 int	init_scene_main(void)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "library.h"
+#include "lib.h"
 
 size_t	sl_strlcpy(char *dst, char *src, size_t dstsize)
 {

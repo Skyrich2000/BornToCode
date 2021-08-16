@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
-#include "asset.h"
+#include "engine/engine.h"
 
 void	scr_ui_time(void)
 {

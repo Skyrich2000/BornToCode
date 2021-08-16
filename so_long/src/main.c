@@ -10,14 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
-#include "asset.h"
+#include "engine/engine.h"
 
 int	main(int ac, char **av)
 {
 	if (init_game() && init_asset() && init_input(ac, av))
 		start_game(g()->asset.scene_main);
 	else
-		printf("loading failed\n");
+		printf("ERROR\n");
 	return (0);
 }

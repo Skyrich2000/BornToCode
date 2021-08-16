@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
+#include "engine/engine.h"
+#include "engine/engine_list.h"
 
 t_list	*create_list(void)
 {

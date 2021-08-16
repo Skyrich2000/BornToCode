@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
-#include "asset.h"
+#include "engine/engine.h"
 
 t_instance	*create_zombie_blue_instance(int x, int y)
 {

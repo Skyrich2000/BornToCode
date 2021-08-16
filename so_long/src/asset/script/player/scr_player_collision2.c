@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
-#include "asset.h"
+#include "engine/engine.h"
 
 void	scr_player_collision_trigger(t_instance *this)
 {

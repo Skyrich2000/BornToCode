@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
+#include "engine/engine.h"
+#include "engine/engine_image.h"
 
 t_sprite	*add_sprite(int offset_x, int offset_y, int img_speed, t_box mask)
 {

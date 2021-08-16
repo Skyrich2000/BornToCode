@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
+#include "engine/engine.h"
 
 #define	SPR_MOVE	1
 #define	SPR_ATTACK	3

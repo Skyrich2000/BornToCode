@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
+#include "engine/engine.h"
+#include "engine/engine_draw.h"
 
 void	draw_point(int x, int y, int color)
 {

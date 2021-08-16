@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
+#include "engine/engine.h"
 
 t_instance	*create_trigger_instance(int pos[2], int inverted, \
 												t_instance *target, int signal)

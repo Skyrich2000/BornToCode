@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "library.h"
+#include "lib.h"
 
 char	*sl_substr(char *s, unsigned int start, size_t len)
 {

@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
+#include "engine/engine.h"
+#include "engine/engine_key.h"
 
 int	keyboard_check(int keycode)
 {

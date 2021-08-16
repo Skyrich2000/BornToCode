@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
+#include "engine/engine.h"
 
 t_instance	*create_inverter_instance(int x, int y, \
 												int inverted, int out_dir[20])

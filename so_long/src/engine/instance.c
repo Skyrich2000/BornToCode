@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
+#include "engine/engine.h"
+#include "engine/engine_instance.h"
 
 t_instance	*create_instance(t_sprite *spr, int data[3], \
 				void (*step)(t_instance *this), void (*draw)(t_instance *this))

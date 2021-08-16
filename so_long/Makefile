@@ -21,7 +21,7 @@ ENGINE		=	game.c \
 				list.c \
 				scene.c \
 				input.c \
-				math.c \
+				util.c \
 				font.c
 
 BACKGROUND	=	background_main.c \
@@ -116,7 +116,10 @@ LIB			=	sl_abs.c \
 				sl_split.c \
 				sl_strchr.c \
 				sl_strjoin.c \
-				sl_strlcpy.c
+				sl_strlcpy.c \
+				sl_bzero.c \
+				sl_memcpy.c \
+				sl_strlen.c
 
 FILE		=	main.c \
 				asset/asset.c \
@@ -175,7 +178,7 @@ $(NAME)			: $(OBJS)
 	@printf "░░░██║░░░███████╗██║░╚███║╔███████║╔████████\n"
 	@printf "░░░╚═╝░░░╚══════╝╚═╝░░╚══╝╚═══════╝╚═══════╝\n"
 	@printf "\n\n"
-	@afplay ./res/bgm.mp3 -v 0.3 & ./so_long ./res/ber/map.ber ; pkill afplay
+	@afplay ./res/bgm.mp3 -v 0.5 & ./so_long ./res/ber/map.ber ; pkill afplay
 
 run				:
 	@printf "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\e[1;33mso\e[1;31m long\e[1;37m \e[0;32mis Ready 💚\e[0m\n\n\n"
@@ -186,7 +189,7 @@ run				:
 	@printf "░░░██║░░░███████╗██║░╚███║╔███████║╔████████\n"
 	@printf "░░░╚═╝░░░╚══════╝╚═╝░░╚══╝╚═══════╝╚═══════╝\n"
 	@printf "\n\n"
-	@afplay ./res/bgm.mp3 -v 0.3 & ./so_long ./res/ber/map.ber ; pkill afplay
+	@afplay ./res/bgm.mp3 -v 0.5 & ./so_long ./res/ber/map.ber ; pkill afplay
 
 clean			:
 	@rm -rf $(OBJ_DIR)
