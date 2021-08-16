@@ -49,9 +49,8 @@ $(BONUS_NAME): $(BONUS_OBJS)
 	gcc $(CFLAGS) -o $@ $^
 
 test			:
-	cd ./test/push_swap_tester
+	cd ./test/push_swap_tester && \
 	./push_swap_tester.bash
-	
 
 norm			:
 	@python3 -m norminette include/*
