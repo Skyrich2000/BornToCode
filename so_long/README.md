@@ -1,81 +1,9 @@
+# So_long
 
-## TODO
-
-* 순위가 잘 기록되는지 확인할것
-* 재순행 공격 못하게 막기
-
-* 인버터에서 공격하면 버그 있음!
-
-* 게임 로직
-	* 순행이 금을 다 모아야 탈출 할 수 있다.
-	* 순행이 상자를 부술 수 있다.
-	* 좀비는 역행이 무조건 살려야한다.
-	* 순행 인버터를 타면 시간이 거꾸로 흐르면서 역행 플레이어를 조종한다.
-	* 역행 인버터는 시간이 음수가 되야 탈 수 있다.
-	* 역행 인버터를 타면 시간이 다시 순행으로 흐르면서 재순행 플레이어를 조종한다.
-	* 재순행 플레이어는 탈출구에 가면 탈출 할 수 있다.
-	* 정해진 색깔과 상호작용 할 수 있다.
-	* R 를 눌러서 게임을 재시작 할 수 있다.
-
-* 튜토리얼 고민
-	* map 0_0 : map.ber
-	* map 0_1 : 순행이 자유롭게 돌아다니고, 역행이 그걸 보면서 시간이 거꾸로 흐른다는걸 이해시킨다. + 시간이 음수가 되야 탈 수 있다는걸 어필한다.
-	* map 0_2 : 순행, 역행, 재순행 모두 탈출구에 접근 가능한 구조 -> 여기서 재순행만 탈출이 가능하다는걸 어필한다. + 서로 충돌하면 안된다는걸 어필한다.
-	* map 0_3 : 빨간 파란 상자 부수는 맵
-	* map 0_4 : 좀비 살리는 맵
-	* map 0_5 : 순행이 좀비 박으면 죽는다는걸 알리는 맵
-	* map 1 : 근본 맵 ?
-	* map 2 : 근본 맵 1
-	* map 3 : 근본 맵 2
-	* map 4 : 대 근본 맵
-
-```c
-func[(int)'1'] = create_wall_instance;
-func[(int)'Z'] = create_zombie_blue_instance;
-func[(int)'B'] = create_box_red_instance;
-func[(int)'4'] = create_box_blue_instance;
-func[(int)'C'] = create_gold_red_instance;
-func[(int)'E'] = create_exit_instance;
-func[(int)'P'] = create_player_instance;
-```
-
-# engine
-
-## asset
-
-* background
-* font
-* sprite
-* object
-* scene
-* script
-
-## game cycle
-
-1. game start
-2. scene start
-3. scene controller
-4. instance step
-5. draw background
-6. instance draw
-7. back to 3
-8. scene end
-9. back to 2
-10. game end
-
-
-## instance life cycle
-
-1. create
-2. step
-3. draw
-4. back to 2
-5. destory
-
-# 게임 시작하기
+## 게임 시작하기
 1. 아래 링크를 클론합니다.
 ```
-git clone [주소]
+git clone https://github.com/Skyrich2000/TENET.git
 ```
 2. 아래 명령어를 통해 실행합니다.
 ```
@@ -101,15 +29,69 @@ git clone [주소]
 
 ## 사운드가 안꺼질 때
 ```
-pkill afplay // afplay 프로세스를 종료시켜주세요
+pkill afplay # afplay 프로세스를 종료시켜주세요
 ```
 
-## before
+# 게임 구상
 
-## done
-map 1_2
-map 1_3
-map 2
-map 3
-map 4
-map 5
+## 게임 로직
+* 순행이 금을 다 모아야 탈출 할 수 있다.
+* 순행이 상자를 부술 수 있다.
+* 좀비는 역행이 무조건 살려야한다.
+* 순행 인버터를 타면 시간이 거꾸로 흐르면서 역행 플레이어를 조종한다.
+* 역행 인버터는 시간이 음수가 되야 탈 수 있다.
+* 역행 인버터를 타면 시간이 다시 순행으로 흐르면서 재순행 플레이어를 조종한다.
+* 재순행 플레이어는 탈출구에 가면 탈출 할 수 있다.
+* 정해진 색깔과 상호작용 할 수 있다.
+* R 를 눌러서 게임을 재시작 할 수 있다.
+
+## 맵 고민
+* map 0_0 : map.ber
+* map 0_1 : 순행이 자유롭게 돌아다니고, 역행이 그걸 보면서 시간이 거꾸로 흐른다는걸 이해시킨다. + 시간이 음수가 되야 탈 수 있다는걸 어필한다.
+* map 0_2 : 순행, 역행, 재순행 모두 탈출구에 접근 가능한 구조 -> 여기서 재순행만 탈출이 가능하다는걸 어필한다. + 서로 충돌하면 안된다는걸 어필한다.
+* map 0_3 : 빨간 파란 상자 부수는 맵
+* map 0_4 : 좀비 살리는 맵
+* map 0_5 : 순행이 좀비 박으면 죽는다는걸 알리는 맵
+* map 1 : 쉬운 맵
+* map 2 : 근본 맵 1
+* map 3 : 근본 맵 2
+* map 4 : 어려운 맵
+* map 5 : 대 근본 맵
+
+## 이슈
+
+* 인버터에서 공격하면 버그남!
+
+# Engine
+
+## asset
+
+* background
+* font
+* map
+* object
+* scene
+* sprite
+* script
+
+## game cycle
+
+1. game start
+2. scene start
+3. scene controller
+5. draw background
+6. instance draw
+4. instance step
+7. back to 3
+8. scene end
+9. back to 2
+10. game end
+
+
+## instance life cycle
+
+1. create
+2. step
+3. draw
+4. back to 2
+5. destory
