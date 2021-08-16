@@ -10,26 +10,37 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= push_swap
-BONUS_NAME	= checker
+NAME		=	push_swap
+BONUS_NAME	=	checker
 
-CFLAGS	= -Wall -Wextra -Werror -I.
+CFLAGS		=	-Wall -Wextra -Werror -Iinclude
 
-SRCS	= push_swap.c \
-			srcs/input.c \
-			srcs/list1.c srcs/list2.c srcs/func.c \
-			srcs/lib.c srcs/lib_split.c srcs/lib_gnl.c \
-			srcs/sort_quick.c srcs/sort_small.c
+FILE		=	push_swap.c \
+				core/input.c \
+				core/func.c \
+				core/list/list1.c core/list/list2.c \
+				core/sort/sort_quick.c core/sort/sort_small.c \
+				lib/lib.c lib/lib_split.c lib/lib_gnl.c
 
-BONUS_SRCS	= checker.c \
-			srcs/input.c \
-			srcs/list1.c srcs/list2.c srcs/func.c \
-			srcs/lib.c srcs/lib_split.c srcs/lib_gnl.c \
+BONUS_FILE	=	checker.c \
+				core/input.c \
+				core/func.c \
+				core/list/list1.c core/list/list2.c \
+				lib/lib.c lib/lib_split.c lib/lib_gnl.c
 
-OBJS	= $(SRCS:%.c=%.o)
-BONUS_OBJS	= $(BONUS_SRCS:%.c=%.o)
+SRC_DIR		=	./src
+SRCS		= 	$(addprefix $(SRC_DIR)/, $(FILE))
+BONUS_SRCS	= 	$(addprefix $(SRC_DIR)/, $(BONUS_FILE))
+
+OBJ_DIR		=	./obj
+OBJS		=	$(addprefix $(OBJ_DIR)/, $(patsubst %.c,%.o,$(FILE)))
+BONUS_OBJS	=	$(addprefix $(OBJ_DIR)/, $(patsubst %.c,%.o,$(BONUS_FILE)))
 
 all: $(NAME) $(BONUS_NAME)
+
+$(OBJ_DIR)/%.o	: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
 	gcc $(CFLAGS) -o $@ $^
@@ -37,13 +48,21 @@ $(NAME): $(OBJS)
 $(BONUS_NAME): $(BONUS_OBJS)
 	gcc $(CFLAGS) -o $@ $^
 
+test			:
+	cd ./test/push_swap_tester
+	./push_swap_tester.bash
+	
+
+norm			:
+	@python3 -m norminette include/*
+	@python3 -m norminette src/*
+
 clean:
-	rm -f $(OBJS)
-	rm -f $(BONUS_OBJS)
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
 	rm -f $(NAME) $(BONUS_NAME)
 
 re: fclean all
 
-.PHONY: clean fclean all re
+.PHONY: clean fclean all re norm test
