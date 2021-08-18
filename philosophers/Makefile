@@ -10,11 +10,11 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= philo
+NAME		=	philo
 
-CFLAGS		= -Wall -Wextra -Werror -Iinclude -g
+CFLAGS		=	-Wall -Wextra -Werror -Iinclude -g
 
-FILE		= main.c \
+FILE		=	main.c \
 				philo.c \
 				data.c \
 				input.c \
@@ -37,6 +37,11 @@ $(OBJ_DIR)/%.o	: $(SRC_DIR)/%.c
 $(NAME)			: $(OBJS)
 	gcc $(CFLAGS) -o $@ $^ -lpthread
 
+show			:
+	@printf "NAME : $(NAME)\n"
+	@printf "FILE : $(FILE)\n"
+	@printf "OBJS : $(OBJS)\n"
+
 norm			:
 	@python3 -m norminette include/*
 	@python3 -m norminette src/*
@@ -49,5 +54,5 @@ fclean			: clean
 
 re				: fclean all
 
-.PHONY: clean fclean all re
+.PHONY: clean fclean all re norm
 
