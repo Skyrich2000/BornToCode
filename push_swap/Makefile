@@ -52,9 +52,13 @@ test			:
 	cd ./test/push_swap_tester && \
 	./push_swap_tester.bash
 
+show			:
+	@printf "SRCS : $(SRCS)"
+	@printf "OBJS : $(OBJS)"
+
 norm			:
 	@python3 -m norminette include/*
-	@python3 -m norminette src/*
+	@python3 -m norminette $(SRC_DIR)/*
 
 clean:
 	rm -rf $(OBJ_DIR)
@@ -64,4 +68,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: clean fclean all re norm test
+.PHONY: clean fclean all re norm test show
