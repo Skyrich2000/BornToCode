@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: su <su@student.42.fr>                      +#+  +:+       +#+         #
+#    By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/07/16 07:48:16 by ycha              #+#    #+#              #
-#    Updated: 2021/08/10 20:28:59 by su               ###   ########.fr        #
+#    Created: 2021/08/19 01:51:41 by ycha              #+#    #+#              #
+#    Updated: 2021/08/19 01:51:43 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -150,9 +150,14 @@ SHELL		=	/bin/bash
 sp			=	/-\|/
 idx			=	0
 
+export FILE
+
 # =========================================================
 
 all				: $(NAME)
+
+bonus			:
+	@$(MAKE) -C bonus
 
 $(OBJ_DIR)/%.o	: $(SRC_DIR)/%.c
 	$(eval idx = $(shell expr $(idx) + 1))
@@ -191,16 +196,14 @@ run				:
 	@printf "\n\n"
 	@afplay ./res/bgm.mp3 -v 0.5 & ./so_long ./res/ber/map.ber ; pkill afplay
 
-clean			:
-	@rm -rf $(OBJ_DIR)
-	@make -C ./src/mlx clean
-
-fclean			: clean
-	@rm -f $(NAME)
-
-re				: fclean all
+show			:
+	$(MAKE) -C bonus show
+	@printf "NAME : $(NAME)\n"
+	@printf "FILE : $(FILE)\n"
+	@printf "OBJS : $(OBJS)\n"
 
 norm			:
+	@$(MAKE) -C bonus norm
 	@python3 -m norminette include/*
 	@python3 -m norminette src/main.c
 	@python3 -m norminette src/asset/asset.c
@@ -214,4 +217,15 @@ norm			:
 	@python3 -m norminette src/engine/*
 	@python3 -m norminette src/lib/*
 
-.PHONY			:	all clean fclean re bonus norm
+clean			:
+	@$(MAKE) -C bonus clean
+	@rm -rf $(OBJ_DIR)
+	@$(MAKE) -C ./src/mlx clean
+
+fclean			: clean
+	@$(MAKE) -C bonus fclean
+	@rm -f $(NAME)
+
+re				: fclean all
+
+.PHONY			:	all clean fclean re bonus show norm run
