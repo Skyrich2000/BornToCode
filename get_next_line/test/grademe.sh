@@ -2,6 +2,7 @@
 
 # 이거를 프로젝트 폴더로 수정하세요!
 PROJ_PATH=../src
+BONUS_PATH=../bonus
 TEST_PATH=.
 
 # ### 안내사항
@@ -36,23 +37,24 @@ REAL_PATH=$(cd $(dirname $0) && cd ${PROJ_PATH} && pwd)
 echo 프로젝트 위치: $REAL_PATH
 
 cp -rf $PROJ_PATH/* $TEST_PATH/
+cp -rf $BONUS_PATH/* $TEST_PATH/
 
 cd $TEST_PATH
 ## 42testers-gnl
-git clone https://github.com/Mazoise/42TESTERS-GNL.git 42testers-gnl
+#git clone https://github.com/Mazoise/42TESTERS-GNL.git 42testers-gnl
 cd 42testers-gnl
 bash all_tests_with_bonus.sh
 cd ..
 
 ### gnl_lover
-git clone https://github.com/charMstr/GNL_lover.git gnl-lover
+#git clone https://github.com/charMstr/GNL_lover.git gnl-lover
 cp get_next_line* gnl-lover/copy_in_here_GNL_files
 cd gnl-lover
 sh GNL_lover.sh
 cd ..
 
 ### gnlkiller
-git clone https://github.com/DontBreakAlex/gnlkiller.git
+#git clone https://github.com/DontBreakAlex/gnlkiller.git
 cd gnlkiller
 cp ../get_next_line.c .
 cp ../get_next_line_utils.c .
@@ -61,7 +63,7 @@ bash run.sh;
 cd ..
 
 ### gnlkiller2
-git clone https://github.com/Sherchryst/gnlkiller.git gnlkiller2
+#git clone https://github.com/Sherchryst/gnlkiller.git gnlkiller2
 cd gnlkiller2
 cp ../get_next_line.c .
 cp ../get_next_line_utils.c .
@@ -71,7 +73,7 @@ chmod +x test.sh
 cd ..
 
 ### TEST-42
-git clone https://github.com/PandaCoustik/Test-42.git
+#git clone https://github.com/PandaCoustik/Test-42.git
 cd Test-42/test_gnl
 chmod +x test.sh
 ./test.sh
