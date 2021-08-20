@@ -10,17 +10,17 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	libftprintf.a
+NAME		=	../libftprintf.a
 
 CC			= 	gcc
 CFLAGS		=	-Wextra -Wall -Werror -Iinclude
 
-FILE		=	ft_printf.c \
-				core/boxing.c \
-				core/get_arg.c \
-				core/print.c \
-				core/parse.c \
-				utils/utils.c
+FILE		=	ft_printf_bonus.c \
+				core/boxing_bonus.c \
+				core/get_arg_bonus.c \
+				core/print_bonus.c \
+				core/parse_bonus.c \
+				utils/utils_bonus.c
 
 SRC_DIR		=	./src
 SCRS		=	$(addprefix $(SRC_DIR)/, $(FILE))
@@ -29,9 +29,6 @@ OBJ_DIR		=	./obj
 OBJS		=	$(addprefix $(OBJ_DIR)/, $(patsubst %.c,%.o,$(FILE)))
 
 all			: $(NAME)
-
-bonus		:
-	$(MAKE) -C bonus
 
 %.o			: %.c
 	$(CC) $(CFLAGS) $< -o $@
@@ -43,27 +40,20 @@ $(OBJ_DIR)/%.o	: $(SRC_DIR)/%.c
 $(NAME)		: $(OBJS)
 	ar -cr $@ $?
 
-test			:
-	cd ./test && ./grademe.sh
-
 show			:
-	$(MAKE) -C bonus show
 	@printf "NAME : $(NAME)\n"
 	@printf "OBJS : $(OBJS)\n"
 
 norm			:
-	$(MAKE) -C bonus norm
 	@python3 -m norminette include/*
 	@python3 -m norminette $(SRC_DIR)/*
 
 clean		:
-	$(MAKE) -C bonus clean
 	rm -rf $(OBJ_DIR)
 
 fclean		: clean
-	$(MAKE) -C bonus fclean
 	rm -rf $(NAME)
 
 re			: fclean all
 
-.PHONY		: all bonus clean fclean re show norm test
+.PHONY		: all clean fclean re show norm
