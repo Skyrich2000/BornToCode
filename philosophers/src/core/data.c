@@ -19,6 +19,13 @@ void	init_data(t_data *data)
 		exit(1);
 }
 
+void	add_value(t_data *data, int value)
+{
+	pthread_mutex_lock(&data->lock);
+	data->value += value;
+	pthread_mutex_unlock(&data->lock);
+}
+
 void	set_value(t_data *data, int value)
 {
 	pthread_mutex_lock(&data->lock);

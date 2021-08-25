@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-int	is_num(char *str)
+static int	is_num(char *str)
 {
 	while (*str)
 	{
@@ -23,7 +23,7 @@ int	is_num(char *str)
 	return (OK);
 }
 
-int	ft_atoi(char *str, int *data)
+static int	ft_atoi(char *str, int *data)
 {
 	int			sign;
 	long long	result;

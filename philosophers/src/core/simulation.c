@@ -20,7 +20,7 @@ static void	init_philosopher(t_arg *arg, t_resource *res, \
 	philo->fork_index[RIGHT] = (i + 1) % arg->number;
 	init_data(&philo->eat_count);
 	init_data(&philo->die_time);
-	set_value(&philo->die_time, res->start + arg->time_to_die);
+	set_value(&philo->die_time, res->start + arg->time_to_die * 1000);
 	philo->res = res;
 	philo->arg = arg;
 }

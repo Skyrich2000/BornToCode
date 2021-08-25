@@ -15,12 +15,12 @@ NAME		=	philo
 CFLAGS		=	-Wall -Wextra -Werror -Iinclude -g
 
 FILE		=	main.c \
-				philo.c \
-				data.c \
-				input.c \
-				monitor.c \
-				simulation.c \
-				utils.c
+				core/philo.c \
+				core/data.c \
+				core/input.c \
+				core/monitor.c \
+				core/simulation.c \
+				utils/utils.c
 
 SRC_DIR		=	./src
 SRCS		=	$(addprefix $(SRC_DIR)/, $(FILE))
