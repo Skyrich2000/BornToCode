@@ -12,23 +12,6 @@
 
 #include "philo.h"
 
-// static void	pickup(t_philosopher *philo, int index)
-// {
-// 	while (1)
-// 	{
-// 		//lock
-// 		if (get_value(&philo->res->forks[philo->fork_index[index]]) == 0)
-// 		{
-// 			set_value(&philo->res->forks[philo->fork_index[index]], 1);
-// 			break;
-// 		}
-// 		//unlock
-// 		if (get_value(&philo->res->end))
-// 			return ;
-// 	}
-// 	display_message(philo, MSG_TAKE_FORK);
-// }
-
 static void	pickup(t_philosopher *philo)
 {
 	int	flag;
@@ -51,6 +34,7 @@ static void	pickup(t_philosopher *philo)
 			return ;
 		if (flag)
 			break;
+		usleep(1000);
 	}
 	display_message(philo, MSG_TAKE_FORK);
 	display_message(philo, MSG_TAKE_FORK);
@@ -58,8 +42,6 @@ static void	pickup(t_philosopher *philo)
 
 static void	eating(t_philosopher *philo)
 {
-	// pickup(philo, philo->index % 2 == 0);
-	// pickup(philo, philo->index % 2 == 1);
 	pickup(philo);
 	set_value(&philo->die_time, get_time() + philo->arg->time_to_die * 1000);
 	set_value(&philo->eat_count, get_value(&philo->eat_count) + 1);
@@ -94,7 +76,7 @@ void	*philosopher(void *data)
 		eating(philo);
 		sleeping(philo);
 		thinking(philo);
-		usleep(200);
+		usleep(1000);
 	}
 	return (0);
 }

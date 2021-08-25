@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static int	is_dead(t_monitor *self)
+int	is_dead(t_monitor *self)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ static int	is_dead(t_monitor *self)
 	return (FALSE);
 }
 
-static int	is_all_ate(t_monitor *self)
+int	is_all_ate(t_monitor *self)
 {
 	int	i;
 
@@ -57,7 +57,7 @@ void	*monitor(void *data)
 			return (0);
 		if (is_all_ate(self))
 			return (0);
-		usleep(210);
+		usleep(1000);
 	}
 	return (0);
 }

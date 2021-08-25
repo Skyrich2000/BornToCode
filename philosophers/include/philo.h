@@ -102,4 +102,7 @@ void	end_simulation(t_arg *arg, \
 void	*philosopher(void *data);
 void	*monitor(void *data);
 
+int	is_dead(t_monitor *self);
+int	is_all_ate(t_monitor *self);
+
 #endif

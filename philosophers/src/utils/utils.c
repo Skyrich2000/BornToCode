@@ -50,11 +50,8 @@ int	get_time(void)
 
 void	psleep(t_resource *res, int end_time)
 {
-	(void)res;
 	while (get_time() < end_time)
 	{
-		// if (get_value(&res->end))
-		// 	return ;
-		usleep(210);
+		usleep(1000);
 	}
 }

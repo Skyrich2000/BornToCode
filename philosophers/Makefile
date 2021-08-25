@@ -12,7 +12,8 @@
 
 NAME		=	philo
 
-CFLAGS		=	-Wall -Wextra -Werror -Iinclude -g
+# CFLAGS		=	-Wall -Wextra -Werror -Iinclude -g
+CFLAGS		=	-Iinclude -g
 
 FILE		=	main.c \
 				core/philo.c \

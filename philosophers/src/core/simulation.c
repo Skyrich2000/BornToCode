@@ -58,8 +58,8 @@ void	start_simulation(t_arg *arg, t_philosopher *philos, t_monitor *moni)
 		if (pthread_create(&philos[i].thread, NULL, \
 						philosopher, (void *)(&philos[i])) != 0)
 			exit(1);
-	if (pthread_create(&moni->thread, NULL, monitor, (void *)moni) != 0)
-		exit(1);
+	// if (pthread_create(&moni->thread, NULL, monitor, (void *)moni) != 0)
+		// exit(1);
 }
 
 void	end_simulation(t_arg *arg, t_resource *res, \
@@ -68,7 +68,17 @@ void	end_simulation(t_arg *arg, t_resource *res, \
 	int	i;
 
 	i = -1;
-	pthread_join(moni->thread, 0);
+	
+	while (1)
+	{
+		if (is_dead(moni))
+			break;
+		usleep(1000);
+		if (is_all_ate(moni))
+			break;
+		usleep(1000);
+	}
+
 	while (++i < arg->number)
 		pthread_join(philos[i].thread, 0);
 	while (++i < arg->number)
