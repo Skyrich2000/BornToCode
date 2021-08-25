@@ -52,6 +52,6 @@ void	psleep(t_resource *res, int end_time)
 {
 	while (get_time() < end_time)
 	{
-		usleep(1000);
+		usleep(500);
 	}
 }

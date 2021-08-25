@@ -34,7 +34,7 @@ static void	pickup(t_philosopher *philo)
 			return ;
 		if (flag)
 			break;
-		usleep(1000);
+		usleep(500);
 	}
 	display_message(philo, MSG_TAKE_FORK);
 	display_message(philo, MSG_TAKE_FORK);
@@ -76,7 +76,7 @@ void	*philosopher(void *data)
 		eating(philo);
 		sleeping(philo);
 		thinking(philo);
-		usleep(1000);
+		usleep(500);
 	}
 	return (0);
 }

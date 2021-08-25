@@ -73,10 +73,9 @@ void	end_simulation(t_arg *arg, t_resource *res, \
 	{
 		if (is_dead(moni))
 			break;
-		usleep(1000);
 		if (is_all_ate(moni))
 			break;
-		usleep(1000);
+		usleep(500);
 	}
 
 	while (++i < arg->number)

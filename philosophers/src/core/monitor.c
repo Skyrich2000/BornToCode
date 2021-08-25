@@ -57,7 +57,7 @@ void	*monitor(void *data)
 			return (0);
 		if (is_all_ate(self))
 			return (0);
-		usleep(1000);
+		usleep(500);
 	}
 	return (0);
 }
