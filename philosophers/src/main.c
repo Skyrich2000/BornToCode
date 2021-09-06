@@ -16,14 +16,13 @@ int	main(int ac, char **av)
 {
 	t_arg			arg;
 	t_resource		res;
-	t_monitor		moni;
 	t_philosopher	*philos;
 
 	if (input(ac, av, &arg))
 	{
-		init_simulation(&arg, &res, &philos, &moni);
-		start_simulation(&arg, philos, &moni);
-		end_simulation(&arg, &res, philos, &moni);
+		init_simulation(&arg, &res, &philos);
+		start_simulation(&arg, philos);
+		end_simulation(&arg, &res, philos);
 	}
 	else
 		printf("Error\n");

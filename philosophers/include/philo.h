@@ -69,15 +69,6 @@ typedef struct s_philosopher
 	pthread_t		thread;
 }	t_philosopher;
 
-typedef struct s_monitor
-{
-	t_philosopher	*philos;
-	t_resource		*res;
-	t_arg			*arg;
-
-	pthread_t		thread;
-}	t_monitor;
-
 int		input(int ac, char **av, t_arg *arg);
 
 void	init_data(t_data *data);
@@ -89,20 +80,12 @@ int		get_time(void);
 void	psleep(t_resource *res, int end_time);
 void	display_message(t_philosopher *philo, int type);
 
-void	init_simulation(t_arg *arg, \
-						t_resource *res, \
-						t_philosopher **philos, \
-						t_monitor *moni);
-void	start_simulation(t_arg *arg, t_philosopher *philos, t_monitor *moni);
-void	end_simulation(t_arg *arg, \
-						t_resource *res, \
-						t_philosopher *philos, \
-						t_monitor *moni);
+void	init_simulation(t_arg *arg, t_resource *res, t_philosopher **philos);
+void	start_simulation(t_arg *arg, t_philosopher *philos);
+void	end_simulation(t_arg *arg, t_resource *res, t_philosopher *philos);
 
 void	*philosopher(void *data);
-void	*monitor(void *data);
 
-int	is_dead(t_monitor *self);
-int	is_all_ate(t_monitor *self);
+void	monitoring(t_arg *arg, t_philosopher *philos, t_data *end);
 
 #endif

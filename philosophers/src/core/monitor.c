@@ -12,52 +12,48 @@
 
 #include "philo.h"
 
-int	is_dead(t_monitor *self)
+static int	is_dead(t_arg *arg, t_philosopher *philos, t_data *end)
 {
 	int	i;
 
 	i = -1;
-	while (++i < self->arg->number)
+	while (++i < arg->number)
 	{
-		if (get_value(&self->philos[i].die_time) < get_time())
+		if (get_value(&philos[i].die_time) < get_time())
 		{
-			display_message(&self->philos[i], MSG_DEAD);
-			set_value(&self->res->end, 1);
+			display_message(&philos[i], MSG_DEAD);
+			set_value(end, 1);
 			return (TRUE);
 		}
 	}
 	return (FALSE);
 }
 
-int	is_all_ate(t_monitor *self)
+static int	is_all_eaten(t_arg *arg, t_philosopher *philos, t_data *end)
 {
 	int	i;
 
 	i = -1;
-	if (self->arg->must_eat_count == -1)
+	if (arg->must_eat_count == -1)
 		return (FALSE);
-	while (++i < self->arg->number)
+	while (++i < arg->number)
 	{
-		if (get_value(&self->philos[i].eat_count) < self->arg->must_eat_count)
+		if (get_value(&philos[i].eat_count) < arg->must_eat_count)
 			return (FALSE);
 	}
-	display_message(&self->philos[0], MSG_ENOUGH);
-	set_value(&self->res->end, 1);
+	display_message(&philos[0], MSG_ENOUGH);
+	set_value(end, 1);
 	return (TRUE);
 }
 
-void	*monitor(void *data)
+void	monitoring(t_arg *arg, t_philosopher *philos, t_data *end)
 {
-	t_monitor	*self;
-
-	self = (t_monitor *)data;
 	while (1)
 	{
-		if (is_dead(self))
-			return (0);
-		if (is_all_ate(self))
-			return (0);
+		if (is_dead(arg, philos, end))
+			return ;
+		if (is_all_eaten(arg, philos, end))
+			return ;
 		usleep(500);
 	}
-	return (0);
 }

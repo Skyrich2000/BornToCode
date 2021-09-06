@@ -32,9 +32,9 @@ void	display_message(t_philosopher *philo, int type)
 	{
 		if (type == MSG_ENOUGH)
 			printf("%d All philosophers ate it all.\n", \
-										(get_time() - philo->res->start) / 1000);
+									get_time() - philo->res->start);
 		else
-			printf("%d %d %s", (get_time() - philo->res->start) / 1000, \
+			printf("%d %d %s", get_time() - philo->res->start, \
 										philo->index + 1, get_message(type));
 	}
 	pthread_mutex_unlock(&philo->res->message_lock);
@@ -45,13 +45,11 @@ int	get_time(void)
 	struct timeval	time;
 
 	gettimeofday(&time, NULL);
-	return (time.tv_sec * 1000 * 1000 + time.tv_usec);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
 void	psleep(t_resource *res, int end_time)
 {
 	while (get_time() < end_time)
-	{
 		usleep(500);
-	}
 }
