@@ -33,7 +33,7 @@ static void	pickup(t_philosopher *philo)
 		if (get_value(&philo->res->end))
 			return ;
 		if (flag)
-			break;
+			break ;
 		usleep(500);
 	}
 	display_message(philo, MSG_TAKE_FORK);
@@ -46,7 +46,7 @@ static void	eating(t_philosopher *philo)
 	set_value(&philo->die_time, get_time() + philo->arg->time_to_die);
 	set_value(&philo->eat_count, get_value(&philo->eat_count) + 1);
 	display_message(philo, MSG_EATING);
-	psleep(philo->res, get_time() + philo->arg->time_to_eat);
+	psleep(get_time() + philo->arg->time_to_eat);
 	set_value(&philo->res->forks[philo->fork_index[LEFT]], 0);
 	set_value(&philo->res->forks[philo->fork_index[RIGHT]], 0);
 }
@@ -54,7 +54,7 @@ static void	eating(t_philosopher *philo)
 static void	sleeping(t_philosopher *philo)
 {
 	display_message(philo, MSG_SLEEPING);
-	psleep(philo->res, get_time() + philo->arg->time_to_sleep);
+	psleep(get_time() + philo->arg->time_to_sleep);
 }
 
 static void	thinking(t_philosopher *philo)
@@ -68,7 +68,7 @@ void	*philosopher(void *data)
 
 	philo = (t_philosopher *)data;
 	if (philo->index % 2)
-		psleep(philo->res, get_time() + philo->arg->time_to_eat);
+		psleep(get_time() + philo->arg->time_to_eat);
 	while (!get_value(&philo->res->end))
 	{
 		eating(philo);

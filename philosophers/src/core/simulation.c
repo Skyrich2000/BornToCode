@@ -23,7 +23,7 @@ static void	init_philosopher(
 	philo->fork_index[RIGHT] = (index + 1) % arg->number;
 	init_data(&philo->eat_count);
 	init_data(&philo->die_time);
-	set_value(&philo->die_time, res->start + arg->time_to_die * 1000);
+	set_value(&philo->die_time, res->start + arg->time_to_die);
 	philo->res = res;
 	philo->arg = arg;
 }
@@ -55,8 +55,10 @@ void	start_simulation(t_arg *arg, t_philosopher *philos)
 	i = -1;
 	while (++i < arg->number)
 	{
-		if (pthread_create(&philos[i].thread, NULL, philosopher, (void *)(&philos[i])) != 0)
+		if (pthread_create(&philos[i].thread, NULL, \
+										philosopher, (void *)(&philos[i])) != 0)
 			exit(1);
+		pthread_detach(philos[i].thread);
 	}
 }
 
@@ -66,8 +68,6 @@ void	end_simulation(t_arg *arg, t_resource *res, t_philosopher *philos)
 
 	i = -1;
 	monitoring(arg, philos, &res->end);
-	while (++i < arg->number)
-		pthread_join(philos[i].thread, 0);
 	while (++i < arg->number)
 	{
 		delete_data(&res->forks[i]);

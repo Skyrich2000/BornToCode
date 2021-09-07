@@ -12,8 +12,7 @@
 
 NAME		=	philo
 
-# CFLAGS		=	-Wall -Wextra -Werror -Iinclude -g
-CFLAGS		=	-Iinclude -g
+CFLAGS		=	-Wall -Wextra -Werror -Iinclude -g # -g3 -fsanitize=address
 
 FILE		=	main.c \
 				core/philo.c \

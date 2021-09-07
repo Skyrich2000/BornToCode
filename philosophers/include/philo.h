@@ -77,7 +77,7 @@ int		get_value(t_data *data);
 void	delete_data(t_data *data);
 
 int		get_time(void);
-void	psleep(t_resource *res, int end_time);
+void	psleep(int end_time);
 void	display_message(t_philosopher *philo, int type);
 
 void	init_simulation(t_arg *arg, t_resource *res, t_philosopher **philos);

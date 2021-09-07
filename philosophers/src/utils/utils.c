@@ -27,8 +27,10 @@ static char	*get_message(int type)
 
 void	display_message(t_philosopher *philo, int type)
 {
+	static int	end = 0;
+
 	pthread_mutex_lock(&philo->res->message_lock);
-	if (!get_value(&philo->res->end))
+	if (!end)
 	{
 		if (type == MSG_ENOUGH)
 			printf("%d All philosophers ate it all.\n", \
@@ -36,6 +38,8 @@ void	display_message(t_philosopher *philo, int type)
 		else
 			printf("%d %d %s", get_time() - philo->res->start, \
 										philo->index + 1, get_message(type));
+		if (type == MSG_DEAD || type == MSG_ENOUGH)
+			end = 1;
 	}
 	pthread_mutex_unlock(&philo->res->message_lock);
 }
@@ -48,7 +52,7 @@ int	get_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-void	psleep(t_resource *res, int end_time)
+void	psleep(int end_time)
 {
 	while (get_time() < end_time)
 		usleep(500);
