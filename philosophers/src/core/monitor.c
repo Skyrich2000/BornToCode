@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/31 14:59:46 by ycha              #+#    #+#             */
-/*   Updated: 2021/08/14 05:57:20 by ycha             ###   ########.fr       */
+/*   Updated: 2021/09/07 17:02:45 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ void	monitoring(t_arg *arg, t_philosopher *philos, t_data *end)
 			return ;
 		if (is_all_eaten(arg, philos, end))
 			return ;
-		usleep(500);
+		usleep(200);
 	}
 }

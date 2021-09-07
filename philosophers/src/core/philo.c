@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/31 14:59:46 by ycha              #+#    #+#             */
-/*   Updated: 2021/08/14 05:57:23 by ycha             ###   ########.fr       */
+/*   Updated: 2021/09/07 17:19:54 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	pickup(t_philosopher *philo)
 			return ;
 		if (flag)
 			break ;
-		usleep(500);
+		usleep(200);
 	}
 	display_message(philo, MSG_TAKE_FORK);
 	display_message(philo, MSG_TAKE_FORK);
@@ -71,10 +71,10 @@ void	*philosopher(void *data)
 		psleep(get_time() + philo->arg->time_to_eat);
 	while (!get_value(&philo->res->end))
 	{
+		usleep(200);
 		eating(philo);
 		sleeping(philo);
 		thinking(philo);
-		usleep(500);
 	}
 	return (0);
 }

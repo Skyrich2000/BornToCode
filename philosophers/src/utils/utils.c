@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 20:25:09 by ycha              #+#    #+#             */
-/*   Updated: 2021/08/14 05:57:31 by ycha             ###   ########.fr       */
+/*   Updated: 2021/09/07 17:20:31 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ int	get_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
+// TODO: return if ended
 void	psleep(int end_time)
 {
 	while (get_time() < end_time)
-		usleep(500);
+		usleep(200);
 }
