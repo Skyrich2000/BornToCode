@@ -81,13 +81,14 @@ pkill afplay # afplay 프로세스를 종료시켜주세요
 1. game start
 2. scene start
 3. scene controller
-5. draw background
-6. instance draw
-4. instance step
-7. back to 3
-8. scene end
-9. back to 2
-10. game end
+4. draw background
+5. instance draw
+6. instance step
+7. scene ui
+8. back to 3
+9. scene end
+10. back to 2
+11. game end
 
 
 ## instance life cycle

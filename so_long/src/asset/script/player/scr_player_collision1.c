@@ -72,6 +72,7 @@ void	scr_player_collision_inverter(t_instance *this)
 
 	ins = place_meeting_type(this, this->x, this->y, INVERTER);
 	if (ins && ins->condition & C_ALIVE && \
+		ins->obj.inverter.dummy && \
 		ins->obj.inverter.inverted == this->obj.player.inverted)
 	{
 		ins->condition = C_DEING;
