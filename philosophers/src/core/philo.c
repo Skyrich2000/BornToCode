@@ -30,8 +30,6 @@ static void	pickup(t_philosopher *philo)
 		}
 		pthread_mutex_unlock(&philo->res->forks[philo->fork_index[LEFT]].lock);
 		pthread_mutex_unlock(&philo->res->forks[philo->fork_index[RIGHT]].lock);
-		if (get_value(&philo->res->end))
-			return ;
 		if (flag)
 			break ;
 		usleep(200);

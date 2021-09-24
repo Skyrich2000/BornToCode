@@ -56,4 +56,5 @@ void	monitoring(t_arg *arg, t_philosopher *philos, t_data *end)
 			return ;
 		usleep(200);
 	}
+	usleep(1000);
 }

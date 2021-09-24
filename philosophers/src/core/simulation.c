@@ -58,16 +58,19 @@ void	start_simulation(t_arg *arg, t_philosopher *philos)
 		if (pthread_create(&philos[i].thread, NULL, \
 										philosopher, (void *)(&philos[i])) != 0)
 			exit(1);
-		pthread_detach(philos[i].thread);
 	}
+	pthread_detach(philos[0].thread);
 }
 
 void	end_simulation(t_arg *arg, t_resource *res, t_philosopher *philos)
 {
 	int	i;
 
-	i = -1;
 	monitoring(arg, philos, &res->end);
+	i = 0;
+	while (++i < arg->number)
+		pthread_join(philos[i].thread, 0);
+	i = -1;
 	while (++i < arg->number)
 	{
 		delete_data(&res->forks[i]);
