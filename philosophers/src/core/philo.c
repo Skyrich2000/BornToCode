@@ -32,7 +32,7 @@ static void	pickup(t_philosopher *philo)
 		pthread_mutex_unlock(&philo->res->forks[philo->fork_index[RIGHT]].lock);
 		if (flag)
 			break ;
-		usleep(200);
+		usleep(100);
 	}
 	display_message(philo, MSG_TAKE_FORK);
 	display_message(philo, MSG_TAKE_FORK);
@@ -69,10 +69,10 @@ void	*philosopher(void *data)
 		psleep(get_time() + philo->arg->time_to_eat);
 	while (!get_value(&philo->res->end))
 	{
-		usleep(200);
 		eating(philo);
 		sleeping(philo);
 		thinking(philo);
+		usleep(200);
 	}
 	return (0);
 }
