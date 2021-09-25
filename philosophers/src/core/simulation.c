@@ -67,6 +67,7 @@ void	end_simulation(t_arg *arg, t_resource *res, t_philosopher *philos)
 	int	i;
 
 	monitoring(arg, philos, &res->end);
+	pthread_mutex_destroy(&res->message_lock);
 	i = 0;
 	while (++i < arg->number)
 		pthread_join(philos[i].thread, 0);
@@ -78,7 +79,6 @@ void	end_simulation(t_arg *arg, t_resource *res, t_philosopher *philos)
 		delete_data(&philos[i].die_time);
 	}
 	delete_data(&res->end);
-	pthread_mutex_destroy(&res->message_lock);
 	free(res->forks);
 	free(philos);
 }
