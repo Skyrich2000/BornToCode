@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/02 19:52:00 by echung            #+#    #+#             */
-/*   Updated: 2021/02/03 00:37:16 by echung           ###   ########.fr       */
+/*   Created: 2021/09/12 16:31:58 by echung            #+#    #+#             */
+/*   Updated: 2021/09/12 16:32:43 by echung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
-{
-	new->next = *lst;
-	*lst = new;
-}
+# include <unistd.h>
+
+void	builtin_echo(int argc, char **argv, char **env);
+void	builtin_cd(int argc, char **argv, char **env);
+void	builtin_pwd(int argc, char **argv, char **env);
+
+#endif

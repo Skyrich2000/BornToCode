@@ -1,35 +1,36 @@
 #include "minishell.h"
+#include "core/env.h"
+#include "core/input.h"
+#include "core/execute.h"
+#include "utils/list.h"
+#include "utils/utils.h"
+#include "core/parse.h"
 
-typedef struct s_list t_list;
-
-typedef struct s_argv
+void    start(char **envp)
 {
-	t_list *list;
-}   t_argv;
+	t_env	*env;
+	t_list	*cmds;
+	char	*line;
 
-void    init_list(char **envp)
-{
-
-}
-
-t_argv  *envp_to_list(char **envp)
-{
-	init_list(&argv);
-}
-
-void    startshell(char **envp)
-{
-	envp_to_list(envp);
-	while (1)
+	env = init_env(envp);
+	while (input(&line) == OK)
 	{
-		write_message_to_command("bash > ");
-		get_command();
-		parse_command();
+		cmds = init_list();
+		if (parse(line, cmds) != OK)
+		{
+			printf("에러남 ㅠ \n");
+			continue ;
+		}
+		free(line);
+		free_list(cmds, ft_free);
 	}
-}    
+	free(env);
+}
 
 int main(int argc, char **argv, char **envp)
 {
-	startshell();
+	(void)argv;
+	(void)argc;
+	start(envp);
 	return (0);
 }

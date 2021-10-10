@@ -8,27 +8,25 @@
 int pipes[2] ;
 
 void parent_proc() {
-  // char * buf = 0x0;
-  char buf[32];
+  char * buf = 0x0;
   ssize_t s;
   size_t len = 0;
 
   // 읽기용 파이프를 닫는다
   close(pipes[0]);
 
-  // while ((s = getline(&buf, &len, stdin)) != -1) {
-  while ((s = read(0, buf, 31)) > 0) {
-    buf[s - 1] = 0x0;
+  while ((s = getline(&buf, &len, stdin)) != -1) {
+	buf[s - 1] = 0x0;
 
-    ssize_t sent = 0;
-    char * data = buf;
+	ssize_t sent = 0;
+	char * data = buf;
 
-    while (sent < s) {
-      sent += write(pipes[1], buf + sent, s - sent);
-    }
-    // free(buf);
-    // buf = 0x0;
-    len = 0;
+	while (sent < s) {
+	  sent += write(pipes[1], buf + sent, s - sent);
+	}
+	free(buf);
+	buf = 0x0;
+	len = 0;
   }
   close(pipes[1]);
 }
@@ -40,8 +38,8 @@ void child_proc() {
   // 쓰기용 파이프를 닫는다
   close(pipes[1]);
   while ((s = read(pipes[0], buf, 31)) > 0) {
-    buf[s + 1] = 0x0;
-    printf(">%s\n", buf);
+	buf[s + 1] = 0x0;
+	printf(">%s\n", buf);
   }
   exit(0);
 }

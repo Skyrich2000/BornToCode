@@ -1,5 +1,7 @@
 # Test
 
+cat | cat < a << b > c >> d
+
 ## parse
 
 
@@ -7,5 +9,3 @@
 ## builtin
 
 ## 
-
-check fd leak

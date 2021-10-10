@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: su <su@student.42.fr>                      +#+  +:+       +#+         #
+#    By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/02 00:01:37 by ycha              #+#    #+#              #
-#    Updated: 2021/10/11 05:16:23 by su               ###   ########.fr        #
+#    Updated: 2021/08/13 01:21:19 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,16 +21,17 @@ FILE		=	\
 				core/builtin/builtin.c \
 				core/env/env.c \
 				core/env/path.c \
+
+				core/excute/excute.c \ 
+				
 				core/parse/lexer.c \
-				core/parse/parse.c \
+				core/parse/parse.c \ 
 				core/parse/tokenizer.c \
-				core/input.c \
+				
 				utils/ft_exit.c \
-				utils/ft_free.c \
-				utils/ft_split_free.c \
-				utils/ft_strjoins.c \
-				utils/list.c \
-				debug/debug_parse.c
+				utils/ft_strjoins.c \ 
+
+				utils/list.c \ 
 
 
 # Options =================================================
@@ -54,8 +55,7 @@ $(OBJ_DIR)/%.o	: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME)			: $(OBJS)
-	$(MAKE) -C ./src/lib
-	gcc $(CFLAGS) -Lsrc/lib -lft -lreadline -o $@ $^
+	gcc $(CFLAGS) -o $@ $^
 
 norm			:
 	@python3 -m norminette include/*
@@ -67,11 +67,9 @@ show			:
 
 clean			:
 	rm -rf $(OBJ_DIR)
-	$(MAKE) -C ./src/lib clean
 
 fclean			: clean
 	rm -f $(NAME)
-	$(MAKE) -C ./src/lib fclean
 
 re				: fclean all
 
