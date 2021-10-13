@@ -52,7 +52,7 @@ char    *search_env(t_env *env, char *key);
 /**
  * 환경 변수에 값을 추가합니다.
  * 
- * @param env 리스트
+ * @param env 환경 변수 구조체
  * @param key 추가할 key 값
  * @param value 추가할 value 값 (없는 경우 NULL)
  */

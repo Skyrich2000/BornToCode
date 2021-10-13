@@ -3,6 +3,7 @@
 #include "core/execute/proc.h"
 #include "core/parse/cmd.h"
 #include "utils/utils.h"
+#include "debug/debug_parse.h"
 
 #define IN 0
 #define OUT 1
@@ -11,6 +12,8 @@ int execute_cmd(t_cmd *cmd, t_env *env, int fd_in, int fd_out)
 {
 	t_proc *proc;
 
+	printf("--------execute---------\n");
+	print_cmd(cmd, 0);
 	proc = build_proc(cmd, env, fd_in, fd_out);
 	if (get_proc_type(proc) == P_EXTERN)
 		execute_extern_proc(proc);

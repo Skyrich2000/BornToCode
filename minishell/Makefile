@@ -18,7 +18,6 @@ FILE		=	\
 				main.c \
 				core/builtin/builtin_cd.c \
 				core/builtin/builtin_pwd.c \
-				core/builtin/builtin.c \
 				core/execute/build_proc.c \
 				core/execute/execute.c \
 				core/execute/proc.c \

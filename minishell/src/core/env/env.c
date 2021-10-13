@@ -40,6 +40,7 @@ static char **get_key_value(char* line)
     return (output);
 }
 
+// TODO: key_value 변수 free 제대로 할것
 t_env *init_env(char **envp)
 {
     t_env   *output;
@@ -154,6 +155,6 @@ char    **export_env(t_env *env)
         node = node->next;
         ++idx;
     }
-    rt[idx] = '\0';
+    rt[idx] = 0;
     return (rt);
 }

@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_cd.c                                       :+:      :+:    :+:   */
+/*   mshell_envp.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: su <su@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/12 16:23:34 by echung            #+#    #+#             */
-/*   Updated: 2021/10/11 02:55:23 by su               ###   ########.fr       */
+/*   Created: 2021/10/13 16:33:40 by echung            #+#    #+#             */
+/*   Updated: 2021/10/13 16:42:25 by echung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core/builtin.h"
+#include "core/env.h"
 
-void	builtin_cd(int argc, char **argv, char **env)
+void	builtin_env(int argc, char **argv, t_env *env)
 {
-	(void)env;
-	(void)argc;
-	chdir(argv[1]);
+	char	**envp;
+	int i;
+
+	i = 0;
+	envp = export_env(env);
+	while (envp[i])
+	{
+		printf("\n%s", envp[i]);
+		i++;
+	}
+/*
+	for (i = 0; env[i] != NULL; i++)
+		printf("\n%s", env[i]);
+*/
 }

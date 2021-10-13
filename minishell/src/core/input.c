@@ -1,4 +1,4 @@
-#include "core/input.h"
+#include "minishell.h"
 
 int	input(char **line)
 {

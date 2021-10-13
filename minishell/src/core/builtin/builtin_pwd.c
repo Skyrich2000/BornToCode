@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include "core/builtin.h"
+
 #define PATH_MAX 1000
 
 void	builtin_pwd(int argc, char **argv, char **env)
