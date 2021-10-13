@@ -34,7 +34,7 @@ void    free_list(t_list *list, void (*del)(void *data))
 	t_list *delete_position;
 	t_list *ptr;
 
-	ptr = list;
+	ptr = list->next;
 	while (ptr)
 	{
 		delete_position = ptr;
@@ -44,4 +44,20 @@ void    free_list(t_list *list, void (*del)(void *data))
 		free(delete_position);
 		delete_position = 0;
 	}
+	free(list);
+}
+
+int count_list(t_list *list)
+{
+	int		size;
+	t_list	*node;
+
+	node = list->next;
+	size = 0;
+	while (node)
+	{
+		++size;
+		node = node->next;
+	}
+	return (size);
 }

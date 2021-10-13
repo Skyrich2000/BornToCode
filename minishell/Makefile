@@ -19,12 +19,19 @@ FILE		=	\
 				core/builtin/builtin_cd.c \
 				core/builtin/builtin_pwd.c \
 				core/builtin/builtin.c \
+				core/execute/build_proc.c \
+				core/execute/execute.c \
+				core/execute/proc.c \
+				core/execute/redir.c \
 				core/env/env.c \
-				core/env/path.c \
+				core/parse/cmd.c \
 				core/parse/lexer.c \
 				core/parse/parse.c \
+				core/parse/replace.c \
+				core/parse/token.c \
 				core/parse/tokenizer.c \
 				core/input.c \
+				utils/ft_close.c \
 				utils/ft_exit.c \
 				utils/ft_free.c \
 				utils/ft_split_free.c \
@@ -36,14 +43,18 @@ FILE		=	\
 # Options =================================================
 
 CC			=	gcc
-INCLUDE 	=	-Iinclude
-CFLAGS		=	-Wall -Werror -Wextra $(INCLUDE) -g
+INCLUDE 	=	include
+# CFLAGS		=	-Wall -Werror -Wextra -I$(INCLUDE) -g
+CFLAGS		=	-I$(INCLUDE) -g
+CLIB		=	-Lsrc/lib -lft -lreadline
 
 SRC_DIR		=	./src
 SRCS		=	$(addprefix $(SRC_DIR)/, $(FILE))
 
 OBJ_DIR		=	./obj
 OBJS		=	$(addprefix $(OBJ_DIR)/, $(patsubst %.c,%.o,$(FILE)))
+
+export FILE
 
 # =========================================================
 
@@ -55,7 +66,8 @@ $(OBJ_DIR)/%.o	: $(SRC_DIR)/%.c
 
 $(NAME)			: $(OBJS)
 	$(MAKE) -C ./src/lib
-	gcc $(CFLAGS) -Lsrc/lib -lft -lreadline -o $@ $^
+	ar rcs ./obj/libminishell.a $(OBJS)
+	gcc $(CFLAGS) $(CLIB) -o $@ $^
 
 norm			:
 	@python3 -m norminette include/*
@@ -76,4 +88,3 @@ fclean			: clean
 re				: fclean all
 
 .PHONY: clean fclean all re norm show
-

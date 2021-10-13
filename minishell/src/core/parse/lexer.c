@@ -1,39 +1,6 @@
-#include "core/parse.h"
+#include "core/parse/parse.h"
 
-/**
- * 문자열에 해당하는 타입 종류를 찾습니다.
- *
- * @param str 문자열
- * @return 타입 종류를 반환합니다.
- *
- * TODO: @test str = '>>a' 인경우에도 잘 돌아가는지 확인...
- */
-static int get_type(char *str)
-{
-    if (ft_strncmp(str, "|", 1) == 0)
-        return (T_PIPE);
-    else if (ft_strncmp(str, "<<", 2) == 0)
-        return (T_LEFT_DOUBLE_REDIR);
-    else if (ft_strncmp(str, ">>", 2) == 0)
-        return (T_RIGHT_DOUBLE_REDIR);
-    else if (ft_strncmp(str, "<", 1) == 0)
-        return (T_LEFT_REDIR);
-    else if (ft_strncmp(str, ">", 1) == 0)
-        return (T_RIGHT_REDIR);
-    return (T_ARG);
-}
-
-static t_token *init_token(int type, char *value)
-{
-    t_token *output;
-
-    output = malloc(sizeof(t_token));
-    if (!output)
-        exit(12);
-    output->type = type;
-    output->value = value;
-    return (output);
-}
+static int get_type(char *str);
 
 /**
  * 앞에서 부터 순회하면서
@@ -78,4 +45,27 @@ int lexer(char **strings, t_list *tokens)
         push_list(tokens, init_token(type, value));
     }
     return (OK);
+}
+
+/**
+ * 문자열에 해당하는 타입 종류를 찾습니다.
+ *
+ * @param str 문자열
+ * @return 타입 종류를 반환합니다.
+ *
+ * TODO: @test str = '>>a' 인경우에도 잘 돌아가는지 확인...
+ */
+static int get_type(char *str)
+{
+    if (ft_strncmp(str, "|", 1) == 0)
+        return (T_PIPE);
+    else if (ft_strncmp(str, "<<", 2) == 0)
+        return (T_LEFT_DOUBLE_REDIR);
+    else if (ft_strncmp(str, ">>", 2) == 0)
+        return (T_RIGHT_DOUBLE_REDIR);
+    else if (ft_strncmp(str, "<", 1) == 0)
+        return (T_LEFT_REDIR);
+    else if (ft_strncmp(str, ">", 1) == 0)
+        return (T_RIGHT_REDIR);
+    return (T_ARG);
 }

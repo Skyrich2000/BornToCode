@@ -1,5 +1,6 @@
 #include "core/env.h"
 #include "lib/libft.h"
+#include "utils/utils.h"
 
 #define KEY_MAX 1000000
 
@@ -67,6 +68,8 @@ char    *search_env(t_env *env, char *key)
             break;
         node = node->next;
     }
+    if (!node)
+        return (NULL);
     return (node->value);
 }
 
@@ -112,4 +115,45 @@ void free_env(t_env *env)
     free(env->key);
     if (env->value)
         free(env->value);
+}
+
+static int count_env(t_env *env)
+{
+	int		size;
+	t_env	*node;
+
+	size = 0;
+	node = env->next;
+	while (node)
+	{
+		++size;
+		node = node->next;
+	}
+	return (size);
+}
+
+char    **export_env(t_env *env)
+{
+    char    **rt;
+    int     size;
+    int     idx;
+    t_env	*node;
+    
+    size = count_env(env);
+    rt = (char **)malloc(sizeof(char *) * (size + 1));
+    if (!rt)
+        ft_exit(12);
+    idx = 0;
+    node = env->next;
+    while (node)
+    {
+        if (node->value)
+            rt[idx] = ft_strjoins((char *[3]){node->key, "=", node->value}, 3);
+        else
+            rt[idx] = ft_strdup(node->key);
+        node = node->next;
+        ++idx;
+    }
+    rt[idx] = '\0';
+    return (rt);
 }

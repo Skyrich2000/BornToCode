@@ -1,32 +1,35 @@
-#include "core/parse.h"
 #include "utils/utils.h"
+#include "core/env.h"
+#include "core/parse/parse.h"
 #include "debug/debug_parse.h"
 
-int parse(char *line, t_list *cmds)
+static int  replace(t_list *tokens, t_env *env);
+
+int parse(char *line, t_env *env, t_list *cmds)
 {
     t_list  *tokens;
     char    **strings;
 
     tokens = init_list();
     tokenizer(line, &strings);
+    printf("-------tokenizer-------\n");
+    print_pp(strings);
+
     lexer(strings, tokens);
+    printf("---------lexer---------\n");
+    print_token_list(tokens, 0);
+
+    replace(tokens, env);
+    printf("--------replace--------\n");
+    print_token_list(tokens, 0);
+
     parser(tokens, cmds);
+    printf("--------parser---------\n");
+    print_cmd_list(cmds, 0);
+
     ft_split_free(strings);
-    free_list(tokens, NULL);
+    free_list(tokens, free_token);
     return (OK);
-}
-
-static t_cmd    *init_cmd()
-{
-    t_cmd   *cmd;
-
-    cmd = malloc(sizeof(t_cmd));
-    if (!cmd)
-        exit(12);
-    cmd->args = init_list();
-    cmd->rd_in = init_list();
-    cmd->rd_out = init_list();
-    return (cmd);
 }
 
 /**
@@ -70,7 +73,7 @@ int parser(t_list *tokens, t_list *cmds)
         cmd = init_cmd();
         while (node && ((t_token *)node->data)->type != T_PIPE)
         {
-            token = node->data;
+            token = dup_token((t_token *)node->data);
             if (token->type == T_ARG)
                 push_list(cmd->args, (void *)token);
             else if (token->type == T_LEFT_REDIR || token->type == T_LEFT_DOUBLE_REDIR)
@@ -82,6 +85,24 @@ int parser(t_list *tokens, t_list *cmds)
         push_list(cmds, (void *)cmd);
         if (node)
             node = node->next;
+    }
+    return (OK);
+}
+
+static int  replace(t_list *tokens, t_env *env)
+{
+    t_list  *node;
+    t_token *token;
+
+    node = tokens->next;
+    while (node)
+    {
+        token = node->data;
+        node = node->next;
+        if (token->type == T_PIPE)
+            continue;
+        if (!replace_env_in_token(token, env))
+            return (ERROR);
     }
     return (OK);
 }

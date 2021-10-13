@@ -12,20 +12,19 @@
 
 TEST_NAME	=	$(notdir $(shell pwd))
 
-NAME		:=	$(TEST_NAME)
-
-TEST_FILE	:=	$(TEST_NAME).c
+TEST_PATH	=	./parse/$(TEST_NAME)
+TEST_FILE	=	$(TEST_NAME).c
 
 all			:
-	@$(MAKE) -C ../ TEST_NAME=$(TEST_NAME) test
+	@$(MAKE) -C ../../ TEST_PATH=$(TEST_PATH) test
 
 test		:
-	@gcc $(TEST_FILE) -o $(MLX_NAME) $(MLX_INCLUDE) $(MLX_CLIB)
-	@install_name_tool -change libmlx.dylib $(MLX_PATH)/libmlx.dylib $(MLX_NAME)
-	@gcc $(TEST_FILE) -o $(SDL_NAME) $(SDL_INCLUDE) $(SDL_CLIB)
+	@printf "[TEST] $(TEST_NAME)\n";
+	@g++ $(TEST_FILE) -lminishell -L../../../obj
+	@./a.out
 
 fclean		:
-	@rm -f $(NAME)
+	@rm -f ./a.out
 
 re			: fclean all
 

@@ -13,11 +13,17 @@
  */
 
 /**
- * @struct t_env 환경 변수값들이 담길 연결리스트
+ * @brief 환경 변수값들이 담길 연결리스트
  * 
- * @type key : 환경 변수에서 key 에 해당됨 
- * value : 환경 변수에서 value 에 해당됨 (value 가 없는 경우 NULL)
- * next : 다음 연결 리스트 포인터
+ * @c key 환경 변수에서 key 에 해당됨 
+ * @c value : 환경 변수에서 value 에 해당됨 (value 가 없는 경우 NULL)
+ * @c next : 다음 연결 리스트 포인터
+ * 
+ * @example {
+ *   key : 'USER'
+ *   value : 'ycha'
+ *   next : pointer
+ * }
  */
 typedef struct s_env
 {
@@ -75,5 +81,15 @@ void    remove_env(t_env *env, char *key);
  * @param env 환경 변수 구조체
  */
 void    free_env(t_env *env);
+
+/**
+ * 환경 변수를 이차원 문자열로 추출합니다.
+ * 
+ * @example ["key1=value", "key2=value"]
+ * 
+ * @param env 환경 변수 구조체
+ * @return 이차원 문자열 (free 필요)
+ */
+char    **export_env(t_env *env);
 
 #endif

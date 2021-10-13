@@ -1,115 +1,83 @@
 #include "core/env.h"
+#include "core/execute/execute.h"
+#include "core/execute/proc.h"
+#include "core/parse/cmd.h"
+#include "utils/utils.h"
 
+#define IN 0
+#define OUT 1
 
-int size_of_list(t_env *list)
+int execute_cmd(t_cmd *cmd, t_env *env, int fd_in, int fd_out)
 {
-	int size;
-	t_env *node;
+	t_proc *proc;
 
-	node = list;
-	size = 0;
-	while (node)
-	{
-		++size;
-		node = node->next;
-	}
-	return (size);
+	proc = build_proc(cmd, env, fd_in, fd_out);
+	if (get_proc_type(proc) == P_EXTERN)
+		execute_extern_proc(proc);
+	else
+		execute_builtin_proc(proc);
+	free_proc(proc);
+	return (OK);
 }
 
-// 아웃풋 정상 출력되는지 확인 필요
-void list_to_arr(t_env *list)
+int	wait_cmd()
 {
-	char **output;
-	int idx;
+	int	status;
 
-	output = malloc(sizeof(char *) * size_of_list(list));
-	if (!output)
-		exit(12);
-	idx = -1;
-	while (output[++idx])
-	{
-		output[idx] = strjoin(/* key  + `=` + value */);
-	}
-	return (output);
+	wait(&status);
+	return (OK);
 }
 
-void run_execve(t_env *list)
+/**
+ * 명령어들을 재귀를 돌면서 호출
+ * 
+ * fd_in 은 앞의 명령어에서의 fd_out 입니다.
+ * 파이프를 만들어요.
+ * pipe_fd[IN], pipe_fd[OUT] 이 나옴!
+ * <fd_in> 명령어1 <fd_out=pipe_fd[IN]> | <pipe_fd[OUT]> 명령어2 <...>
+ * fork 를 해요
+ * 부모
+ * 		fd_in 이랑 fd_out 은 필요없음!
+ * 		그래서 둘다 닫음!
+ * 자식
+ * 		pipe_fd[OUT] 은 필요없음!
+ * 		그래서 닫음!
+ */
+int execute_cmds(t_list *node, t_env *env, int fd_in)
 {
-	/* fork
-	**  ㄴ parent :  자식 프로세스의 상태 확인 및 malloc 해준 변수를 free 해줌
-	**  ㄴ child  : 실제로 명령어를 실행하는 프로세스
-	*/
-	fork()
-	
-	/*
-	** envp list 를 char ** 로 바꿔야함!
-	** execve의 세번째 인자.
-	*/
-	char ** env_arr = list_to_arr(list);
-	
-	/*
-	** envp list에서 path를 찾아서 `:` 를 기준으로 스플릿해야함
-	** execve의 첫번째 인자
-	*/
-	split_path(/* path */ , ':');
+	int		pipe_fd[2];
+	int		fd_out;
+	int		pid;
 
-
-	if (/* parent */)
+	fd_out = STDOUT_FILENO;
+	if (node->next)
 	{
-		// wait child
-		// free contents
-		// error check
+		pipe(pipe_fd);
+		fd_out = pipe_fd[IN];
+	}
+	pid = fork();
+	if (pid > 0)
+	{
+		ft_close(fd_in);
+		ft_close(fd_out);
+		wait_cmd();
 	}
 	else
 	{
-		// 첫번째 인자가 패스면 인자를 패스자리에 넣기!
-		while (/* 파싱된 path의 개수만큼 */)
-		{
-			// strjoin 두번써야함 free 해줘야함..
-			strjoin(/* path + `/` + command */);
-			execve(/* path + `/` + command */ , /* argument */, /* char ** environment value */);
-		}
+		ft_close(pipe_fd[OUT]);
+		execute_cmd(node->data, env, fd_in, fd_out);
+		exit(0);
 	}
+	if (fd_out != STDOUT_FILENO)
+		execute_cmds(node->next, env, pipe_fd[OUT]);
+	return (OK);
 }
 
-void run_command()
+int execute(t_list *cmds, t_env *env)
 {
-	if (/* builtin */)
-	{
-		/* builtin function
-		** argument의 command를 기준으로 비교
-		** echo, cd, export, env, exit, pwd, unset
-		*/
-	}
+	if (count_list(cmds) > 1)
+		execute_cmds(cmds->next, env, STDIN_FILENO);
 	else
-	{
-		// run_execve()
-	}
-}
-
-void excute(char **line)
-{
-
-	// 파이프로 나눠지는 명령어 개수를 찾아야함. 
-	count_command()
-
-	if (/* command 개수 1개 이상이면 */)
-	{
-		while (/* pipe 명령어 갯수만큼 */)
-		{
-			pipe();
-			fork();
-		}
-	}
-
-
-	if (/* command 개수 1개 이상 || 부모 프로세스 */)
-	{
-		// wait child
-		// pipe fd close
-	}
-	else
-	{
-		run_command();
-	}
+		execute_cmd(cmds->next->data, env, STDIN_FILENO, STDOUT_FILENO);
+	return (OK);
 }

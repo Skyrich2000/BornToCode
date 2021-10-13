@@ -10,68 +10,28 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	minishell
-
-# FILE =================================================
-
-FILE		=	\
-				main.c \
-				core/builtin/builtin_cd.c \
-				core/builtin/builtin_pwd.c \
-				core/builtin/builtin.c \
-				core/env/env.c \
-				core/env/path.c \
-
-				core/excute/excute.c \ 
-				
-				core/parse/lexer.c \
-				core/parse/parse.c \ 
-				core/parse/tokenizer.c \
-				
-				utils/ft_exit.c \
-				utils/ft_strjoins.c \ 
-
-				utils/list.c \ 
-
-
-# Options =================================================
-
-CC			=	gcc
-INCLUDE 	=	-Iinclude
-CFLAGS		=	-Wall -Werror -Wextra $(INCLUDE) -g
-
-SRC_DIR		=	./src
-SRCS		=	$(addprefix $(SRC_DIR)/, $(FILE))
-
-OBJ_DIR		=	./obj
-OBJS		=	$(addprefix $(OBJ_DIR)/, $(patsubst %.c,%.o,$(FILE)))
+TESTS		=	\
+        		parse/test_lexer \
+				parse/test_parser \
+				parse/test_tokenizer
 
 # =========================================================
 
-all				: $(NAME)
+all				:
+	@$(MAKE) -C ../
+	@for DIRS in $(TESTS); do \
+		$(MAKE) -C $$DIRS test; \
+	done
 
-$(OBJ_DIR)/%.o	: $(SRC_DIR)/%.c
-	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+test			:
+	@$(MAKE) -C ../
+	@$(MAKE) -C $(TEST_PATH) test;
 
-$(NAME)			: $(OBJS)
-	gcc $(CFLAGS) -o $@ $^
-
-norm			:
-	@python3 -m norminette include/*
-	@python3 -m norminette src/*
-
-show			:
-	@printf "SRCS : $(SRCS)"
-	@printf "OBJS : $(OBJS)"
-
-clean			:
-	rm -rf $(OBJ_DIR)
-
-fclean			: clean
-	rm -f $(NAME)
+fclean			:
+	@for DIRS in $(TESTS); do \
+		$(MAKE) -C $$DIRS fclean; \
+	done
 
 re				: fclean all
 
-.PHONY: clean fclean all re norm show
-
+.PHONY: fclean all re show

@@ -4,7 +4,7 @@ int	input(char **line)
 {
     char *str;
 
-	str = readline("minishell$ ");
+	str = readline("의민쉘$ ");
 	if (str)
 		*line = str;
 	else
