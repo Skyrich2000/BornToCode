@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strjoins.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/18 23:37:48 by echung            #+#    #+#             */
+/*   Updated: 2021/11/18 23:37:49 by echung           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "utils/utils.h"
 
-char*	ft_strjoins(char **strs, int n)
+char	*ft_strjoins(char **strs, int n)
 {
 	char	*temp;
 	char	*output;

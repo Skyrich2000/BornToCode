@@ -3,51 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 16:26:55 by echung            #+#    #+#             */
-/*   Updated: 2021/10/14 17:16:37 by echung           ###   ########.fr       */
+/*   Updated: 2021/11/26 20:03:57 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "core/builtin.h"
-#include "core/env.h"
+#include "core/env/env.h"
+#include "core/error.h"
+#include "utils/utils.h"
 
-/**
- * 
- * @example argv ['export', 'ABC=10']
- * @example argv ['export', 'ABC']
- * @example argv ['export']
- * @example argv ['export', 'ABC=10=10'] key : ABC, value : 10=10
- * @example argv ['export', 'ABC=10   =    10'] key : ABC, value : 10   =    10
- * @example argv ['export', 'ABC=10', 'BCE=20']
- * 
- * 
- */
-
-void	builtin_export_only(int argc, char **argv, t_env *env)
+static char	*to_string(t_env_data *data)
 {
-	t_env *node;
+	if (!data->value)
+		return (ft_strjoins((char *[3]){"declare -x ", data->key, "\n"}, 3));
+	return (ft_strjoins((char *[6]){"declare -x ", data->key, \
+				"=", "\"", data->value, "\"\n"}, 6));
+}
 
-	node = env->next;
-	while (node)
+void	builtin_export_only(t_env *env, int fd)
+{
+	char	**envp;
+	int		i;
+
+	i = 0;
+	envp = to_string_env(env, to_string);
+	while (envp[i])
 	{
-		printf("declare -x ");
-		printf("%s", node->key);
-		printf("=");
-		printf("\"");
-		printf("%s", node->value);
-		printf("\"\n");
-		node = node->next;
+		ft_putstr_fd(envp[i], fd);
+		i++;
 	}
 }
 
-void	builtin_export(int argc, char **argv, t_env *env)
+int	builtin_export_with_value(char **argv, t_env *env)
 {
-	char **output;
+	char	*key;
+	char	*value;
+	int		i;
+	int		flag;
 
-	if (argc == 1)	//export만 들어온 경우
-		builtin_export_only(argc, argv, env);
-	output = get_key_value(argv[1]);
-    insert_env(env, output[0], output[1]);
+	i = 1;
+	flag = 0;
+	while (argv[i])
+	{
+		ft_get_key_and_value(argv[i], &key, &value);
+		if (ft_is_valid_key(key))
+			replace_env(env, key, value);
+		else
+		{
+			error_message_for_export(argv[i]);
+			flag = 1;
+		}
+		free(key);
+		free(value);
+		i++;
+	}
+	return (flag);
+}
+
+int	builtin_export(int argc, char **argv, t_env *env, int fd)
+{
+	int		exit_code;
+
+	if (argc == 1)
+	{
+		builtin_export_only(env, fd);
+		return (0);
+	}
+	exit_code = builtin_export_with_value(argv, env);
+	return (exit_code);
 }

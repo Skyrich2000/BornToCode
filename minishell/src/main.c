@@ -1,51 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/16 02:18:24 by ycha              #+#    #+#             */
+/*   Updated: 2021/11/26 04:08:37 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int	input(char **line)
+void	start(t_env *env, char *line)
 {
-    char *str;
-
-	str = readline("의민쉘$ ");
-	if (str)
-		*line = str;
-	else
-		return (ERROR);
-	add_history(str);
-    return(OK);
-}
-
-void    start(char **envp)
-{
-	char	*line;
-	t_env	*env;
 	t_list	*cmds;
 
-	env = init_env(envp);
-	while (input(&line) == OK)
-	{
-		cmds = init_list();
-		if (parse(line, env, cmds) != OK)
-		{
-			printf("에러남 ㅠ \n");
-			free(line);
-			continue ;
-		}
-		if (execute(cmds, env) != OK)
-		{
-			printf("에러남 ㅠ \n");
-			free(line);
-			free_list(cmds, free_cmd);
-			continue ;
-		}
-		free(line);
-		free_list(cmds, free_cmd);
-	}
-	free(env);
+	cmds = init_list();
+	if (parse(line, env, cmds))
+		execute(cmds, env);
+	free_list(cmds, free_cmd);
 }
 
-int main(int argc, char **argv, char **envp)
+void	loop(t_env *env)
 {
-	(void)argv;
-	(void)argc;
-	start(envp);
+	char	*line;
+
+	while (input(&line))
+	{
+		start(env, line);
+		free(line);
+	}
+	printf("exit\n");
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_env	*env;
+
+	env = init_env(envp);
+	termios_echoctl_off();
+	sig_handler()->sigint = signal(SIGINT, sigint_handler);
+	sig_handler()->sigquit = signal(SIGQUIT, SIG_IGN);
+	if (argc == 3 && ft_strncmp(argv[1], "-c", 3) == 0)
+	{
+		start(env, argv[2]);
+		exit(g_exit_code);
+	}
+	loop(env);
+	free_env(env);
 	return (0);
 }

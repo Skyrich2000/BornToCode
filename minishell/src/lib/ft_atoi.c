@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/24 16:02:08 by echung            #+#    #+#             */
-/*   Updated: 2021/01/22 15:37:06 by echung           ###   ########.fr       */
+/*   Updated: 2021/11/26 02:36:34 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+long long	ft_atoi(char *str)
 {
-	int	sign;
-	int	result;
+	int			sign;
+	long long	result;
 
 	sign = 1;
 	while (*str == ' ' || (9 <= *str && *str <= 13))

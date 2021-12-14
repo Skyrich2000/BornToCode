@@ -44,18 +44,13 @@ static int	ft_power(int n)
 	return (result);
 }
 
-char		*ft_itoa(int n)
+char	*_ft_itoa(int n, int n_org, int len)
 {
 	char	*ascii;
 	char	*ascii_org;
-	int		len;
-	int		n_org;
 
-	n_org = n;
-	if (n_org == -2147483648)
-		return (ft_strdup("-2147483648"));
-	len = ft_intlen(n);
-	if (!(ascii = malloc(sizeof(char) * (len + 1))))
+	ascii = malloc(sizeof(char) * (len + 1));
+	if (!ascii)
 		return (0);
 	ascii_org = ascii;
 	ascii[len] = '\0';
@@ -71,4 +66,16 @@ char		*ft_itoa(int n)
 		n = n - ((*ascii++ - '0') * ft_power(len-- - 1));
 	}
 	return (ascii_org);
+}
+
+char	*ft_itoa(int n)
+{
+	int		len;
+	int		n_org;
+
+	n_org = n;
+	if (n_org == -2147483648)
+		return (ft_strdup("-2147483648"));
+	len = ft_intlen(n);
+	return (_ft_itoa(n, n_org, len));
 }
