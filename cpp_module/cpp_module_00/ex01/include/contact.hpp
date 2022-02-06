@@ -14,8 +14,6 @@ class Contact {
     std::string phone_number;
     std::string darkest_secret;
 
-    std::string cut(std::string string);
-
    public:
     bool input(int index);
     void print();

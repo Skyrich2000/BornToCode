@@ -1,4 +1,5 @@
 #include "contact.hpp"
+#include "utils.hpp"
 
 bool Contact::input(int index) {
     std::string _first_name;
@@ -54,18 +55,12 @@ void Contact::printSummary() {
     std::cout << index << "|";
 
     std::cout << std::setw(10);
-    std::cout << this->cut(this->first_name) << "|";
+    std::cout << cutByTen(this->first_name) << "|";
 
     std::cout << std::setw(10);
-    std::cout << this->cut(this->last_name) << "|";
+    std::cout << cutByTen(this->last_name) << "|";
 
     std::cout << std::setw(10);
-    std::cout << this->cut(this->nickname);
+    std::cout << cutByTen(this->nickname);
     std::cout << std::endl;
-}
-
-std::string Contact::cut(std::string string) {
-    if (string.length() > 10)
-        string[9] = '.';
-    return string.substr(0, 10);
 }

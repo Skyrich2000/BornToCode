@@ -27,3 +27,9 @@ int ft_atoi(const char *str) {
     }
     return (result * sign);
 }
+
+std::string cutByTen(std::string string) {
+    if (string.length() > 10)
+        string[9] = '.';
+    return string.substr(0, 10);
+}
