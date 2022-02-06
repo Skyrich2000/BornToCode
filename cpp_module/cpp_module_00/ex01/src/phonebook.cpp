@@ -9,7 +9,7 @@ PhoneBook::~PhoneBook() {}
 bool PhoneBook::addContact() {
     const int perIndex = this->index % MAX_CONTACTS;
 
-    std::cout << ">>> New contact ... [" << perIndex << '/' << MAX_CONTACTS - 1 << ']' << std::endl;
+    std::cout << ">>> New contact ... " << std::endl;
     if (!this->contacts[perIndex].input(perIndex))
         return false;
     std::cout << ">>> Contact " << perIndex << " added!" << std::endl;
