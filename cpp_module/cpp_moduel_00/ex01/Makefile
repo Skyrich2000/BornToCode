@@ -24,8 +24,8 @@ OBJS		=	$(addprefix $(OBJ_DIR)/, $(patsubst %.cpp,%.o,$(FILE)))
 
 # var ==================================================
 
-CC          =	g++
-CFLAGS      =	-Wall -Werror -Wextra -std=c++98 -I $(INCLUDE)
+CXX         =	c++
+CXXFLAGS    =	-Wall -Werror -Wextra -std=c++98 -I $(INCLUDE)
 
 # Rule =================================================
 
@@ -35,10 +35,10 @@ all		: $(NAME)
 $(OBJ_DIR)/%.o	: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
 	@echo $(YELLOW)"Compiling... $<"$(RESET)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) -o $@ $^
+	@$(CXX) $(CXXFLAGS) -o $@ $^
 	@echo $(GREEN)"Done!"$(RESET)
 
 .PHONY	: clean
