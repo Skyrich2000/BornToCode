@@ -1,4 +1,5 @@
 #include "contact.hpp"
+
 #include "utils.hpp"
 
 bool Contact::input(int index) {
