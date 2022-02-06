@@ -1,3 +1,6 @@
+#ifndef PHONEBOOK_HPP
+#define PHONEBOOK_HPP
+
 #include <iomanip>
 #include <iostream>
 
@@ -18,3 +21,5 @@ class PhoneBook {
     void printSummary();
     bool search();
 };
+
+#endif
