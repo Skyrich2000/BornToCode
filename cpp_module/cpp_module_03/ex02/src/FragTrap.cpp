@@ -6,14 +6,14 @@ FragTrap::FragTrap() : ClapTrap() {
     this->hit = 100;
     this->energy = 100;
     this->damage = 30;
-    std::cout << "FragTrap [" << this->name << "] - default onstructor has been called." << std::endl;
+    std::cout << "FragTrap [" << this->name << "] - default constructor has been called." << std::endl;
 }
 
 FragTrap::FragTrap(std::string name) : ClapTrap(name) {
     this->hit = 100;
     this->energy = 100;
     this->damage = 30;
-    std::cout << "FragTrap [" << this->name << "] - default onstructor has been called." << std::endl;
+    std::cout << "FragTrap [" << this->name << "] - name constructor has been called." << std::endl;
 }
 
 FragTrap::FragTrap(const FragTrap& obj) : ClapTrap(obj) {

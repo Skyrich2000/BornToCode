@@ -3,11 +3,11 @@
 #include <iostream>
 
 ClapTrap::ClapTrap() : name("noname"), hit(10), energy(10), damage(0) {
-    std::cout << "ClapTrap [" << this->name << "] - default onstructor has been called." << std::endl;
+    std::cout << "ClapTrap [" << this->name << "] - default constructor has been called." << std::endl;
 }
 
 ClapTrap::ClapTrap(std::string name) : name(name), hit(10), energy(10), damage(0) {
-    std::cout << "ClapTrap [" << this->name << "] - default onstructor has been called." << std::endl;
+    std::cout << "ClapTrap [" << this->name << "] - name constructor has been called." << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap& obj) {
