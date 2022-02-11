@@ -1,14 +1,15 @@
 #include <string>
 
-#include "FragTrap.hpp"
+#include "DiamondTrap.hpp"
 
 int main() {
-    FragTrap a("a");
-    FragTrap b("b");
+    DiamondTrap a("ycha");
 
-    a.attack("b");
-    b.takeDamage(0);
+    a.whoAmI();
 
-    b.beRepaired(10);
+    a.guardGate();
     a.highFivesGuys();
+    a.beRepaired(10);
+
+    a.attack("ucha");
 }

@@ -6,14 +6,14 @@ ScavTrap::ScavTrap() : ClapTrap() {
     this->hit = 100;
     this->energy = 50;
     this->damage = 20;
-    std::cout << "ScavTrap [" << this->name << "] - default onstructor has been called." << std::endl;
+    std::cout << "ScavTrap [" << this->name << "] - default constructor has been called." << std::endl;
 }
 
 ScavTrap::ScavTrap(std::string name) : ClapTrap(name) {
     this->hit = 100;
     this->energy = 50;
     this->damage = 20;
-    std::cout << "ScavTrap [" << this->name << "] - default onstructor has been called." << std::endl;
+    std::cout << "ScavTrap [" << this->name << "] - name constructor has been called." << std::endl;
 }
 
 ScavTrap::ScavTrap(const ScavTrap& obj) : ClapTrap(obj) {
@@ -27,7 +27,10 @@ ScavTrap::~ScavTrap() {
 
 ScavTrap& ScavTrap::operator=(const ScavTrap& obj) {
     std::cout << "ScavTrap [" << this->name << "] - operator= has been called." << std::endl;
-    this->operator=(obj);
+    this->name = obj.name;
+    this->hit = obj.hit;
+    this->energy = obj.energy;
+    this->damage = obj.damage;
     return *this;
 }
 
