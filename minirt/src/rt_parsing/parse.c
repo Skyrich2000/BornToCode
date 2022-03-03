@@ -1,4 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/03 20:52:46 by ycha              #+#    #+#             */
+/*   Updated: 2022/03/03 20:52:46 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
+
+#define KEY_NUM	9
 
 static void	parser_init(int (*parser[9])(char **, t_minirt *))
 {
@@ -13,51 +27,67 @@ static void	parser_init(int (*parser[9])(char **, t_minirt *))
 	parser[tr] = parse_tr;
 }
 
-static int	parsing(t_minirt *mini, char *str)
+static int	find_key_index(char *key)
+{
+	int	j;
+
+	j = -1;
+	while (++j < KEY_NUM)
+	{
+		if (ft_strncmp(key, (char [9][3]){"R", "A", "c", "l", \
+			"sp", "pl", "sq", "cy", "tr"}[j]) == 0)
+			break ;
+	}
+	return (j);
+}
+
+static int	parsing(t_minirt *mini, char *file_data)
 {
 	int		i;
+	int		key_index;
 	int		(*parser[9])(char **, t_minirt *);
-	char	**data;
-	char	**line;
+	char	**lines;
+	char	**words;
 
+	i = -1;
 	parser_init(parser);
-	data = ft_split(str, "\n");
-	while (*data)
+	lines = ft_split(file_data, "\n");
+	while (lines[++i])
 	{
-		line = ft_split(*data, WHITESPACE);
-		i = -1;
-		if (line[0][0] != '#')
-			while (++i < 9)
-				if (!ft_strncmp(line[0], \
-								(char [9][3]){"R", "A", "c", "l", "sp", "pl" \
-											, "sq", "cy", "tr"}[i]) && \
-					parser[i](line, mini))
-					break ;
-		ft_free_split(line, ft_arrsize(line));
-		if (i == 9)
-			return (printf_error());
-		++data;
+		if (lines[i][0] == '#')
+			continue ;
+		words = ft_split(lines[i], WHITESPACE);
+		key_index = find_key_index(words[0]);
+		if (key_index == KEY_NUM)
+			break ;
+		parser[key_index](words, mini);
+		ft_free_split(words, ft_arrsize(words));
 	}
+	ft_free_split(lines, ft_arrsize(lines));
+	if (key_index == KEY_NUM)
+		return (printf_error());
 	return (OK);
 }
 
-static int	fileread(char *file, t_minirt *mini, char *line)
+static int	fileread(char *file_name, char *file_data)
 {
-	char	ch[1];
-	int		s;
+	char	ch;
+	int		len;
 	int		fd;
-	int		i;
+	int		s;
 
-	i = 0;
-	fd = open(file, O_RDONLY);
-	s = ft_strlen(file);
-	if (fd < 0 || s < 3 || file[s - 1] != 't' || \
-		file[s - 2] != 'r' || file[s - 3] != '.')
+	fd = open(file_name, O_RDONLY);
+	len = ft_strlen(file_name);
+	if (fd < 0
+		|| len < 3
+		|| file_name[len - 3] != '.'
+		|| file_name[len - 2] != 'r'
+		|| file_name[len - 1] != 't')
 		return (ERROR);
 	s = read(fd, &ch, 1);
 	while (s > 0)
 	{
-		line[i++] = ch[0];
+		*file_data++ = ch;
 		s = read(fd, &ch, 1);
 	}
 	return (s >= 0);
@@ -65,9 +95,9 @@ static int	fileread(char *file, t_minirt *mini, char *line)
 
 int	input(int argc, char **argv, t_minirt *mini)
 {
-	char	line[MAX_FILE_READ];
+	char	file_data[MAX_FILE_READ];
 
-	return (argc == 2 && \
-			fileread(argv[1], mini, line) && \
-			parsing(mini, line));
+	if (argc == 2 && fileread(argv[1], file_data) && parsing(mini, file_data))
+		return (OK);
+	return (ERROR);
 }
