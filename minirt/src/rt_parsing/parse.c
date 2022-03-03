@@ -65,7 +65,7 @@ static int	fileread(char *file, t_minirt *mini, char *line)
 
 int	input(int argc, char **argv, t_minirt *mini)
 {
-	char	line[4400000];
+	char	line[MAX_FILE_READ];
 
 	return (argc == 2 && \
 			fileread(argv[1], mini, line) && \

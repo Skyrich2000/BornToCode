@@ -3,6 +3,7 @@
 # include <fcntl.h>
 # include "minirt.h"
 # define WHITESPACE "\t\n\v\f\r "
+# define MAX_FILE_READ 4400000
 
 typedef struct s_minirt t_minirt;
 
