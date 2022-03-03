@@ -6,7 +6,7 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/26 15:07:00 by suhshin           #+#    #+#              #
-#    Updated: 2021/05/17 04:15:29 by ycha             ###   ########.fr        #
+#    Updated: 2022/02/24 22:43:08 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,13 +68,15 @@ CLIB	=	-Lsrcs/mlx -lmlx -framework OpenGL -framework Appkit $(INCLUDE)
 all		: $(NAME)
 
 %.o	:%.c
-	$(CC) $(CFLAGS)  -c $< -o $@
+	$(CC) $(INCLUDE) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(CLIB) $(SRCS) -o $(NAME)
+	$(MAKE) -C ./srcs/mlx
+	$(CC) $(CLIB) $(SRCS) -o $(NAME)
 	install_name_tool -change libmlx.dylib srcs/mlx/libmlx.dylib $(NAME)
 
 clean	:
+	$(MAKE) -C ./srcs/mlx clean
 	rm -rf $(OBJS)
 
 fclean	: clean
