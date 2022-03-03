@@ -10,76 +10,89 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	a.out
+# Color =================================================s
 
-SRCS	=	\
-			minirt.c \
-			./srcs/rt_vector/vector1.c \
-			./srcs/rt_vector/vector2.c \
-			./srcs/rt_vector/vector3.c \
-			./srcs/rt_vector/vector4.c \
-			./srcs/rt_vector/vector5.c \
-			./srcs/rt_vector/vector6.c \
-			./srcs/rt_vector/vector7.c \
-			./srcs/rt_event/event.c	\
-			./srcs/rt_camera/camera.c \
-			./srcs/rt_camera/render.c \
-			./srcs/rt_object/world.c \
-			./srcs/rt_object/sphere.c \
-			./srcs/rt_object/plane.c \
-			./srcs/rt_object/square.c \
-			./srcs/rt_object/cylinder.c \
-			./srcs/rt_object/triangle.c \
-			./srcs/rt_library/lib1.c \
-			./srcs/rt_library/lib2.c \
-			./srcs/rt_library/lib3.c \
-			./srcs/rt_library/lib4.c \
-			./srcs/rt_library/lib5.c \
-			./srcs/rt_material/lambertian.c \
-			./srcs/rt_material/metal.c \
-			./srcs/rt_material/dielectric.c \
-			./srcs/rt_parsing/parse.c \
-			./srcs/rt_parsing/parse1.c \
-			./srcs/rt_parsing/parse2.c \
-			./srcs/rt_parsing/util.c \
-			./srcs/rt_light/light.c \
-#
-#
-#
+GREEN="\033[32m"
+YELLOW="\033[33m"
+RED="\033[31m"
+BLUE="\033[34m"
+RESET="\033[0m"
 
-SRC_DIR	=	./srcs
+# File =================================================
 
-INCLUDE =	-Iinclude -Isrcs/mlx -I./
+NAME			=	minirt
 
-OBJS = $(SRCS:%.c=%.o)
+INCLUDE         =   ./include
+FILE			=	\
+					minirt.c \
+					rt_vector/vector1.c \
+					rt_vector/vector2.c \
+					rt_vector/vector3.c \
+					rt_vector/vector4.c \
+					rt_vector/vector5.c \
+					rt_vector/vector6.c \
+					rt_vector/vector7.c \
+					rt_event/event.c	\
+					rt_camera/camera.c \
+					rt_camera/render.c \
+					rt_object/world.c \
+					rt_object/sphere.c \
+					rt_object/plane.c \
+					rt_object/square.c \
+					rt_object/cylinder.c \
+					rt_object/triangle.c \
+					rt_library/lib1.c \
+					rt_library/lib2.c \
+					rt_library/lib3.c \
+					rt_library/lib4.c \
+					rt_library/lib5.c \
+					rt_material/lambertian.c \
+					rt_material/metal.c \
+					rt_material/dielectric.c \
+					rt_parsing/parse.c \
+					rt_parsing/parse1.c \
+					rt_parsing/parse2.c \
+					rt_parsing/util.c \
+					rt_light/light.c \
 
-#
-# Compiler and flags
-#
+SRC_DIR         =	./src
+SRCS            =	$(addprefix $(SRC_DIR)/, $(FILE))
 
-CC		=	clang
-CFLAGS	=	-Wall -Werror -Wextra
-CLIB	=	-Lsrcs/mlx -lmlx -framework OpenGL -framework Appkit $(INCLUDE)
+OBJ_DIR         =	./obj
+OBJS            =	$(addprefix $(OBJ_DIR)/, $(patsubst %.c,%.o,$(FILE)))
 
-#
-# Rules
-#
 
+# var ==================================================
+
+CC		=	gcc
+CFLAGS	=	-I$(INCLUDE) -I./src/mlx #-Wall -Werror -Wextra 
+CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit
+
+# Rule =================================================
+
+.PHONY  : all
 all		: $(NAME)
 
-%.o	:%.c
-	$(CC) $(INCLUDE) -c $< -o $@
+$(OBJ_DIR)/%.o  : $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	@echo $(YELLOW)"Compiling... $<"$(RESET)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(MAKE) -C ./srcs/mlx
-	$(CC) $(CLIB) $(SRCS) -o $(NAME)
-	install_name_tool -change libmlx.dylib srcs/mlx/libmlx.dylib $(NAME)
+	@$(MAKE) -s -C ./src/mlx
+	@$(CC) $(CFLAGS) $(CLIB) -o $@ $^
+	@echo $(GREEN)"Done!"$(RESET)
 
+.PHONY  : clean
 clean	:
-	$(MAKE) -C ./srcs/mlx clean
-	rm -rf $(OBJS)
+	@$(MAKE) -C ./src/mlx clean
+	@echo $(RED)"Remove $(OBJ_DIR)..."$(RESET)
+	@rm -rf $(OBJ_DIR)
 
+.PHONY  : fclean
 fclean	: clean
-	rm -rf	$(NAME)
+	@echo $(RED)"Remove $(NAME)..."$(RESET)
+	@rm -rf	$(NAME)
 
+.PHONY  : re
 re		: fclean all
