@@ -32,6 +32,7 @@ typedef struct s_camera
 	t_vec	w;
 	void 	*img;
 	char	*img_addr;
+	int		render_index;
 	struct s_camera	*next;
 } 				t_camera;
 

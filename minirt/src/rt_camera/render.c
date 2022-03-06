@@ -56,6 +56,7 @@ static t_clr ray_color_scatter(t_world *world, t_ray *ray, int depth)
 	return (vec((1 - 0.5 * val_for_sky), (1 - 0.3 * val_for_sky), 1));
 }
 */
+
 static t_clr	ray_color(t_ray *ray, int depth)
 {
 	t_hit_record	rec;
@@ -63,8 +64,6 @@ static t_clr	ray_color(t_ray *ray, int depth)
 	double			val_for_sky;
 	t_vec			ray_from_cam;
 
-	if (depth <= 0)
-		return ((t_vec){0, 0, 0});
 	if (hit_world(m()->wrd, ray, (double [2]){0.001, INFINITY}, &rec))
 		return (phong(m(), &rec));
 	ray_from_cam = vec_oppo(vec_unit_(&ray->dir));
@@ -110,21 +109,37 @@ static int	anti(t_camera *cam, int wdx, int hdx)
 // 	int			w_end;
 // } t_render_args;
 
+void	render_pixel(t_camera *cam, int thread_idx[2], int i, int j)
+{
+	const x = (m()->scr.wid / W_THREAD) * thread_idx[1] + j;
+	const y = (m()->scr.hei / H_THREAD) * thread_idx[0] + i;
+	put_pixel(cam, x, m()->scr.hei - y, anti(cam, x, y));
+}
 
 int	render(void *data)
 {
 	const t_camera	*cam = m()->curr_cam;
-	const int h_index = (long long)data / W_THREAD;
-	const int w_index = (long long)data % W_THREAD;
-	int	hdx;
-	int	wdx;
+	const int		render_index = cam->render_index;
+	const int		thread_idx[2] = {(long long)data / W_THREAD, \
+									(long long)data % W_THREAD};
+	const int		size[2] = {
+							(m()->scr.hei / H_THREAD), \
+							(m()->scr.wid / W_THREAD)};
+	int				idx[2];
 
-	hdx = (m()->scr.hei / H_THREAD) * h_index;
-	while (++hdx < ((m()->scr.hei / H_THREAD) * (h_index + 1) + 1))
+	idx[0] = 0;
+	while (++idx[0] <= size[0] / 4 + 1)
 	{
-		wdx = (m()->scr.wid / W_THREAD) * w_index;
-		while (++wdx < ((m()->scr.wid / W_THREAD) * (w_index + 1) + 1))
-			put_pixel(cam, wdx, (m()->scr.hei - 1 - hdx), anti(cam, wdx, hdx));
+		idx[1] = 0;
+		while (++idx[1] <= size[1])
+		{
+			render_pixel(cam, thread_idx, size[0] / 4 * 0 + idx[0], idx[1]);
+			render_pixel(cam, thread_idx, size[0] / 4 * 1 + idx[0], idx[1]);
+			render_pixel(cam, thread_idx, size[0] / 4 * 2 + idx[0], idx[1]);
+			render_pixel(cam, thread_idx, size[0] / 4 * 3 + idx[0], idx[1]);
+			if (cam->render_index != render_index)
+				return (0);
+		}
 	}
 	return (0);
 }
@@ -135,10 +150,11 @@ int	render_thread(t_minirt *mini)
 	int				i;
 
 	i = -1;
+	mini->curr_cam->render_index++;
 	while (++i < H_THREAD * W_THREAD)
-	{		
+	{
 		pthread_create(&thread, NULL, render, (void *)i);
-		pthread_detach(thread);	
+		pthread_detach(thread);
 	}
 	return (0);
 }

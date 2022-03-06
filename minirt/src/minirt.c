@@ -32,6 +32,7 @@ static void setting(t_minirt *mini)
 		c = c->next;
 	c->next = mini->cam->next;
 	mini->curr_cam = mini->cam->next;
+	mini->light_toggle = 1;
 	event(mini);
 }
 
@@ -51,14 +52,6 @@ int	loop_hook(t_minirt *m)
 	
 	if (m->curr_cam->img)
 		mlx_put_image_to_window(m->scr.mlx, m->scr.win, m->curr_cam->img, 0, 0);
-	// t_camera *c;
-
-	// c = mini->curr_cam;
-	// if (c->next)
-	// 	mini->curr_cam = c->next;
-	// else
-	// 	mini->curr_cam = mini->cam;
-	// return (OK);
 	mlx_do_sync(m->scr.mlx);
 	return 0;
 }

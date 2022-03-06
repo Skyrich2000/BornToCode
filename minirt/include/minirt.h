@@ -78,6 +78,7 @@ typedef struct s_minirt
 	t_world		*wrd;
 	t_camera	*cam;
 	t_camera	*curr_cam;
+	int			light_toggle;
 	t_light		*light;
 }		t_minirt;
 

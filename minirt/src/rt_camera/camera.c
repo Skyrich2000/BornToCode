@@ -45,6 +45,7 @@ int			add_camera(t_minirt *mini, t_vec lookfrom, t_vec dir, double fov)
 	move_camera(cam, lookfrom, dir, fov);
 	cam->img = 0;
 	cam->next = mini->cam->next;
+	cam->render_index = 0;
 	mini->cam->next = cam;
 	return (OK);
 }
@@ -53,6 +54,8 @@ void		draw(t_minirt *m)
 {
 	clock_t	start, end;
 
+	// if (m->curr_cam->img)
+		// mlx_destroy_image(m->scr.mlx, m->curr_cam->img);
 	if (!m->curr_cam->img)
 	{
 		m->curr_cam->img = mlx_new_image(m->scr.mlx, m->scr.wid, m->scr.hei);

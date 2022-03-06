@@ -76,6 +76,8 @@ t_clr phong(t_minirt *mini, t_hit_record *rec)
 	t_clr		color;
 	t_light		*light;
 
+	if (!mini->light_toggle)
+		return rec->material->color;
 	light = mini->light->next;
 	color = (t_clr){0, 0, 0};
 	while (light)

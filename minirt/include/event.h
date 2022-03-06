@@ -18,6 +18,14 @@
 # define KEY_S			1
 # define KEY_D			2
 # define KEY_W			13
+# define KEY_C			8
+# define KEY_L			37
+# define KEY_LEFT_SHIFT	257
+# define KEY_SPACEBAR	49
+# define KEY_LEFT		123
+# define KEY_DOWN		125
+# define KEY_RIGHT		124
+# define KEY_UP			126
 
 typedef struct s_screen t_screen;
 
