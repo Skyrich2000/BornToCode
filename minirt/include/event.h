@@ -14,6 +14,11 @@
 # define EVENT_H
 # include "minirt.h"
 
+# define KEY_A			0
+# define KEY_S			1
+# define KEY_D			2
+# define KEY_W			13
+
 typedef struct s_screen t_screen;
 
 int exit_hook();

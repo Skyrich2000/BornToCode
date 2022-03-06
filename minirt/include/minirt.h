@@ -27,8 +27,8 @@
 # include "event.h"
 # include "camera.h"
 
-# define H_THREAD 2
-# define W_THREAD 2
+# define H_THREAD 4
+# define W_THREAD 4
 
 # define ANTI_ALIASING 0
 

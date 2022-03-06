@@ -12,21 +12,19 @@ t_camera	*init_camera(void)
 	return (head);
 }
 
-int			add_camera(t_minirt *mini, t_vec lookfrom, t_vec dir, double fov)
+int			move_camera(t_camera *cam, t_vec lookfrom, t_vec dir, double fov)
 {
-	t_camera	*cam;
 	double		aperture;
 	double		ratio;
 
 	aperture = 2.0;
-	ratio = mini->scr.wid / mini->scr.hei;
-	cam = malloc(sizeof(t_camera));
-	if (!cam)
-		return (ERROR);
+	ratio = m()->scr.wid / m()->scr.hei;
 	cam->pos = lookfrom;
+	cam->dir = dir;
 	cam->view_height = 2.0 * tan((fov * M_PI / 180) / 2.0);
 	cam->view_width = ratio * cam->view_height;
-	cam->w = vec_oppo(dir);
+	cam->fov = fov;
+	cam->w = vec_oppo(cam->dir);
 	cam->u = vec_unit(vec_cross(vec(0, 1, 0), cam->w));
 	cam->v = vec_cross(cam->w, cam->u);
 	cam->hor = vec_muln(cam->u, cam->view_width);
@@ -34,6 +32,17 @@ int			add_camera(t_minirt *mini, t_vec lookfrom, t_vec dir, double fov)
 	cam->low_left_corner = vec_cal((t_vec[4]){lookfrom, cam->hor, cam->ver, cam->w},
 									(double[4]){1, -0.5, -0.5, -1},
 									4);
+	return (OK);
+}
+
+int			add_camera(t_minirt *mini, t_vec lookfrom, t_vec dir, double fov)
+{
+	t_camera	*cam;
+
+	cam = malloc(sizeof(t_camera));
+	if (!cam)
+		return (ERROR);
+	move_camera(cam, lookfrom, dir, fov);
 	cam->img = 0;
 	cam->next = mini->cam->next;
 	mini->cam->next = cam;
@@ -54,9 +63,9 @@ void		draw(t_minirt *m)
 		// printf("start render!\n");
 		// start = clock();
 		// render(m);
-		render_thread(m);
 		// end = clock();
 		// printf("time : %f\n",(double)(end - start) / CLOCKS_PER_SEC);
 	}
+	render_thread(m);
 	// mlx_put_image_to_window(m->scr.mlx, m->scr.win, m->curr_cam->img, 0, 0);
 }

@@ -19,6 +19,7 @@
 typedef struct s_camera
 {
 	t_pnt	pos;
+	t_vec	dir;
 	t_vec	hor;
 	t_vec	ver;
 	t_vec	low_left_corner;
@@ -58,6 +59,7 @@ typedef struct s_camera
 // }		t_minirt;
 
 t_camera	*init_camera();
+int			move_camera(t_camera *cam, t_vec lookfrom, t_vec dir, double fov);
 int			add_camera(t_minirt *mini, t_vec lookfrom, t_vec dir, double fov);
 void	draw(t_minirt *m);
 typedef struct s_render_args
