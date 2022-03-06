@@ -24,14 +24,14 @@ int	ft_isdigit(char c)
 
 int	ft_isnum(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str[i] == '-')
 		++i;
-	while(str[i])
+	while (str[i])
 	{
-		if(!ft_isdigit(str[i]) && str[i] != '.')
+		if (!ft_isdigit(str[i]) && str[i] != '.')
 			return (ERROR);
 		++i;
 	}

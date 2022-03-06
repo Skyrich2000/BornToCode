@@ -45,7 +45,9 @@ static size_t	ft_check_size(char const *s, char *delim)
 	while (*(++i + s + 1))
 		if (!ft_strchr(delim, *(i + s)) && ft_strchr(delim, *(i + s + 1)))
 			++cnt;
-	return (!ft_strchr(delim, *(s + i)) ? cnt + 1 : cnt);
+	if (ft_strchr(delim, *(s + i)))
+		return (cnt);
+	return (cnt + 1);
 }
 
 char	**ft_free_split(char **s, int i)
@@ -66,10 +68,11 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 {
 	char	*dest;
 
-	if (!s || !(dest = (char *)malloc(len + 1)))
+	dest = (char *)malloc(len + 1);
+	if (!s || !dest)
 		return (NULL);
-	if ((size_t)start >= ft_strlen(s) ||
-			!(ft_strlcpy(dest, s + start, len + 1)))
+	if ((size_t)start >= ft_strlen(s)
+		|| !(ft_strlcpy(dest, s + start, len + 1)))
 		dest[0] = '\0';
 	return (dest);
 }
@@ -80,8 +83,8 @@ char	**ft_split(char const *s, char *delim)
 	char	*from;
 	int		i;
 
-	if (!s ||
-		!(ret = (char **)malloc(sizeof(char *) * (ft_check_size(s, delim) + 1))))
+	ret = (char **)malloc(sizeof(char *) * (ft_check_size(s, delim) + 1));
+	if (!s || !ret)
 		return (NULL);
 	i = 0;
 	while (*s)
@@ -91,7 +94,8 @@ char	**ft_split(char const *s, char *delim)
 			from = (char *)s;
 			while (*s && !ft_strchr(delim, *s))
 				++s;
-			if (!(ret[i++] = ft_substr(from, 0, (s - from))))
+			ret[i] = ft_substr(from, 0, (s - from));
+			if (!(ret[i++]))
 				return (ft_free_split(ret, i));
 		}
 		else
