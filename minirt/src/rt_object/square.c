@@ -2,7 +2,7 @@
 
 t_object	create_square(t_pnt c, t_vec n, double side)
 {
-	t_object obj;
+	t_object	obj;
 
 	vec_print("square c", &c);
 	vec_print("square n", &n);
@@ -12,7 +12,7 @@ t_object	create_square(t_pnt c, t_vec n, double side)
 	return (obj);
 }
 
-int get_square_t(t_square *sq, t_ray *ray, double minmax[2], double *t)
+int	get_square_t(t_square *sq, t_ray *ray, double minmax[2], double *t)
 {
 	double	cos_theta;
 	double	limit;
@@ -38,7 +38,7 @@ int get_square_t(t_square *sq, t_ray *ray, double minmax[2], double *t)
 	return (OK);
 }
 
-int hit_square(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
+int	hit_square(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
 {
 	if (!get_square_t(&this->obj.square, ray, minmax, &rec->t))
 		return (ERROR);

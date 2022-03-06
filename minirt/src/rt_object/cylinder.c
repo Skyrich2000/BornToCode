@@ -2,7 +2,7 @@
 
 t_object	create_cylinder(t_pnt c, t_vec n, double r, double h)
 {
-	t_object obj;
+	t_object	obj;
 
 	vec_print("cylinder c", &c);
 	vec_print("cylinder n", &n);
@@ -15,14 +15,16 @@ t_object	create_cylinder(t_pnt c, t_vec n, double r, double h)
 	return (obj);
 }
 
-static int check_t(t_cylinder *cy, t_ray *ray, double t)
+static int	check_t(t_cylinder *cy, t_ray *ray, double t)
 {
 	t_vec	p;
 
 	p = ray_at(ray, t);
-	if (vec_dot(cy->n, vec_cal((t_vec [2]){p, cy->top}, (double [2]){1, -1}, 2)) > 0)
+	if (vec_dot(cy->n, \
+			vec_cal((t_vec [2]){p, cy->top}, (double [2]){1, -1}, 2)) > 0)
 		return (ERROR);
-	if (vec_dot(cy->n, vec_cal((t_vec [2]){p, cy->bot}, (double [2]){1, -1}, 2)) < 0)
+	if (vec_dot(cy->n, \
+			vec_cal((t_vec [2]){p, cy->bot}, (double [2]){1, -1}, 2)) < 0)
 		return (ERROR);
 	return (OK);
 }
@@ -33,7 +35,7 @@ int	get_cylinder_t(t_cylinder *cy, t_ray *ray, double minmax[2], double *t)
 	double	half_b;
 	double	c;
 	double	discriminant;
-	t_vec ca;
+	t_vec	ca;
 
 	ca = vec_cal((t_vec [2]){ray->origin, cy->c}, (double [2]){1, -1}, 2);
 	a = vec_length_squared(vec_cross_(&ray->dir, &cy->n));
@@ -59,8 +61,10 @@ int	hit_cylinder(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
 	if (!get_cylinder_t(&this->obj.cylinder, ray, minmax, &rec->t))
 		return (ERROR);
 	rec->p = ray_at(ray, rec->t);
-	cp = vec_cal((t_vec [2]){this->obj.cylinder.c, rec->p}, (double [2]){1, -1}, 2);
-	rec->n = vec_unit(vec_cross(this->obj.cylinder.n, vec_cross_(&cp, &this->obj.cylinder.n)));
+	cp = vec_cal((t_vec [2]){this->obj.cylinder.c, rec->p}, \
+													(double [2]){1, -1}, 2);
+	rec->n = vec_unit(vec_cross(this->obj.cylinder.n, \
+									vec_cross_(&cp, &this->obj.cylinder.n)));
 	set_rec(this, ray, rec);
 	return (OK);
 }
