@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vector2.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/06 23:18:45 by echung            #+#    #+#             */
+/*   Updated: 2022/03/06 23:18:50 by echung           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 t_vec	vec_cal(t_vec *v, double *a, int n)
 {
-	t_vec out;
+	t_vec	out;
 
 	out = vec(0, 0, 0);
 	while (n--)
@@ -14,9 +26,9 @@ t_vec	vec_cal(t_vec *v, double *a, int n)
 	return (out);
 }
 
-t_vec vec_add(t_vec v1, t_vec v2)
+t_vec	vec_add(t_vec v1, t_vec v2)
 {
-	t_vec out;
+	t_vec	out;
 
 	out.x = v1.x + v2.x;
 	out.y = v1.y + v2.y;
@@ -24,9 +36,9 @@ t_vec vec_add(t_vec v1, t_vec v2)
 	return (out);
 }
 
-t_vec vec_sub(t_vec v1, t_vec v2)
+t_vec	vec_sub(t_vec v1, t_vec v2)
 {
-	t_vec out;
+	t_vec	out;
 
 	out.x = v1.x - v2.x;
 	out.y = v1.y - v2.y;
@@ -34,9 +46,9 @@ t_vec vec_sub(t_vec v1, t_vec v2)
 	return (out);
 }
 
-t_vec vec_sub_(t_vec *v1, t_vec *v2)
+t_vec	vec_sub_(t_vec *v1, t_vec *v2)
 {
-	t_vec out;
+	t_vec	out;
 
 	out.x = v1->x - v2->x;
 	out.y = v1->y - v2->y;
