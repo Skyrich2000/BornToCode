@@ -34,11 +34,15 @@ t_vec	vec_unit_(t_vec *v)
 
 t_vec	reflect(t_vec v, t_vec n)
 {
-	return (vec_cal((t_vec[2]){v, n}, (double[2]){1, -2 * vec_dot(v, n)}, 2));
+	return (vec_cal((t_vec [2]){v, n}, (double [2]){1, -2 * vec_dot(v, n)}, 2));
 }
 
 t_vec	reflect_(t_vec *v, t_vec *n)
 {
+	const t_vec	v_value = *v;
+	const t_vec	n_value = *n;
+
 	return (vec_cal(
-		(t_vec[2]){*v, *n}, (double[2]){1, -2 * vec_dot_(v, n)}, 2));
+			(t_vec [2]){v_value, n_value}, \
+			(double [2]){1, -2 * vec_dot_(v, n)}, 2));
 }
