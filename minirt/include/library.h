@@ -34,7 +34,7 @@ int ft_isspace(char c);
 int ft_isdigit(char c);
 int ft_isnum(char *str);
 int ft_atoi(char *line);
-double ft_atod(double *f, char *line);
+int	ft_atod(double *f, char *line);
 
 //lib3.c
 char **ft_split(char const *s, char *delim);

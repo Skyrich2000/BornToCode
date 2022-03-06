@@ -36,7 +36,7 @@ static size_t	ft_check_size(char const *s, char *delim)
 	return (!ft_strchr(delim, *(s + i)) ? cnt + 1 : cnt);
 }
 
-char		**ft_free_split(char **s, int i)
+char	**ft_free_split(char **s, int i)
 {
 	if (s == NULL)
 		return (NULL);
@@ -62,7 +62,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	return (dest);
 }
 
-char			**ft_split(char const *s, char *delim)
+char	**ft_split(char const *s, char *delim)
 {
 	char	**ret;
 	char	*from;

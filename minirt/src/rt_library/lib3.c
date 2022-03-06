@@ -10,43 +10,43 @@ double	rand_num(int anti, int min, int max)
 		return ((double)rand() / ((double)RAND_MAX));
 }
 
-int ft_atoi(char *line)
+int	ft_atoi(char *line)
 {
-	int num;
-	int sign;
+	int	num;
+	int	sign;
 
 	sign = 1;
 	num = 0;
-	if(*line == '-')
+	if (*line == '-')
 	{
 		sign = -1;
 		++(line);
 	}
-	while(ft_isdigit(*line))
+	while (ft_isdigit(*line))
 	{
 		num = num * 10 + (*line - '0');
 		++(line);
 	}
-	return num * sign;
+	return (num * sign);
 }
 
-double ft_atod(double *f, char *line)
+int	ft_atod(double *f, char *line)
 {
 	double	num;
 	int		sign;
-	char* 	pos;
+	char	*pos;
 
 	if (!ft_isnum(line))
 		return (ERROR);
 	sign = 1;
 	pos = 0;
 	num = 0;
-	if(*line == '-')
+	if (*line == '-')
 	{
 		sign = -1;
 		++(line);
 	}
-	while(ft_isdigit(*line) || *line == '.')
+	while (ft_isdigit(*line) || *line == '.')
 	{
 		if (*line == '.')
 			pos = line + 1;
@@ -56,6 +56,6 @@ double ft_atod(double *f, char *line)
 	}
 	*f = num * sign;
 	if (pos)
-		*f = num / pow(10, line - pos) * sign;
+		*f = num * sign / pow(10, line - pos);
 	return (OK);
 }

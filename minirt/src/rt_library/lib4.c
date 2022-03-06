@@ -1,16 +1,16 @@
 #include "minirt.h"
 
-int ft_isspace(char c)
+int	ft_isspace(char c)
 {
 	return (c == 32);
 }
 
-int ft_isdigit(char c)
+int	ft_isdigit(char c)
 {
 	return (c >= '0' && c <= '9');
 }
 
-int ft_isnum(char *str)
+int	ft_isnum(char *str)
 {
 	int i;
 

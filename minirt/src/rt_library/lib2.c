@@ -1,18 +1,18 @@
 #include "minirt.h"
 
-int ft_arrsize(char **arr)
+int	ft_arrsize(char **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(arr[i])
+	while (arr[i])
 		++i;
 	return (i);
 }
 
-int ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (str[len])
@@ -20,12 +20,12 @@ int ft_strlen(char *str)
 	return (len);
 }
 
-int		ft_strchr(const char *s, int c)
+int	ft_strchr(const char *s, int c)
 {
-	int i;
+	int	i;
 
 	i = -1;
-	while(s[++i])
+	while (s[++i])
 		if (s[i] == c)
 			return (1);
 	return (0);
