@@ -1,5 +1,8 @@
 #include "minirt.h"
 
+#define COS 0
+#define SIN 1
+
 t_material	create_dielectric(double ir)
 {
 	t_material	mat;
@@ -48,8 +51,7 @@ int	scatter_dielectric(
 	double	refraction_ratio;
 	t_vec	ray_in_dir_unit;
 	t_vec	ray_in_dir_unit_minus;
-	double	cos_theta;
-	double	sin_theta;
+	double	theta[2];
 
 	refraction_ratio = this->ir;
 	if (rec->front_face)
@@ -57,13 +59,13 @@ int	scatter_dielectric(
 	ray_in_dir_unit = vec_unit_(&ray_in->dir);
 	ray_in_dir_unit_minus = vec_cal((t_vec [1]){ray_in_dir_unit}, \
 														(double [1]){-1}, 1);
-	cos_theta = ft_min(vec_dot_(&ray_in_dir_unit_minus, &rec->n), 1.0);
-	sin_theta = sqrt(1 - pow(cos_theta, 2));
-	if (refraction_ratio * sin_theta > 1.0)
+	theta[COS] = ft_min(vec_dot_(&ray_in_dir_unit_minus, &rec->n), 1.0);
+	theta[SIN] = sqrt(1 - pow(theta[COS], 2));
+	if (refraction_ratio * theta[SIN] > 1.0)
 		target = reflect_(&ray_in_dir_unit, &rec->n);
 	else
 		target = refract(&ray_in_dir_unit, &rec->n, \
-												refraction_ratio, cos_theta);
+												refraction_ratio, theta[COS]);
 	ray_out->origin = rec->p;
 	ray_out->dir = target;
 	return (OK);
