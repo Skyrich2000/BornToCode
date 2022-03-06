@@ -20,7 +20,7 @@ int	get_square_t(t_square *sq, t_ray *ray, double minmax[2], double *t)
 	t_vec	side_vecter;
 	t_vec	cp;
 
-	if (!_get_plane_t(&sq->c, &sq->n, ray, minmax, t))
+	if (!_get_plane_t((t_vec *[2]){&sq->c, &sq->n}, ray, minmax, t))
 		return (ERROR);
 	random_vector = vec(0, 1, 0);
 	if (ft_abs(sq->n.y) == 1)

@@ -11,16 +11,17 @@ t_object	create_plane(t_pnt c, t_vec n)
 	return (obj);
 }
 
-int	_get_plane_t(t_vec *c, t_vec *n, t_ray *ray, double minmax[2], double *t)
+int	_get_plane_t(t_vec *v[2], t_ray *ray, double minmax[2], double *t)
 {
-	const t_vec	c_value = *c;
+	const t_vec	c_value = *v[0];
+	const t_vec	n_value = *v[1];
 	double		d;
 
-	d = vec_dot_(&ray->dir, n);
+	d = vec_dot_(&ray->dir, &n_value);
 	if (ft_abs(d) < EPSILON)
 		return (ERROR);
 	*t = vec_dot(vec_cal((t_vec [2]){c_value, ray->origin}, \
-										(double [2]){1, -1}, 2), *n) / d;
+										(double [2]){1, -1}, 2), n_value) / d;
 	if (*t < minmax[0] || minmax[1] < *t)
 		return (ERROR);
 	return (OK);
@@ -28,7 +29,7 @@ int	_get_plane_t(t_vec *c, t_vec *n, t_ray *ray, double minmax[2], double *t)
 
 int	get_plane_t(t_plane *pl, t_ray *ray, double minmax[2], double *t)
 {
-	return (_get_plane_t(&pl->c, &pl->n, ray, minmax, t));
+	return (_get_plane_t((t_vec *[2]){&pl->c, &pl->n}, ray, minmax, t));
 }
 
 int	hit_plane(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)

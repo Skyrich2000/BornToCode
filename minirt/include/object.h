@@ -86,7 +86,7 @@ int			hit_sphere(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
 t_object	create_plane(t_pnt c, t_vec n);
 int			hit_plane(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec);
 //int			get_plane_t(t_world *this, t_ray *ray, double minmax[2], double *t);
-int			_get_plane_t(t_vec *c, t_vec *n, t_ray *ray, double minmax[2], double *t);
+int			_get_plane_t(t_vec *v[2], t_ray *ray, double minmax[2], double *t);
 
 t_object	create_square(t_pnt c, t_vec n, double side);
 int			hit_square(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec);

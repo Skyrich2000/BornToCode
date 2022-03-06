@@ -19,7 +19,7 @@ int	get_triangle_t(t_triangle *tr, t_ray *ray, double minmax[2], double *t)
 {
 	t_vec	p;
 
-	if (!_get_plane_t(&tr->p1, &tr->n, ray, minmax, t))
+	if (!_get_plane_t((t_vec *[2]){&tr->p1, &tr->n}, ray, minmax, t))
 		return (ERROR);
 	p = ray_at(ray, *t);
 	if (vec_dot(tr->n, vec_cross(tr->e1, vec_sub(p, tr->p1))) < 0 || \
