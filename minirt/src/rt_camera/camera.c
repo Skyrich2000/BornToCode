@@ -51,11 +51,12 @@ void		draw(t_minirt *m)
 													&m->scr.bits_per_pixel,
 													&m->scr.line_length,
 													&m->scr.endian);
-		printf("start render!\n");
-		start = clock();
-		render(m);
-		end = clock();
-		printf("time : %f\n",(double)(end - start) / CLOCKS_PER_SEC);
+		// printf("start render!\n");
+		// start = clock();
+		// render(m);
+		render_thread(m);
+		// end = clock();
+		// printf("time : %f\n",(double)(end - start) / CLOCKS_PER_SEC);
 	}
-	mlx_put_image_to_window(m->scr.mlx, m->scr.win, m->curr_cam->img, 0, 0);
+	// mlx_put_image_to_window(m->scr.mlx, m->scr.win, m->curr_cam->img, 0, 0);
 }

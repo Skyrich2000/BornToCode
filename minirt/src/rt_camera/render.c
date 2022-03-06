@@ -1,11 +1,11 @@
 #include "minirt.h"
 
-static void	put_pixel(t_minirt *mini, int x, int y, int color)
+static void	put_pixel(t_camera *cam, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = mini->curr_cam->img_addr + \
-		(y * mini->scr.line_length + x * (mini->scr.bits_per_pixel / 8));
+	dst = cam->img_addr + \
+		(y * m()->scr.line_length + x * (m()->scr.bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
 
@@ -56,7 +56,7 @@ static t_clr ray_color_scatter(t_world *world, t_ray *ray, int depth)
 	return (vec((1 - 0.5 * val_for_sky), (1 - 0.3 * val_for_sky), 1));
 }
 */
-static t_clr	ray_color(t_minirt *mini, t_ray *ray, int depth)
+static t_clr	ray_color(t_ray *ray, int depth)
 {
 	t_hit_record	rec;
 	t_ray			new_ray;
@@ -65,14 +65,14 @@ static t_clr	ray_color(t_minirt *mini, t_ray *ray, int depth)
 
 	if (depth <= 0)
 		return ((t_vec){0, 0, 0});
-	if (hit_world(mini->wrd, ray, (double [2]){0.001, INFINITY}, &rec))
-		return (phong(mini, &rec));
+	if (hit_world(m()->wrd, ray, (double [2]){0.001, INFINITY}, &rec))
+		return (phong(m(), &rec));
 	ray_from_cam = vec_oppo(vec_unit_(&ray->dir));
 	val_for_sky = 0.5 - 0.5 * ray_from_cam.y;
 	return (vec((1 - 0.5 * val_for_sky), (1 - 0.3 * val_for_sky), 1));
 }
 
-static int	anti(t_minirt *mini, int wdx, int hdx)
+static int	anti(t_camera *cam, int wdx, int hdx)
 {
 	double	u;
 	double	v;
@@ -82,36 +82,63 @@ static int	anti(t_minirt *mini, int wdx, int hdx)
 
 	color = vec(0, 0, 0);
 	adx = -1;
-	while (++adx <= mini->scr.anti)
+	while (++adx <= m()->scr.anti)
 	{
-		u = (double)(wdx + rand_num(mini->scr.anti, 0, 0)) / (mini->scr.wid - 1);
-		v = (double)(hdx + rand_num(mini->scr.anti, 0, 0)) / (mini->scr.hei - 1);
-		ray.origin = mini->curr_cam->pos;
-		ray.dir = vec_cal((t_vec [4]){mini->curr_cam->low_left_corner, \
-									  mini->curr_cam->hor, \
-									  mini->curr_cam->ver, \
-									  mini->curr_cam->pos}, \
+		u = (double)(wdx + rand_num(m()->scr.anti, 0, 0)) / (m()->scr.wid - 1);
+		v = (double)(hdx + rand_num(m()->scr.anti, 0, 0)) / (m()->scr.hei - 1);
+		ray.origin = cam->pos;
+		ray.dir = vec_cal((t_vec [4]){cam->low_left_corner, \
+									  cam->hor, \
+									  cam->ver, \
+									  cam->pos}, \
 						  (double [4]){1, u, v, -1}, \
 						  4);
 		ray.dir = vec_unit_(&ray.dir);
-		color = vec_cal((t_vec [2]){color, ray_color(mini, &ray, MAX_DEPTH)}, \
+		color = vec_cal((t_vec [2]){color, ray_color(&ray, MAX_DEPTH)}, \
 						(double [2]){1, 1}, \
 						2);
 	}
-	return (trgb_anti(&color, mini->scr.anti));
+	return (trgb_anti(&color, m()->scr.anti));
 }
 
-int	render(t_minirt *mini)
+// typedef struct s_render_args
+// {
+// 	t_minirt	*mini;
+// 	int			h_start;
+// 	int			w_start;
+// 	int			h_end;
+// 	int			w_end;
+// } t_render_args;
+
+
+int	render(void *data)
 {
+	const t_camera	*cam = m()->curr_cam;
+	const int h_index = (long long)data / W_THREAD;
+	const int w_index = (long long)data % W_THREAD;
 	int	hdx;
 	int	wdx;
 
-	hdx = -1;
-	while (++hdx < (mini->scr.hei - 1))
+	hdx = (m()->scr.hei / H_THREAD) * h_index;
+	while (++hdx < ((m()->scr.hei / H_THREAD) * (h_index + 1) + 1))
 	{
-		wdx = -1;
-		while (++wdx < (mini->scr.wid - 1))
-			put_pixel(mini, wdx, (mini->scr.hei - 1 - hdx), anti(mini, wdx, hdx));
+		wdx = (m()->scr.wid / W_THREAD) * w_index;
+		while (++wdx < ((m()->scr.wid / W_THREAD) * (w_index + 1) + 1))
+			put_pixel(cam, wdx, (m()->scr.hei - 1 - hdx), anti(cam, wdx, hdx));
+	}
+	return (0);
+}
+
+int	render_thread(t_minirt *mini)
+{
+	pthread_t		thread;
+	int				i;
+
+	i = -1;
+	while (++i < H_THREAD * W_THREAD)
+	{		
+		pthread_create(&thread, NULL, render, (void *)i);
+		pthread_detach(thread);	
 	}
 	return (0);
 }

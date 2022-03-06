@@ -66,7 +66,7 @@ OBJS            =	$(addprefix $(OBJ_DIR)/, $(patsubst %.c,%.o,$(FILE)))
 
 CC		=	gcc
 CFLAGS	=	-I$(INCLUDE) -I./src/mlx #-Wall -Werror -Wextra 
-CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit
+CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit -lpthread
 
 # Rule =================================================
 
@@ -82,6 +82,15 @@ $(NAME): $(OBJS)
 	@$(MAKE) -s -C ./src/mlx
 	@$(CC) $(CFLAGS) $(CLIB) -o $@ $^
 	@echo $(GREEN)"Done!"$(RESET)
+
+.PHONY  : run
+run		:
+	@echo $(YELLOW)"Running... ./$(NAME)"$(RESET)
+	@./$(NAME) maps/1.rt
+
+.PHONY  : norm
+norm	:
+	python3 -m norminette $(SRCS)
 
 .PHONY  : clean
 clean	:
