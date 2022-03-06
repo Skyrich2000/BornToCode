@@ -78,8 +78,11 @@ static int	fileread(char *file_name, char *file_data)
 
 	fd = open(file_name, O_RDONLY);
 	len = ft_strlen(file_name);
-	if (fd < 0 || len < 3 || file_name[len - 3] != '.'
-		|| file_name[len - 2] != 'r' || file_name[len - 1] != 't')
+	if (fd < 0
+		|| len < 3
+		|| file_name[len - 3] != '.'
+		|| file_name[len - 2] != 'r'
+		|| file_name[len - 1] != 't')
 		return (ERROR);
 	s = read(fd, &ch, 1);
 	while (s > 0)
