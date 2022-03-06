@@ -49,10 +49,9 @@ int	ft_atod(double *f, char *line)
 	while (ft_isdigit(*line) || *line == '.')
 	{
 		if (*line == '.')
-			pos = line + 1;
+			pos = line++ + 1;
 		else
-			num = num * 10 + (*line - '0');
-		++(line);
+			num = num * 10 + (*line++ - '0');
 	}
 	*f = num * sign;
 	if (pos)
