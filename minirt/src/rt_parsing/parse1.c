@@ -35,7 +35,7 @@ int	parse_c(char **line)
 		|| !parse_split(&c, line[1])
 		|| !parse_split(&dir, line[2]))
 		return (ERROR);
-	if (!add_camera(c, dir, fov))
+	if (!add_camera(m()->cam, c, dir, fov))
 		return (ERROR);
 	return (OK);
 }

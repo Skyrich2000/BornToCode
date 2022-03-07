@@ -35,6 +35,7 @@ FILE			=	\
 					rt_event/event.c	\
 					rt_camera/camera.c \
 					rt_camera/render.c \
+					rt_camera/draw.c \
 					rt_object/world.c \
 					rt_object/sphere.c \
 					rt_object/plane.c \
@@ -79,7 +80,7 @@ $(OBJ_DIR)/%.o  : $(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	@$(MAKE) -s -C ./src/mlx
+#	@$(MAKE) -s -C ./src/mlx
 	@$(CC) $(CFLAGS) $(CLIB) -o $@ $^
 	@echo $(GREEN)"Done!"$(RESET)
 
@@ -94,7 +95,7 @@ norm	:
 
 .PHONY  : clean
 clean	:
-	@$(MAKE) -C ./src/mlx clean
+#	@$(MAKE) -C ./src/mlx clean
 	@echo $(RED)"Remove $(OBJ_DIR)..."$(RESET)
 	@rm -rf $(OBJ_DIR)
 

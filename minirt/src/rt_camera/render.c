@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-static void	put_pixel(t_camera *cam, int x, int y, int color)
+static void	put_pixel(const t_camera *cam, int x, int y, int color)
 {
 	char	*dst;
 
@@ -65,13 +65,13 @@ static t_clr	ray_color(t_ray *ray, int depth)
 	t_vec			ray_from_cam;
 
 	if (hit_world(m()->wrd, ray, (double [2]){0.001, INFINITY}, &rec))
-		return (phong(m(), &rec));
+		return (phong(&rec));
 	ray_from_cam = vec_oppo(vec_unit_(&ray->dir));
 	val_for_sky = 0.5 - 0.5 * ray_from_cam.y;
 	return (vec((1 - 0.5 * val_for_sky), (1 - 0.3 * val_for_sky), 1));
 }
 
-static int	anti(t_camera *cam, int wdx, int hdx)
+static int	anti(const t_camera *cam, int wdx, int hdx)
 {
 	double	u;
 	double	v;
@@ -100,61 +100,10 @@ static int	anti(t_camera *cam, int wdx, int hdx)
 	return (trgb_anti(&color, m()->scr.anti));
 }
 
-// typedef struct s_render_args
-// {
-// 	t_minirt	*mini;
-// 	int			h_start;
-// 	int			w_start;
-// 	int			h_end;
-// 	int			w_end;
-// } t_render_args;
-
-void	render_pixel(t_camera *cam, int thread_idx[2], int i, int j)
+void	render_pixel(const t_camera *cam, const int thread_idx[2], int i, int j)
 {
-	const x = (m()->scr.wid / W_THREAD) * thread_idx[1] + j;
-	const y = (m()->scr.hei / H_THREAD) * thread_idx[0] + i;
+	const int	x = (m()->scr.wid / W_THREAD) * thread_idx[1] + j;
+	const int	y = (m()->scr.hei / H_THREAD) * thread_idx[0] + i;
+
 	put_pixel(cam, x, m()->scr.hei - y, anti(cam, x, y));
-}
-
-int	render(void *data)
-{
-	const t_camera	*cam = m()->curr_cam;
-	const int		render_index = cam->render_index;
-	const int		thread_idx[2] = {(long long)data / W_THREAD, \
-									(long long)data % W_THREAD};
-	const int		size[2] = {
-							(m()->scr.hei / H_THREAD), \
-							(m()->scr.wid / W_THREAD)};
-	int				idx[2];
-
-	idx[0] = 0;
-	while (++idx[0] <= size[0] / 4 + 1)
-	{
-		idx[1] = 0;
-		while (++idx[1] <= size[1])
-		{
-			render_pixel(cam, thread_idx, size[0] / 4 * 0 + idx[0], idx[1]);
-			render_pixel(cam, thread_idx, size[0] / 4 * 1 + idx[0], idx[1]);
-			render_pixel(cam, thread_idx, size[0] / 4 * 2 + idx[0], idx[1]);
-			render_pixel(cam, thread_idx, size[0] / 4 * 3 + idx[0], idx[1]);
-			if (cam->render_index != render_index)
-				return (0);
-		}
-	}
-	return (0);
-}
-
-int	render_thread()
-{
-	pthread_t		thread;
-	int				i;
-
-	i = -1;
-	m()->curr_cam->render_index++;
-	while (++i < H_THREAD * W_THREAD)
-	{
-		pthread_create(&thread, NULL, render, (void *)i);
-		pthread_detach(thread);
-	}
-	return (0);
 }

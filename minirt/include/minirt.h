@@ -36,7 +36,6 @@
 # define ERROR 0
 # define OK 1
 # define EPSILON 1e-6
-# define LUMEN 3
 
 // typedef struct s_world t_wold;
 // camera 구조체

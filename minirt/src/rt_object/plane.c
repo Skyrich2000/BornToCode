@@ -17,7 +17,7 @@ int	_get_plane_t(t_vec *v[2], t_ray *ray, double minmax[2], double *t)
 	const t_vec	n_value = *v[1];
 	double		d;
 
-	d = vec_dot_(&ray->dir, &n_value);
+	d = vec_dot_(&ray->dir, v[1]);
 	if (ft_abs(d) < EPSILON)
 		return (ERROR);
 	*t = vec_dot(vec_cal((t_vec [2]){c_value, ray->origin}, \

@@ -61,7 +61,7 @@ t_minirt	*m(void)
 
 int	main(int argc, char **argv)
 {
-	const void	*back = mlx_new_image(m()->scr.mlx, m()->scr.wid, m()->scr.hei);
+	void	*back;
 
 	if (!init() || !input(argc, argv))
 	{
@@ -71,6 +71,7 @@ int	main(int argc, char **argv)
 	setting();
 	draw();
 	mlx_loop_hook(m()->scr.mlx, loop_hook, 0);
+	back = mlx_new_image(m()->scr.mlx, m()->scr.wid, m()->scr.hei);
 	mlx_put_image_to_window(m()->scr.mlx, m()->scr.win, back, 0, 0);
 	mlx_loop(m()->scr.mlx);
 	return (0);

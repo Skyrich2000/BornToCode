@@ -14,8 +14,6 @@
 # define CAMERA_H
 # include "minirt.h"
 
-// typedef struct s_world t_wold;
-// camera 구조체
 typedef struct s_camera
 {
 	t_pnt	pos;
@@ -26,7 +24,6 @@ typedef struct s_camera
 	double			view_width;
 	double			view_height;
 	double			fov;
-	// double lens_radius;
 	t_vec	u;
 	t_vec	v;
 	t_vec	w;
@@ -36,34 +33,11 @@ typedef struct s_camera
 	struct s_camera	*next;
 } 				t_camera;
 
-// image data 구조체
-// typedef struct s_screen
-// {
-// 	void	*mlx;
-// 	void	*win;
-// 	int		bits_per_pixel;
-// 	int		line_length;
-// 	int		endian;
-// 	double	wid;
-// 	double	hei;
-// 	int		anti;
-// }		t_screen;
-
-// the everything...
-// typedef struct s_minirt
-// {
-// 	t_screen	scr;
-// 	t_world		*wrd;
-// 	t_camera	*cam;
-// 	t_camera	*curr_cam;
-// 	t_light		*light;
-// }		t_minirt;
-
 t_camera	*init_camera();
 int			set_camera(t_camera *cam, t_vec lookfrom, t_vec dir, double fov);
-int			add_camera(t_vec lookfrom, t_vec dir, double fov);
+int			add_camera(t_camera *head, t_vec lookfrom, t_vec dir, double fov);
+
 void		draw();
-int			render(void *data);
-int			render_thread();
+void		render_pixel(const t_camera *cam, const int thread_idx[2], int i, int j);
 
 #endif
