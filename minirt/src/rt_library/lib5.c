@@ -71,7 +71,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	dest = (char *)malloc(len + 1);
 	if (!s || !dest)
 		return (NULL);
-	if ((size_t)start >= ft_strlen(s)
+	if ((int)start >= ft_strlen(s)
 		|| !(ft_strlcpy(dest, s + start, len + 1)))
 		dest[0] = '\0';
 	return (dest);

@@ -55,6 +55,7 @@ FILE			=	\
 					rt_parsing/parse2.c \
 					rt_parsing/util.c \
 					rt_light/light.c \
+					rt_light/phong.c
 
 SRC_DIR         =	./src
 SRCS            =	$(addprefix $(SRC_DIR)/, $(FILE))
@@ -66,7 +67,7 @@ OBJS            =	$(addprefix $(OBJ_DIR)/, $(patsubst %.c,%.o,$(FILE)))
 # var ==================================================
 
 CC		=	gcc
-CFLAGS	=	-I$(INCLUDE) -I./src/mlx #-Wall -Werror -Wextra 
+CFLAGS	=	-I$(INCLUDE) -I./src/mlx -Wall -Werror -Wextra 
 CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit -lpthread
 
 # Rule =================================================

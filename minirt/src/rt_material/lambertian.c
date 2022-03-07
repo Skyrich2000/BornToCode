@@ -19,6 +19,8 @@ int	scatter_lambertian(
 ) {
 	t_vec	target;
 
+	(void)this;
+	(void)ray_in;
 	target = random_in_hemisphere(&rec->n);
 	ray_out->origin = rec->p;
 	ray_out->dir = target;

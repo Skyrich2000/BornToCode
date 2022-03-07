@@ -57,10 +57,9 @@ static t_clr ray_color_scatter(t_world *world, t_ray *ray, int depth)
 }
 */
 
-static t_clr	ray_color(t_ray *ray, int depth)
+static t_clr	ray_color(t_ray *ray)
 {
 	t_hit_record	rec;
-	t_ray			new_ray;
 	double			val_for_sky;
 	t_vec			ray_from_cam;
 
@@ -93,7 +92,7 @@ static int	anti(const t_camera *cam, int wdx, int hdx)
 						  (double [4]){1, u, v, -1}, \
 						  4);
 		ray.dir = vec_unit_(&ray.dir);
-		color = vec_cal((t_vec [2]){color, ray_color(&ray, MAX_DEPTH)}, \
+		color = vec_cal((t_vec [2]){color, ray_color(&ray)}, \
 						(double [2]){1, 1}, \
 						2);
 	}

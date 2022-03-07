@@ -15,10 +15,10 @@ t_material	create_dielectric(double ir)
 
 // double r0 = (1-ref_idx) / (1+ref_idx);
 //         r0 = r0*r0;
-static double	reflectance(double cos_theta, double ir)
-{
-	return (ir * (1 - ir) * pow(1 - cos_theta, 5));
-}
+// static double	reflectance(double cos_theta, double ir)
+// {
+// 	return (ir * (1 - ir) * pow(1 - cos_theta, 5));
+// }
 
 // abs 왜 있음?
 static t_vec	refract(t_vec *r_in, t_vec *n, double ir, double cos_theta)

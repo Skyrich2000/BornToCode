@@ -31,8 +31,6 @@ int	get_triangle_t(t_triangle *tr, t_ray *ray, double minmax[2], double *t)
 
 int	hit_triangle(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
 {
-	t_vec	tr;
-
 	if (!get_triangle_t(&this->obj.triangle, ray, minmax, &rec->t))
 		return (ERROR);
 	rec->p = ray_at(ray, rec->t);
