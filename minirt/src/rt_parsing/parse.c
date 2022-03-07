@@ -14,7 +14,7 @@
 
 #define KEY_NUM 9
 
-static void	parser_init(int (*parser[9])(char **, t_minirt *))
+static void	parser_init(int (*parser[9])(char **))
 {
 	parser[r] = parse_r;
 	parser[a] = parse_a;
@@ -41,11 +41,11 @@ static int	find_key_index(char *key)
 	return (j);
 }
 
-static int	parsing(t_minirt *mini, char *file_data)
+static int	parsing(char *file_data)
 {
 	int		i;
 	int		key_index;
-	int		(*parser[9])(char **, t_minirt *);
+	int		(*parser[9])(char **);
 	char	**lines;
 	char	**words;
 
@@ -60,7 +60,7 @@ static int	parsing(t_minirt *mini, char *file_data)
 		key_index = find_key_index(words[0]);
 		if (key_index == KEY_NUM)
 			break ;
-		parser[key_index](words, mini);
+		parser[key_index](words);
 		ft_free_split(words, ft_arrsize(words));
 	}
 	ft_free_split(lines, ft_arrsize(lines));
@@ -93,11 +93,11 @@ static int	fileread(char *file_name, char *file_data)
 	return (s >= 0);
 }
 
-int	input(int argc, char **argv, t_minirt *mini)
+int	input(int argc, char **argv)
 {
 	char	file_data[MAX_FILE_READ];
 
-	if (argc == 2 && fileread(argv[1], file_data) && parsing(mini, file_data))
+	if (argc == 2 && fileread(argv[1], file_data) && parsing(file_data))
 		return (OK);
 	return (ERROR);
 }

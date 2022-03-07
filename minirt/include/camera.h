@@ -61,19 +61,9 @@ typedef struct s_camera
 
 t_camera	*init_camera();
 int			set_camera(t_camera *cam, t_vec lookfrom, t_vec dir, double fov);
-int			add_camera(t_minirt *mini, t_vec lookfrom, t_vec dir, double fov);
-void	draw(t_minirt *m);
-typedef struct s_render_args
-{
-	t_minirt	*mini;
-	int			h_start;
-	int			w_start;
-	int			h_end;
-	int			w_end;
-} t_render_args;
-
-
-int	render(void *data);
-int		render_thread(t_minirt *mini);
+int			add_camera(t_vec lookfrom, t_vec dir, double fov);
+void		draw();
+int			render(void *data);
+int			render_thread();
 
 #endif

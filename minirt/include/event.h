@@ -30,6 +30,6 @@
 typedef struct s_screen t_screen;
 
 int exit_hook();
-int	key_hook(int keycode, t_minirt *mini);
+int	key_hook(int keycode);
 
 #endif

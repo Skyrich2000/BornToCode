@@ -144,13 +144,13 @@ int	render(void *data)
 	return (0);
 }
 
-int	render_thread(t_minirt *mini)
+int	render_thread()
 {
 	pthread_t		thread;
 	int				i;
 
 	i = -1;
-	mini->curr_cam->render_index++;
+	m()->curr_cam->render_index++;
 	while (++i < H_THREAD * W_THREAD)
 	{
 		pthread_create(&thread, NULL, render, (void *)i);

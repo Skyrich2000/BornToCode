@@ -12,17 +12,17 @@
 
 #include "minirt.h"
 
-int	parse_r(char **line, t_minirt *mini)
+int	parse_r(char **line)
 {
-	if ((mini->scr.wid && mini->scr.hei)
+	if ((m()->scr.wid && m()->scr.hei)
 		|| ft_arrsize(line) != 3
-		|| !ft_atod(&mini->scr.wid, line[1])
-		|| !ft_atod(&mini->scr.hei, line[2]))
+		|| !ft_atod(&m()->scr.wid, line[1])
+		|| !ft_atod(&m()->scr.hei, line[2]))
 		return (ERROR);
 	return (OK);
 }
 
-int	parse_sp(char **line, t_minirt *mini)
+int	parse_sp(char **line)
 {
 	t_vec	c;
 	t_vec	color;
@@ -33,7 +33,7 @@ int	parse_sp(char **line, t_minirt *mini)
 		|| !parse_split(&c, line[1])
 		|| !parse_split(&color, line[3]))
 		return (ERROR);
-	if (!add_world(mini->wrd,
+	if (!add_world(m()->wrd,
 			create_sphere(c, r),
 			hit_sphere,
 			create_metal(color, (double)rand() / (double)RAND_MAX)))
@@ -41,7 +41,7 @@ int	parse_sp(char **line, t_minirt *mini)
 	return (OK);
 }
 
-int	parse_sq(char **line, t_minirt *mini)
+int	parse_sq(char **line)
 {
 	t_pnt	c;
 	t_vec	n;
@@ -54,7 +54,7 @@ int	parse_sq(char **line, t_minirt *mini)
 		|| !parse_split(&n, line[2])
 		|| !parse_split(&color, line[4]))
 		return (ERROR);
-	if (!add_world(mini->wrd,
+	if (!add_world(m()->wrd,
 			create_square(c, n, side),
 			hit_square,
 			create_metal(color, (double)rand() / (double)RAND_MAX)))
@@ -62,7 +62,7 @@ int	parse_sq(char **line, t_minirt *mini)
 	return (OK);
 }
 
-int	parse_tr(char **line, t_minirt *mini)
+int	parse_tr(char **line)
 {
 	t_vec	p1;
 	t_vec	p2;
@@ -75,7 +75,7 @@ int	parse_tr(char **line, t_minirt *mini)
 		|| !parse_split(&p3, line[3])
 		|| !parse_split(&color, line[4]))
 		return (ERROR);
-	if (!add_world(mini->wrd,
+	if (!add_world(m()->wrd,
 			create_triangle(p1, p2, p3),
 			hit_triangle,
 			create_metal(color, (double)rand() / (double)RAND_MAX)))

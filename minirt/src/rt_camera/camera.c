@@ -36,7 +36,7 @@ int	set_camera(t_camera *cam, t_vec lookfrom, t_vec dir, double fov)
 	return (OK);
 }
 
-int	add_camera(t_minirt *mini, t_vec lookfrom, t_vec dir, double fov)
+int	add_camera(t_vec lookfrom, t_vec dir, double fov)
 {
 	t_camera	*cam;
 
@@ -45,21 +45,25 @@ int	add_camera(t_minirt *mini, t_vec lookfrom, t_vec dir, double fov)
 		return (ERROR);
 	set_camera(cam, lookfrom, dir, fov);
 	cam->img = 0;
-	cam->next = mini->cam->next;
+	cam->next = m()->cam->next;
 	cam->render_index = 0;
-	mini->cam->next = cam;
+	m()->cam->next = cam;
 	return (OK);
 }
 
-void	draw(t_minirt *m)
+void	draw(void)
 {
-	if (!m->curr_cam->img)
+	if (!m()->curr_cam->img)
 	{
-		m->curr_cam->img = mlx_new_image(m->scr.mlx, m->scr.wid, m->scr.hei);
-		m->curr_cam->img_addr = mlx_get_data_addr(m->curr_cam->img, \
-													&m->scr.bits_per_pixel, \
-													&m->scr.line_length, \
-													&m->scr.endian);
+		m()->curr_cam->img = mlx_new_image(\
+										m()->scr.mlx, \
+										m()->scr.wid, \
+										m()->scr.hei);
+		m()->curr_cam->img_addr = mlx_get_data_addr(\
+										m()->curr_cam->img, \
+										&m()->scr.bits_per_pixel, \
+										&m()->scr.line_length, \
+										&m()->scr.endian);
 	}
-	render_thread(m);
+	render_thread();
 }

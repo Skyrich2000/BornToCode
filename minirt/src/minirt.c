@@ -12,48 +12,44 @@
 
 #include "minirt.h"
 
-
-static void event(t_minirt *mini)
+static void	setting(void)
 {
-	mlx_key_hook(mini->scr.win, key_hook, mini);  // esc close
-	mlx_hook(mini->scr.win, 17, 0, exit_hook, 0); // x button close
-}
+	t_camera	*c;
 
-static void setting(t_minirt *mini)
-{
-	t_camera *c;
-
-	mini->scr.mlx = mlx_init();
-	mini->scr.win = mlx_new_window(
-		mini->scr.mlx, mini->scr.wid, mini->scr.hei, "this is minirt");
-	mini->scr.anti = ANTI_ALIASING;
-	c = mini->cam;
+	m()->scr.mlx = mlx_init();
+	m()->scr.win = mlx_new_window(
+		m()->scr.mlx, m()->scr.wid, m()->scr.hei, "this is minirt");
+	m()->scr.anti = ANTI_ALIASING;
+	c = m()->cam;
 	while (c->next)
 		c = c->next;
-	c->next = mini->cam->next;
-	mini->curr_cam = mini->cam->next;
-	mini->light_toggle = 1;
-	event(mini);
+	c->next = m()->cam->next;
+	m()->curr_cam = m()->cam->next;
+	m()->light_toggle = 1;
+	mlx_key_hook(m()->scr.win, key_hook, 0);
+	mlx_hook(m()->scr.win, 17, 0, exit_hook, 0);
 }
 
-int init(t_minirt *mini)
+static int	init(void)
 {
-	ft_memset(mini, 0, sizeof(t_minirt));
-	mini->wrd = init_world();
-	mini->cam = init_camera();
-	mini->light = init_light();
-	if (!mini->wrd || !mini->cam || !mini->light)
+	ft_memset(m(), 0, sizeof(t_minirt));
+	m()->wrd = init_world();
+	m()->cam = init_camera();
+	m()->light = init_light();
+	if (!m()->wrd || !m()->cam || !m()->light)
 		return (ERROR);
 	return (OK);
 }
 
-int	loop_hook(t_minirt *m)
+int	loop_hook(void)
 {
-	
-	if (m->curr_cam->img)
-		mlx_put_image_to_window(m->scr.mlx, m->scr.win, m->curr_cam->img, 0, 0);
-	mlx_do_sync(m->scr.mlx);
-	return 0;
+	if (m()->curr_cam->img)
+		mlx_put_image_to_window(\
+					m()->scr.mlx, \
+					m()->scr.win, \
+					m()->curr_cam->img, 0, 0);
+	mlx_do_sync(m()->scr.mlx);
+	return (0);
 }
 
 t_minirt	*m(void)
@@ -63,20 +59,19 @@ t_minirt	*m(void)
 	return (&mini);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	const t_minirt *mini = m();
+	const void	*back = mlx_new_image(m()->scr.mlx, m()->scr.wid, m()->scr.hei);
 
-	if (!init(mini) || !input(argc, argv, mini))
+	if (!init() || !input(argc, argv))
 	{
 		printf("Error\n");
 		return (ERROR);
 	}
-	setting(mini);
-	draw(mini);
-	mlx_loop_hook(mini->scr.mlx, loop_hook, mini);
-	void *back = mlx_new_image(mini->scr.mlx, mini->scr.wid, mini->scr.hei);
-	mlx_put_image_to_window(mini->scr.mlx, mini->scr.win, back, 0, 0);
-	mlx_loop(mini->scr.mlx);
+	setting();
+	draw();
+	mlx_loop_hook(m()->scr.mlx, loop_hook, 0);
+	mlx_put_image_to_window(m()->scr.mlx, m()->scr.win, back, 0, 0);
+	mlx_loop(m()->scr.mlx);
 	return (0);
 }
