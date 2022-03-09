@@ -65,7 +65,7 @@ int			add_camera(t_camera *head, t_vec lookfrom, t_vec dir, double fov);
 
 void		draw();
 void		set_gui_objects(t_camera *cam);
-void		set_gui_button(t_camera *cam, t_object *obj);
+void		set_gui_button(t_camera *cam);
 void		render_pixel(const t_camera *cam, const int thread_idx[2], int i, int j);
 
 #endif

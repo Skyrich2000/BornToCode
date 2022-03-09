@@ -9,6 +9,7 @@
 # define	CYLINDER	2
 # define	SQUARE		3
 # define	TRIANGLE	4
+# define	LIGHT		5
 
 typedef struct s_sphere
 {

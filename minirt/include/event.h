@@ -33,5 +33,6 @@ int exit_hook();
 int	key_hook(int keycode);
 int mouse_up(int button, int x,int y, void *param);
 int mouse_down(int button, int x,int y, void *param);
+int mouse_move(int x, int y, void *param);
 
 #endif

@@ -56,6 +56,8 @@ static void	setting(void)
 	m()->scr.win = mlx_new_window(
 		m()->scr.mlx, m()->scr.wid, m()->scr.hei, "this is minirt");
 	m()->scr.anti = ANTI_ALIASING;
+	m()->scr.mouse_x = -1;
+	m()->scr.mouse_y = -1;
 	c = m()->cam;
 	while (c->next)
 		c = c->next;
@@ -66,6 +68,7 @@ static void	setting(void)
 	mlx_hook(m()->scr.win, 17, 0, exit_hook, 0);
 	mlx_hook(m()->scr.win, 4, 0, mouse_down, 0);
 	mlx_hook(m()->scr.win, 5, 0, mouse_up, 0);
+	mlx_hook(m()->scr.win, 6, 0, mouse_move, 0);
 	mlx_loop_hook(m()->scr.mlx, loop_hook, 0);
 }
 

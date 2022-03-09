@@ -71,6 +71,7 @@ typedef struct s_screen
 
 	int		mouse_x;
 	int		mouse_y;
+	t_vec	start_dir;
 }		t_screen;
 
 // the everything...
