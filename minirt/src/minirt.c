@@ -12,35 +12,6 @@
 
 #include "minirt.h"
 
-static void	setting(void)
-{
-	t_camera	*c;
-
-	m()->scr.mlx = mlx_init();
-	m()->scr.win = mlx_new_window(
-		m()->scr.mlx, m()->scr.wid, m()->scr.hei, "this is minirt");
-	m()->scr.anti = ANTI_ALIASING;
-	c = m()->cam;
-	while (c->next)
-		c = c->next;
-	c->next = m()->cam->next;
-	m()->curr_cam = m()->cam->next;
-	m()->light_toggle = 1;
-	mlx_key_hook(m()->scr.win, key_hook, 0);
-	mlx_hook(m()->scr.win, 17, 0, exit_hook, 0);
-}
-
-static int	init(void)
-{
-	ft_memset(m(), 0, sizeof(t_minirt));
-	m()->wrd = init_world();
-	m()->cam = init_camera();
-	m()->light = init_light();
-	if (!m()->wrd || !m()->cam || !m()->light)
-		return (ERROR);
-	return (OK);
-}
-
 int	loop_hook(void)
 {
 	int				i;
@@ -62,6 +33,38 @@ int	loop_hook(void)
 	return (0);
 }
 
+static void	setting(void)
+{
+	t_camera	*c;
+
+	m()->scr.mlx = mlx_init();
+	m()->scr.win = mlx_new_window(
+		m()->scr.mlx, m()->scr.wid, m()->scr.hei, "this is minirt");
+	m()->scr.anti = ANTI_ALIASING;
+	c = m()->cam;
+	while (c->next)
+		c = c->next;
+	c->next = m()->cam->next;
+	m()->curr_cam = m()->cam->next;
+	m()->light_toggle = 1;
+	mlx_key_hook(m()->scr.win, key_hook, 0);
+	mlx_hook(m()->scr.win, 17, 0, exit_hook, 0);
+	mlx_hook(m()->scr.win, 4, 0, mouse_down, 0);
+	mlx_hook(m()->scr.win, 5, 0, mouse_up, 0);
+	mlx_loop_hook(m()->scr.mlx, loop_hook, 0);
+}
+
+static int	init(void)
+{
+	ft_memset(m(), 0, sizeof(t_minirt));
+	m()->wrd = init_world();
+	m()->cam = init_camera();
+	m()->light = init_light();
+	if (!m()->wrd || !m()->cam || !m()->light)
+		return (ERROR);
+	return (OK);
+}
+
 t_minirt	*m(void)
 {
 	static t_minirt	mini;
@@ -80,7 +83,6 @@ int	main(int argc, char **argv)
 	}
 	setting();
 	draw();
-	mlx_loop_hook(m()->scr.mlx, loop_hook, 0);
 	back = mlx_new_image(m()->scr.mlx, m()->scr.wid, m()->scr.hei);
 	mlx_put_image_to_window(m()->scr.mlx, m()->scr.win, back, 0, 0);
 	mlx_loop(m()->scr.mlx);

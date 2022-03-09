@@ -33,6 +33,7 @@ FILE			=	\
 					rt_vector/vector6.c \
 					rt_vector/vector7.c \
 					rt_event/event.c	\
+					rt_event/mouse.c	\
 					rt_camera/camera.c \
 					rt_camera/render.c \
 					rt_camera/draw.c \

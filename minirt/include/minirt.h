@@ -68,6 +68,9 @@ typedef struct s_screen
 	double	wid;
 	double	hei;
 	int		anti;
+
+	int		mouse_x;
+	int		mouse_y;
 }		t_screen;
 
 // the everything...
