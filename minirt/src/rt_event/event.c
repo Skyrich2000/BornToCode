@@ -93,6 +93,6 @@ int	key_hook(int keycode)
 	key_camera_dir(keycode);
 	key_camera_move(keycode);
 	key_camera_updown(keycode);
-	draw(m());
+	draw();
 	return (0);
 }

@@ -47,10 +47,130 @@ static int	get_screen_pos(t_camera *cam, t_vec world_pos, t_vec *screen_pos)
 	return (OK);
 }
 
+void	addX(t_gui_object *select_gui_object)
+{
+	if (select_gui_object->type == TRIANGLE)
+	{
+		((t_triangle *)select_gui_object->obj)->p1.x += 1;
+		((t_triangle *)select_gui_object->obj)->p2.x += 1;
+		((t_triangle *)select_gui_object->obj)->p3.x += 1;
+		return ;
+	}
+	((t_sphere *)select_gui_object->obj)->c.x += 1;
+}
+
+void	subX(t_gui_object *select_gui_object)
+{
+	if (select_gui_object->type == TRIANGLE)
+	{
+		((t_triangle *)select_gui_object->obj)->p1.x -= 1;
+		((t_triangle *)select_gui_object->obj)->p2.x -= 1;
+		((t_triangle *)select_gui_object->obj)->p3.x -= 1;
+		return ;
+	}
+	((t_sphere *)select_gui_object->obj)->c.x -= 1;
+}
+
+void	addY(t_gui_object *select_gui_object)
+{
+	if (select_gui_object->type == TRIANGLE)
+	{
+		((t_triangle *)select_gui_object->obj)->p1.y += 1;
+		((t_triangle *)select_gui_object->obj)->p2.y += 1;
+		((t_triangle *)select_gui_object->obj)->p3.y += 1;
+		return ;
+	}
+	((t_sphere *)select_gui_object->obj)->c.y += 1;
+}
+
+void	subY(t_gui_object *select_gui_object)
+{
+	if (select_gui_object->type == TRIANGLE)
+	{
+		((t_triangle *)select_gui_object->obj)->p1.y -= 1;
+		((t_triangle *)select_gui_object->obj)->p2.y -= 1;
+		((t_triangle *)select_gui_object->obj)->p3.y -= 1;
+		return ;
+	}
+	((t_sphere *)select_gui_object->obj)->c.y -= 1;
+}
+
+void	addZ(t_gui_object *select_gui_object)
+{
+	if (select_gui_object->type == TRIANGLE)
+	{
+		((t_triangle *)select_gui_object->obj)->p1.z += 1;
+		((t_triangle *)select_gui_object->obj)->p2.z += 1;
+		((t_triangle *)select_gui_object->obj)->p3.z += 1;
+		return ;
+	}
+	((t_sphere *)select_gui_object->obj)->c.z += 1;
+}
+
+void	subZ(t_gui_object *select_gui_object)
+{
+	if (select_gui_object->type == TRIANGLE)
+	{
+		((t_triangle *)select_gui_object->obj)->p1.z -= 1;
+		((t_triangle *)select_gui_object->obj)->p2.z -= 1;
+		((t_triangle *)select_gui_object->obj)->p3.z -= 1;
+		return ;
+	}
+	((t_sphere *)select_gui_object->obj)->c.z -= 1;
+}
+
+void	set_gui_button(t_camera *cam, t_object *obj)
+{
+	if (!obj)
+		return ;
+	cam->gui_button_top = 0;
+	cam->gui_button[cam->gui_button_top].text = "X + 1";
+	cam->gui_button[cam->gui_button_top].f = addX;
+	cam->gui_button[cam->gui_button_top].world_pos = vec_add(obj->sphere.c, vec(1, 0, 0));
+	get_screen_pos(cam, cam->gui_button[cam->gui_button_top].world_pos, &cam->gui_button[cam->gui_button_top].pos);
+	cam->gui_button_top++;
+	cam->gui_button[cam->gui_button_top].text = "X - 1";
+	cam->gui_button[cam->gui_button_top].f = subX;
+	cam->gui_button[cam->gui_button_top].world_pos = vec_add(obj->sphere.c, vec(-1, 0, 0));
+	get_screen_pos(cam, cam->gui_button[cam->gui_button_top].world_pos, &cam->gui_button[cam->gui_button_top].pos);
+	cam->gui_button_top++;
+	cam->gui_button[cam->gui_button_top].text = "Y + 1";
+	cam->gui_button[cam->gui_button_top].f = addY;
+	cam->gui_button[cam->gui_button_top].world_pos = vec_add(obj->sphere.c, vec(0, 1, 0));
+	get_screen_pos(cam, cam->gui_button[cam->gui_button_top].world_pos, &cam->gui_button[cam->gui_button_top].pos);
+	cam->gui_button_top++;
+	cam->gui_button[cam->gui_button_top].text = "Y - 1";
+	cam->gui_button[cam->gui_button_top].f = subY;
+	cam->gui_button[cam->gui_button_top].world_pos = vec_add(obj->sphere.c, vec(0, -1, 0));
+	get_screen_pos(cam, cam->gui_button[cam->gui_button_top].world_pos, &cam->gui_button[cam->gui_button_top].pos);
+	cam->gui_button_top++;
+	cam->gui_button[cam->gui_button_top].text = "Z + 1";
+	cam->gui_button[cam->gui_button_top].f = addZ;
+	cam->gui_button[cam->gui_button_top].world_pos = vec_add(obj->sphere.c, vec(0, 0, 1));
+	get_screen_pos(cam, cam->gui_button[cam->gui_button_top].world_pos, &cam->gui_button[cam->gui_button_top].pos);
+	cam->gui_button_top++;
+	cam->gui_button[cam->gui_button_top].text = "Z - 1";
+	cam->gui_button[cam->gui_button_top].f = subZ;
+	cam->gui_button[cam->gui_button_top].world_pos = vec_add(obj->sphere.c, vec(0, 0, -1));
+	get_screen_pos(cam, cam->gui_button[cam->gui_button_top].world_pos, &cam->gui_button[cam->gui_button_top].pos);
+	cam->gui_button_top++;
+}
+
 void	set_gui_objects(t_camera *cam)
 {
+	int			i;
 	t_world		*w;
 
+	if (cam->select_gui_object.obj)
+	{
+		i = -1;
+		get_screen_pos(cam, ((t_object *)cam->select_gui_object.obj)->sphere.c, \
+							&cam->select_gui_object.pos);
+		while (++i < cam->gui_button_top)
+		{
+			get_screen_pos(cam, cam->gui_button[i].world_pos, &cam->gui_button[i].pos);
+		}
+	}
 	cam->gui_object_top = 0;
 	w = m()->wrd->next;
 	while (w && w->next && cam->gui_object_top < MAX_GUI_OBJECT)
@@ -64,4 +184,5 @@ void	set_gui_objects(t_camera *cam)
 		}
 		w = w->next;
 	}
+	return ;
 }

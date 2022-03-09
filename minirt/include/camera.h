@@ -15,6 +15,7 @@
 # include "minirt.h"
 
 # define MAX_GUI_OBJECT 10
+# define MAX_GUI_BUTTON 10
 
 typedef struct s_gui_object
 {
@@ -23,6 +24,14 @@ typedef struct s_gui_object
 	t_vec		pos;
 }			t_gui_object;
 
+typedef struct s_gui_button
+{
+	char		*text;
+	t_gui_object	select_gui_object;
+	void		(*f)(t_gui_object *select_gui_object);
+	t_vec		world_pos;
+	t_vec		pos;
+}			t_gui_button;
 
 typedef struct s_camera
 {
@@ -43,7 +52,10 @@ typedef struct s_camera
 
 	int				gui_object_top;
 	t_gui_object	gui_object[MAX_GUI_OBJECT];
-	int				gui_selected;
+	t_gui_object	select_gui_object;
+
+	int				gui_button_top;
+	t_gui_button	gui_button[MAX_GUI_BUTTON];
 	struct s_camera	*next;
 } 				t_camera;
 
@@ -53,6 +65,7 @@ int			add_camera(t_camera *head, t_vec lookfrom, t_vec dir, double fov);
 
 void		draw();
 void		set_gui_objects(t_camera *cam);
+void		set_gui_button(t_camera *cam, t_object *obj);
 void		render_pixel(const t_camera *cam, const int thread_idx[2], int i, int j);
 
 #endif

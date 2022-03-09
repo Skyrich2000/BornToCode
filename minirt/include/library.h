@@ -39,4 +39,8 @@ int	ft_atod(double *f, char *line);
 //lib3.c
 char **ft_split(char const *s, char *delim);
 char **ft_free_split(char **s, int i);
+
+//lib6.c
+char		*ft_itoa(int n);
+
 #endif

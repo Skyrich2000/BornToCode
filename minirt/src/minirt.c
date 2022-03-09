@@ -14,22 +14,37 @@
 
 int	loop_hook(void)
 {
+	static int		loop_color = 0;
 	int				i;
 	const t_camera	*cam = m()->curr_cam;
 
+	mlx_do_sync(m()->scr.mlx);
 	if (cam->img)
 		mlx_put_image_to_window(\
 					m()->scr.mlx, \
 					m()->scr.win, \
 					cam->img, 0, 0);
+	loop_color += 0x112233;
 	i = -1;
+	if (cam->select_gui_object.obj)
+	{
+		while (++i < cam->gui_button_top)
+		{
+			mlx_string_put(m()->scr.mlx, m()->scr.win, \
+						cam->gui_button[i].pos.x, cam->gui_button[i].pos.y, \
+						0x0, cam->gui_button[i].text);
+		}
+		mlx_string_put(m()->scr.mlx, m()->scr.win, \
+					cam->select_gui_object.pos.x, cam->select_gui_object.pos.y, \
+					loop_color, "O");
+		return (0);
+	}
 	while (++i < cam->gui_object_top)
 	{
 		mlx_string_put(m()->scr.mlx, m()->scr.win, \
 					cam->gui_object[i].pos.x, cam->gui_object[i].pos.y, \
-					0xFFFFFF, "SP 1");
+					0x0, "O");
 	}
-	mlx_do_sync(m()->scr.mlx);
 	return (0);
 }
 
