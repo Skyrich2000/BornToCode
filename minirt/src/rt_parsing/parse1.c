@@ -67,9 +67,8 @@ int	parse_pl(char **line)
 		|| !parse_split(&n, line[2])
 		|| !parse_split(&color, line[3]))
 		return (ERROR);
-	if (!add_world(m()->wrd,
+	if (!add_world(PLANE,
 			create_plane(c, n),
-			hit_plane,
 			create_metal(color, (double)rand() / (double)RAND_MAX)))
 		return (ERROR);
 	return (OK);
@@ -90,9 +89,8 @@ int	parse_cy(char **line)
 		|| !parse_split(&n, line[2])
 		|| !parse_split(&color, line[5]))
 		return (ERROR);
-	if (!add_world(m()->wrd,
+	if (!add_world(CYLINDER,
 			create_cylinder(c, n, r, h),
-			hit_cylinder,
 			create_metal(color, (double)rand() / (double)RAND_MAX)))
 		return (ERROR);
 	return (OK);

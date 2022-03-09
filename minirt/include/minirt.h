@@ -30,7 +30,7 @@
 # define H_THREAD 4
 # define W_THREAD 4
 
-# define ANTI_ALIASING 30
+# define ANTI_ALIASING 0
 
 # define MAX_DEPTH 50
 # define ERROR 0

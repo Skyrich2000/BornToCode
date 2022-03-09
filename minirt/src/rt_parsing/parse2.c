@@ -33,9 +33,8 @@ int	parse_sp(char **line)
 		|| !parse_split(&c, line[1])
 		|| !parse_split(&color, line[3]))
 		return (ERROR);
-	if (!add_world(m()->wrd,
+	if (!add_world(SPHERE,
 			create_sphere(c, r),
-			hit_sphere,
 			create_metal(color, (double)rand() / (double)RAND_MAX)))
 		return (ERROR);
 	return (OK);
@@ -54,9 +53,8 @@ int	parse_sq(char **line)
 		|| !parse_split(&n, line[2])
 		|| !parse_split(&color, line[4]))
 		return (ERROR);
-	if (!add_world(m()->wrd,
+	if (!add_world(SQUARE,
 			create_square(c, n, side),
-			hit_square,
 			create_metal(color, (double)rand() / (double)RAND_MAX)))
 		return (ERROR);
 	return (OK);
@@ -75,9 +73,8 @@ int	parse_tr(char **line)
 		|| !parse_split(&p3, line[3])
 		|| !parse_split(&color, line[4]))
 		return (ERROR);
-	if (!add_world(m()->wrd,
+	if (!add_world(TRIANGLE,
 			create_triangle(p1, p2, p3),
-			hit_triangle,
 			create_metal(color, (double)rand() / (double)RAND_MAX)))
 		return (ERROR);
 	return (OK);

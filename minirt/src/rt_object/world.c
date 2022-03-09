@@ -11,20 +11,29 @@ t_world	*init_world(void)
 	return (head);
 }
 
-int	add_world(t_world *head, t_object obj, \
-	int (*hit)(t_world *this, t_ray *ray, double minmax[2], t_hit_record *out), \
-	t_material material)
-{
+int	add_world(
+	int type,
+	t_object obj,
+	t_material material
+) {
+	int		(*hits[5])(struct s_world *this, \
+							t_ray *ray, double minmax[2], t_hit_record *out);
 	t_world	*new;
 
+	hits[PLANE] = hit_plane;
+	hits[SPHERE] = hit_sphere;
+	hits[CYLINDER] = hit_cylinder;
+	hits[SQUARE] = hit_square;
+	hits[TRIANGLE] = hit_triangle;
 	new = (t_world *)malloc(sizeof(t_world) * 1);
 	if (!new)
 		return (ERROR);
+	new->type = type;
 	new->obj = obj;
-	new->hit = hit;
+	new->hit = hits[type];
 	new->material = material;
-	new->next = head->next;
-	head->next = new;
+	new->next = m()->wrd->next;
+	m()->wrd->next = new;
 	return (OK);
 }
 
@@ -32,14 +41,14 @@ int	add_world(t_world *head, t_object obj, \
 // min값은 ray의
 // ray가 특정 object에 맞았다면 max value를 바꿔준다.
 // 이때 위의 함수가 true가 되려면 맞았을때의 t값이 min < t < max 이여야한다.
-int	hit_world(t_world *head, t_ray *ray, double minmax[2], t_hit_record *out)
+int	hit_world(t_ray *ray, double minmax[2], t_hit_record *out)
 {
 	t_hit_record	temp_rec;
 	t_world			*w;
 	int				flag;
 
 	flag = 0;
-	w = head;
+	w = m()->wrd;
 	while (w->next)
 	{
 		w = w->next;

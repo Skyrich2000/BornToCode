@@ -58,7 +58,7 @@ void	set_gui_objects(t_camera *cam)
 		if (get_screen_pos(cam, w->obj.sphere.c, \
 							&cam->gui_object[cam->gui_object_top].pos))
 		{
-			cam->gui_object[cam->gui_object_top].type = 0;
+			cam->gui_object[cam->gui_object_top].type = w->type;
 			cam->gui_object[cam->gui_object_top].obj = &w->obj;
 			cam->gui_object_top++;
 		}

@@ -35,7 +35,7 @@ static int	trgb_anti(t_vec *colors, int anti)
 // 	}
 // }
 
-static t_clr ray_color_scatter(t_ray *ray, int depth)
+static t_clr	ray_color_scatter(t_ray *ray, int depth)
 {
 	t_hit_record	rec;
 	t_ray			new_ray;
@@ -44,7 +44,7 @@ static t_clr ray_color_scatter(t_ray *ray, int depth)
 
 	if (depth <= 0)
 		return ((t_vec){0, 0, 0});
-	if (hit_world(m()->wrd, ray, (double [2]){EPSILON, INFINITY}, &rec))
+	if (hit_world(ray, (double [2]){EPSILON, INFINITY}, &rec))
 	{
 		if (rec.material->scatter(rec.material, ray, &rec, &new_ray))
 			return (vec_mul(rec.material->color, \
@@ -63,7 +63,7 @@ static t_clr	ray_color(t_ray *ray, int depth)
 	t_vec			ray_from_cam;
 
 	(void)depth;
-	if (hit_world(m()->wrd, ray, (double [2]){0.001, INFINITY}, &rec))
+	if (hit_world(ray, (double [2]){0.001, INFINITY}, &rec))
 		return (phong(&rec));
 	ray_from_cam = vec_oppo(vec_unit_(&ray->dir));
 	val_for_sky = 0.5 - 0.5 * ray_from_cam.y;
