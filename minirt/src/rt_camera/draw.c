@@ -12,7 +12,7 @@ static void	*render(void *data)
 	int				idx[2];
 
 	idx[0] = 0;
-	while (++idx[0] <= size[0] / 4 + 1)
+	while (++idx[0] <= size[0] / 4 + 2)
 	{
 		idx[1] = 0;
 		while (++idx[1] <= size[1])

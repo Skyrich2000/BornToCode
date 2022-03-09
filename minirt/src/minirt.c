@@ -43,11 +43,21 @@ static int	init(void)
 
 int	loop_hook(void)
 {
-	if (m()->curr_cam->img)
+	int			i;
+	const t_camera	*cam = m()->curr_cam;
+
+	if (cam->img)
 		mlx_put_image_to_window(\
 					m()->scr.mlx, \
 					m()->scr.win, \
-					m()->curr_cam->img, 0, 0);
+					cam->img, 0, 0);
+	i = -1;
+	while (++i < cam->gui_object_top)
+	{
+		mlx_string_put(m()->scr.mlx, m()->scr.win,
+					cam->gui_object[i].pos.x, cam->gui_object[i].pos.y, \
+					0xFFFFFF, "SP 1");
+	}
 	mlx_do_sync(m()->scr.mlx);
 	return (0);
 }

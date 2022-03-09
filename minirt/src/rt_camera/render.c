@@ -21,21 +21,21 @@ static int	trgb_anti(t_vec *colors, int anti)
 	colors->z = clamp((colors->z * scale), 0, 0.999);
 	return (trgb(0, colors->x * 256, colors->y * 256, colors->z * 256));
 }
-/*
-static t_vec	random_in_unit_disk(double dist_to_focus)
-{
-	t_vec	out;
 
-	while (1)
-	{
-		out = vec(rand_num(1, -1, 1),rand_num(1, -1, 1),0);
-		if (vec_length_squared_(&out) >= 1)
-			continue ;
-		return (vec_cal(&out, &dist_to_focus, 1));
-	}
-}
+// static t_vec	random_in_unit_disk(double dist_to_focus)
+// {
+// 	t_vec	out;
 
-static t_clr ray_color_scatter(t_world *world, t_ray *ray, int depth)
+// 	while (1)
+// 	{
+// 		out = vec(rand_num(1, -1, 1),rand_num(1, -1, 1),0);
+// 		if (vec_length_squared_(&out) >= 1)
+// 			continue ;
+// 		return (vec_cal(&out, &dist_to_focus, 1));
+// 	}
+// }
+
+static t_clr ray_color_scatter(t_ray *ray, int depth)
 {
 	t_hit_record	rec;
 	t_ray			new_ray;
@@ -44,25 +44,25 @@ static t_clr ray_color_scatter(t_world *world, t_ray *ray, int depth)
 
 	if (depth <= 0)
 		return ((t_vec){0, 0, 0});
-	if (hit_world(world, ray, (double [2]){EPSILON, INFINITY}, &rec))
+	if (hit_world(m()->wrd, ray, (double [2]){EPSILON, INFINITY}, &rec))
 	{
 		if (rec.material->scatter(rec.material, ray, &rec, &new_ray))
 			return (vec_mul(rec.material->color, \
-					ray_color_scatter(world, &new_ray, depth - 1)));
+					ray_color_scatter(&new_ray, depth - 1)));
 		return (vec(0, 0, 0));
 	}
 	ray_from_cam = vec_oppo(vec_unit_(&ray->dir));
 	val_for_sky = 0.5 - 0.5 * ray_from_cam.y;
 	return (vec((1 - 0.5 * val_for_sky), (1 - 0.3 * val_for_sky), 1));
 }
-*/
 
-static t_clr	ray_color(t_ray *ray)
+static t_clr	ray_color(t_ray *ray, int depth)
 {
 	t_hit_record	rec;
 	double			val_for_sky;
 	t_vec			ray_from_cam;
 
+	(void)depth;
 	if (hit_world(m()->wrd, ray, (double [2]){0.001, INFINITY}, &rec))
 		return (phong(&rec));
 	ray_from_cam = vec_oppo(vec_unit_(&ray->dir));
@@ -92,7 +92,7 @@ static int	anti(const t_camera *cam, int wdx, int hdx)
 						  (double [4]){1, u, v, -1}, \
 						  4);
 		ray.dir = vec_unit_(&ray.dir);
-		color = vec_cal((t_vec [2]){color, ray_color(&ray)}, \
+		color = vec_cal((t_vec [2]){color, ray_color(&ray, MAX_DEPTH)}, \
 						(double [2]){1, 1}, \
 						2);
 	}

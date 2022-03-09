@@ -36,6 +36,7 @@ FILE			=	\
 					rt_camera/camera.c \
 					rt_camera/render.c \
 					rt_camera/draw.c \
+					rt_camera/gui.c \
 					rt_object/world.c \
 					rt_object/sphere.c \
 					rt_object/plane.c \
@@ -67,7 +68,7 @@ OBJS            =	$(addprefix $(OBJ_DIR)/, $(patsubst %.c,%.o,$(FILE)))
 # var ==================================================
 
 CC		=	gcc
-CFLAGS	=	-I$(INCLUDE) -I./src/mlx -Wall -Werror -Wextra 
+CFLAGS	=	-I$(INCLUDE) -I./src/mlx # -Wall -Werror -Wextra 
 CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit -lpthread
 
 # Rule =================================================

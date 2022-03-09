@@ -28,6 +28,7 @@ int	add_world(t_world *head, t_object obj, \
 	return (OK);
 }
 
+// type 을 넣을까요?
 // min값은 ray의
 // ray가 특정 object에 맞았다면 max value를 바꿔준다.
 // 이때 위의 함수가 true가 되려면 맞았을때의 t값이 min < t < max 이여야한다.

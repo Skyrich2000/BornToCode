@@ -54,6 +54,11 @@ int	get_cylinder_t(t_cylinder *cy, t_ray *ray, double minmax[2], double *t)
 	return (OK);
 }
 
+t_vec	*get_cylinder_center(t_cylinder *cy)
+{
+	return (&cy->c);
+}
+
 int	hit_cylinder(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
 {
 	t_vec	cp;

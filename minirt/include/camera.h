@@ -14,6 +14,16 @@
 # define CAMERA_H
 # include "minirt.h"
 
+# define MAX_GUI_OBJECT 10
+
+typedef struct s_gui_object
+{
+	int			type;
+	void		*obj;
+	t_vec		pos;
+}			t_gui_object;
+
+
 typedef struct s_camera
 {
 	t_pnt	pos;
@@ -30,6 +40,10 @@ typedef struct s_camera
 	void 	*img;
 	char	*img_addr;
 	int		render_index;
+
+	int				gui_object_top;
+	t_gui_object	gui_object[MAX_GUI_OBJECT];
+	int				gui_selected;
 	struct s_camera	*next;
 } 				t_camera;
 
@@ -38,6 +52,7 @@ int			set_camera(t_camera *cam, t_vec lookfrom, t_vec dir, double fov);
 int			add_camera(t_camera *head, t_vec lookfrom, t_vec dir, double fov);
 
 void		draw();
+void		set_gui_objects(t_camera *cam);
 void		render_pixel(const t_camera *cam, const int thread_idx[2], int i, int j);
 
 #endif
