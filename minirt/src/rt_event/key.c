@@ -22,7 +22,6 @@ static void	move_object(t_camera *cam, t_vec diff)
 void	key_camera_move(void)
 {
 	t_vec			diff;
-	t_gui_object	*gui;
 	t_camera		*cam;
 
 	cam = m()->curr_cam;

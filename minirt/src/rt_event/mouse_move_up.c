@@ -34,7 +34,7 @@ static void	move_object_dir(t_vec pos, double diff_x, double diff_y)
 	m()->render_refresh = 1;
 }
 
-int	mouse_up(int button, int x, int y, void *param)
+int	mouse_up(void)
 {
 	m()->curr_cam->select_gui_object.obj = 0;
 	m()->scr.mouse_x = -1;
@@ -47,6 +47,7 @@ int	mouse_move(int x, int y, void *param)
 	int		diff_x;
 	int		diff_y;
 
+	(void)param;
 	if (m()->scr.mouse_x == -1 || m()->scr.mouse_y == -1)
 		return (0);
 	diff_x = x - m()->scr.mouse_x;

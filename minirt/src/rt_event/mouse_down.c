@@ -25,6 +25,7 @@ static void	click_obj(int x, int y)
 
 int	mouse_down(int button, int x, int y, void *param)
 {
+	(void)param;
 	click_obj(x, y);
 	m()->scr.mouse_button = button;
 	m()->scr.mouse_x = x;

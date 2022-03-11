@@ -41,7 +41,7 @@ void	key_camera_move(void);
 int		key_up(int keycode);
 int		key_down(int keycode);
 
-int		mouse_up(int button, int x, int y, void *param);
+int		mouse_up(void);
 int		mouse_down(int button, int x, int y, void *param);
 int		mouse_move(int x, int y, void *param);
 

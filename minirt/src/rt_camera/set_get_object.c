@@ -42,8 +42,6 @@ void	set_object_pos(void *obj, int type, t_vec pos)
 
 void	set_object_dir(void *obj, int type, t_vec start, t_vec diff)
 {
-	t_vec	temp;
-
 	if (type == PLANE)
 		((t_plane *)obj)->n = vec_unit(vec_add(start, diff));
 	else if (type == SPHERE)
