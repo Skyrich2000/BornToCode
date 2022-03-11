@@ -19,7 +19,12 @@
 # define KEY_D			2
 # define KEY_W			13
 # define KEY_C			8
+# define KEY_R			15
 # define KEY_L			37
+# define KEY_G			5
+# define KEY_M			46
+# define KEY_PLUS		24
+# define KEY_MINUS		27
 # define KEY_LEFT_SHIFT	257
 # define KEY_SPACEBAR	49
 # define KEY_LEFT		123
@@ -27,12 +32,17 @@
 # define KEY_RIGHT		124
 # define KEY_UP			126
 
-typedef struct s_screen t_screen;
+typedef struct s_screen	t_screen;
 
-int exit_hook();
-int	key_hook(int keycode);
-int mouse_up(int button, int x,int y, void *param);
-int mouse_down(int button, int x,int y, void *param);
-int mouse_move(int x, int y, void *param);
+int		exit_hook(void);
+
+void	key_camera_move(void);
+
+int		key_up(int keycode);
+int		key_down(int keycode);
+
+int		mouse_up(int button, int x, int y, void *param);
+int		mouse_down(int button, int x, int y, void *param);
+int		mouse_move(int x, int y, void *param);
 
 #endif

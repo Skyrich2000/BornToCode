@@ -14,37 +14,19 @@
 
 int	loop_hook(void)
 {
-	static int		loop_color = 0;
-	int				i;
-	const t_camera	*cam = m()->curr_cam;
-
-	mlx_do_sync(m()->scr.mlx);
-	if (cam->img)
+	key_camera_move();
+	set_gui(m()->curr_cam);
+	if (m()->render_refresh)
+		render();
+	m()->render_refresh = 0;
+	if (m()->curr_cam->img)
 		mlx_put_image_to_window(\
 					m()->scr.mlx, \
 					m()->scr.win, \
-					cam->img, 0, 0);
-	loop_color += 0x112233;
-	i = -1;
-	if (cam->select_gui_object.obj)
-	{
-		while (++i < cam->gui_button_top)
-		{
-			mlx_string_put(m()->scr.mlx, m()->scr.win, \
-						cam->gui_button[i].pos.x, cam->gui_button[i].pos.y, \
-						0x0, cam->gui_button[i].text);
-		}
-		mlx_string_put(m()->scr.mlx, m()->scr.win, \
-					cam->select_gui_object.pos.x, cam->select_gui_object.pos.y, \
-					loop_color, "O");
-		return (0);
-	}
-	while (++i < cam->gui_object_top)
-	{
-		mlx_string_put(m()->scr.mlx, m()->scr.win, \
-					cam->gui_object[i].pos.x, cam->gui_object[i].pos.y, \
-					0x0, "O");
-	}
+					m()->curr_cam->img, 0, 0);
+	if (m()->gui_toggle)
+		draw_gui();
+	mlx_do_sync(m()->scr.mlx);
 	return (0);
 }
 
@@ -63,8 +45,13 @@ static void	setting(void)
 		c = c->next;
 	c->next = m()->cam->next;
 	m()->curr_cam = m()->cam->next;
+	m()->gui_toggle = 1;
 	m()->light_toggle = 1;
-	mlx_key_hook(m()->scr.win, key_hook, 0);
+	m()->resolution_toggle = 1;
+	m()->ray_mode = 1;
+	ft_memset(m()->keys, 0, sizeof(m()->keys));
+	mlx_hook(m()->scr.win, 2, 0, key_down, 0);
+	mlx_hook(m()->scr.win, 3, 0, key_up, 0);
 	mlx_hook(m()->scr.win, 17, 0, exit_hook, 0);
 	mlx_hook(m()->scr.win, 4, 0, mouse_down, 0);
 	mlx_hook(m()->scr.win, 5, 0, mouse_up, 0);
@@ -100,9 +87,10 @@ int	main(int argc, char **argv)
 		return (ERROR);
 	}
 	setting();
-	draw();
 	back = mlx_new_image(m()->scr.mlx, m()->scr.wid, m()->scr.hei);
 	mlx_put_image_to_window(m()->scr.mlx, m()->scr.win, back, 0, 0);
+	render();
+	set_gui(m()->curr_cam);
 	mlx_loop(m()->scr.mlx);
 	return (0);
 }

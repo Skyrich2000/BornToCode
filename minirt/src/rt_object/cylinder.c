@@ -15,6 +15,13 @@ t_object	create_cylinder(t_pnt c, t_vec n, double r, double h)
 	return (obj);
 }
 
+void	set_cylinder_pos(t_cylinder *cy, t_pnt c)
+{
+	cy->c = c;
+	cy->top = vec_cal((t_vec [2]){c, cy->n}, (double [2]){1, cy->h / 2}, 2);
+	cy->bot = vec_cal((t_vec [2]){c, cy->n}, (double [2]){1, -cy->h / 2}, 2);
+}
+
 static int	check_t(t_cylinder *cy, t_ray *ray, double t)
 {
 	t_vec	p;
@@ -52,11 +59,6 @@ int	get_cylinder_t(t_cylinder *cy, t_ray *ray, double minmax[2], double *t)
 			return (ERROR);
 	}
 	return (OK);
-}
-
-t_vec	*get_cylinder_center(t_cylinder *cy)
-{
-	return (&cy->c);
 }
 
 int	hit_cylinder(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)

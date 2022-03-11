@@ -15,6 +15,13 @@ t_object	create_triangle(t_vec p1, t_vec p2, t_vec p3)
 	return (obj);
 }
 
+void	set_triangle_pos(t_triangle *tr, t_pnt c)
+{
+	tr->p1 = c;
+	tr->p2 = vec_add(tr->p1, tr->e1);
+	tr->p3 = vec_add(tr->p2, tr->e2);
+}
+
 int	get_triangle_t(t_triangle *tr, t_ray *ray, double minmax[2], double *t)
 {
 	t_vec	p;

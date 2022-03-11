@@ -20,7 +20,9 @@ static int	getlen(int n)
 		return (1);
 	if (n == -2147483648)
 		return (11);
-	i = n < 0 ? 1 : 0;
+	i = 0;
+	if (n < 0)
+		i = 1;
 	while (n)
 	{
 		n /= 10;
@@ -53,12 +55,13 @@ static char	*rev(char *ptr, int n)
 	return (putstr(ptr, &c, 1));
 }
 
-char		*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char	*ret;
 	char	*ptr;
 
-	if (!(ret = malloc(getlen(n) + 1)))
+	ret = malloc(getlen(n) + 1);
+	if (!ret)
 		return (0);
 	ptr = ret;
 	if (n == 0)

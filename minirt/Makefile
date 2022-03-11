@@ -32,12 +32,15 @@ FILE			=	\
 					rt_vector/vector5.c \
 					rt_vector/vector6.c \
 					rt_vector/vector7.c \
-					rt_event/event.c	\
-					rt_event/mouse.c	\
+					rt_event/key.c	\
+					rt_event/mouse_down.c \
+					rt_event/mouse_move_up.c \
 					rt_camera/camera.c \
 					rt_camera/render.c \
-					rt_camera/draw.c \
-					rt_camera/gui.c \
+					rt_camera/render_pixel.c \
+					rt_camera/draw_gui.c \
+					rt_camera/set_gui.c \
+					rt_camera/set_get_object.c \
 					rt_object/world.c \
 					rt_object/sphere.c \
 					rt_object/plane.c \
@@ -96,6 +99,7 @@ run		:
 .PHONY  : norm
 norm	:
 	python3 -m norminette $(SRCS)
+	python3 -m norminette $(INCLUDE)
 
 .PHONY  : clean
 clean	:

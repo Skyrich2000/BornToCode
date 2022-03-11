@@ -30,32 +30,13 @@
 # define H_THREAD 4
 # define W_THREAD 4
 
-# define ANTI_ALIASING 0
+# define LOWER_RESOLUTION	3
+# define ANTI_ALIASING 5
 
 # define MAX_DEPTH 50
 # define ERROR 0
 # define OK 1
 # define EPSILON 1e-6
-
-// typedef struct s_world t_wold;
-// camera 구조체
-// typedef struct s_camera
-// {
-// 	t_pnt	pos;
-// 	t_vec	hor;
-// 	t_vec	ver;
-// 	t_vec	low_left_corner;
-// 	double			view_width;
-// 	double			view_height;
-// 	double			fov;
-// 	// double lens_radius;
-// 	t_vec	u;
-// 	t_vec	v;
-// 	t_vec	w;
-// 	void 	*img;
-// 	char	*img_addr;
-// 	struct s_camera	*next;
-// } 				t_camera;
 
 // image data 구조체
 typedef struct s_screen
@@ -68,10 +49,15 @@ typedef struct s_screen
 	double	wid;
 	double	hei;
 	int		anti;
+	int		lower_resolution;
 
+	int		mouse_button;
 	int		mouse_x;
 	int		mouse_y;
-	t_vec	start_dir;
+	t_vec	cam_start_dir;
+	t_vec	cam_start_pos;
+	t_vec	obj_start_dir;
+	t_vec	obj_start_pos;
 }		t_screen;
 
 // the everything...
@@ -81,8 +67,13 @@ typedef struct s_minirt
 	t_world		*wrd;
 	t_camera	*cam;
 	t_camera	*curr_cam;
-	int			light_toggle;
 	t_light		*light;
+	int			gui_toggle;
+	int			light_toggle;
+	int			resolution_toggle;
+	int			ray_mode;
+	int			render_refresh;
+	int			keys[420];
 }		t_minirt;
 
 t_minirt	*m(void);

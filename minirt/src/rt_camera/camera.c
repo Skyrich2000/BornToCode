@@ -33,8 +33,6 @@ int	set_camera(t_camera *cam, t_vec lookfrom, t_vec dir, double fov)
 							(t_vec [4]){lookfrom, cam->hor, cam->ver, cam->w}, \
 							(double [4]){1, -0.5, -0.5, -1}, \
 							4);
-	set_gui_objects(cam);
-	set_gui_button(cam);
 	return (OK);
 }
 

@@ -4,6 +4,7 @@ static int	in_shadow(t_ray *light_ray, double light_len)
 {
 	t_hit_record	rec;
 
+	light_ray->dir = vec_unit_(&light_ray->dir);
 	if (hit_world(light_ray, (double [2]){EPSILON, light_len}, &rec))
 		return (OK);
 	return (ERROR);
