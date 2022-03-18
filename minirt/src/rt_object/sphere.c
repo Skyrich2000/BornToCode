@@ -35,6 +35,15 @@ int	get_sphere_t(t_sphere *sp, t_ray *ray, double minmax[2], double *t)
 	return (OK);
 }
 
+void	get_sphere_uv(t_pnt *p, double *u, double *v)
+{
+	const double	theta = acos(-p->y);
+	const double	phi = atan2(-p->z, p->x) + M_PI;
+
+	*u = phi / (2 * M_PI);
+	*v = theta / M_PI;
+}
+
 int	hit_sphere(t_world *this, t_ray *ray, double minmax [2], t_hit_record *rec)
 {
 	if (!get_sphere_t(&this->obj.sphere, ray, minmax, &rec->t))
@@ -42,6 +51,7 @@ int	hit_sphere(t_world *this, t_ray *ray, double minmax [2], t_hit_record *rec)
 	rec->p = ray_at(ray, rec->t);
 	rec->n = vec_cal((t_vec [2]){rec->p, this->obj.sphere.c}, \
 			(double [2]){1 / this->obj.sphere.r, -1 / this->obj.sphere.r}, 2);
+	get_sphere_uv(&rec->n, &rec->u, &rec->v);
 	set_rec(this, ray, rec);
 	return (OK);
 }

@@ -58,11 +58,13 @@ typedef struct s_material t_material;
 
 typedef struct s_hit_record
 {
-	t_vec	p;	// ray에서 구위의 점으로 향하는 벡터 p
-	t_vec	n;	// 해당 좌표에서의 법선벡터 n
-	t_vec	rayin; // 들어오는 ray의 dir
-	double	t;	// ray가 구와 충돌한 지점 사이의 크기
-	int		front_face;
+	t_vec				p;
+	t_vec				n;
+	t_vec				rayin;
+	double				t;
+	double				u;
+	double				v;
+	int					front_face;
 	struct s_material	*material;
 }				t_hit_record;
 
