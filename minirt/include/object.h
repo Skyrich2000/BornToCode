@@ -69,6 +69,8 @@ typedef struct s_hit_record
 	t_vec				n;
 	t_vec				rayin;
 	double				t;
+	double				u;
+	double				v;
 	int					front_face;
 	struct s_material	*material;
 }	t_hit_record;
