@@ -36,7 +36,7 @@ static t_clr	ray_color_scatter(t_ray *ray, int depth)
 		if (m()->ray_mode)
 			return (phong(&rec));
 		if (rec.material->scatter(rec.material, ray, &rec, &new_ray))
-			return (vec_mul(rec.material->color, \
+			return (vec_mul(rec.material->texture.color, \
 					ray_color_scatter(&new_ray, depth - 1)));
 		return (vec(0, 0, 0));
 	}

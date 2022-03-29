@@ -53,6 +53,6 @@ void	set_object_dir(void *obj, int type, t_vec start, t_vec diff)
 	}
 	else if (type == SQUARE)
 		((t_square *)obj)->n = vec_unit(vec_add(start, diff));
-	else
+	else if (type == LIGHT)
 		((t_light *)obj)->ratio = vec_add(start, diff).y;
 }

@@ -44,24 +44,17 @@ static t_clr	get_light_color(t_hit_record *rec, t_light *light)
 	return (vec_muln(vec_add(diffuse, specular), light->ratio * LUMEN));
 }
 
-t_clr	get_texture_color(double u, double v, t_pnt p)
-{
-	const double	sines = sin(10 * p.x) * sin(10 * p.y) * sin(10 * p.z);
-
-	(void)u;
-	(void)v;
-	if (sines < 0)
-		return (vec(0.2, 0.3, 0.1));
-	return (vec(0.9, 0.9, 0.9));
-}
-
 t_clr	phong(t_hit_record *rec)
 {
+	t_texture	*texture;
+	t_clr		material_color;
 	t_clr		color;
 	t_light		*light;
 
+	texture = &rec->material->texture;
+	material_color = texture->value(texture, rec->u, rec->v);
 	if (!m()->light_toggle)
-		return (get_texture_color(rec->u, rec->v, rec->p));
+		return (material_color);
 	light = m()->light->next;
 	color = (t_clr){0, 0, 0};
 	while (light)
@@ -70,5 +63,5 @@ t_clr	phong(t_hit_record *rec)
 		light = light->next;
 	}
 	color = vec_add(color, vec_muln(m()->light->color, m()->light->ratio));
-	return (vec_min(vec_mul(color, rec->material->color), vec(1, 1, 1)));
+	return (vec_min(vec_mul(color, material_color), vec(1, 1, 1)));
 }

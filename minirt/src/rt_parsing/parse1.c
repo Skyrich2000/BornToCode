@@ -62,14 +62,15 @@ int	parse_pl(char **line)
 	t_vec	n;
 	t_clr	color;
 
-	if (ft_arrsize(line) != 4
+	if (!(ft_arrsize(line) == 4 || ft_arrsize(line) == 5)
 		|| !parse_split(&c, line[1])
 		|| !parse_split(&n, line[2])
 		|| !parse_split(&color, line[3]))
 		return (ERROR);
 	if (!add_world(PLANE,
 			create_plane(c, n),
-			create_metal(color, (double)rand() / (double)RAND_MAX)))
+			create_metal(\
+			create_texture(color, line[4]), (double)rand() / (double)RAND_MAX)))
 		return (ERROR);
 	return (OK);
 }
@@ -82,7 +83,7 @@ int	parse_cy(char **line)
 	double	r;
 	double	h;
 
-	if (ft_arrsize(line) != 6
+	if (!(ft_arrsize(line) == 6 || ft_arrsize(line) == 7)
 		|| !ft_atod(&r, line[3])
 		|| !ft_atod(&h, line[4])
 		|| !parse_split(&c, line[1])
@@ -91,7 +92,8 @@ int	parse_cy(char **line)
 		return (ERROR);
 	if (!add_world(CYLINDER,
 			create_cylinder(c, n, r, h),
-			create_metal(color, (double)rand() / (double)RAND_MAX)))
+			create_metal(\
+			create_texture(color, line[6]), (double)rand() / (double)RAND_MAX)))
 		return (ERROR);
 	return (OK);
 }

@@ -61,6 +61,33 @@ int	get_cylinder_t(t_cylinder *cy, t_ray *ray, double minmax[2], double *t)
 	return (OK);
 }
 
+void	get_cylinder_uv(t_hit_record *rec, t_vec cp, double r, double h, t_vec cylinder_n)
+{
+	const t_vec		p = cp;
+	const t_vec		n = cylinder_n;
+	t_vec			e1;
+	t_vec			e2;
+	double			_x;
+	double			_z;
+	double			_y;
+
+	e1 = vec_unit(vec_cross(n, vec(0, 1, 0)));
+	if (e1.x == 0 && e1.y == 0 && e1.z == 0)
+		e1 = vec_unit(vec_cross(n, vec(0, 0, 1)));
+	e2 = vec_unit(vec_cross(n, e1));
+	_x = vec_dot(e1, p);
+	_z = vec_dot(e2, p);
+	_y = vec_dot(n, p);
+
+	const double	phi = atan2(_z, _x) + M_PI;
+
+	rec->u = phi / (2 * M_PI);
+	rec->v = vec_length(vec_sub(cp, vec_muln(rec->n, r))) / (h / 2);
+	if (_y < 0)
+		rec->v = -rec->v;
+	rec->v  = (rec->v + 1) / 2;
+}
+
 int	hit_cylinder(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
 {
 	t_vec	cp;
@@ -72,6 +99,7 @@ int	hit_cylinder(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
 													(double [2]){1, -1}, 2);
 	rec->n = vec_unit(vec_cross(this->obj.cylinder.n, \
 									vec_cross_(&cp, &this->obj.cylinder.n)));
+	get_cylinder_uv(rec, cp, this->obj.cylinder.r, this->obj.cylinder.h, this->obj.cylinder.n);
 	set_rec(this, ray, rec);
 	return (OK);
 }
