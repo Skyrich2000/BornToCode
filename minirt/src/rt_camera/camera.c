@@ -14,10 +14,8 @@ t_camera	*init_camera(void)
 
 int	set_camera(t_camera *cam, t_vec lookfrom, t_vec dir, double fov)
 {
-	double		aperture;
 	double		ratio;
 
-	aperture = 2.0;
 	ratio = m()->scr.wid / m()->scr.hei;
 	cam->pos = lookfrom;
 	cam->dir = dir;

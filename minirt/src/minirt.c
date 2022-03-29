@@ -18,7 +18,6 @@ static void	setting(void)
 	t_minirt	*g;
 
 	g = m();
-	m()->scr.mlx = mlx_init();
 	g->scr.win = mlx_new_window(\
 		g->scr.mlx, g->scr.wid, g->scr.hei, "this is minirt");
 	m()->scr.anti = ANTI_ALIASING;
@@ -40,6 +39,7 @@ static int	init(void)
 	m()->light = init_light();
 	if (!m()->wrd || !m()->cam || !m()->light)
 		return (ERROR);
+	m()->scr.mlx = mlx_init();
 	return (OK);
 }
 

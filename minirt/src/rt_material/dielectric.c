@@ -7,7 +7,7 @@ t_material	create_dielectric(double ir)
 {
 	t_material	mat;
 
-	mat.color = vec(1.0, 1.0, 1.0);
+	mat.texture = create_texture(vec(1.0, 1.0, 1.0), NULL);
 	mat.ir = ir;
 	mat.scatter = scatter_dielectric;
 	return (mat);

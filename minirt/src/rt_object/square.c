@@ -44,6 +44,7 @@ int	hit_square(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
 		return (ERROR);
 	rec->p = ray_at(ray, rec->t);
 	rec->n = this->obj.square.n;
+	get_plane_uv(rec, this->obj.square.c, this->obj.square.side / 2);
 	set_rec(this, ray, rec);
 	return (OK);
 }

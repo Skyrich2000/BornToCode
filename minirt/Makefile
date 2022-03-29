@@ -50,6 +50,10 @@ FILE			=	\
 					rt_material/lambertian.c \
 					rt_material/metal.c \
 					rt_material/dielectric.c \
+					rt_texture/texture.c \
+					rt_texture/checkboard.c \
+					rt_texture/image.c \
+					rt_texture/solid.c \
 					rt_parsing/parse.c \
 					rt_parsing/parse1.c \
 					rt_parsing/parse2.c \
@@ -67,8 +71,8 @@ OBJS            =	$(addprefix $(OBJ_DIR)/, $(patsubst %.c,%.o,$(FILE)))
 # var ==================================================
 
 CC		=	gcc
-CFLAGS	=	-I$(INCLUDE) -I./src/mlx -Wall -Werror -Wextra 
-CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit -lpthread
+CFLAGS	=	-I$(INCLUDE) -I./src/mlx #-Wall -Werror -Wextra 
+CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit -lpthread -L/opt/homebrew/opt/zlib/lib -lz
 
 # Rule =================================================
 
