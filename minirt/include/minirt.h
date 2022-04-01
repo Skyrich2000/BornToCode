@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 14:24:30 by ycha              #+#    #+#             */
-/*   Updated: 2021/06/15 14:24:30 by ycha             ###   ########.fr       */
+/*   Updated: 2022/04/01 21:21:42 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_minirt
 	int			gui_toggle;
 	int			light_toggle;
 	int			resolution_toggle;
+	int			texture_toggle;
 	int			ray_mode;
 	int			render_refresh;
 	int			keys[420];

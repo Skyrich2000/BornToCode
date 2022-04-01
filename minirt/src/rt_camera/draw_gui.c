@@ -19,11 +19,12 @@ static void	draw_help(void)
 	mlx_string_put(mlx, win, 10, 20 + 15 * 0, 0x0, "R - toggle resolution");
 	mlx_string_put(mlx, win, 10, 20 + 15 * 1, 0x0, "L - toggle light");
 	mlx_string_put(mlx, win, 10, 20 + 15 * 2, 0x0, "M - toggle ray mode");
-	mlx_string_put(mlx, win, 10, 20 + 15 * 3, 0x0, "G - toggle gui");
-	mlx_string_put(mlx, win, 10, 20 + 15 * 4, 0x0, "C - next camera");
+	mlx_string_put(mlx, win, 10, 20 + 15 * 3, 0x0, "T - toggle texture");
+	mlx_string_put(mlx, win, 10, 20 + 15 * 4, 0x0, "G - toggle gui");
+	mlx_string_put(mlx, win, 10, 20 + 15 * 5, 0x0, "C - next camera");
 	text = ft_itoa(m()->scr.anti);
-	mlx_string_put(mlx, win, 10, 20 + 15 * 5, 0x0, "+- - anti-aliasing : ");
-	mlx_string_put(mlx, win, 160, 20 + 15 * 5, 0x0, text);
+	mlx_string_put(mlx, win, 10, 20 + 15 * 6, 0x0, "+- - anti-aliasing : ");
+	mlx_string_put(mlx, win, 160, 20 + 15 * 6, 0x0, text);
 	free(text);
 	mlx_string_put(mlx, win, 10, h - 15 * 6, 0x0, \
 											"Left Mouse - camera direction");

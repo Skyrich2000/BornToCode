@@ -89,6 +89,7 @@ t_world		*init_world(void);
 int			add_world(int type, t_object obj, t_material material);
 int			hit_world(t_ray *ray, double minmax[2], t_hit_record *out);
 void		set_rec(t_world *this, t_ray *ray, t_hit_record *rec);
+t_clr		get_rec_color(t_hit_record *rec);
 
 t_object	create_sphere(t_vec c, double r);
 int			hit_sphere(t_world *this, t_ray *ray, \

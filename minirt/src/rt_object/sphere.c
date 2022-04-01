@@ -53,7 +53,8 @@ int	hit_sphere(t_world *this, t_ray *ray, double minmax [2], t_hit_record *rec)
 	rec->p = ray_at(ray, rec->t);
 	rec->n = vec_cal((t_vec [2]){rec->p, this->obj.sphere.c}, \
 			(double [2]){1 / this->obj.sphere.r, -1 / this->obj.sphere.r}, 2);
-	get_sphere_uv(rec, this->obj.sphere.r);
+	if (m()->texture_toggle)
+		get_sphere_uv(rec, this->obj.sphere.r);
 	set_rec(this, ray, rec);
 	return (OK);
 }

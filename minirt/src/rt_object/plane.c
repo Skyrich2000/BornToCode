@@ -56,7 +56,8 @@ int	hit_plane(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
 		return (ERROR);
 	rec->p = ray_at(ray, rec->t);
 	rec->n = this->obj.plane.n;
-	get_plane_uv(rec, this->obj.plane.c, 1);
+	if (m()->texture_toggle)
+		get_plane_uv(rec, this->obj.plane.c, 1);
 	set_rec(this, ray, rec);
 	return (OK);
 }

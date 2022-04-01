@@ -46,13 +46,11 @@ static t_clr	get_light_color(t_hit_record *rec, t_light *light)
 
 t_clr	phong(t_hit_record *rec)
 {
-	t_texture	*texture;
 	t_clr		material_color;
 	t_clr		color;
 	t_light		*light;
 
-	texture = &rec->material->texture;
-	material_color = texture->value(texture, rec->u, rec->v);
+	material_color = get_rec_color(rec);
 	if (!m()->light_toggle)
 		return (material_color);
 	light = m()->light->next;

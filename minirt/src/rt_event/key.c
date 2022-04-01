@@ -71,6 +71,8 @@ int	key_up(int keycode)
 		m()->light_toggle = !m()->light_toggle;
 	else if (keycode == KEY_M)
 		m()->ray_mode = !m()->ray_mode;
+	else if (keycode == KEY_T)
+		m()->texture_toggle = !m()->texture_toggle;
 	m()->keys[keycode] = 0;
 	m()->render_refresh = 1;
 	return (0);

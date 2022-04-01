@@ -99,7 +99,8 @@ int	hit_cylinder(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
 													(double [2]){1, -1}, 2);
 	rec->n = vec_unit(vec_cross(this->obj.cylinder.n, \
 									vec_cross_(&cp, &this->obj.cylinder.n)));
-	get_cylinder_uv(rec, cp, this->obj.cylinder.r, this->obj.cylinder.h, this->obj.cylinder.n);
+	if (m()->texture_toggle)
+		get_cylinder_uv(rec, cp, this->obj.cylinder.r, this->obj.cylinder.h, this->obj.cylinder.n);
 	set_rec(this, ray, rec);
 	return (OK);
 }

@@ -72,3 +72,13 @@ void	set_rec(t_world *this, t_ray *ray, t_hit_record *rec)
 		rec->n = vec_oppo(rec->n);
 	rec->material = &this->material;
 }
+
+t_clr	get_rec_color(t_hit_record *rec)
+{
+	t_texture	*texture;
+
+	if (!m()->texture_toggle)
+		return (rec->material->texture.color);
+	texture = &rec->material->texture;
+	return (texture->value(texture, rec->u, rec->v));
+}

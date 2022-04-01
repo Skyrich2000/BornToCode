@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/07 19:45:34 by ycha              #+#    #+#             */
-/*   Updated: 2021/05/17 03:44:17 by ycha             ###   ########.fr       */
+/*   Updated: 2022/04/01 21:46:55 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define KEY_L			37
 # define KEY_G			5
 # define KEY_M			46
+# define KEY_T			17
 # define KEY_PLUS		24
 # define KEY_MINUS		27
 # define KEY_LEFT_SHIFT	257

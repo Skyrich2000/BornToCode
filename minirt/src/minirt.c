@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 14:24:28 by ycha              #+#    #+#             */
-/*   Updated: 2021/06/15 14:25:49 by ycha             ###   ########.fr       */
+/*   Updated: 2022/04/01 21:57:23 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	setting(void)
 	m()->gui_toggle = 1;
 	m()->light_toggle = 1;
 	m()->resolution_toggle = 1;
+	m()->texture_toggle = 1;
 	m()->ray_mode = 1;
 	ft_memset(m()->keys, 0, sizeof(m()->keys));
 	mlx_hook(m()->scr.win, 2, 0, key_down, 0);
