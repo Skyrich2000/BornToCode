@@ -12,7 +12,7 @@ static void	*render(void *data)
 	int				idx[2];
 
 	idx[0] = 0;
-	while (++idx[0] <= size[0] / 4 + 1)
+	while (++idx[0] <= size[0] / 4 + size[0] % 4)
 	{
 		idx[1] = 0;
 		while (++idx[1] <= size[1])
@@ -49,8 +49,8 @@ void	draw(void)
 	{
 		m()->curr_cam->img = mlx_new_image(\
 										m()->scr.mlx, \
-										m()->scr.wid, \
-										m()->scr.hei);
+										m()->scr.wid + 1, \
+										m()->scr.hei + 1);
 		m()->curr_cam->img_addr = mlx_get_data_addr(\
 										m()->curr_cam->img, \
 										&m()->scr.bits_per_pixel, \
