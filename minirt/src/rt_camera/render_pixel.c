@@ -74,19 +74,19 @@ static int	anti(const t_camera *cam, int wdx, int hdx, int level)
 	return (trgb_anti(&color, level));
 }
 
-void	render_pixel(const t_camera *cam, const int thread_idx[2], int i, int j)
+void	render_pixel(const t_camera *cam, int x, int y)
 {
-	const int	x = (m()->scr.wid / W_THREAD) * thread_idx[1] + j;
-	const int	y = (m()->scr.hei / H_THREAD) * thread_idx[0] + i;
 	const int	color = anti(cam, x, y, m()->resolution_toggle * m()->scr.anti);
-	int			skip_i;
-	int			skip_j;
+	int			skip_y;
+	int			skip_x;
 
-	skip_i = -1;
-	while (++skip_i <= m()->scr.lower_resolution)
+	skip_y = -1;
+	while (++skip_y <= m()->scr.lower_resolution)
 	{
-		skip_j = -1;
-		while (++skip_j <= m()->scr.lower_resolution)
-			put_pixel(cam, x - skip_j, m()->scr.hei - y + skip_i, color);
+		skip_x = -1;
+		while (++skip_x <= m()->scr.lower_resolution)
+			if (0 <= x && x + skip_x < m()->scr.wid \
+				&& 0 <= y && y + skip_y < m()->scr.hei)
+				put_pixel(cam, x + skip_x, m()->scr.hei - (y + skip_y), color);
 	}
 }

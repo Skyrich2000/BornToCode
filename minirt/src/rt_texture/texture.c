@@ -11,8 +11,10 @@ t_texture	create_texture(t_clr color, char *name)
             texture.value = &checkboard_value;
         else
         {
+            printf("load texture: %s\n", name);
             texture.image = mlx_png_file_to_image(m()->scr.mlx, name, \
                                             &texture.width, &texture.height);
+            printf("texture loaded: %s\n", name);
             if (!texture.image)
                 exit(1);
             texture.addr = mlx_get_data_addr(texture.image, &texture.bits_per_pixel, \

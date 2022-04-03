@@ -77,7 +77,7 @@ OBJS            =	$(addprefix $(OBJ_DIR)/, $(patsubst %.c,%.o,$(FILE)))
 # var ==================================================
 
 CC		=	gcc
-CFLAGS	=	-I$(INCLUDE) -I./src/mlx #-Wall -Werror -Wextra 
+CFLAGS	=	-I$(INCLUDE) -I./src/mlx #  -fsanitize=address -g #-Wall -Werror -Wextra 
 CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit -lpthread -lz -L/Users/$(USER)/.brew/opt/zlib/lib #-L/opt/homebrew/opt/zlib/lib
 
 # Rule =================================================
@@ -91,7 +91,7 @@ $(OBJ_DIR)/%.o  : $(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	@$(MAKE) -s -C ./src/mlx
+# @$(MAKE) -s -C ./src/mlx
 	@$(CC) $(CFLAGS) $(CLIB) -o $@ $^
 	@echo $(GREEN)"Done!"$(RESET)
 
@@ -107,7 +107,7 @@ norm	:
 
 .PHONY  : clean
 clean	:
-	@$(MAKE) -C ./src/mlx clean
+# @$(MAKE) -C ./src/mlx clean
 	@echo $(RED)"Remove $(OBJ_DIR)..."$(RESET)
 	@rm -rf $(OBJ_DIR)
 
