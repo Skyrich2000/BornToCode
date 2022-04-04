@@ -51,7 +51,7 @@ t_clr	phong(t_hit_record *rec)
 	t_light		*light;
 
 	material_color = get_rec_color(rec);
-	if (!m()->light_toggle)
+	if (!m()->ray_mode || !m()->light_toggle)
 		return (material_color);
 	light = m()->light->next;
 	color = (t_clr){0, 0, 0};

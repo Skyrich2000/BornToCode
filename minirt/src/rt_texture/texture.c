@@ -8,10 +8,18 @@ t_texture	create_texture(t_clr color, char *name)
     if (name)
     {
         if (ft_strncmp(name, "checkboard") == 0)
+        {
+            texture.type = TEXTURE_CHECKERBOARD;
             texture.value = &checkboard_value;
+        }
+        else if (ft_strncmp(name, "mirror") == 0)
+        {
+            texture.type = TEXTURE_MIRROR;
+            texture.value = &solid_value;
+        }
         else
         {
-            printf("load texture: %s\n", name);
+            texture.type = TEXTURE_IMAGE;
             texture.image = mlx_png_file_to_image(m()->scr.mlx, name, \
                                             &texture.width, &texture.height);
             printf("texture loaded: %s\n", name);
@@ -23,6 +31,9 @@ t_texture	create_texture(t_clr color, char *name)
         }
     }
     else
+    {
+        texture.type = TEXTURE_SOLID;
         texture.value = &solid_value;
+    }
     return (texture);
 }

@@ -35,8 +35,7 @@ int	parse_sp(char **line)
 		return (ERROR);
 	if (!add_world(SPHERE,
 			create_sphere(c, r),
-			create_metal(\
-			create_texture(color, line[4]), (double)rand() / (double)RAND_MAX)))
+			create_metal(create_texture(color, line[4]), 0)))
 		return (ERROR);
 	return (OK);
 }
@@ -56,8 +55,7 @@ int	parse_sq(char **line)
 		return (ERROR);
 	if (!add_world(SQUARE,
 			create_square(c, n, side),
-			create_metal(\
-			create_texture(color, line[5]), (double)rand() / (double)RAND_MAX)))
+			create_metal(create_texture(color, line[5]), 0)))
 		return (ERROR);
 	return (OK);
 }
@@ -77,8 +75,7 @@ int	parse_tr(char **line)
 		return (ERROR);
 	if (!add_world(TRIANGLE,
 			create_triangle(p1, p2, p3),
-			create_metal(\
-			create_texture(color, line[5]), (double)rand() / (double)RAND_MAX)))
+			create_metal(create_texture(color, line[5]), 0)))
 		return (ERROR);
 	return (OK);
 }

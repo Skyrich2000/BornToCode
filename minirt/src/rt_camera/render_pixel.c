@@ -33,10 +33,10 @@ static t_clr	ray_color_scatter(t_ray *ray, int depth)
 		return ((t_vec){0, 0, 0});
 	if (hit_world(ray, (double [2]){EPSILON, INFINITY}, &rec))
 	{
-		if (m()->ray_mode)
+		if (m()->ray_mode && rec.material->texture.type != TEXTURE_MIRROR)
 			return (phong(&rec));
 		if (rec.material->scatter(rec.material, ray, &rec, &new_ray))
-			return (vec_mul(get_rec_color(&rec), \
+			return (vec_mul(phong(&rec), \
 					ray_color_scatter(&new_ray, depth - 1)));
 		return (vec(0, 0, 0));
 	}

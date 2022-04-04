@@ -3,8 +3,14 @@
 # include <stdio.h>
 # include "minirt.h"
 
+# define TEXTURE_SOLID			0
+# define TEXTURE_CHECKERBOARD	1
+# define TEXTURE_IMAGE			2
+# define TEXTURE_MIRROR			3
+
 typedef struct s_texture
 {
+	int		type;
 	t_clr	color;
 	void	*image;
 	void	*addr;
