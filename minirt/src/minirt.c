@@ -6,7 +6,7 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 14:24:28 by ycha              #+#    #+#             */
-/*   Updated: 2021/06/15 14:25:49 by ycha             ###   ########.fr       */
+/*   Updated: 2022/04/06 20:54:23 by echung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 static void	setting(void)
 {
 	t_camera	*c;
+	t_minirt	*g;
 
+	g = m();
 	m()->scr.mlx = mlx_init();
-	m()->scr.win = mlx_new_window(
-		m()->scr.mlx, m()->scr.wid, m()->scr.hei, "this is minirt");
+	g->scr.win = mlx_new_window(\
+		g->scr.mlx, g->scr.wid, g->scr.hei, "this is minirt");
 	m()->scr.anti = ANTI_ALIASING;
 	c = m()->cam;
 	while (c->next)

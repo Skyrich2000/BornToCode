@@ -6,7 +6,7 @@
 /*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 23:34:39 by echung            #+#    #+#             */
-/*   Updated: 2022/03/06 23:34:42 by echung           ###   ########.fr       */
+/*   Updated: 2022/04/06 20:51:59 by echung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 int	parse_a(char **line)
 {
+	t_minirt	*g;
+
+	g = m();
 	if (m()->light->origin.x == 1
 		|| ft_arrsize(line) != 3
 		|| !ft_atod(&m()->light->origin.x, "1")
 		|| !ft_atod(&m()->light->ratio, line[1])
 		|| !parse_split(&m()->light->color, line[2]))
 		return (ERROR);
-	m()->light->color = vec_divn(m()->light->color, 255);
+	g->light->color = vec_divn(g->light->color, 255);
 	return (OK);
 }
 
