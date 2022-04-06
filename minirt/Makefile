@@ -6,7 +6,7 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/26 15:07:00 by suhshin           #+#    #+#              #
-#    Updated: 2022/03/29 17:41:34 by ycha             ###   ########.fr        #
+#    Updated: 2022/04/06 20:14:46 by echung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,8 +102,14 @@ run		:
 
 .PHONY  : norm
 norm	:
+	Norminette $(SRCS)
+	Norminette $(INCLUDE)
+
+.PHONY	: hnorm
+hnorm	:
 	python3 -m norminette $(SRCS)
 	python3 -m norminette $(INCLUDE)
+
 
 .PHONY  : clean
 clean	:
