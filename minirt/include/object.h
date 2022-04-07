@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   object.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/07 20:47:53 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/07 20:47:54 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 // 구, 원기둥 등 구조체 생성
 #ifndef OBJECT_H
 # define OBJECT_H
@@ -54,7 +66,7 @@ typedef union u_object
 	t_plane		plane;
 }		t_object;
 
-typedef struct s_material t_material;
+typedef struct s_material	t_material;
 
 typedef struct s_hit_record
 {
@@ -70,20 +82,25 @@ typedef struct s_hit_record
 
 typedef struct s_world
 {
-	t_object	obj;
-	t_material	material;
-	int			(*hit)(struct s_world *this, t_ray *ray, double minmax[2], t_hit_record *out);
+	t_object			obj;
+	t_material			material;
+	int					(*hit)(struct s_world *this, t_ray *ray, \
+									double minmax[2], t_hit_record *out);
 	struct s_world		*next;
 }				t_world;
 
 t_world		*init_world(void);
-int			add_world(t_world *head, t_object obj, int (*hit)(t_world *this, t_ray *ray, double minmax[2], t_hit_record *out), t_material material);
-int			hit_world(t_world *head, t_ray *ray, double minmax[2], t_hit_record *out);
+int			add_world(t_world *head, t_object obj, \
+						int (*hit)(t_world *this, t_ray *ray, \
+							double minmax[2], t_hit_record *out), \
+									t_material material);
+int			hit_world(t_world *head, t_ray *ray, \
+										double minmax[2], t_hit_record *out);
 void		set_rec(t_world *this, t_ray *ray, t_hit_record *rec);
 
 t_object	create_sphere(t_vec c, double r);
-int			hit_sphere(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec);
-//int			get_sphere_t(t_ *this, t_ray *ray, double minmax[2], double *t);
+int			hit_sphere(t_world *this, t_ray *ray, \
+										double minmax[2], t_hit_record *rec);
 
 t_object	create_plane(t_pnt c, t_vec n);
 int			hit_plane(t_world *this, t_ray *ray, \
@@ -93,14 +110,15 @@ int			_get_plane_t(t_vec *v[2], t_ray *ray, \
 void		get_plane_uv(t_hit_record *rec, t_pnt c, double size);
 
 t_object	create_square(t_pnt c, t_vec n, double side);
-int			hit_square(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec);
-//int			get_square_t(t_world *this, t_ray *ray, double minmax[2], double *t);
+int			hit_square(t_world *this, t_ray *ray, \
+									double minmax[2], t_hit_record *rec);
 
 t_object	create_cylinder(t_pnt c, t_vec n, double r, double h);
-int			hit_cylinder(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec);
-//int			get_cylinder_t(t_cylinder *cy, t_ray *ray, double minmax[2], double *t);
+int			hit_cylinder(t_world *this, t_ray *ray, \
+									double minmax[2], t_hit_record *rec);
 
 t_object	create_triangle(t_vec p1, t_vec p2, t_vec p3);
-int			hit_triangle(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec);
-//int			get_triangle_t(t_triangle *tr, t_ray *ray, double minmax[2], double *t);
+int			hit_triangle(t_world *this, t_ray *ray, \
+									double minmax[2], t_hit_record *rec);
+
 #endif

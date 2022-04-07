@@ -13,7 +13,7 @@ typedef struct s_texture
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	t_clr	(*value)(struct s_texture *this, double u, double v);
+	t_clr	(* value)(struct s_texture *this, double u, double v);
 }	t_texture;
 
 t_texture	create_texture(t_clr color, char *name);

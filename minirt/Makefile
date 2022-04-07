@@ -102,7 +102,7 @@ norm	:
 .PHONY	: hnorm
 hnorm	:
 	python3 -m norminette $(SRCS)
-
+	python3 -m norminette $(INCLUDE)
 
 .PHONY  : clean
 clean	:
