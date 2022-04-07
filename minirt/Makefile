@@ -85,7 +85,7 @@ $(OBJ_DIR)/%.o  : $(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-#	@$(MAKE) -s -C ./src/mlx
+	@$(MAKE) -s -C ./src/mlx
 	@$(CC) $(CFLAGS) $(CLIB) -o $@ $^
 	@echo $(GREEN)"Done!"$(RESET)
 
@@ -106,7 +106,7 @@ hnorm	:
 
 .PHONY  : clean
 clean	:
-#	@$(MAKE) -C ./src/mlx clean
+	@$(MAKE) -C ./src/mlx clean
 	@echo $(RED)"Remove $(OBJ_DIR)..."$(RESET)
 	@rm -rf $(OBJ_DIR)
 
