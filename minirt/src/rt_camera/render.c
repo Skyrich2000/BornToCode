@@ -63,11 +63,11 @@ static int	anti(const t_camera *cam, int wdx, int hdx)
 		v = (double)(hdx + rand_num(m()->scr.anti, 0, 0)) / (m()->scr.hei - 1);
 		ray.origin = cam->pos;
 		ray.dir = vec_cal((t_vec [4]){cam->low_left_corner, \
-									  cam->hor, \
-									  cam->ver, \
-									  cam->pos}, \
-						  (double [4]){1, u, v, -1}, \
-						  4);
+										cam->hor, \
+										cam->ver, \
+										cam->pos}, \
+							(double [4]){1, u, v, -1}, \
+							4);
 		ray.dir = vec_unit_(&ray.dir);
 		color = vec_cal((t_vec [2]){color, ray_color(&ray)}, \
 						(double [2]){1, 1}, \

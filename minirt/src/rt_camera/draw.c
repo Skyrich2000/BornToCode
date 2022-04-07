@@ -18,7 +18,7 @@ static void	*render(void *data)
 	const int		render_index = cam->render_index;
 	const int		thread_idx[2] = {(long long)data / W_THREAD, \
 									(long long)data % W_THREAD};
-	const int		size[2] = {
+	const int		size[2] = {\
 							(m()->scr.hei / H_THREAD), \
 							(m()->scr.wid / W_THREAD)};
 	int				idx[2];
@@ -57,17 +57,20 @@ static int	render_thread(void)
 
 void	draw(void)
 {
+	t_minirt	*g;
+
+	g = m();
 	if (!m()->curr_cam->img)
 	{
-		m()->curr_cam->img = mlx_new_image(\
-										m()->scr.mlx, \
-										m()->scr.wid + 1, \
-										m()->scr.hei + 1);
-		m()->curr_cam->img_addr = mlx_get_data_addr(\
-										m()->curr_cam->img, \
-										&m()->scr.bits_per_pixel, \
-										&m()->scr.line_length, \
-										&m()->scr.endian);
+		g->curr_cam->img = mlx_new_image(\
+										g->scr.mlx, \
+										g->scr.wid + 1, \
+										g->scr.hei + 1);
+		g->curr_cam->img_addr = mlx_get_data_addr(\
+										g->curr_cam->img, \
+										&g->scr.bits_per_pixel, \
+										&g->scr.line_length, \
+										&g->scr.endian);
 	}
 	render_thread();
 }

@@ -44,7 +44,6 @@ int	get_plane_t(t_plane *pl, t_ray *ray, double minmax[2], double *t)
 	return (_get_plane_t((t_vec *[2]){&pl->c, &pl->n}, ray, minmax, t));
 }
 
-////https://gamedev.stackexchange.com/questions/172352/finding-texture-coordinates-for-plane
 void	get_plane_uv(t_hit_record *rec, t_pnt c, double size)
 {
 	const t_vec		p = vec_sub(rec->p, c);
@@ -58,8 +57,8 @@ void	get_plane_uv(t_hit_record *rec, t_pnt c, double size)
 	e2 = vec_unit(vec_cross(n, e1));
 	rec->u = vec_dot(e1, p) / size;
 	rec->v = vec_dot(e2, p) / size;
-	rec->u  = (rec->u + 1) / 2;
-	rec->v  = (rec->v + 1) / 2;
+	rec->u = (rec->u + 1) / 2;
+	rec->v = (rec->v + 1) / 2;
 }
 
 int	hit_plane(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
