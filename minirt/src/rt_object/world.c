@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   world.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/07 20:09:28 by echung            #+#    #+#             */
+/*   Updated: 2022/04/07 20:09:52 by echung           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 t_world	*init_world(void)
@@ -28,9 +40,6 @@ int	add_world(t_world *head, t_object obj, \
 	return (OK);
 }
 
-// min값은 ray의
-// ray가 특정 object에 맞았다면 max value를 바꿔준다.
-// 이때 위의 함수가 true가 되려면 맞았을때의 t값이 min < t < max 이여야한다.
 int	hit_world(t_world *head, t_ray *ray, double minmax[2], t_hit_record *out)
 {
 	t_hit_record	temp_rec;
@@ -52,8 +61,6 @@ int	hit_world(t_world *head, t_ray *ray, double minmax[2], t_hit_record *out)
 	return (flag);
 }
 
-// 만약 위에서 구한 법선벡터와 ray의 방향벡터(어차피 둘다 단위벡터로 만들었음)의
-// 내적값이 양수이면 예각이므로 n의 방향을 반대로 해주어야 한다
 void	set_rec(t_world *this, t_ray *ray, t_hit_record *rec)
 {
 	rec->rayin = ray->dir;
