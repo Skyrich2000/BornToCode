@@ -57,7 +57,7 @@ static int	parsing(char *file_data)
 		if (lines[i][0] == '#')
 			continue ;
 		words = ft_split(lines[i], WHITESPACE);
-		if (!words)
+		if (!words[0])
 			continue ;
 		key_index = find_key_index(words[0]);
 		if (key_index == KEY_NUM || !parser[key_index](words))
