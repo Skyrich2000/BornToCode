@@ -57,15 +57,16 @@ static int	parsing(char *file_data)
 		if (lines[i][0] == '#')
 			continue ;
 		words = ft_split(lines[i], WHITESPACE);
+		if (!words)
+			continue ;
 		key_index = find_key_index(words[0]);
-		if (key_index == KEY_NUM)
-			break ;
-		parser[key_index](words);
+		if (key_index == KEY_NUM || !parser[key_index](words))
+		{
+			ft_free_split(words, ft_arrsize(words));
+			return (printf_error());
+		}
 		ft_free_split(words, ft_arrsize(words));
 	}
-	ft_free_split(lines, ft_arrsize(lines));
-	if (key_index == KEY_NUM)
-		return (printf_error());
 	return (OK);
 }
 

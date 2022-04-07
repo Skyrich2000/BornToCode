@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/07 20:52:07 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/07 20:52:07 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSE_H
 # define PARSE_H
 # include <fcntl.h>
@@ -5,16 +17,24 @@
 # define WHITESPACE "\t\n\v\f\r "
 # define MAX_FILE_READ 4400000
 
-typedef struct s_minirt t_minirt;
+typedef struct s_minirt	t_minirt;
 
 typedef enum e_parsable
 {
-	r = 0, a, c, l, sp, pl, sq, cy, tr
+	r = 0,
+	a,
+	c,
+	l,
+	sp,
+	pl,
+	sq,
+	cy,
+	tr
 }	t_parsable;
 
 int	printf_error(void);
-int input(int argc, char **argv);
-int parse_split(t_vec *input, char *line);
+int	input(int argc, char **argv);
+int	parse_split(t_vec *input, char *line);
 
 int	parse_r(char **line);
 int	parse_a(char **line);

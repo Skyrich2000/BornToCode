@@ -27,9 +27,9 @@
 # define KEY_RIGHT		124
 # define KEY_UP			126
 
-typedef struct s_screen t_screen;
+typedef struct s_screen	t_screen;
 
-int exit_hook();
+int	exit_hook(void);
 int	key_hook(int keycode);
 
 #endif

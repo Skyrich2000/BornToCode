@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   texture.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/07 20:53:15 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/07 20:53:16 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef TEXTURE_H
 # define TEXTURE_H
 # include <stdio.h>
@@ -13,7 +25,7 @@ typedef struct s_texture
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	t_clr	(* value)(struct s_texture *this, double u, double v);
+	t_clr	(*value)(struct s_texture *this, double u, double v);
 }	t_texture;
 
 t_texture	create_texture(t_clr color, char *name);
