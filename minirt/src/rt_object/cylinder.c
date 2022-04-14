@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cylinder.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 03:33:32 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/15 03:33:32 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 t_object	create_cylinder(t_pnt c, t_vec n, double r, double h)
@@ -13,13 +25,6 @@ t_object	create_cylinder(t_pnt c, t_vec n, double r, double h)
 	obj.cylinder.top = vec_cal((t_vec [2]){c, n}, (double [2]){1, h / 2}, 2);
 	obj.cylinder.bot = vec_cal((t_vec [2]){c, n}, (double [2]){1, -h / 2}, 2);
 	return (obj);
-}
-
-void	set_cylinder_pos(t_cylinder *cy, t_pnt c)
-{
-	cy->c = c;
-	cy->top = vec_cal((t_vec [2]){c, cy->n}, (double [2]){1, cy->h / 2}, 2);
-	cy->bot = vec_cal((t_vec [2]){c, cy->n}, (double [2]){1, -cy->h / 2}, 2);
 }
 
 static int	check_t(t_cylinder *cy, t_ray *ray, double t)

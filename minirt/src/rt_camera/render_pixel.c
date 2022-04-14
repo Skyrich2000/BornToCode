@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_pixel.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 02:57:08 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/15 02:57:08 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 static void	put_pixel(const t_camera *cam, int x, int y, int color)
@@ -33,7 +45,7 @@ static t_clr	ray_color_scatter(t_ray *ray, int depth)
 		return ((t_vec){0, 0, 0});
 	if (hit_world(ray, (double [2]){EPSILON, INFINITY}, &rec))
 	{
-		if (m()->ray_mode && rec.material->texture.type != TEXTURE_MIRROR)
+		if (m()->ray_mode && !rec.is_material_fixed)
 			return (phong(&rec));
 		if (rec.material->scatter(rec.material, ray, &rec, &new_ray))
 			return (vec_mul(phong(&rec), \
@@ -61,11 +73,11 @@ static int	anti(const t_camera *cam, int wdx, int hdx, int level)
 		v = (double)(hdx + rand_num(level, 0, 0)) / (m()->scr.hei - 1);
 		ray.origin = cam->pos;
 		ray.dir = vec_cal((t_vec [4]){cam->low_left_corner, \
-									  cam->hor, \
-									  cam->ver, \
-									  cam->pos}, \
-						  (double [4]){1, u, v, -1}, \
-						  4);
+										cam->hor, \
+										cam->ver, \
+										cam->pos}, \
+						(double [4]){1, u, v, -1}, \
+						4);
 		ray.dir = vec_unit_(&ray.dir);
 		color = vec_cal((t_vec [2]){color, ray_color_scatter(&ray, MAX_DEPTH)}, \
 						(double [2]){1, 1}, \

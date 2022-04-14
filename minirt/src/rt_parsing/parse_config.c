@@ -12,15 +12,28 @@
 
 #include "minirt.h"
 
+int	parse_r(char **line)
+{
+	if ((m()->scr.wid && m()->scr.hei)
+		|| ft_arrsize(line) != 3
+		|| !ft_atod(&m()->scr.wid, line[1])
+		|| !ft_atod(&m()->scr.hei, line[2]))
+		return (ERROR);
+	return (OK);
+}
+
 int	parse_a(char **line)
 {
+	t_minirt	*g;
+
+	g = m();
 	if (m()->light->origin.x == 1
 		|| ft_arrsize(line) != 3
 		|| !ft_atod(&m()->light->origin.x, "1")
 		|| !ft_atod(&m()->light->ratio, line[1])
 		|| !parse_split(&m()->light->color, line[2]))
 		return (ERROR);
-	m()->light->color = vec_divn(m()->light->color, 255);
+	g->light->color = vec_divn(g->light->color, 255);
 	return (OK);
 }
 
@@ -52,46 +65,6 @@ int	parse_l(char **line)
 		|| !parse_split(&color, line[3]))
 		return (ERROR);
 	if (!add_light(m()->light, c, vec_divn(color, 255), ratio))
-		return (ERROR);
-	return (OK);
-}
-
-int	parse_pl(char **line)
-{
-	t_pnt	c;
-	t_vec	n;
-	t_clr	color;
-
-	if (!(ft_arrsize(line) == 4 || ft_arrsize(line) == 5)
-		|| !parse_split(&c, line[1])
-		|| !parse_split(&n, line[2])
-		|| !parse_split(&color, line[3]))
-		return (ERROR);
-	if (!add_world(PLANE,
-			create_plane(c, n),
-			create_metal(create_texture(color, line[4]), 0)))
-		return (ERROR);
-	return (OK);
-}
-
-int	parse_cy(char **line)
-{
-	t_pnt	c;
-	t_vec	n;
-	t_clr	color;
-	double	r;
-	double	h;
-
-	if (!(ft_arrsize(line) == 6 || ft_arrsize(line) == 7)
-		|| !ft_atod(&r, line[3])
-		|| !ft_atod(&h, line[4])
-		|| !parse_split(&c, line[1])
-		|| !parse_split(&n, line[2])
-		|| !parse_split(&color, line[5]))
-		return (ERROR);
-	if (!add_world(CYLINDER,
-			create_cylinder(c, n, r, h),
-			create_metal(create_texture(color, line[6]), 0)))
 		return (ERROR);
 	return (OK);
 }

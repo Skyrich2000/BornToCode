@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dielectric.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 03:32:21 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/15 03:32:22 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 #define COS 0
@@ -7,7 +19,8 @@ t_material	create_dielectric(double ir)
 {
 	t_material	mat;
 
-	mat.texture = create_texture(vec(1.0, 1.0, 1.0), NULL);
+	mat.type = MATERIAL_DIELECTRIC;
+	mat.texture = create_texture(vec(255, 255, 255), NULL);
 	mat.ir = ir;
 	mat.scatter = scatter_dielectric;
 	return (mat);

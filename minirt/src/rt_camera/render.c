@@ -1,41 +1,64 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 02:53:54 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/15 02:53:55 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
+
+#define X 0
+#define Y 1
+
+static void	set_var(void *data, int size[2], int start[2], int end[2])
+{
+	int		thread_idx[2];
+	int		block_size[2];
+
+	thread_idx[X] = (long long)data % W_THREAD;
+	thread_idx[Y] = (long long)data / W_THREAD;
+	block_size[X] = m()->scr.wid / W_THREAD;
+	block_size[Y] = m()->scr.hei / H_THREAD;
+	size[X] = block_size[X];
+	size[Y] = block_size[Y] / 4;
+	size[Y] += (block_size[Y] % 4) * (thread_idx[Y] != (H_THREAD - 1));
+	start[X] = thread_idx[X] * block_size[X];
+	start[Y] = thread_idx[Y] * block_size[Y];
+	end[X] = start[X] + size[X];
+	end[Y] = start[Y] + size[Y];
+	if (end[X] > m()->scr.wid)
+		end[X] = m()->scr.wid - m()->scr.lower_resolution;
+}
 
 static void	*render_block(void *data)
 {
-	const int		render_index = m()->curr_cam->render_index;
-	const int		thread_idx[2] = {(long long)data % W_THREAD, \
-									(long long)data / W_THREAD};
-	const int		block_size[2] = {m()->scr.wid / W_THREAD, \
-									m()->scr.hei / H_THREAD};
-	const int		size[2] = {
-							(block_size[0]),
-							(block_size[1] / 4) + (block_size[1] % 4) * (thread_idx[1] != (H_THREAD - 1))};
-	int			x, y;
-	int			start_x, start_y;
-	int			end_x, end_y;
+	const int	render_index = m()->curr_cam->render_index;
+	int			size[2];
+	int			start[2];
+	int			end[2];
+	int			i[2];
 
-	start_x = thread_idx[0] * block_size[0];
-	start_y = thread_idx[1] * block_size[1];
-	end_x = start_x + size[0];
-	end_y = start_y + size[1];
-	if (end_x > m()->scr.wid)
-		end_x = m()->scr.wid - m()->scr.lower_resolution;
-
-	y = start_y;
-	while (y < end_y)
+	set_var(data, size, start, end);
+	i[Y] = start[Y];
+	while (i[Y] < end[Y])
 	{
-		x = start_x;
-		while (x < end_x)
+		i[X] = start[X];
+		while (i[X] < end[X])
 		{
-			render_pixel(m()->curr_cam, x, y);
-			render_pixel(m()->curr_cam, x, y + size[1] * 1);
-			render_pixel(m()->curr_cam, x, y + size[1] * 2);
-			render_pixel(m()->curr_cam, x, y + size[1] * 3);
+			render_pixel(m()->curr_cam, i[X], i[Y]);
+			render_pixel(m()->curr_cam, i[X], i[Y] + size[Y] * 1);
+			render_pixel(m()->curr_cam, i[X], i[Y] + size[Y] * 2);
+			render_pixel(m()->curr_cam, i[X], i[Y] + size[Y] * 3);
 			if (m()->curr_cam->render_index != render_index)
 				return (0);
-			x += m()->scr.lower_resolution + 1;
+			i[X] += m()->scr.lower_resolution + 1;
 		}
-		y += m()->scr.lower_resolution + 1;
+		i[Y] += m()->scr.lower_resolution + 1;
 	}
 	return (0);
 }
@@ -57,17 +80,20 @@ static int	render_thread(void)
 
 void	render(void)
 {
-	if (!m()->curr_cam->img)
+	t_minirt	*g;
+
+	g = m();
+	if (!g->curr_cam->img)
 	{
-		m()->curr_cam->img = mlx_new_image(\
-										m()->scr.mlx, \
-										m()->scr.wid + 1, \
-										m()->scr.hei + 1);
-		m()->curr_cam->img_addr = mlx_get_data_addr(\
-										m()->curr_cam->img, \
-										&m()->scr.bits_per_pixel, \
-										&m()->scr.line_length, \
-										&m()->scr.endian);
+		g->curr_cam->img = mlx_new_image(\
+								g->scr.mlx, \
+								g->scr.wid + 1, \
+								g->scr.hei + 1);
+		g->curr_cam->img_addr = mlx_get_data_addr(\
+									g->curr_cam->img, \
+									&g->scr.bits_per_pixel, \
+									&g->scr.line_length, \
+									&g->scr.endian);
 	}
 	render_thread();
 }

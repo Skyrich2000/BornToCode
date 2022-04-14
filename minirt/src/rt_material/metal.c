@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   metal.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 03:32:16 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/15 03:32:17 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 t_material	create_metal(t_texture texture, double fuzz)
 {
 	t_material	mat;
 
+	mat.type = MATERIAL_METAL;
 	mat.texture = texture;
 	mat.scatter = scatter_metal;
 	mat.fuzz = 1;

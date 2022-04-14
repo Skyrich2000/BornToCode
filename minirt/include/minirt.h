@@ -28,13 +28,21 @@
 # include "event.h"
 # include "camera.h"
 
-# define H_THREAD 5
-# define W_THREAD 5
+# ifndef H_THREAD
+#  define H_THREAD 5
+# endif
+# ifndef W_THREAD
+#  define W_THREAD 5
+# endif
 
-# define LOWER_RESOLUTION	3
+# ifndef LOWER_RESOLUTION
+#  define LOWER_RESOLUTION	3
+# endif
+# ifndef MAX_DEPTH
+#  define MAX_DEPTH 50
+# endif
+
 # define ANTI_ALIASING 5
-
-# define MAX_DEPTH 50
 # define ERROR 0
 # define OK 1
 # define EPSILON 1e-6

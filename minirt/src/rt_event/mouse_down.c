@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mouse_down.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 03:20:44 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/15 03:20:45 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 #define GUI_CLICK_SIZE 10
@@ -25,21 +37,24 @@ static void	click_obj(int x, int y)
 
 int	mouse_down(int button, int x, int y, void *param)
 {
+	t_minirt	*g;
+
 	(void)param;
+	g = m();
 	click_obj(x, y);
-	m()->scr.mouse_button = button;
-	m()->scr.mouse_x = x;
-	m()->scr.mouse_y = y;
-	m()->scr.cam_start_pos = m()->curr_cam->pos;
-	m()->scr.cam_start_dir = m()->curr_cam->dir;
-	if (m()->curr_cam->select_gui_object.obj)
+	g->scr.mouse_button = button;
+	g->scr.mouse_x = x;
+	g->scr.mouse_y = y;
+	g->scr.cam_start_pos = g->curr_cam->pos;
+	g->scr.cam_start_dir = g->curr_cam->dir;
+	if (g->curr_cam->select_gui_object.obj)
 	{
-		m()->scr.obj_start_pos = *get_object_pos(\
-									m()->curr_cam->select_gui_object.obj, \
-									m()->curr_cam->select_gui_object.type);
-		m()->scr.obj_start_dir = get_object_dir(\
-									m()->curr_cam->select_gui_object.obj, \
-									m()->curr_cam->select_gui_object.type);
+		g->scr.obj_start_pos = *get_object_pos(\
+									g->curr_cam->select_gui_object.obj, \
+									g->curr_cam->select_gui_object.type);
+		g->scr.obj_start_dir = get_object_dir(\
+									g->curr_cam->select_gui_object.obj, \
+									g->curr_cam->select_gui_object.type);
 	}
 	return (0);
 }

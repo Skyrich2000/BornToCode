@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   light.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 02:52:01 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/15 02:52:02 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIGHT_H
 # define LIGHT_H
 # include "minirt.h"
 
 # define LUMEN 3
 # define KSN	28
-# define KS		0.25
+# define KS		0.4
 
 typedef struct s_minirt	t_minirt;
 

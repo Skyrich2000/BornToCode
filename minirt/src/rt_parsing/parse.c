@@ -12,19 +12,34 @@
 
 #include "minirt.h"
 
-#define KEY_NUM 9
+#define KEY_NUM 24
 
-static void	parser_init(int (*parser[9])(char **))
+static void	parser_init(int (*parser[KEY_NUM])(char **))
 {
-	parser[r] = parse_r;
-	parser[a] = parse_a;
-	parser[c] = parse_c;
-	parser[l] = parse_l;
-	parser[sp] = parse_sp;
-	parser[pl] = parse_pl;
-	parser[sq] = parse_sq;
-	parser[cy] = parse_cy;
-	parser[tr] = parse_tr;
+	parser[0] = parse_r;
+	parser[1] = parse_a;
+	parser[2] = parse_c;
+	parser[3] = parse_l;
+	parser[4] = parse_sp;
+	parser[5] = parse_pl;
+	parser[6] = parse_sq;
+	parser[7] = parse_cy;
+	parser[8] = parse_tr;
+	parser[9] = parse_sp_metal;
+	parser[10] = parse_pl_metal;
+	parser[11] = parse_sq_metal;
+	parser[12] = parse_cy_metal;
+	parser[13] = parse_tr_metal;
+	parser[14] = parse_sp_dielectric;
+	parser[15] = parse_pl_dielectric;
+	parser[16] = parse_sq_dielectric;
+	parser[17] = parse_cy_dielectric;
+	parser[18] = parse_tr_dielectric;
+	parser[19] = parse_sp_lambertian;
+	parser[20] = parse_pl_lambertian;
+	parser[21] = parse_sq_lambertian;
+	parser[22] = parse_cy_lambertian;
+	parser[23] = parse_tr_lambertian;
 }
 
 static int	find_key_index(char *key)
@@ -34,8 +49,13 @@ static int	find_key_index(char *key)
 	j = -1;
 	while (++j < KEY_NUM)
 	{
-		if (ft_strncmp(key, (char [9][3]){
-			"R", "A", "c", "l", "sp", "pl", "sq", "cy", "tr" }[j]) == 0)
+		if (ft_strncmp(key, (char [KEY_NUM][15]){
+			"R", "A", "c", "l", "sp", "pl", "sq", "cy", "tr", \
+			"sp-metal", "pl-metal", "sq-metal", "cy-metal", "tr-metal", \
+			"sp-dielectric", "pl-dielectric", "sq-dielectric", "cy-dielectric", \
+			"tr-dielectric", "sp-lambertian", "pl-lambertian", "sq-lambertian", \
+			"cy-lambertian", "tr-lambertian", \
+			}[j]) == 0)
 			break ;
 	}
 	return (j);
@@ -45,7 +65,7 @@ static int	parsing(char *file_data)
 {
 	int		i;
 	int		key_index;
-	int		(*parser[9])(char **);
+	int		(*parser[KEY_NUM])(char **);
 	char	**lines;
 	char	**words;
 

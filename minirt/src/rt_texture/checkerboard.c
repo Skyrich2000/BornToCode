@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   image.c                                            :+:      :+:    :+:   */
+/*   checkboard.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/15 03:36:23 by ycha              #+#    #+#             */
-/*   Updated: 2022/04/15 03:36:23 by ycha             ###   ########.fr       */
+/*   Created: 2022/04/15 03:36:59 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/15 03:37:00 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_clr	image_value(t_texture *this, double u, double v)
+t_clr	checkerboard_value(t_texture *this, double u, double v)
 {
-	int			color;
-	t_vec		ret;
-	const int	u2 = clamp(floor(u * this->width), 0, this->width - 1);
-	const int	v2 = clamp(floor(v * this->height), 0, this->height - 1);
+	const int		width = 4;
+	const int		height = 4;
+	const double	u2 = floor(u * width);
+	const double	v2 = floor(v * height);
 
-	color = *(int *)(this->addr + \
-			(v2 * this->line_length + u2 * (this->bits_per_pixel / 8)));
-	ret = vec(color >> 16 & 0xFF, color >> 8 & 0xFF, color & 0xFF);
-	return (vec_divn(ret, 255));
+	if (fmod(u2 + v2, 2.) == 0)
+		return (this->color);
+	return (vec(1, 1, 1));
 }

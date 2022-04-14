@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   triangle.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 03:34:16 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/15 03:34:16 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 t_object	create_triangle(t_vec p1, t_vec p2, t_vec p3)
@@ -43,7 +55,8 @@ int	hit_triangle(t_world *this, t_ray *ray, double minmax[2], t_hit_record *rec)
 	rec->p = ray_at(ray, rec->t);
 	rec->n = this->obj.triangle.n;
 	if (m()->texture_toggle)
-		get_plane_uv(rec, this->obj.triangle.p1, vec_length_(&this->obj.triangle.e1) / 2);
+		get_plane_uv(rec, this->obj.triangle.p1, \
+									vec_length_(&this->obj.triangle.e1) / 2);
 	set_rec(this, ray, rec);
 	return (OK);
 }

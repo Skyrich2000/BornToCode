@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   object.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 02:51:32 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/15 02:51:33 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 // 구, 원기둥 등 구조체 생성
 #ifndef OBJECT_H
 # define OBJECT_H
 # include "minirt.h"
 # include <stdlib.h>
 
-# define	PLANE		0
-# define	SPHERE		1
-# define	CYLINDER	2
-# define	SQUARE		3
-# define	TRIANGLE	4
-# define	LIGHT		5
+# define PLANE		0
+# define SPHERE		1
+# define CYLINDER	2
+# define SQUARE		3
+# define TRIANGLE	4
+# define LIGHT		5
 
 typedef struct s_sphere
 {
@@ -72,12 +84,14 @@ typedef struct s_hit_record
 	double				u;
 	double				v;
 	int					front_face;
+	int					is_material_fixed;
 	struct s_material	*material;
 }	t_hit_record;
 
 typedef struct s_world
 {
 	int				type;
+	int				is_material_fixed;
 	t_object		obj;
 	t_material		material;
 	int				(*hit)(struct s_world *this, t_ray *ray, \
@@ -86,7 +100,8 @@ typedef struct s_world
 }	t_world;
 
 t_world		*init_world(void);
-int			add_world(int type, t_object obj, t_material material);
+int			add_world(int type, int is_material_fixed, \
+										t_object obj, t_material material);
 int			hit_world(t_ray *ray, double minmax[2], t_hit_record *out);
 void		set_rec(t_world *this, t_ray *ray, t_hit_record *rec);
 t_clr		get_rec_color(t_hit_record *rec);
@@ -112,7 +127,6 @@ int			hit_cylinder(t_world *this, t_ray *ray, \
 										double minmax[2], t_hit_record *rec);
 
 t_object	create_triangle(t_vec p1, t_vec p2, t_vec p3);
-void		set_cylinder_pos(t_cylinder *cy, t_pnt c);
 int			hit_triangle(t_world *this, t_ray *ray, \
 										double minmax[2], t_hit_record *rec);
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   world.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 03:34:22 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/15 03:34:22 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 t_world	*init_world(void)
@@ -13,6 +25,7 @@ t_world	*init_world(void)
 
 int	add_world(
 	int type,
+	int is_material_fixed,
 	t_object obj,
 	t_material material
 ) {
@@ -29,6 +42,7 @@ int	add_world(
 	if (!new)
 		return (ERROR);
 	new->type = type;
+	new->is_material_fixed = is_material_fixed;
 	new->obj = obj;
 	new->hit = hits[type];
 	new->material = material;
@@ -71,6 +85,7 @@ void	set_rec(t_world *this, t_ray *ray, t_hit_record *rec)
 	if (!rec->front_face)
 		rec->n = vec_oppo(rec->n);
 	rec->material = &this->material;
+	rec->is_material_fixed = this->is_material_fixed;
 }
 
 t_clr	get_rec_color(t_hit_record *rec)

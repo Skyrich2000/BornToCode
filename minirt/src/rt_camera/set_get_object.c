@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_get_object.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 02:54:21 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/15 02:54:21 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 t_vec	*get_object_pos(void *obj, int type)
@@ -28,6 +40,13 @@ t_vec	get_object_dir(void *obj, int type)
 	if (type == SQUARE)
 		return (((t_square *)obj)->n);
 	return (vec(0, ((t_light *)obj)->ratio, 0));
+}
+
+void	set_cylinder_pos(t_cylinder *cy, t_pnt c)
+{
+	cy->c = c;
+	cy->top = vec_cal((t_vec [2]){c, cy->n}, (double [2]){1, cy->h / 2}, 2);
+	cy->bot = vec_cal((t_vec [2]){c, cy->n}, (double [2]){1, -cy->h / 2}, 2);
 }
 
 void	set_object_pos(void *obj, int type, t_vec pos)

@@ -1,21 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_gui.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 02:54:24 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/15 02:54:24 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 static int	transfrom_3d_to_2d(t_camera *cam, t_vec *pos_3d, t_vec *pos_2d)
 {
-	const t_vec	R[3] = {
-		{cam->u.x, cam->v.x, cam->dir.x},
-		{cam->u.y, cam->v.y, cam->dir.y},
+	const t_vec	r[3] = {\
+		{cam->u.x, cam->v.x, cam->dir.x}, \
+		{cam->u.y, cam->v.y, cam->dir.y}, \
 		{cam->u.z, cam->v.z, cam->dir.z},
 	};
-	const t_vec	R_t[3] = {
-		{R[0].x, R[1].x, R[2].x},
-		{R[0].y, R[1].y, R[2].y},
-		{R[0].z, R[1].z, R[2].z},
+	const t_vec	r_t[3] = {\
+		{r[0].x, r[1].x, r[2].x}, \
+		{r[0].y, r[1].y, r[2].y}, \
+		{r[0].z, r[1].z, r[2].z},
 	};
 	const t_vec	pos_on_screen = {
-		vec_dot_((t_vec *)&R_t[0], pos_3d),
-		vec_dot_((t_vec *)&R_t[1], pos_3d),
-		vec_dot_((t_vec *)&R_t[2], pos_3d),
+		vec_dot_((t_vec *)&r_t[0], pos_3d),
+		vec_dot_((t_vec *)&r_t[1], pos_3d),
+		vec_dot_((t_vec *)&r_t[2], pos_3d),
 	};
 	double		x;
 	double		y;

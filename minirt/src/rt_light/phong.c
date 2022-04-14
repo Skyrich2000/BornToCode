@@ -1,13 +1,45 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   phong.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 03:29:37 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/15 03:29:38 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
+
+static int	_hit_world(t_ray *ray, double minmax[2])
+{
+	t_hit_record	temp_rec;
+	t_world			*w;
+	int				flag;
+
+	flag = 0;
+	w = m()->wrd;
+	while (w->next)
+	{
+		w = w->next;
+		if (w->material.type == MATERIAL_DIELECTRIC)
+			continue ;
+		if (w->hit(w, ray, minmax, &temp_rec))
+		{
+			minmax[1] = temp_rec.t;
+			flag = 1;
+		}
+	}
+	return (flag);
+}
 
 static int	in_shadow(t_ray *light_ray, double light_len)
 {
-	t_hit_record	rec;
-
 	light_ray->dir = vec_unit_(&light_ray->dir);
-	if (hit_world(light_ray, (double [2]){EPSILON, light_len}, &rec))
-		return (OK);
-	return (ERROR);
+	if (!_hit_world(light_ray, (double [2]){EPSILON, light_len}))
+		return (ERROR);
+	return (OK);
 }
 
 static t_clr	get_specular(t_hit_record *rec, t_light *light, t_vec light_dir)
@@ -34,7 +66,7 @@ static t_clr	get_light_color(t_hit_record *rec, t_light *light)
 	light_ray.dir = vec_cal((t_vec [2]){light->origin, rec->p}, \
 							(double [2]){1, -1}, 2);
 	light_ray.origin = vec_cal((t_vec [2]){rec->p, rec->n}, \
-								(double [2]){1, EPSILON}, 2);
+							(double [2]){1, EPSILON}, 2);
 	if (in_shadow(&light_ray, vec_length_(&light_ray.dir)))
 		return (vec(0, 0, 0));
 	light_dir = vec_unit(light_ray.dir);
@@ -51,7 +83,9 @@ t_clr	phong(t_hit_record *rec)
 	t_light		*light;
 
 	material_color = get_rec_color(rec);
-	if (!m()->ray_mode || !m()->light_toggle)
+	if (!m()->ray_mode \
+		|| !m()->light_toggle \
+		|| rec->material->type == MATERIAL_DIELECTRIC)
 		return (material_color);
 	light = m()->light->next;
 	color = (t_clr){0, 0, 0};
