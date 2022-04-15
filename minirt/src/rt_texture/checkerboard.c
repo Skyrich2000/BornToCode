@@ -14,8 +14,8 @@
 
 t_clr	checkerboard_value(t_texture *this, double u, double v)
 {
-	const int		width = 4;
-	const int		height = 4;
+	const int		width = 10;
+	const int		height = 10;
 	const double	u2 = floor(u * width);
 	const double	v2 = floor(v * height);
 

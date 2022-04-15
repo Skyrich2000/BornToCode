@@ -6,7 +6,7 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/26 15:07:00 by suhshin           #+#    #+#              #
-#    Updated: 2022/04/06 20:14:46 by echung           ###   ########.fr        #
+#    Updated: 2022/04/15 05:09:41 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,7 +85,7 @@ MAX_DEPTH		=	50
 # var ==================================================
 
 CC		=	gcc
-CFLAGS	=	-I$(INCLUDE) -I./src/mlx -Wall -Werror -Wextra # -fsanitize=address -g 
+CFLAGS	=	-I$(INCLUDE) -I./src/mlx -Wall -Werror -Wextra  #-fsanitize=address -g 
 CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit -lpthread -lz -L/Users/$(USER)/.brew/opt/zlib/lib #-L/opt/homebrew/opt/zlib/lib
 DEF		=	-D H_THREAD=$(H_THREAD) -D W_THREAD=$(W_THREAD) -D LOWER_RESOLUTION=$(LOWER_RESOLUTION) -D MAX_DEPTH=$(MAX_DEPTH)
 
