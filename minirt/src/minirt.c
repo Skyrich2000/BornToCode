@@ -38,7 +38,7 @@ static void	setting(void)
 	g = m();
 	g->scr.win = mlx_new_window(\
 		g->scr.mlx, g->scr.wid, g->scr.hei, "this is minirt");
-	g->scr.anti = ANTI_ALIASING;
+	g->scr.anti = 0;
 	g->scr.mouse_x = -1;
 	g->scr.mouse_y = -1;
 	c = g->cam;
