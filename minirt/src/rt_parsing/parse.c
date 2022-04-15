@@ -84,13 +84,17 @@ static int	fileread(char *file_name, char *file_data)
 		|| file_name[len - 3] != '.'
 		|| file_name[len - 2] != 'r'
 		|| file_name[len - 1] != 't')
+	{
+		close(fd);
 		return (ERROR);
+	}
 	s = read(fd, &ch, 1);
 	while (s > 0)
 	{
 		*file_data++ = ch;
 		s = read(fd, &ch, 1);
 	}
+	close(fd);
 	return (s >= 0);
 }
 
