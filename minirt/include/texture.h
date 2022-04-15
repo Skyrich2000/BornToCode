@@ -23,6 +23,7 @@ typedef struct s_texture
 {
 	int				type;
 	t_clr			color;
+	char			*file_name;
 	void			*image;
 	void			*addr;
 	int				height;

@@ -24,6 +24,8 @@
 # define KEY_G			5
 # define KEY_M			46
 # define KEY_T			17
+# define KEY_P			35
+# define KEY_O			31
 # define KEY_PLUS		24
 # define KEY_MINUS		27
 # define KEY_LEFT_SHIFT	257
@@ -45,5 +47,7 @@ int		key_down(int keycode);
 int		mouse_up(void);
 int		mouse_down(int button, int x, int y, void *param);
 int		mouse_move(int x, int y, void *param);
+
+void	key_save(void);
 
 #endif

@@ -51,7 +51,7 @@ int			set_camera(t_camera *cam, t_vec lookfrom, t_vec dir, double fov);
 int			add_camera(t_camera *head, t_vec lookfrom, t_vec dir, double fov);
 
 void		render(void);
-void		render_pixel(const t_camera *cam, int x, int y);
+void		render_pixel(int x, int y);
 
 void		set_gui(t_camera *cam);
 void		draw_gui(void);

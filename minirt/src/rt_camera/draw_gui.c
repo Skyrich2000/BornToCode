@@ -35,8 +35,9 @@ static void	draw_help(void)
 	mlx_string_put(mlx, win, 10, 20 + 15 * 3, 0x0, "T - toggle texture");
 	mlx_string_put(mlx, win, 10, 20 + 15 * 4, 0x0, "G - toggle gui");
 	mlx_string_put(mlx, win, 10, 20 + 15 * 5, 0x0, "C - next camera");
-	mlx_string_put(mlx, win, 10, 20 + 15 * 6, 0x0, "+- - anti-aliasing : ");
-	mlx_string_put(mlx, win, 160, 20 + 15 * 6, 0x0, text);
+	mlx_string_put(mlx, win, 10, 20 + 15 * 6, 0x0, "P - save rt file");
+	mlx_string_put(mlx, win, 10, 20 + 15 * 7, 0x0, "+- - anti-aliasing : ");
+	mlx_string_put(mlx, win, 160, 20 + 15 * 7, 0x0, text);
 	mlx_string_put(mlx, win, 10, h - 90, 0x0, "Left Mouse - camera direction");
 	mlx_string_put(mlx, win, 10, h - 75, 0x0, "Left Mouse - move object");
 	mlx_string_put(mlx, win, 10, h - 60, 0x0, "Right Mouse - change object");

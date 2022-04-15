@@ -43,4 +43,10 @@ char	**ft_free_split(char **s, int i);
 //lib6.c
 char	*ft_itoa(int n);
 
+//lib7.c
+int		ft_get_number_len(unsigned long long n, int len);
+void	ft_bzero(void *s, size_t n);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
+char	*rt_strchr(const char *s, int c);
+char	*ft_strdup(const char *s);
 #endif

@@ -33,6 +33,7 @@ FILE			=	\
 					rt_vector/vector6.c \
 					rt_vector/vector7.c \
 					rt_event/key.c	\
+					rt_event/key_save.c	\
 					rt_event/key_move.c	\
 					rt_event/mouse_down.c \
 					rt_event/mouse_move_up.c \
@@ -54,6 +55,7 @@ FILE			=	\
 					rt_library/lib4.c \
 					rt_library/lib5.c \
 					rt_library/lib6.c \
+					rt_library/lib7.c \
 					rt_material/lambertian.c \
 					rt_material/metal.c \
 					rt_material/dielectric.c \
@@ -69,7 +71,12 @@ FILE			=	\
 					rt_parsing/parse_object.c \
 					rt_parsing/util.c \
 					rt_light/light.c \
-					rt_light/phong.c
+					rt_light/phong.c \
+					rt_printf/ft_printf.c \
+					rt_printf/core/boxing.c \
+					rt_printf/core/get_arg.c \
+					rt_printf/core/parse.c \
+					rt_printf/core/print.c
 
 SRC_DIR         =	./src
 SRCS            =	$(addprefix $(SRC_DIR)/, $(FILE))
@@ -85,7 +92,7 @@ MAX_DEPTH		=	50
 # var ==================================================
 
 CC		=	gcc
-CFLAGS	=	-I$(INCLUDE) -I./src/mlx -Wall -Werror -Wextra  #-fsanitize=address -g 
+CFLAGS	=	-I$(INCLUDE) -I./src/mlx -Wall -Werror -Wextra # -fsanitize=address -g 
 CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit -lpthread -lz -L/Users/$(USER)/.brew/opt/zlib/lib #-L/opt/homebrew/opt/zlib/lib
 DEF		=	-D H_THREAD=$(H_THREAD) -D W_THREAD=$(W_THREAD) -D LOWER_RESOLUTION=$(LOWER_RESOLUTION) -D MAX_DEPTH=$(MAX_DEPTH)
 

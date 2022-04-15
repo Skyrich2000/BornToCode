@@ -29,6 +29,7 @@ t_texture	create_texture(t_clr color, char *name)
 {
 	t_texture	texture;
 
+	texture.file_name = ft_strdup(name);
 	texture.color = vec_divn(color, 255);
 	if (name)
 	{

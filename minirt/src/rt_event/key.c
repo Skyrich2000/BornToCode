@@ -50,6 +50,11 @@ int	key_up(int keycode)
 		m()->gui_toggle = !m()->gui_toggle;
 		return (0);
 	}
+	if (keycode == KEY_P)
+	{
+		key_save();
+		return (0);
+	}
 	key_for_rerender(keycode);
 	m()->keys[keycode] = 0;
 	m()->render_refresh = 1;

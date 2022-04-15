@@ -12,11 +12,13 @@
 
 #include "minirt.h"
 
-static void	put_pixel(const t_camera *cam, int x, int y, int color)
+static void	put_pixel(int x, int y, int color)
 {
 	char	*dst;
 
-	dst = cam->img_addr + \
+	if (!m()->curr_cam->img_addr)
+		return ;
+	dst = m()->curr_cam->img_addr + \
 		(y * m()->scr.line_length + x * (m()->scr.bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
@@ -86,12 +88,13 @@ static int	anti(const t_camera *cam, int wdx, int hdx, int level)
 	return (trgb_anti(&color, level));
 }
 
-void	render_pixel(const t_camera *cam, int x, int y)
+void	render_pixel(int x, int y)
 {
-	const int	color = anti(cam, x, y, m()->resolution_toggle * m()->scr.anti);
+	int			color;
 	int			skip_y;
 	int			skip_x;
 
+	color = anti(m()->curr_cam, x, y, m()->resolution_toggle * m()->scr.anti);
 	skip_y = -1;
 	while (++skip_y <= m()->scr.lower_resolution)
 	{
@@ -99,6 +102,6 @@ void	render_pixel(const t_camera *cam, int x, int y)
 		while (++skip_x <= m()->scr.lower_resolution)
 			if (0 <= x && x + skip_x < m()->scr.wid \
 				&& 0 <= y && y + skip_y < m()->scr.hei)
-				put_pixel(cam, x + skip_x, m()->scr.hei - (y + skip_y), color);
+				put_pixel(x + skip_x, m()->scr.hei - (y + skip_y), color);
 	}
 }

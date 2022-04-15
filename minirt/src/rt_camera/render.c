@@ -50,10 +50,10 @@ static void	*render_block(void *data)
 		i[X] = start[X];
 		while (i[X] < end[X])
 		{
-			render_pixel(m()->curr_cam, i[X], i[Y]);
-			render_pixel(m()->curr_cam, i[X], i[Y] + size[Y] * 1);
-			render_pixel(m()->curr_cam, i[X], i[Y] + size[Y] * 2);
-			render_pixel(m()->curr_cam, i[X], i[Y] + size[Y] * 3);
+			render_pixel(i[X], i[Y]);
+			render_pixel(i[X], i[Y] + size[Y] * 1);
+			render_pixel(i[X], i[Y] + size[Y] * 2);
+			render_pixel(i[X], i[Y] + size[Y] * 3);
 			if (m()->curr_cam->render_index != render_index)
 				return (0);
 			i[X] += m()->scr.lower_resolution + 1;
