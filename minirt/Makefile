@@ -128,7 +128,7 @@ deploy	: $(NAME)
 		&& cp -rf ../res . \
 		&& cp -rf ../maps . \
 		&& git add . \
-		&& git commit -m "$(date +%D) - Deploy $1" | cat \
+		&& git commit -m "$$(date +%D) - Deploy" | cat \
 		&& git push\
 		&& echo "Deploying... Done!" 
 	make fclean
