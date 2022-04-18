@@ -1,6 +1,6 @@
 # Mini Ray Tracing
 
-My mini ray tracer is a simple ray tracer that can be used to render simple scenes.
+This is a simple ray tracer that can be used to render simple scenes.
 
 [Source Code](https://github.com/Skyrich2000/BornToCode/tree/master/minirt)
 
@@ -39,7 +39,7 @@ cd MiniRayTracing
 * L - toggle light
 * M - toggle scatter mode
 * T - toggle texture
-* R - toggle resolution (recommended to use this before movement)
+* R - toggle resolution (**recommended to use this before moving**)
 * C - toggle camera
 * G - toggle GUI
 * P - save to `out.rt` file
@@ -60,7 +60,7 @@ you can change the default configuration in the [`Makefile`](https://github.com/
 
 * H_THREAD - number of threads for height (default 5)
 * W_THREAD - number of threads for width (default 5)
-* LOWER_RESOLUTION - number to lower the resolution (default 3)
+* LOWER_RESOLUTION - number to lower the resolution level (default 3)
 * MAX_DEPTH - maximum depth for raytracing (default 50)
 
 ## RT file format
