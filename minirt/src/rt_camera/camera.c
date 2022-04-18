@@ -53,7 +53,9 @@ int	add_camera(t_camera *head, t_vec lookfrom, t_vec dir, double fov)
 	cam = malloc(sizeof(t_camera));
 	if (!cam)
 		return (ERROR);
-	set_camera(cam, lookfrom, dir, fov);
+	cam->pos = lookfrom;
+	cam->dir = dir;
+	cam->fov = fov;
 	cam->img = 0;
 	cam->img_addr = 0;
 	cam->next = head->next;

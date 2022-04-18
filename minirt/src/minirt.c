@@ -43,7 +43,10 @@ static void	setting(void)
 	g->scr.mouse_y = -1;
 	c = g->cam;
 	while (c->next)
+	{
 		c = c->next;
+		set_camera(c, c->pos, c->dir, c->fov);
+	}
 	c->next = g->cam->next;
 	g->curr_cam = g->cam->next;
 	g->gui_toggle = 1;
@@ -51,12 +54,6 @@ static void	setting(void)
 	g->resolution_toggle = 1;
 	g->texture_toggle = 1;
 	g->ray_mode = 1;
-	mlx_hook(g->scr.win, 2, 0, key_down, 0);
-	mlx_hook(g->scr.win, 3, 0, key_up, 0);
-	mlx_hook(g->scr.win, 17, 0, exit_hook, 0);
-	mlx_hook(g->scr.win, 4, 0, mouse_down, 0);
-	mlx_hook(g->scr.win, 5, 0, mouse_up, 0);
-	mlx_hook(g->scr.win, 6, 0, mouse_move, 0);
 }
 
 static int	init(void)
@@ -92,6 +89,12 @@ int	main(int argc, char **argv)
 		return (ERROR);
 	}
 	setting();
+	mlx_hook(m()->scr.win, 2, 0, key_down, 0);
+	mlx_hook(m()->scr.win, 3, 0, key_up, 0);
+	mlx_hook(m()->scr.win, 17, 0, exit_hook, 0);
+	mlx_hook(m()->scr.win, 4, 0, mouse_down, 0);
+	mlx_hook(m()->scr.win, 5, 0, mouse_up, 0);
+	mlx_hook(m()->scr.win, 6, 0, mouse_move, 0);
 	ft_memset(m()->keys, 0, sizeof(m()->keys));
 	back = mlx_new_image(m()->scr.mlx, m()->scr.wid, m()->scr.hei);
 	mlx_put_image_to_window(m()->scr.mlx, m()->scr.win, back, 0, 0);
