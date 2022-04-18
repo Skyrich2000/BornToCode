@@ -12,6 +12,8 @@
 * rt 파일에 필수 인자 없는경우 에러안남
 * bmp 저장
 * Caustic 구현
+* 프레임처리 시간 측정
+
 
 ## Reference
 https://raytracing.github.io/books/RayTracingInOneWeekend.html
