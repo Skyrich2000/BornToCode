@@ -37,7 +37,7 @@ make
 * L - toggle light
 * M - toggle scatter mode
 * T - toggle texture
-* R - toggle resolution
+* R - toggle resolution (recommended to use this before movement)
 * C - toggle camera
 * G - toggle GUI
 * P - save to `out.rt` file
