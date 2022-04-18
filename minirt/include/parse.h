@@ -21,8 +21,7 @@ typedef struct s_minirt	t_minirt;
 
 typedef enum e_parsable
 {
-	r = 0,
-	a,
+	a = 0,
 	c,
 	l,
 	sp,
@@ -36,7 +35,6 @@ int	printf_error(void);
 int	input(int argc, char **argv);
 int	parse_split(t_vec *input, char *line);
 
-int	parse_r(char **line);
 int	parse_a(char **line);
 int	parse_c(char **line);
 int	parse_l(char **line);

@@ -12,11 +12,10 @@
 
 #include "minirt.h"
 
-#define KEY_NUM 9
+#define KEY_NUM 8
 
-static void	parser_init(int (*parser[9])(char **))
+static void	parser_init(int (*parser[8])(char **))
 {
-	parser[r] = parse_r;
 	parser[a] = parse_a;
 	parser[c] = parse_c;
 	parser[l] = parse_l;
@@ -34,8 +33,8 @@ static int	find_key_index(char *key)
 	j = -1;
 	while (++j < KEY_NUM)
 	{
-		if (ft_strncmp(key, (char [9][3]){
-			"R", "A", "c", "l", "sp", "pl", "sq", "cy", "tr" }[j]) == 0)
+		if (ft_strncmp(key, (char [8][3]){
+			"A", "c", "l", "sp", "pl", "sq", "cy", "tr" }[j]) == 0)
 			break ;
 	}
 	return (j);
@@ -45,7 +44,7 @@ static int	parsing(char *file_data)
 {
 	int		i;
 	int		key_index;
-	int		(*parser[9])(char **);
+	int		(*parser[8])(char **);
 	char	**lines;
 	char	**words;
 

@@ -40,6 +40,8 @@ static int	init(void)
 	if (!m()->wrd || !m()->cam || !m()->light)
 		return (ERROR);
 	m()->scr.mlx = mlx_init();
+	m()->scr.wid = 800;
+	m()->scr.hei = 600;
 	return (OK);
 }
 
@@ -70,6 +72,8 @@ int	main(int argc, char **argv)
 		printf("Error\n");
 		return (ERROR);
 	}
+	m()->scr.wid = 800;
+	m()->scr.hei = 600;
 	setting();
 	draw();
 	mlx_loop_hook(m()->scr.mlx, loop_hook, 0);

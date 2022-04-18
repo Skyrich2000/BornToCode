@@ -55,6 +55,7 @@ int	add_camera(t_camera *head, t_vec lookfrom, t_vec dir, double fov)
 		return (ERROR);
 	set_camera(cam, lookfrom, dir, fov);
 	cam->img = 0;
+	cam->img_addr = 0;
 	cam->next = head->next;
 	cam->render_index = 0;
 	head->next = cam;

@@ -12,16 +12,6 @@
 
 #include "minirt.h"
 
-int	parse_r(char **line)
-{
-	if ((m()->scr.wid && m()->scr.hei)
-		|| ft_arrsize(line) != 3
-		|| !ft_atod(&m()->scr.wid, line[1])
-		|| !ft_atod(&m()->scr.hei, line[2]))
-		return (ERROR);
-	return (OK);
-}
-
 int	parse_sp(char **line)
 {
 	t_vec	c;

@@ -12,11 +12,13 @@
 
 #include "minirt.h"
 
-static void	put_pixel(const t_camera *cam, int x, int y, int color)
+static void	put_pixel(int x, int y, int color)
 {
 	char	*dst;
 
-	dst = cam->img_addr + \
+	if (!m()->curr_cam->img_addr)
+		return ;
+	dst = m()->curr_cam->img_addr + \
 		(y * m()->scr.line_length + x * (m()->scr.bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
@@ -76,10 +78,10 @@ static int	anti(const t_camera *cam, int wdx, int hdx)
 	return (trgb_anti(&color, m()->scr.anti));
 }
 
-void	render_pixel(const t_camera *cam, const int thread_idx[2], int i, int j)
+void	render_pixel(const int thread_idx[2], int i, int j)
 {
 	const int	x = (m()->scr.wid / W_THREAD) * thread_idx[1] + j;
 	const int	y = (m()->scr.hei / H_THREAD) * thread_idx[0] + i;
 
-	put_pixel(cam, x, m()->scr.hei - y, anti(cam, x, y));
+	put_pixel(x, m()->scr.hei - y, anti(m()->curr_cam, x, y));
 }
