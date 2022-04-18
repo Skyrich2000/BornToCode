@@ -51,7 +51,7 @@ FILE			=	\
 					rt_material/metal.c \
 					rt_material/dielectric.c \
 					rt_texture/texture.c \
-					rt_texture/checkboard.c \
+					rt_texture/checkerboard.c \
 					rt_texture/image.c \
 					rt_texture/solid.c \
 					rt_parsing/parse.c \

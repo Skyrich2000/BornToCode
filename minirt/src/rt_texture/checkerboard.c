@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checkboard.c                                       :+:      :+:    :+:   */
+/*   checkerboard.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-t_clr	checkboard_value(t_texture *this, double u, double v)
+t_clr	checkerboard_value(t_texture *this, double u, double v)
 {
 	const int		width = 4;
 	const int		height = 4;

@@ -19,8 +19,8 @@ t_texture	create_texture(t_clr color, char *name)
 	texture.color = vec_divn(color, 255);
 	if (name)
 	{
-		if (ft_strncmp(name, "checkboard") == 0)
-			texture.value = &checkboard_value;
+		if (ft_strncmp(name, "checkerboard") == 0)
+			texture.value = &checkerboard_value;
 		else
 		{
 			texture.image = mlx_png_file_to_image(m()->scr.mlx, name, \

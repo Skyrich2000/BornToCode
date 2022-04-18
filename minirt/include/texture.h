@@ -31,7 +31,7 @@ typedef struct s_texture
 t_texture	create_texture(t_clr color, char *name);
 
 t_clr		solid_value(struct s_texture *this, double u, double v);
-t_clr		checkboard_value(struct s_texture *this, double u, double v);
+t_clr		checkerboard_value(struct s_texture *this, double u, double v);
 t_clr		image_value(struct s_texture *this, double u, double v);
 
 #endif
