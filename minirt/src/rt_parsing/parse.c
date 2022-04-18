@@ -34,7 +34,7 @@ static int	find_key_index(char *key)
 	while (++j < KEY_NUM)
 	{
 		if (ft_strncmp(key, (char [8][3]){
-			"A", "c", "l", "sp", "pl", "sq", "cy", "tr" }[j]) == 0)
+			"A", "C", "l", "sp", "pl", "sq", "cy", "tr" }[j]) == 0)
 			break ;
 	}
 	return (j);

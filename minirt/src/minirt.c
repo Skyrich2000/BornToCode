@@ -26,7 +26,6 @@ static void	setting(void)
 		c = c->next;
 	c->next = m()->cam->next;
 	m()->curr_cam = m()->cam->next;
-	m()->light_toggle = 1;
 	mlx_key_hook(m()->scr.win, key_hook, 0);
 	mlx_hook(m()->scr.win, 17, 0, exit_hook, 0);
 }

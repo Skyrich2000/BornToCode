@@ -48,8 +48,12 @@ int	set_camera(t_camera *cam, t_vec lookfrom, t_vec dir, double fov)
 
 int	add_camera(t_camera *head, t_vec lookfrom, t_vec dir, double fov)
 {
+	static int	num = 0;
 	t_camera	*cam;
 
+	num++;
+	if (num > 1)
+		return (ERROR);
 	cam = malloc(sizeof(t_camera));
 	if (!cam)
 		return (ERROR);

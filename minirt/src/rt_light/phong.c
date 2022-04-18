@@ -64,8 +64,6 @@ t_clr	phong(t_hit_record *rec)
 
 	texture = &rec->material->texture;
 	material_color = texture->value(texture, rec->u, rec->v);
-	if (!m()->light_toggle)
-		return (material_color);
 	light = m()->light->next;
 	color = (t_clr){0, 0, 0};
 	while (light)

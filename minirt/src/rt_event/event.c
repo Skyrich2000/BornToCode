@@ -91,17 +91,6 @@ int	key_hook(int keycode)
 		exit(0);
 		return (0);
 	}
-	if (keycode == KEY_C)
-	{
-		m()->curr_cam = m()->curr_cam->next;
-	}
-	if (keycode == KEY_L)
-	{
-		m()->light_toggle = !m()->light_toggle;
-		m()->scr.anti = 0;
-		if (m()->light_toggle)
-			m()->scr.anti = ANTI_ALIASING;
-	}
 	key_camera_dir(keycode);
 	key_camera_move(keycode);
 	key_camera_updown(keycode);
