@@ -124,6 +124,7 @@ deploy	: $(NAME)
 		&& cd MiniRayTracing \
 		&& cp -f ../minirt . \
 		&& cp -f ../README.md . \
+		&& cp -rf ../img . \
 		&& cp -rf ../res . \
 		&& cp -rf ../maps . \
 		&& git add . \
