@@ -93,7 +93,7 @@ MAX_DEPTH		=	50
 
 CC		=	gcc
 CFLAGS	=	-I$(INCLUDE) -I./src/mlx -Wall -Werror -Wextra # -fsanitize=address -g 
-CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit -lpthread -lz -L/Users/$(USER)/.brew/opt/zlib/lib #-L/opt/homebrew/opt/zlib/lib
+CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit -lpthread -lz -L/Users/$(USER)/.brew/opt/zlib/lib -L/opt/homebrew/opt/zlib/lib
 DEF		=	-D H_THREAD=$(H_THREAD) -D W_THREAD=$(W_THREAD) -D LOWER_RESOLUTION=$(LOWER_RESOLUTION) -D MAX_DEPTH=$(MAX_DEPTH)
 
 # Rule =================================================
