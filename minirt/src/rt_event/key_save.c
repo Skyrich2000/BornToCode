@@ -183,7 +183,7 @@ void	key_save(void)
 {
 	int	fd;
 
-	fd = open("out.rt", O_CREAT | O_WRONLY | O_TRUNC, 0744);
+	fd = open("out.rt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
 		return ;
 	ft_fprintf(fd, "R\t\t\t\t");
