@@ -20,13 +20,13 @@ My mini ray tracer is a simple ray tracer that can be used to render simple scen
 ![room](./img/room.png)
 
 ## Usage
-### Build
+### Run
 
 > Only works on MacOS
 
 ```bash
-brew install zlib
-make
+git clone https://github.com/Skyrich2000/MiniRayTracing
+cd MiniRayTracing
 ./minirt maps/metal-balls.rt
 ```
 
@@ -43,9 +43,18 @@ make
 * P - save to `out.rt` file
 * +- - increase/decrease anti-aliasing
 
-### Configuration
+### Build
 
-you can change the default configuration in the `Makefile`
+```bash
+brew install zlib
+git clone https://github.com/Skyrich2000/BornToCode
+cd BornToCode/minirt
+make
+```
+
+### Build Configuration
+
+you can change the default configuration in the [`Makefile`](https://github.com/Skyrich2000/BornToCode/blob/master/minirt/Makefile#L87)
 
 * H_THREAD - number of threads for height (default 5)
 * W_THREAD - number of threads for width (default 5)
@@ -97,6 +106,7 @@ you can change the default configuration in the `Makefile`
 
 * Caustics
 * FPS counter
+* segfaults
 
 ## Reference
 

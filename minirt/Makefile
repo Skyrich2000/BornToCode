@@ -114,7 +114,24 @@ $(NAME): $(OBJS)
 .PHONY  : run
 run		:
 	@echo $(YELLOW)"Running... ./$(NAME)"$(RESET)
-	@./$(NAME) maps/1.rt
+	@./$(NAME) maps/metal-balls.rt
+
+.PHONY	: deploy
+deploy	: $(NAME)
+	echo "Deploying..."
+	rm -rf MiniRayTracing
+	git clone https://github.com/Skyrich2000/MiniRayTracing.git \
+		&& cd MiniRayTracing \
+		&& cp -f ../minirt . \
+		&& cp -f ../README.md . \
+		&& cp -rf ../res . \
+		&& cp -rf ../maps . \
+		&& git add . \
+		&& git commit -m "$(date +%D) - Deploy $1" | cat \
+		&& git push\
+		&& echo "Deploying... Done!" 
+	make fclean
+	rm -rf MiniRayTracing
 
 .PHONY	: norm
 norm	:
