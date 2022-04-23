@@ -45,9 +45,6 @@ FILE			=	\
 					rt_library/lib3.c \
 					rt_library/lib4.c \
 					rt_library/lib5.c \
-					rt_material/lambertian.c \
-					rt_material/metal.c \
-					rt_material/dielectric.c \
 					rt_texture/texture.c \
 					rt_texture/checkerboard.c \
 					rt_texture/image.c \

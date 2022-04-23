@@ -32,8 +32,7 @@ int	parse_sp(char **line)
 	if (!add_world(m()->wrd,
 			create_sphere(c, r),
 			hit_sphere,
-			create_metal(\
-			create_texture(color, line[4]), (double)rand() / (double)RAND_MAX)))
+			create_texture(color, line[4])))
 		return (ERROR);
 	return (OK);
 }

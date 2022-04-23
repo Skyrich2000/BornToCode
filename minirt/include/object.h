@@ -45,8 +45,6 @@ typedef union u_object
 	t_plane		plane;
 }		t_object;
 
-typedef struct s_material	t_material;
-
 typedef struct s_hit_record
 {
 	t_vec				p;
@@ -56,13 +54,13 @@ typedef struct s_hit_record
 	double				u;
 	double				v;
 	int					front_face;
-	struct s_material	*material;
+	struct s_texture	*texture;
 }				t_hit_record;
 
 typedef struct s_world
 {
 	t_object			obj;
-	t_material			material;
+	t_texture			texture;
 	int					(*hit)(struct s_world *this, t_ray *ray, \
 									double minmax[2], t_hit_record *out);
 	struct s_world		*next;
@@ -72,7 +70,7 @@ t_world		*init_world(void);
 int			add_world(t_world *head, t_object obj, \
 						int (*hit)(t_world *this, t_ray *ray, \
 							double minmax[2], t_hit_record *out), \
-									t_material material);
+									t_texture texture);
 int			hit_world(t_world *head, t_ray *ray, \
 										double minmax[2], t_hit_record *out);
 void		set_rec(t_world *this, t_ray *ray, t_hit_record *rec);

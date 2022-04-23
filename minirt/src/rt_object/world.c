@@ -25,7 +25,7 @@ t_world	*init_world(void)
 
 int	add_world(t_world *head, t_object obj, \
 	int (*hit)(t_world *this, t_ray *ray, double minmax[2], t_hit_record *out), \
-	t_material material)
+	t_texture texture)
 {
 	t_world	*new;
 
@@ -34,7 +34,7 @@ int	add_world(t_world *head, t_object obj, \
 		return (ERROR);
 	new->obj = obj;
 	new->hit = hit;
-	new->material = material;
+	new->texture = texture;
 	new->next = head->next;
 	head->next = new;
 	return (OK);
@@ -67,5 +67,5 @@ void	set_rec(t_world *this, t_ray *ray, t_hit_record *rec)
 	rec->front_face = vec_dot_(&ray->dir, &rec->n) < 0;
 	if (!rec->front_face)
 		rec->n = vec_oppo(rec->n);
-	rec->material = &this->material;
+	rec->texture = &this->texture;
 }
