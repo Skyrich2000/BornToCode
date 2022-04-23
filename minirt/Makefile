@@ -6,7 +6,7 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/26 15:07:00 by suhshin           #+#    #+#              #
-#    Updated: 2022/04/23 07:21:39 by ycha             ###   ########.fr        #
+#    Updated: 2022/04/23 22:02:37 by echung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ FILE			=	\
 					rt_parsing/parse.c \
 					rt_parsing/parse1.c \
 					rt_parsing/parse2.c \
+					rt_parsing/parse3.c \
 					rt_parsing/util.c \
 					rt_light/light.c \
 					rt_light/phong.c
