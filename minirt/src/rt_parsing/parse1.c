@@ -6,7 +6,7 @@
 /*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 23:34:39 by echung            #+#    #+#             */
-/*   Updated: 2022/04/23 21:36:33 by echung           ###   ########.fr       */
+/*   Updated: 2022/04/23 21:48:28 by echung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,18 @@ int	parse_pl(char **line)
 		|| !parse_split(&n, line[2])
 		|| !parse_split(&color, line[3]))
 		return (ERROR);
+	if (n.x < -1 || n.x > 1)
+		return (ERROR);
+	if (n.y < -1 || n.y > 1)
+		return (ERROR);
+	if (n.z < -1 || n.z > 1)
+		return (ERROR);
+	if (color.x < 0 || color.x > 255)
+		return (ERROR);
+	if (color.y < 0 || color.y > 255)
+		return (ERROR);
+	if (color.z < 0 || color.z > 255)
+		return (ERROR);
 	if (!add_world(m()->wrd,
 			create_plane(c, n),
 			hit_plane,
@@ -114,6 +126,18 @@ int	parse_cy(char **line)
 		|| !parse_split(&c, line[1])
 		|| !parse_split(&n, line[2])
 		|| !parse_split(&color, line[5]))
+		return (ERROR);
+	if (n.x < -1 || n.x > 1)
+		return (ERROR);
+	if (n.y < -1 || n.y > 1)
+		return (ERROR);
+	if (n.z < -1 || n.z > 1)
+		return (ERROR);
+	if (color.x < 0 || color.x > 255)
+		return (ERROR);
+	if (color.y < 0 || color.y > 255)
+		return (ERROR);
+	if (color.z < 0 || color.z > 255)
 		return (ERROR);
 	if (!add_world(m()->wrd,
 			create_cylinder(c, n, r, h),
