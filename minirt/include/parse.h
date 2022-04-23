@@ -26,9 +26,7 @@ typedef enum e_parsable
 	l,
 	sp,
 	pl,
-	cy,
-	sq,
-	tr
+	cy
 }	t_parsable;
 
 int	printf_error(void);
@@ -40,8 +38,6 @@ int	parse_c(char **line);
 int	parse_l(char **line);
 int	parse_pl(char **line);
 int	parse_sp(char **line);
-int	parse_sq(char **line);
 int	parse_cy(char **line);
-int	parse_tr(char **line);
 
 #endif
