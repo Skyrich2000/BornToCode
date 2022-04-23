@@ -59,6 +59,9 @@ typedef struct s_minirt
 	t_camera	*cam;
 	t_camera	*curr_cam;
 	t_light		*light;
+	int			num_a;
+	int			num_c;
+	int			num_l;
 }		t_minirt;
 
 t_minirt	*m(void);
