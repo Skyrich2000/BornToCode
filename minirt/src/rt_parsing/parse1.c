@@ -6,7 +6,7 @@
 /*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 23:34:39 by echung            #+#    #+#             */
-/*   Updated: 2022/04/23 21:48:28 by echung           ###   ########.fr       */
+/*   Updated: 2022/04/23 21:54:37 by echung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,74 +79,6 @@ int	parse_l(char **line)
 	if (color.z < 0 || color.z > 255)
 		return (ERROR);
 	if (!add_light(m()->light, c, vec_divn(color, 255), ratio))
-		return (ERROR);
-	return (OK);
-}
-
-int	parse_pl(char **line)
-{
-	t_pnt	c;
-	t_vec	n;
-	t_clr	color;
-
-	if (!(ft_arrsize(line) == 4 || ft_arrsize(line) == 5)
-		|| !parse_split(&c, line[1])
-		|| !parse_split(&n, line[2])
-		|| !parse_split(&color, line[3]))
-		return (ERROR);
-	if (n.x < -1 || n.x > 1)
-		return (ERROR);
-	if (n.y < -1 || n.y > 1)
-		return (ERROR);
-	if (n.z < -1 || n.z > 1)
-		return (ERROR);
-	if (color.x < 0 || color.x > 255)
-		return (ERROR);
-	if (color.y < 0 || color.y > 255)
-		return (ERROR);
-	if (color.z < 0 || color.z > 255)
-		return (ERROR);
-	if (!add_world(m()->wrd,
-			create_plane(c, n),
-			hit_plane,
-			create_metal(\
-			create_texture(color, line[4]), (double)rand() / (double)RAND_MAX)))
-		return (ERROR);
-	return (OK);
-}
-
-int	parse_cy(char **line)
-{
-	t_pnt	c;
-	t_vec	n;
-	t_clr	color;
-	double	r;
-	double	h;
-
-	if (!(ft_arrsize(line) == 6 || ft_arrsize(line) == 7)
-		|| !ft_atod(&r, line[3])
-		|| !ft_atod(&h, line[4])
-		|| !parse_split(&c, line[1])
-		|| !parse_split(&n, line[2])
-		|| !parse_split(&color, line[5]))
-		return (ERROR);
-	if (n.x < -1 || n.x > 1)
-		return (ERROR);
-	if (n.y < -1 || n.y > 1)
-		return (ERROR);
-	if (n.z < -1 || n.z > 1)
-		return (ERROR);
-	if (color.x < 0 || color.x > 255)
-		return (ERROR);
-	if (color.y < 0 || color.y > 255)
-		return (ERROR);
-	if (color.z < 0 || color.z > 255)
-		return (ERROR);
-	if (!add_world(m()->wrd,
-			create_cylinder(c, n, r, h),
-			hit_cylinder,
-			create_metal(\
-			create_texture(color, line[6]), (double)rand() / (double)RAND_MAX)))
 		return (ERROR);
 	return (OK);
 }
