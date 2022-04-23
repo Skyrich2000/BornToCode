@@ -17,9 +17,7 @@ int	parse_a(char **line)
 	t_minirt	*g;
 
 	g = m();
-	if (m()->light->origin.x == 1
-		|| ft_arrsize(line) != 3
-		|| !ft_atod(&m()->light->origin.x, "1")
+	if (ft_arrsize(line) != 3
 		|| !ft_atod(&m()->light->ratio, line[1])
 		|| !parse_split(&m()->light->color, line[2]))
 		return (ERROR);
