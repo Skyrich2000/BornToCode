@@ -14,10 +14,6 @@
 
 #define KEY_NUM 6
 
-int	num_a = 0;
-int	num_c = 0;
-int	num_l = 0;
-
 static void	parser_init(int (*parser[8])(char **))
 {
 	parser[a] = parse_a;
@@ -39,11 +35,11 @@ static int	find_key_index(char *key)
 			"A", "C", "L", "sp", "pl", "cy"}[j]) == 0)
 		{
 			if (j == 0)
-				num_a++;
+				m()->num_a++;
 			if (j == 1)
-				num_c++;
+				m()->num_c++;
 			if (j == 2)
-				num_l++;
+				m()->num_l++;
 			break ;
 		}
 	}
@@ -74,7 +70,7 @@ static int	parsing(char *file_data)
 		}
 		ft_free_split(words, ft_arrsize(words));
 	}
-	if (num_a * num_c * num_l != 1)
+	if (m()->num_a * m()->num_c * m()->num_l != 1)
 		return (printf_error());
 	return (OK);
 }
@@ -111,6 +107,9 @@ int	input(int argc, char **argv)
 {
 	char	file_data[MAX_FILE_READ];
 
+	m()->num_a = 0;
+	m()->num_c = 0;
+	m()->num_l = 0;
 	if (argc == 2 && fileread(argv[1], file_data) && parsing(file_data))
 		return (OK);
 	return (ERROR);
