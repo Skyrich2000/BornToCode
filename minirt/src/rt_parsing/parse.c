@@ -13,6 +13,7 @@
 #include "minirt.h"
 
 #define KEY_NUM 8
+
 int	num_a = 0;
 int	num_c = 0;
 int	num_l = 0;
@@ -24,8 +25,8 @@ static void	parser_init(int (*parser[8])(char **))
 	parser[l] = parse_l;
 	parser[sp] = parse_sp;
 	parser[pl] = parse_pl;
-	parser[sq] = parse_sq;
 	parser[cy] = parse_cy;
+	parser[sq] = parse_sq;
 	parser[tr] = parse_tr;
 }
 

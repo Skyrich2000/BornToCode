@@ -26,8 +26,8 @@ typedef enum e_parsable
 	l,
 	sp,
 	pl,
-	sq,
 	cy,
+	sq,
 	tr
 }	t_parsable;
 
