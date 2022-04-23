@@ -6,7 +6,7 @@
 /*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 23:34:39 by echung            #+#    #+#             */
-/*   Updated: 2022/04/23 21:24:39 by echung           ###   ########.fr       */
+/*   Updated: 2022/04/23 21:31:04 by echung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,14 @@ int	parse_l(char **line)
 		|| !parse_split(&color, line[3]))
 		return (ERROR);
 	if (!add_light(m()->light, c, vec_divn(color, 255), ratio))
+		return (ERROR);
+	if (ratio < 0.0 || ratio > 1.0)
+		return (ERROR);
+	if (color.x < 0 || color.x > 255)
+		return (ERROR);
+	if (color.y < 0 || color.y > 255)
+		return (ERROR);
+	if (color.z < 0 || color.z > 255)
 		return (ERROR);
 	return (OK);
 }
