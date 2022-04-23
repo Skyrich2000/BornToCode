@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-#define KEY_NUM 8
+#define KEY_NUM 6
 
 int	num_a = 0;
 int	num_c = 0;
@@ -26,8 +26,6 @@ static void	parser_init(int (*parser[8])(char **))
 	parser[sp] = parse_sp;
 	parser[pl] = parse_pl;
 	parser[cy] = parse_cy;
-	parser[sq] = parse_sq;
-	parser[tr] = parse_tr;
 }
 
 static int	find_key_index(char *key)
@@ -38,7 +36,7 @@ static int	find_key_index(char *key)
 	while (++j < KEY_NUM)
 	{
 		if (ft_strncmp(key, (char [8][3]){
-			"A", "C", "L", "sp", "pl", "cy", "sq", "tr"}[j]) == 0)
+			"A", "C", "L", "sp", "pl", "cy"}[j]) == 0)
 		{
 			if (j == 0)
 				num_a++;

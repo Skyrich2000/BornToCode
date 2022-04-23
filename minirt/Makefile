@@ -39,9 +39,7 @@ FILE			=	\
 					rt_object/world.c \
 					rt_object/sphere.c \
 					rt_object/plane.c \
-					rt_object/square.c \
 					rt_object/cylinder.c \
-					rt_object/triangle.c \
 					rt_library/lib1.c \
 					rt_library/lib2.c \
 					rt_library/lib3.c \

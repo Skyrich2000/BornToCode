@@ -28,13 +28,6 @@ typedef struct s_plane
 	t_vec	n;
 }				t_plane;
 
-typedef struct s_square
-{
-	t_vec	c;
-	t_vec	n;
-	double	side;
-}				t_square;
-
 typedef struct s_cylinder
 {
 	t_vec	c;
@@ -45,22 +38,9 @@ typedef struct s_cylinder
 	t_vec	bot;
 }				t_cylinder;
 
-typedef struct s_triangle
-{
-	t_vec	p1;
-	t_vec	p2;
-	t_vec	p3;
-	t_vec	n;
-	t_vec	e1;
-	t_vec	e2;
-	t_vec	e3;
-}				t_triangle;
-
 typedef union u_object
 {
 	t_cylinder	cylinder;
-	t_triangle	triangle;
-	t_square	square;
 	t_sphere	sphere;
 	t_plane		plane;
 }		t_object;
@@ -108,16 +88,8 @@ int			_get_plane_t(t_vec *v[2], t_ray *ray, \
 										double minmax[2], double *t);
 void		get_plane_uv(t_hit_record *rec, t_pnt c, double size);
 
-t_object	create_square(t_pnt c, t_vec n, double side);
-int			hit_square(t_world *this, t_ray *ray, \
-									double minmax[2], t_hit_record *rec);
-
 t_object	create_cylinder(t_pnt c, t_vec n, double r, double h);
 int			hit_cylinder(t_world *this, t_ray *ray, \
-									double minmax[2], t_hit_record *rec);
-
-t_object	create_triangle(t_vec p1, t_vec p2, t_vec p3);
-int			hit_triangle(t_world *this, t_ray *ray, \
 									double minmax[2], t_hit_record *rec);
 
 #endif
