@@ -6,7 +6,7 @@
 /*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 23:34:39 by echung            #+#    #+#             */
-/*   Updated: 2022/04/06 20:51:59 by echung           ###   ########.fr       */
+/*   Updated: 2022/04/23 21:20:34 by echung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@ int	parse_c(char **line)
 		|| !ft_atod(&fov, line[3])
 		|| !parse_split(&c, line[1])
 		|| !parse_split(&dir, line[2]))
+		return (ERROR);
+	if (fov < 0 || fov > 180)
+		return (ERROR);
+	if (dir.x < -1 || dir.x > 1)
+		return (ERROR);
+	if (dir.y < -1 || dir.y > 1)
+		return (ERROR);
+	if (dir.z < -1 || dir.z > 1)
 		return (ERROR);
 	if (!add_camera(m()->cam, c, dir, fov))
 		return (ERROR);
