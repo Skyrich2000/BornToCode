@@ -71,8 +71,7 @@ int	parse_pl(char **line)
 	if (!add_world(m()->wrd,
 			create_plane(c, n),
 			hit_plane,
-			create_metal(\
-			create_texture(color, line[4]), (double)rand() / (double)RAND_MAX)))
+			create_texture(color, line[4])))
 		return (ERROR);
 	return (OK);
 }
@@ -95,8 +94,7 @@ int	parse_cy(char **line)
 	if (!add_world(m()->wrd,
 			create_cylinder(c, n, r, h),
 			hit_cylinder,
-			create_metal(\
-			create_texture(color, line[6]), (double)rand() / (double)RAND_MAX)))
+			create_texture(color, line[6])))
 		return (ERROR);
 	return (OK);
 }

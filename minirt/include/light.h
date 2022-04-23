@@ -19,6 +19,7 @@
 # define KS		0.25
 
 typedef struct s_minirt	t_minirt;
+typedef struct s_hit_record	t_hit_record;
 
 typedef struct s_light
 {
