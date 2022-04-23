@@ -6,13 +6,16 @@
 /*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:52:46 by ycha              #+#    #+#             */
-/*   Updated: 2022/03/06 23:34:31 by echung           ###   ########.fr       */
+/*   Updated: 2022/04/23 20:33:55 by echung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 #define KEY_NUM 8
+int	num_a = 0;
+int	num_c = 0;
+int	num_l = 0;
 
 static void	parser_init(int (*parser[8])(char **))
 {
@@ -34,8 +37,16 @@ static int	find_key_index(char *key)
 	while (++j < KEY_NUM)
 	{
 		if (ft_strncmp(key, (char [8][3]){
-			"A", "C", "l", "sp", "pl", "sq", "cy", "tr" }[j]) == 0)
+			"A", "C", "L", "sp", "pl", "cy", "sq", "tr"}[j]) == 0)
+		{
+			if (j == 0)
+				num_a++;
+			if (j == 1)
+				num_c++;
+			if (j == 2)
+				num_l++;
 			break ;
+		}
 	}
 	return (j);
 }
@@ -53,8 +64,6 @@ static int	parsing(char *file_data)
 	lines = ft_split(file_data, "\n");
 	while (lines[++i])
 	{
-		if (lines[i][0] == '#')
-			continue ;
 		words = ft_split(lines[i], WHITESPACE);
 		if (!words[0])
 			continue ;
@@ -66,6 +75,8 @@ static int	parsing(char *file_data)
 		}
 		ft_free_split(words, ft_arrsize(words));
 	}
+	if (num_a * num_c * num_l != 1)
+		return (printf_error());
 	return (OK);
 }
 

@@ -6,7 +6,7 @@
 /*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 23:34:57 by echung            #+#    #+#             */
-/*   Updated: 2022/03/06 23:35:00 by echung           ###   ########.fr       */
+/*   Updated: 2022/04/23 20:36:26 by echung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	printf_error(void)
 {
-	printf("parsing error\n");
 	return (ERROR);
 }
 
