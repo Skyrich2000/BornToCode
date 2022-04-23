@@ -38,6 +38,6 @@ int			set_camera(t_camera *cam, t_vec lookfrom, t_vec dir, double fov);
 int			add_camera(t_camera *head, t_vec lookfrom, t_vec dir, double fov);
 
 void		draw(void);
-void		render_pixel(const int thread_idx[2], int i, int j);
+void		render_pixel(int i, int j);
 
 #endif

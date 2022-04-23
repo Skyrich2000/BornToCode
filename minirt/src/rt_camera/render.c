@@ -78,10 +78,10 @@ static int	anti(const t_camera *cam, int wdx, int hdx)
 	return (trgb_anti(&color, m()->scr.anti));
 }
 
-void	render_pixel(const int thread_idx[2], int i, int j)
+void	render_pixel(int i, int j)
 {
-	const int	x = (m()->scr.wid / W_THREAD) * thread_idx[1] + j;
-	const int	y = (m()->scr.hei / H_THREAD) * thread_idx[0] + i;
+	const int	x = j;
+	const int	y = i;
 
 	put_pixel(x, m()->scr.hei - y, anti(m()->curr_cam, x, y));
 }

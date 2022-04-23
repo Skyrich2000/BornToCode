@@ -67,7 +67,7 @@ OBJS            =	$(addprefix $(OBJ_DIR)/, $(patsubst %.c,%.o,$(FILE)))
 
 CC		=	gcc
 CFLAGS	=	-I$(INCLUDE) -I./src/mlx  -Wall -Werror -Wextra -fsanitize=address -g 
-CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit -lpthread -L/opt/homebrew/opt/zlib/lib -lz
+CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit -L/opt/homebrew/opt/zlib/lib -lz
 
 # Rule =================================================
 

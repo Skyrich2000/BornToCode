@@ -16,7 +16,6 @@
 # include <mlx.h>
 # include <math.h>
 # include <stdlib.h>
-# include <pthread.h>
 
 # include "vector.h"
 # include "library.h"
@@ -26,9 +25,6 @@
 # include "parse.h"
 # include "event.h"
 # include "camera.h"
-
-# define H_THREAD 4
-# define W_THREAD 4
 
 # define ANTI_ALIASING 0
 

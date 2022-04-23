@@ -12,44 +12,22 @@
 
 #include "minirt.h"
 
-static void	*render(void *data)
+static void	*render()
 {
 	const int		render_index = m()->curr_cam->render_index;
-	const int		thread_idx[2] = {(long long)data / W_THREAD, \
-									(long long)data % W_THREAD};
-	const int		size[2] = {\
-							(m()->scr.hei / H_THREAD), \
-							(m()->scr.wid / W_THREAD)};
-	int				idx[2];
+	int				i;
+	int				j;
 
-	idx[0] = 0;
-	while (++idx[0] <= size[0] / 4 + size[0] % 4)
+	i = 0;
+	while (++i < m()->scr.hei)
 	{
-		idx[1] = 0;
-		while (++idx[1] <= size[1])
+		j = 0;
+		while (++j < m()->scr.wid)
 		{
-			render_pixel(thread_idx, size[0] / 4 * 0 + idx[0], idx[1]);
-			render_pixel(thread_idx, size[0] / 4 * 1 + idx[0], idx[1]);
-			render_pixel(thread_idx, size[0] / 4 * 2 + idx[0], idx[1]);
-			render_pixel(thread_idx, size[0] / 4 * 3 + idx[0], idx[1]);
+			render_pixel(i, j);
 			if (m()->curr_cam->render_index != render_index)
 				return (0);
 		}
-	}
-	return (0);
-}
-
-static int	render_thread(void)
-{
-	pthread_t		thread;
-	int				i;
-
-	i = -1;
-	m()->curr_cam->render_index++;
-	while (++i < H_THREAD * W_THREAD)
-	{
-		pthread_create(&thread, NULL, render, (void *)(long long)i);
-		pthread_detach(thread);
 	}
 	return (0);
 }
@@ -71,5 +49,6 @@ void	draw(void)
 										&g->scr.line_length, \
 										&g->scr.endian);
 	}
-	render_thread();
+	m()->curr_cam->render_index++;
+	render();
 }
