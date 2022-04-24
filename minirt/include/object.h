@@ -45,7 +45,6 @@ typedef union u_object
 	t_plane		plane;
 }		t_object;
 
-
 typedef struct s_hit_record
 {
 	t_vec				p;

@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static void	*render()
+static void	*render(void)
 {
 	const int		render_index = m()->curr_cam->render_index;
 	int				i;
