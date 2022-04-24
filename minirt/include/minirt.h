@@ -19,7 +19,6 @@
 
 # include "vector.h"
 # include "library.h"
-# include "texture.h"
 # include "light.h"
 # include "object.h"
 # include "parse.h"

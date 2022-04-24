@@ -45,10 +45,6 @@ FILE			=	\
 					rt_library/lib3.c \
 					rt_library/lib4.c \
 					rt_library/lib5.c \
-					rt_texture/texture.c \
-					rt_texture/checkerboard.c \
-					rt_texture/image.c \
-					rt_texture/solid.c \
 					rt_parsing/parse.c \
 					rt_parsing/parse1.c \
 					rt_parsing/parse2.c \
