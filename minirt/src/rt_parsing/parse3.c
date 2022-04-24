@@ -29,7 +29,7 @@ int	parse_pl(char **line)
 	t_vec	n;
 	t_clr	color;
 
-	if (!(ft_arrsize(line) == 4 || ft_arrsize(line) == 5)
+	if (!(ft_arrsize(line) == 4)
 		|| !parse_split(&c, line[1])
 		|| !parse_split(&n, line[2])
 		|| !parse_split(&color, line[3]))
@@ -38,10 +38,7 @@ int	parse_pl(char **line)
 		return (ERROR);
 	if (error_in_range(color, 0, 255) == ERROR)
 		return (ERROR);
-	if (!add_world(m()->wrd,
-			create_plane(c, n),
-			hit_plane,
-			color))
+	if (!add_world(m()->wrd, create_plane(c, n), hit_plane, color))
 		return (ERROR);
 	return (OK);
 }
@@ -54,7 +51,7 @@ int	parse_cy(char **line)
 	double	r;
 	double	h;
 
-	if (!(ft_arrsize(line) == 6 || ft_arrsize(line) == 7)
+	if (!(ft_arrsize(line) == 6)
 		|| !ft_atod(&r, line[3])
 		|| !ft_atod(&h, line[4])
 		|| !parse_split(&c, line[1])
@@ -65,10 +62,7 @@ int	parse_cy(char **line)
 		return (ERROR);
 	if (error_in_range(color, 0, 255) == ERROR)
 		return (ERROR);
-	if (!add_world(m()->wrd,
-			create_cylinder(c, n, r, h),
-			hit_cylinder,
-			color))
+	if (!add_world(m()->wrd, create_cylinder(c, n, r, h), hit_cylinder, color))
 		return (ERROR);
 	return (OK);
 }

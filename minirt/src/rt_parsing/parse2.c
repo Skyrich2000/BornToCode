@@ -18,7 +18,7 @@ int	parse_sp(char **line)
 	t_vec	color;
 	double	r;
 
-	if (!(ft_arrsize(line) == 4 || ft_arrsize(line) == 5)
+	if (!(ft_arrsize(line) == 4)
 		|| !ft_atod(&r, line[2])
 		|| !parse_split(&c, line[1])
 		|| !parse_split(&color, line[3]))
@@ -29,10 +29,7 @@ int	parse_sp(char **line)
 		return (ERROR);
 	if (color.z < 0 || color.z > 255)
 		return (ERROR);
-	if (!add_world(m()->wrd,
-			create_sphere(c, r),
-			hit_sphere,
-			color))
+	if (!add_world(m()->wrd, create_sphere(c, r), hit_sphere, color))
 		return (ERROR);
 	return (OK);
 }
