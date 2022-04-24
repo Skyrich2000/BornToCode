@@ -35,7 +35,9 @@ int	set_camera(t_camera *cam, t_vec lookfrom, t_vec dir, double fov)
 	cam->view_width = ratio * cam->view_height;
 	cam->fov = fov;
 	cam->w = vec_oppo(cam->dir);
-	cam->u = vec_unit(vec_cross(vec(0, 1, 0), cam->w));
+	cam->u = vec_unit(vec_cross(cam->w, vec(0, 1, 0)));
+	if (cam->u.x == 0 && cam->u.y == 0 && cam->u.z == 0)
+		cam->u = vec_unit(vec_cross(cam->w, vec(0, 0, 1)));
 	cam->v = vec_cross(cam->w, cam->u);
 	cam->hor = vec_muln(cam->u, cam->view_width);
 	cam->ver = vec_muln(cam->v, cam->view_height);
