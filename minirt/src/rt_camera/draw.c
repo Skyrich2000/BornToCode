@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:08:47 by echung            #+#    #+#             */
-/*   Updated: 2022/04/07 20:08:51 by echung           ###   ########.fr       */
+/*   Updated: 2022/04/24 16:57:22 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static void	*render(void)
 	int				j;
 
 	i = 0;
-	while (++i < m()->scr.hei)
+	while (++i <= m()->scr.hei)
 	{
 		j = 0;
-		while (++j < m()->scr.wid)
+		while (++j <= m()->scr.wid)
 		{
 			render_pixel(i, j);
 			if (m()->curr_cam->render_index != render_index)
