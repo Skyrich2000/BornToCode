@@ -120,6 +120,7 @@ run		:
 deploy	: $(NAME)
 	echo "Deploying..."
 	rm -rf MiniRayTracing
+	export CMSG=$(git log --oneline -1 --pretty=format:"%s" )
 	git clone https://github.com/Skyrich2000/MiniRayTracing.git \
 		&& cd MiniRayTracing \
 		&& cp -f ../minirt . \
@@ -128,7 +129,7 @@ deploy	: $(NAME)
 		&& cp -rf ../res . \
 		&& cp -rf ../maps . \
 		&& git add . \
-		&& git commit -m "$$(date +%D) - Deploy" | cat \
+		&& git commit -m "$$CMSG ($$(date +%D)) - Deploy" | cat \
 		&& git push\
 		&& echo "Deploying... Done!" 
 	make fclean
