@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:13:23 by echung            #+#    #+#             */
-/*   Updated: 2022/04/07 20:13:24 by echung           ###   ########.fr       */
+/*   Updated: 2022/04/25 19:48:57 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ t_object	create_plane(t_pnt c, t_vec n)
 {
 	t_object	obj;
 
-	vec_print("plane c", &c);
-	vec_print("plane n", &n);
 	obj.plane.c = c;
 	obj.plane.n = n;
 	return (obj);

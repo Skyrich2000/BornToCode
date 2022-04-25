@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:13:58 by echung            #+#    #+#             */
-/*   Updated: 2022/04/07 20:13:59 by echung           ###   ########.fr       */
+/*   Updated: 2022/04/25 19:48:53 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ t_object	create_cylinder(t_pnt c, t_vec n, double r, double h)
 {
 	t_object	obj;
 
-	vec_print("cylinder c", &c);
-	vec_print("cylinder n", &n);
 	obj.cylinder.c = c;
 	obj.cylinder.n = n;
 	obj.cylinder.r = r;

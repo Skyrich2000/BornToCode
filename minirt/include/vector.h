@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:44:23 by ycha              #+#    #+#             */
-/*   Updated: 2022/04/07 20:44:24 by ycha             ###   ########.fr       */
+/*   Updated: 2022/04/25 19:49:06 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_ray
 
 t_vec	ray_at(t_ray *ray, double t);
 t_vec	vec(double x, double y, double z);
-void	vec_print(char *str, t_vec *vec);
 
 t_vec	vec_cal(t_vec *v, double *a, int n);
 t_vec	vec_add(t_vec v1, t_vec v2);

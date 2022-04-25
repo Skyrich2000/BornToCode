@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:52:46 by ycha              #+#    #+#             */
-/*   Updated: 2022/04/23 20:46:52 by echung           ###   ########.fr       */
+/*   Updated: 2022/04/25 19:47:49 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #define KEY_NUM 6
 
-static void	parser_init(int (*parser[8])(char **))
+static void	parser_init(int (*parser[6])(char **))
 {
 	parser[a] = parse_a;
 	parser[c] = parse_c;
@@ -31,7 +31,7 @@ static int	find_key_index(char *key)
 	j = -1;
 	while (++j < KEY_NUM)
 	{
-		if (ft_strncmp(key, (char [8][3]){
+		if (ft_strncmp(key, (char [6][3]){
 			"A", "C", "L", "sp", "pl", "cy"}[j]) == 0)
 		{
 			if (j == 0)
@@ -50,7 +50,7 @@ static int	parsing(char *file_data)
 {
 	int		i;
 	int		key_index;
-	int		(*parser[8])(char **);
+	int		(*parser[6])(char **);
 	char	**lines;
 	char	**words;
 
@@ -61,17 +61,16 @@ static int	parsing(char *file_data)
 	{
 		words = ft_split(lines[i], WHITESPACE);
 		if (!words[0])
-			continue ;
-		key_index = find_key_index(words[0]);
-		if (key_index == KEY_NUM || !parser[key_index](words))
 		{
 			ft_free_split(words, ft_arrsize(words));
-			return (printf_error());
+			continue ;
 		}
+		key_index = find_key_index(words[0]);
+		if (key_index == KEY_NUM || !parser[key_index](words))
+			return (free_line(lines, words));
 		ft_free_split(words, ft_arrsize(words));
 	}
-	if (m()->num_a * m()->num_c * m()->num_l != 1)
-		return (printf_error());
+	ft_free_split(lines, ft_arrsize(lines));
 	return (OK);
 }
 
@@ -110,7 +109,9 @@ int	input(int argc, char **argv)
 	m()->num_a = 0;
 	m()->num_c = 0;
 	m()->num_l = 0;
-	if (argc == 2 && fileread(argv[1], file_data) && parsing(file_data))
-		return (OK);
-	return (ERROR);
+	if (argc != 2 || !fileread(argv[1], file_data) || !parsing(file_data))
+		return (ERROR);
+	if (m()->num_a * m()->num_c * m()->num_l != 1)
+		return (ERROR);
+	return (OK);
 }

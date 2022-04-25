@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:52:07 by ycha              #+#    #+#             */
-/*   Updated: 2022/04/07 20:52:07 by ycha             ###   ########.fr       */
+/*   Updated: 2022/04/25 19:47:42 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ typedef enum e_parsable
 	cy
 }	t_parsable;
 
-int	printf_error(void);
 int	input(int argc, char **argv);
 int	parse_split(t_vec *input, char *line);
+int	free_line(char **line, char **words);
 
 int	parse_a(char **line);
 int	parse_c(char **line);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:10:11 by echung            #+#    #+#             */
-/*   Updated: 2022/04/07 20:10:12 by echung           ###   ########.fr       */
+/*   Updated: 2022/04/25 19:49:00 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_object	create_sphere(t_vec c, double r)
 {
 	t_object	obj;
 
-	vec_print("sphere", &c);
 	obj.sphere.c = c;
 	obj.sphere.r = r / 2;
 	return (obj);

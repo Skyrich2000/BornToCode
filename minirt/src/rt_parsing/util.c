@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 23:34:57 by echung            #+#    #+#             */
-/*   Updated: 2022/04/23 20:36:26 by echung           ###   ########.fr       */
+/*   Updated: 2022/04/25 19:48:01 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-int	printf_error(void)
-{
-	return (ERROR);
-}
 
 int	parse_split(t_vec *input, char *line)
 {
@@ -29,4 +24,11 @@ int	parse_split(t_vec *input, char *line)
 		return (ERROR);
 	ft_free_split(tmp, ft_arrsize(tmp));
 	return (OK);
+}
+
+int	free_line(char **line, char **words)
+{
+	ft_free_split(words, ft_arrsize(words));
+	ft_free_split(line, ft_arrsize(line));
+	return (ERROR);
 }
