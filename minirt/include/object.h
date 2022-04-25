@@ -19,7 +19,6 @@ typedef struct s_sphere
 {
 	t_pnt	c;
 	double	r;
-	int		inside;
 }				t_sphere;
 
 typedef struct s_plane
@@ -51,8 +50,6 @@ typedef struct s_hit_record
 	t_vec				n;
 	t_vec				rayin;
 	double				t;
-	double				u;
-	double				v;
 	int					front_face;
 	t_clr				color;
 }				t_hit_record;
