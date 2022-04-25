@@ -30,7 +30,7 @@ typedef struct s_light
 }	t_light;
 
 t_light	*init_light(void);
-int		add_light(t_light *head, t_pnt origin, t_clr color, double ratio);
+int		add_light(t_light *head, t_pnt origin, double ratio);
 
 t_clr	phong(t_hit_record *rec);
 

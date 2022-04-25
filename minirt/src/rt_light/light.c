@@ -24,7 +24,7 @@ t_light	*init_light(void)
 	return (head);
 }
 
-int	add_light(t_light *head, t_pnt origin, t_clr color, double ratio)
+int	add_light(t_light *head, t_pnt origin, double ratio)
 {
 	t_light	*light;
 
@@ -32,7 +32,7 @@ int	add_light(t_light *head, t_pnt origin, t_clr color, double ratio)
 	if (!light)
 		return (ERROR);
 	light->origin = origin;
-	light->color = color;
+	light->color = vec(1, 1, 1);
 	light->ratio = ratio;
 	light->next = head->next;
 	head->next = light;

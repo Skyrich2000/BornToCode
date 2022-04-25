@@ -60,23 +60,15 @@ int	parse_c(char **line)
 int	parse_l(char **line)
 {
 	t_pnt	c;
-	t_clr	color;
 	double	ratio;
 
-	if (ft_arrsize(line) != 4
+	if (ft_arrsize(line) != 3
 		|| !ft_atod(&ratio, line[2])
-		|| !parse_split(&c, line[1])
-		|| !parse_split(&color, line[3]))
+		|| !parse_split(&c, line[1]))
 		return (ERROR);
 	if (ratio < 0.0 || ratio > 1.0)
 		return (ERROR);
-	if (color.x < 0 || color.x > 255)
-		return (ERROR);
-	if (color.y < 0 || color.y > 255)
-		return (ERROR);
-	if (color.z < 0 || color.z > 255)
-		return (ERROR);
-	if (!add_light(m()->light, c, vec_divn(color, 255), ratio))
+	if (!add_light(m()->light, c, ratio))
 		return (ERROR);
 	return (OK);
 }
