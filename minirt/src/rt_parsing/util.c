@@ -31,3 +31,10 @@ int	parse_split(t_vec *input, char *line)
 	ft_free_split(tmp, ft_arrsize(tmp));
 	return (OK);
 }
+
+int	free_lines_and_words(char **lines, char **words)
+{
+	ft_free_split(lines, ft_arrsize(lines));
+	ft_free_split(words, ft_arrsize(words));
+	return (printf_error());
+}

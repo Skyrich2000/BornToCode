@@ -22,6 +22,7 @@ typedef struct s_minirt	t_minirt;
 int	printf_error(void);
 int	input(int argc, char **argv);
 int	parse_split(t_vec *input, char *line);
+int	free_lines_and_words(char **lines, char **words);
 
 int	parse_r(char **line);
 int	parse_a(char **line);
