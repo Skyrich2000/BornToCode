@@ -16,9 +16,11 @@ static void	put_pixel(int x, int y, int color)
 {
 	char	*dst;
 
-	if (!m()->curr_cam->img_addr)
+	if (!m()->cam.img_addr)
 		return ;
-	dst = m()->curr_cam->img_addr + \
+	if (x < 0 || x >= m()->scr.wid || y < 0 || y >= m()->scr.hei)
+		return ;
+	dst = m()->cam.img_addr + \
 		(y * m()->scr.line_length + x * (m()->scr.bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
@@ -44,14 +46,12 @@ static t_clr	ray_color(t_ray *ray)
 	return (vec((1 - 0.5 * val_for_sky), (1 - 0.3 * val_for_sky), 1));
 }
 
-void	render_pixel(int i, int j)
+static void	render_pixel(int x, int y)
 {
-	const int	x = j;
-	const int	y = i;
 	t_ray		ray;
 	t_camera	*cam;
 
-	cam = m()->curr_cam;
+	cam = &m()->cam;
 	ray.origin = cam->pos;
 	ray.dir = vec_cal((t_vec [4]){cam->low_left_corner, \
 									cam->hor, \
@@ -60,5 +60,21 @@ void	render_pixel(int i, int j)
 					(double [4]){1, x / m()->scr.wid, y / m()->scr.hei, -1}, \
 					4);
 	ray.dir = vec_unit_(&ray.dir);
-	put_pixel(x, m()->scr.hei - y, clamp_color(ray_color(&ray)));
+	put_pixel(x, y, clamp_color(ray_color(&ray)));
+}
+
+void	render(void)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (++y <= m()->scr.hei)
+	{
+		x = 0;
+		while (++x <= m()->scr.wid)
+		{
+			render_pixel(x, y);
+		}
+	}
 }

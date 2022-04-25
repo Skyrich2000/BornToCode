@@ -31,11 +31,9 @@ FILE			=	\
 					rt_vector/vector4.c \
 					rt_vector/vector5.c \
 					rt_vector/vector6.c \
-					rt_vector/vector7.c \
 					rt_event/event.c	\
 					rt_camera/camera.c \
 					rt_camera/render.c \
-					rt_camera/draw.c \
 					rt_object/world.c \
 					rt_object/sphere.c \
 					rt_object/plane.c \
@@ -90,11 +88,6 @@ run		:
 norm	:
 	Norminette $(SRCS)
 	Norminette $(INCLUDE)
-
-.PHONY	: hnorm
-hnorm	:
-	python3 -m norminette $(SRCS)
-	python3 -m norminette $(INCLUDE)
 
 .PHONY  : clean
 clean	:

@@ -57,18 +57,10 @@ static t_clr	get_light_color(t_hit_record *rec, t_light *light)
 
 t_clr	phong(t_hit_record *rec)
 {
-	t_clr		material_color;
 	t_clr		color;
-	t_light		*light;
 
-	material_color = rec->color;
-	light = m()->light->next;
 	color = (t_clr){0, 0, 0};
-	while (light)
-	{
-		color = vec_add(color, get_light_color(rec, light));
-		light = light->next;
-	}
-	color = vec_add(color, vec_muln(m()->light->color, m()->light->ratio));
-	return (vec_min(vec_mul(color, material_color), vec(1, 1, 1)));
+	color = vec_add(color, get_light_color(rec, &m()->light));
+	color = vec_add(color, vec_muln(m()->ambi.color, m()->ambi.ratio));
+	return (vec_min(vec_mul(color, rec->color), vec(1, 1, 1)));
 }

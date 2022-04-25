@@ -18,18 +18,18 @@ int	parse_a(char **line)
 
 	g = m();
 	if (ft_arrsize(line) != 3
-		|| !ft_atod(&m()->light->ratio, line[1])
-		|| !parse_split(&m()->light->color, line[2]))
+		|| !ft_atod(&m()->ambi.ratio, line[1])
+		|| !parse_split(&m()->ambi.color, line[2]))
 		return (ERROR);
-	if (m()->light->ratio < 0.0 || m()->light->ratio > 1.0)
+	if (g->ambi.ratio < 0.0 || g->ambi.ratio > 1.0)
 		return (ERROR);
-	if (m()->light->color.x < 0 || m()->light->color.x > 255)
+	if (g->ambi.color.x < 0 || g->ambi.color.x > 255)
 		return (ERROR);
-	if (m()->light->color.y < 0 || m()->light->color.y > 255)
+	if (g->ambi.color.y < 0 || g->ambi.color.y > 255)
 		return (ERROR);
-	if (m()->light->color.z < 0 || m()->light->color.z > 255)
+	if (g->ambi.color.z < 0 || g->ambi.color.z > 255)
 		return (ERROR);
-	g->light->color = vec_divn(g->light->color, 255);
+	g->ambi.color = vec_divn(g->ambi.color, 255);
 	return (OK);
 }
 
@@ -52,7 +52,7 @@ int	parse_c(char **line)
 		return (ERROR);
 	if (dir.z < -1 || dir.z > 1)
 		return (ERROR);
-	if (!add_camera(m()->cam, c, dir, fov))
+	if (!add_camera(c, dir, fov))
 		return (ERROR);
 	return (OK);
 }
@@ -68,7 +68,7 @@ int	parse_l(char **line)
 		return (ERROR);
 	if (ratio < 0.0 || ratio > 1.0)
 		return (ERROR);
-	if (!add_light(m()->light, c, ratio))
+	if (!add_light(c, ratio))
 		return (ERROR);
 	return (OK);
 }

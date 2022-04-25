@@ -13,18 +13,7 @@
 #include "minirt.h"
 #include <time.h>
 
-t_camera	*init_camera(void)
-{
-	t_camera	*head;
-
-	head = (t_camera *)malloc(sizeof(t_camera));
-	if (!head)
-		return (0);
-	head->next = 0;
-	return (head);
-}
-
-int	set_camera(t_camera *cam, t_vec lookfrom, t_vec dir, double fov)
+static int	set_camera(t_camera *cam, t_vec lookfrom, t_vec dir, double fov)
 {
 	double		ratio;
 
@@ -35,9 +24,9 @@ int	set_camera(t_camera *cam, t_vec lookfrom, t_vec dir, double fov)
 	cam->view_width = ratio * cam->view_height;
 	cam->fov = fov;
 	cam->w = vec_oppo(cam->dir);
-	cam->u = vec_unit(vec_cross(vec(0, 1, 0), cam->w));
+	cam->u = vec_unit(vec_cross(cam->w, vec(0, 1, 0)));
 	if (cam->u.x == 0 && cam->u.y == 0 && cam->u.z == 0)
-		cam->u = vec_unit(vec_cross(vec(0, 0, 1), cam->w));
+		cam->u = vec_unit(vec_cross(cam->w, vec(0, 0, 1)));
 	cam->v = vec_cross(cam->w, cam->u);
 	cam->hor = vec_muln(cam->u, cam->view_width);
 	cam->ver = vec_muln(cam->v, cam->view_height);
@@ -48,18 +37,14 @@ int	set_camera(t_camera *cam, t_vec lookfrom, t_vec dir, double fov)
 	return (OK);
 }
 
-int	add_camera(t_camera *head, t_vec lookfrom, t_vec dir, double fov)
+int	add_camera(t_vec lookfrom, t_vec dir, double fov)
 {
-	t_camera	*cam;
+	t_minirt	*g;
 
-	cam = malloc(sizeof(t_camera));
-	if (!cam)
-		return (ERROR);
-	set_camera(cam, lookfrom, dir, fov);
-	cam->img = 0;
-	cam->img_addr = 0;
-	cam->next = head->next;
-	cam->render_index = 0;
-	head->next = cam;
+	g = m();
+	set_camera(&g->cam, lookfrom, dir, fov);
+	g->cam.img = mlx_new_image(g->scr.mlx, g->scr.wid, g->scr.hei);
+	g->cam.img_addr = mlx_get_data_addr(g->cam.img, &g->scr.bits_per_pixel, \
+										&g->scr.line_length, &g->scr.endian);
 	return (OK);
 }

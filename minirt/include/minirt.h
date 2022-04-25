@@ -25,7 +25,6 @@
 # include "event.h"
 # include "camera.h"
 
-# define MAX_DEPTH 50
 # define ERROR 0
 # define OK 1
 # define EPSILON 1e-6
@@ -45,9 +44,9 @@ typedef struct s_minirt
 {
 	t_screen	scr;
 	t_world		*wrd;
-	t_camera	*cam;
-	t_camera	*curr_cam;
-	t_light		*light;
+	t_camera	cam;
+	t_light		light;
+	t_light		ambi;
 	int			num_a;
 	int			num_c;
 	int			num_l;

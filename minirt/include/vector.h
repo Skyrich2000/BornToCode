@@ -57,10 +57,6 @@ t_vec	vec_unit_(t_vec *vec);
 t_vec	reflect(t_vec v, t_vec n);
 t_vec	reflect_(t_vec *v, t_vec *n);
 
-t_vec	random_in_unit_sphere(void);
-t_vec	random_unit_vector(void);
-t_vec	random_in_hemisphere(t_vec *normal);
-
 double	vec_length(t_vec vec);
 double	vec_length_(t_vec *vec);
 double	vec_length_squared(t_vec vec);

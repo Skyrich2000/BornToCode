@@ -29,15 +29,11 @@ typedef struct s_camera
 	t_vec			w;
 	void			*img;
 	char			*img_addr;
-	int				render_index;
-	struct s_camera	*next;
 }	t_camera;
 
 t_camera	*init_camera(void);
-int			set_camera(t_camera *cam, t_vec lookfrom, t_vec dir, double fov);
-int			add_camera(t_camera *head, t_vec lookfrom, t_vec dir, double fov);
+int			add_camera(t_vec lookfrom, t_vec dir, double fov);
 
-void		draw(void);
-void		render_pixel(int i, int j);
+void		render(void);
 
 #endif

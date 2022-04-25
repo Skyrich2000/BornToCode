@@ -12,29 +12,13 @@
 
 #include "minirt.h"
 
-t_light	*init_light(void)
+int	add_light(t_pnt origin, double ratio)
 {
-	t_light	*head;
+	t_minirt	*g;
 
-	head = (t_light *)malloc(sizeof(t_light));
-	if (!head)
-		return (0);
-	head->origin = vec(0, 0, 0);
-	head->next = 0;
-	return (head);
-}
-
-int	add_light(t_light *head, t_pnt origin, double ratio)
-{
-	t_light	*light;
-
-	light = malloc(sizeof(t_light));
-	if (!light)
-		return (ERROR);
-	light->origin = origin;
-	light->color = vec(1, 1, 1);
-	light->ratio = ratio;
-	light->next = head->next;
-	head->next = light;
+	g = m();
+	g->light.origin = origin;
+	g->light.color = vec(1, 1, 1);
+	g->light.ratio = ratio;
 	return (OK);
 }
