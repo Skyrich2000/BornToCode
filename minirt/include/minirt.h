@@ -25,14 +25,11 @@
 # include "event.h"
 # include "camera.h"
 
-# define ANTI_ALIASING 0
-
 # define MAX_DEPTH 50
 # define ERROR 0
 # define OK 1
 # define EPSILON 1e-6
 
-// image data 구조체
 typedef struct s_screen
 {
 	void	*mlx;
@@ -42,10 +39,8 @@ typedef struct s_screen
 	int		endian;
 	double	wid;
 	double	hei;
-	int		anti;
 }		t_screen;
 
-// the everything...
 typedef struct s_minirt
 {
 	t_screen	scr;

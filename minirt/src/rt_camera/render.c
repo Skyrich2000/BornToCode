@@ -23,17 +23,12 @@ static void	put_pixel(int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-static int	trgb_anti(t_vec *colors, int anti)
+static int	clamp_color(t_vec colors)
 {
-	double	scale;
-
-	if (anti == 0)
-		anti = 1;
-	scale = 1 / (double)anti;
-	colors->x = clamp((colors->x * scale), 0, 0.999);
-	colors->y = clamp((colors->y * scale), 0, 0.999);
-	colors->z = clamp((colors->z * scale), 0, 0.999);
-	return (trgb(0, colors->x * 256, colors->y * 256, colors->z * 256));
+	colors.x = clamp(colors.x, 0, 0.999);
+	colors.y = clamp(colors.y, 0, 0.999);
+	colors.z = clamp(colors.z, 0, 0.999);
+	return (trgb(0, colors.x * 256, colors.y * 256, colors.z * 256));
 }
 
 static t_clr	ray_color(t_ray *ray)
@@ -49,39 +44,21 @@ static t_clr	ray_color(t_ray *ray)
 	return (vec((1 - 0.5 * val_for_sky), (1 - 0.3 * val_for_sky), 1));
 }
 
-static int	anti(const t_camera *cam, int wdx, int hdx)
-{
-	double	u;
-	double	v;
-	int		adx;
-	t_ray	ray;
-	t_clr	color;
-
-	color = vec(0, 0, 0);
-	adx = -1;
-	while (++adx <= m()->scr.anti)
-	{
-		u = (double)(wdx + rand_num(m()->scr.anti, 0, 0)) / (m()->scr.wid - 1);
-		v = (double)(hdx + rand_num(m()->scr.anti, 0, 0)) / (m()->scr.hei - 1);
-		ray.origin = cam->pos;
-		ray.dir = vec_cal((t_vec [4]){cam->low_left_corner, \
-										cam->hor, \
-										cam->ver, \
-										cam->pos}, \
-							(double [4]){1, u, v, -1}, \
-							4);
-		ray.dir = vec_unit_(&ray.dir);
-		color = vec_cal((t_vec [2]){color, ray_color(&ray)}, \
-						(double [2]){1, 1}, \
-						2);
-	}
-	return (trgb_anti(&color, m()->scr.anti));
-}
-
 void	render_pixel(int i, int j)
 {
 	const int	x = j;
 	const int	y = i;
+	t_ray		ray;
+	t_camera	*cam;
 
-	put_pixel(x, m()->scr.hei - y, anti(m()->curr_cam, x, y));
+	cam = m()->curr_cam;
+	ray.origin = cam->pos;
+	ray.dir = vec_cal((t_vec [4]){cam->low_left_corner, \
+									cam->hor, \
+									cam->ver, \
+									cam->pos}, \
+					(double [4]){1, x / m()->scr.wid, y / m()->scr.hei, -1}, \
+					4);
+	ray.dir = vec_unit_(&ray.dir);
+	put_pixel(x, m()->scr.hei - y, clamp_color(ray_color(&ray)));
 }

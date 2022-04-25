@@ -33,7 +33,6 @@ t_vec	random_unit_vector(void)
 	return (vec_unit_(&tmp));
 }
 
-// In the same hemisphere as the normal
 t_vec	random_in_hemisphere(t_vec *normal)
 {
 	t_vec	in_unit_sphere;

@@ -34,7 +34,6 @@ static t_clr	get_specular(t_hit_record *rec, t_light *light, t_vec light_dir)
 	return (vec_muln(vec_muln(light->color, KS), spec));
 }
 
-// (교점에서 출발하여 광원을 향하는 벡터)와 (교점에서의 법선벡터)의 내적값.
 static t_clr	get_light_color(t_hit_record *rec, t_light *light)
 {
 	t_clr			diffuse;
