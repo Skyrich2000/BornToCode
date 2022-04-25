@@ -6,7 +6,7 @@
 #    By: ycha <ycha@gmail.com>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/26 15:07:00 by suhshin           #+#    #+#              #
-#    Updated: 2022/04/23 22:02:37 by echung           ###   ########.fr        #
+#    Updated: 2022/04/25 19:07:42 by ycha             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,7 @@ OBJS            =	$(addprefix $(OBJ_DIR)/, $(patsubst %.c,%.o,$(FILE)))
 
 CC		=	gcc
 CFLAGS	=	-I$(INCLUDE) -I./src/mlx  -Wall -Werror -Wextra -fsanitize=address -g 
-CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit -L/opt/homebrew/opt/zlib/lib -lz
+CLIB	=	-Lsrc/mlx -lmlx -framework OpenGL -framework Appkit
 
 # Rule =================================================
 
