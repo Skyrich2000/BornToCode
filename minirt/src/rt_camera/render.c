@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echung <echung@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: ycha <ycha@gmail.com>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:08:33 by echung            #+#    #+#             */
-/*   Updated: 2022/04/07 20:08:34 by echung           ###   ########.fr       */
+/*   Updated: 2022/04/30 19:02:48 by ycha             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ void	render(void)
 	int	x;
 	int	y;
 
-	y = 0;
-	while (++y <= m()->scr.hei)
+	y = -1;
+	while (++y < m()->scr.hei)
 	{
-		x = 0;
-		while (++x <= m()->scr.wid)
+		x = -1;
+		while (++x < m()->scr.wid)
 		{
 			render_pixel(x, y);
 		}
