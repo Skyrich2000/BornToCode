@@ -8,11 +8,11 @@ RESET="\033[0m"
 
 # File =================================================
 
-NAME		=	karenFilter
+NAME		=	harlFilter
 
 INCLUDE		=	./include
 FILE		=	main.cpp  \
-				Karen.cpp
+				Harl.cpp
 
 SRC_DIR		=	./src
 SRCS		= 	$(addprefix $(SRC_DIR)/, $(FILE))

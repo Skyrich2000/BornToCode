@@ -1,14 +1,9 @@
-#ifndef KAREN_HPP
-#define KAREN_HPP
-
-#define DEBUG 0
-#define INFO 1
-#define WARNING 2
-#define ERROR 3
+#ifndef HARL_HPP
+#define HARL_HPP
 
 #include <string>
 
-class Karen {
+class Harl {
    private:
     void debug(void);
     void info(void);
@@ -16,8 +11,8 @@ class Karen {
     void error(void);
 
    public:
-    Karen();
-    ~Karen();
+    Harl();
+    ~Harl();
 
     void complain(std::string level);
 };
