@@ -47,9 +47,9 @@ void testDeepCopy() {
 }
 
 void testAbstract() {
-    Animal *animal = new Animal();
-    animal->makeSound();
-    delete animal;
+    // Animal *animal = new Animal();
+    // animal->makeSound();
+    // delete animal;
 }
 
 int main() {
