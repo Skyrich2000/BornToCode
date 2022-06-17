@@ -2,7 +2,7 @@
 - @echung
 	- builtin functions
 - @ycha
-	- parsing
+	- parsing & analysis & execution
 
 ## Minishell Blueprint
 <p align = "center"><img src = "https://github.com/euiminnn/image-upload/blob/master/minishell%20blueprint.png" width = "500"></p>
