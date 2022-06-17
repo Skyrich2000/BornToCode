@@ -39,6 +39,7 @@ void testDeepCopy() {
     cat2->printBrain();
 
     *cat2 = *cat1;
+    cat1->getBrain()->setIdeas("🔟");
     delete cat1;
 
     cat2->printBrain();
