@@ -2,7 +2,23 @@
 
 Convert::Convert() : value(0) {}
 
-Convert::Convert(const std::string& input) : value(std::stod(input)) {}
+Convert::Convert(const std::string& input) {
+    char* check;
+
+    this->input = input;
+    this->value = std::strtod(input.c_str(), &check);
+
+    if (*check == 0)
+        this->type = NUMBER;
+    else {
+        if (*check == 'f' && *(check + 1) == 0)
+            this->type = NUMBER;
+        else if (isascii(*check) && !isdigit(*check) && *(check + 1) == 0 && this->value == 0)
+            this->type = CHAR;
+        else
+            this->type = ERROR;
+    }
+}
 
 Convert::Convert(const Convert& obj) : value(obj.value) {
     *this = obj;
@@ -18,66 +34,48 @@ Convert& Convert::operator=(const Convert& obj) {
 // ----------------------------------------------------------------------------
 
 char Convert::toChar() const {
-    char ch = static_cast<char>(value);
-
-    if (isnan(value) || isinf(value)) {
+    if (this->type == ERROR)
         throw ImpossibleException();
-    } else if (!isprint(toChar())) {
-        throw NonDisplayableException();
-    }
+    if (this->input == "nan" || this->input == "nanf" || this->input == "+inf" || this->input == "-inf" || this->input == "+inff" || this->input == "-inff" || this->input == "inf" || this->input == "inff")
+        throw ImpossibleException();
 
-    return ch;
+    if (this->type == CHAR) {
+        if (!isprint(input[0]))
+            throw NonDisplayableException();
+        return static_cast<char>(input[0]);
+    }
+    if (!isprint(this->value))
+        throw NonDisplayableException();
+    return static_cast<char>(value);
 }
 
 int Convert::toInt() const {
-    int num = static_cast<int>(value);
-
-    if (isnan(value) || isinf(value)) {
+    if (this->type == ERROR)
         throw ImpossibleException();
-    } else if (std::numeric_limits<int>::max() < value || std::numeric_limits<int>::min() > value) {
-        std::cout << "Int Overflow" << std::endl;
-    }
+    if (this->input == "nan" || this->input == "nanf" || this->input == "+inf" || this->input == "-inf" || this->input == "+inff" || this->input == "-inff" || this->input == "inf" || this->input == "inff")
+        throw ImpossibleException();
 
-    return num;
+    if (INT_MAX < value || INT_MIN > value)
+        throw ImpossibleException();
+    if (this->type == CHAR)
+        return static_cast<int>(this->input[0]);
+    return static_cast<int>(value);
 }
 
 float Convert::toFloat() const {
-    float f = static_cast<float>(value);
-
-    return f;
-
-    // std::cout << std::setprecision(std::numeric_limits<float>::digits10) << toFloat() << ".0f" << std::endl;
-    // if (isChar == true) {
-    //     return static_cast<float>(input.at(0));
-    // } else {
-    //     if (isNan == true) {
-    //         throw ImpossibleException();
-    //     } else if (isInff == true && value > 0) {
-    //         throw ImpossibleException();
-    //     } else if (isInff == true && value < 0) {
-    //         throw ImpossibleException();
-    //     }
-    //     return static_cast<float>(value);
-    // }
+    if (this->type == ERROR)
+        throw ImpossibleException();
+    if (this->type == CHAR)
+        return static_cast<float>(this->input[0]);
+    return static_cast<float>(value);
 }
 
 double Convert::toDouble() const {
-    double d = static_cast<double>(value);
-
-    return d;
-
-    // if (isChar == true) {
-    //     return static_cast<double>(input.at(0));
-    // } else {
-    //     if (isNan == true) {
-    //         throw ImpossibleException();
-    //     } else if (isInff == true && value > 0) {
-    //         throw ImpossibleException();
-    //     } else if (isInff == true && value < 0) {
-    //         throw ImpossibleException();
-    //     }
-    //     return static_cast<double>(value);
-    // }
+    if (this->type == ERROR)
+        throw ImpossibleException();
+    if (this->type == CHAR)
+        return static_cast<double>(this->input[0]);
+    return static_cast<double>(value);
 }
 
 // ----------------------------------------------------------------------------
@@ -106,6 +104,7 @@ void Convert::printInt() const {
 void Convert::printFloat() const {
     std::cout << "float: ";
     try {
+        std::cout.precision(7);
         float f = this->toFloat();
         if (f - static_cast<int>(f) == 0) {
             std::cout << f << ".0f";
@@ -121,6 +120,7 @@ void Convert::printFloat() const {
 void Convert::printDouble() const {
     std::cout << "double: ";
     try {
+        std::cout.precision(15);
         float d = this->toDouble();
         if (d - static_cast<int>(d) == 0) {
             std::cout << d << ".0";

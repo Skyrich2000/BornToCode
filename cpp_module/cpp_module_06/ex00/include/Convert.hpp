@@ -9,9 +9,15 @@
 #include <limits>
 #include <string>
 
+#define NUMBER 0
+#define CHAR 1
+#define ERROR 2
+
 class Convert {
    private:
-    const double value;
+    std::string input;
+    double value;
+    int type;
 
     Convert();
     Convert& operator=(const Convert& obj);
