@@ -11,11 +11,13 @@ Span::Span(const Span& obj) {
 Span::~Span() {}
 
 Span& Span::operator=(const Span& obj) {
-    this->v.clear();
-    this->n = obj.n;
+    if (this != &obj) {
+        this->v.clear();
+        this->n = obj.n;
 
-    for (unsigned int i = 0; i < this->n; i++) {
-        this->v.push_back(obj.v[i]);
+        for (unsigned int i = 0; i < this->n; i++) {
+            this->v.push_back(obj.v[i]);
+        }
     }
     return *this;
 }
