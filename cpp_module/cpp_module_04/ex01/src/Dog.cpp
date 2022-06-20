@@ -6,6 +6,7 @@ Dog::Dog() : Animal("Dog") {
 }
 
 Dog::Dog(const Dog& obj) {
+    this->brain = new Brain();
     std::cout << "Dog - copy constructor has been called." << std::endl;
     *this = obj;
 }
