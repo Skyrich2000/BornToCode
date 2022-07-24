@@ -1,16 +1,16 @@
 #include <iostream>
 
-#include "Karen.hpp"
+#include "Harl.hpp"
 
 int main(int argc, const char* const argv[]) {
-    Karen karen;
+    Harl harl;
 
     if (argc != 2) {
         std::cout << "[ Slient ]" << std::endl;
         return (0);
     }
 
-    karen.complain(std::string(argv[1]));
+    harl.complain(std::string(argv[1]));
 
     return (0);
 }

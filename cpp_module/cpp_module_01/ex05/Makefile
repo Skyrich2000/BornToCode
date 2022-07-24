@@ -12,7 +12,7 @@ NAME		=	a.out
 
 INCLUDE		=	./include
 FILE		=	main.cpp  \
-				Karen.cpp
+				Harl.cpp
 
 SRC_DIR		=	./src
 SRCS		= 	$(addprefix $(SRC_DIR)/, $(FILE))

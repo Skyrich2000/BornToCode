@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vector.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycha <ycha@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/15 02:51:18 by ycha              #+#    #+#             */
+/*   Updated: 2022/04/15 02:51:19 by ycha             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef VECTOR_H
 # define VECTOR_H
 # include <math.h>
 # include <stdio.h>
 
-typedef struct s_vec t_clr;
-typedef struct s_vec t_pnt;
-typedef struct s_vec t_vec;
+typedef struct s_vec	t_clr;
+typedef struct s_vec	t_pnt;
+typedef struct s_vec	t_vec;
 
 struct	s_vec
 {
@@ -14,7 +26,7 @@ struct	s_vec
 	double	z;
 };
 
-typedef struct	s_ray
+typedef struct s_ray
 {
 	t_pnt	origin;
 	t_vec	dir;
@@ -44,7 +56,7 @@ double	vec_dot_(t_vec *v1, t_vec *v2);
 t_vec	vec_unit(t_vec vec);
 t_vec	vec_unit_(t_vec *vec);
 t_vec	reflect(t_vec v, t_vec n);
-t_vec 	reflect_(t_vec *v, t_vec *n);
+t_vec	reflect_(t_vec *v, t_vec *n);
 
 t_vec	random_in_unit_sphere(void);
 t_vec	random_unit_vector(void);
