@@ -13,8 +13,8 @@ namespace ft
         typedef typename ft::iterator_traits<pointer>::value_type value_type;
         typedef typename ft::iterator_traits<pointer>::reference reference;
         typedef typename ft::iterator_traits<pointer>::difference_type difference_type;
-        typedef typename ft::iterator_traits<pointer>::iterator_category iterator_category;
-        // typedef std::random_access_iterator_tag iterator_category;
+        // typedef typename ft::iterator_traits<pointer>::iterator_category iterator_category;
+        typedef std::random_access_iterator_tag iterator_category; // TODO: 이거써도 되는거 아닌가
 
         random_access_iterator(void) : _p(NULL) {}
 
