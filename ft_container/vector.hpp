@@ -127,6 +127,13 @@ namespace ft
             _base[_size++] = val;
         }
 
+        void pop_back()
+        {
+            if (_size == 0)
+                return;
+            _alloc.destroy(&_base[--_size]);
+        }
+
         template <class InputIterator>
         void assign(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = NULL)
         {
@@ -144,7 +151,6 @@ namespace ft
                 push_back(val);
         }
 
-        // copilot
         reference at(size_type n)
         {
             if (n >= _size)
@@ -152,20 +158,11 @@ namespace ft
             return _base[n];
         }
 
-        // copilot
         const_reference at(size_type n) const
         {
             if (n >= _size)
                 throw std::out_of_range("vector");
             return _base[n];
-        }
-
-        // copilot
-        void pop_back()
-        {
-            if (_size == 0)
-                return;
-            _alloc.destroy(&_base[--_size]);
         }
 
         // copilot
@@ -250,7 +247,6 @@ namespace ft
             }
         }
 
-        // copilot
         void swap(vector &x)
         {
             ft::swap(_base, x._base);
@@ -259,30 +255,86 @@ namespace ft
             ft::swap(_alloc, x._alloc);
         }
 
-        // dohykim
-        iterator begin() { return iterator(_base); }
-        const_iterator begin() const { return const_iterator(_base); }
-        iterator end() { return iterator(_base + _size); }
-        const_iterator end() const { return const_iterator(_base + _size); }
+        iterator begin()
+        {
+            return iterator(_base);
+        }
+        iterator end()
+        {
+            return iterator(_base + _size);
+        }
+        const_iterator begin() const
+        {
+            return const_iterator(_base);
+        }
+        const_iterator end() const
+        {
+            return const_iterator(_base + _size);
+        }
 
-        reverse_iterator rbegin() { return reverse_iterator(end()); }
-        const_reverse_iterator rbegin() const { return const_reverse_iterator(end()); }
-        reverse_iterator rend() { return reverse_iterator(begin()); }
-        const_reverse_iterator rend() const { return const_reverse_iterator(rend()); }
+        reverse_iterator rbegin()
+        {
+            return reverse_iterator(end());
+        }
+        reverse_iterator rend()
+        {
+            return reverse_iterator(begin());
+        }
+        const_reverse_iterator rbegin() const
+        {
+            return const_reverse_iterator(end());
+        }
+        const_reverse_iterator rend() const
+        {
+            return const_reverse_iterator(rend());
+        }
 
-        allocator_type get_allocator() const { return _alloc; }
-        size_type size() const { return _size; }
-        size_type max_size() const { return _alloc.max_size(); }
+        reference front()
+        {
+            return _base[0];
+        }
+        reference back()
+        {
+            return _base[_size - 1];
+        }
+        const_reference front() const
+        {
+            return _base[0];
+        }
+        const_reference back() const
+        {
+            return _base[_size - 1];
+        }
 
-        reference front() { return _base[0]; }
-        const_reference front() const { return _base[0]; }
-        reference back() { return _base[_size - 1]; }
-        const_reference back() const { return _base[_size - 1]; }
+        allocator_type get_allocator() const
+        {
+            return _alloc;
+        }
+        size_type size() const
+        {
+            return _size;
+        }
+        size_type max_size() const
+        {
+            return _alloc.max_size();
+        }
+        bool empty() const
+        {
+            return _size == 0;
+        }
+        size_type capacity() const
+        {
+            return _capacity;
+        }
 
-        bool empty() const { return _size == 0; }
-        size_type capacity() const { return _capacity; }
-        reference operator[](size_type n) { return _base[n]; }
-        const_reference operator[](size_type n) const { return _base[n]; }
+        reference operator[](size_type n)
+        {
+            return _base[n];
+        }
+        const_reference operator[](size_type n) const
+        {
+            return _base[n];
+        }
     };
 
     template <class T, class Alloc>
