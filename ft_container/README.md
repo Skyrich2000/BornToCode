@@ -145,3 +145,18 @@ typedef typename _Iter::iterator_category iterator_category; // random, bidirect
         size_type _capacity;
         allocator_type _alloc;
 ```
+
+6. stack 구현
+
+- https://legacy.cplusplus.com/reference/stack/stack/?kw=stack
+- vector 가지고 구현하면된다. 또는 #include <stack> 여기서 직접 봐도 됨
+- 그리고 cplusplus 여기가 좀더 정확한거같음 그래서 여기 기준으로 하겠음
+- 평가자가 뭐라고 하면 공식문서에서 보라고 하면됨
+
+```cpp
+
+// A container adaptor keeps internally a container object as data. This container object is a copy of the ctnr argument passed to the constructor, if any, otherwise it is an empty container.
+
+// ctnr의 복사본을 내부적으로 들고있으면 된다.
+
+```
