@@ -20,20 +20,19 @@ namespace ft
 
         Node(const pair_type &pair, Node *parent, int height) : pair(pair), parent(parent), left(NULL), right(NULL), height(height) {}
 
-        Node(const pair_type &pair, Node *parent, Node *left, Node *right, int height) : pair(pair), parent(parent), left(left), right(right), height(height) {}
-
         ~Node() {}
 
         /**
          * @debug
          */
-        void print()
+        void print(int value_toggle = 0)
         {
             for (int i = 0; i < height; i++)
-            {
-                std::cout << " ";
-            }
-            std::cout << pair.first << std::endl;
+                std::cout << "  ";
+            std::cout << "(" << height << ") " << pair.first;
+            if (value_toggle)
+                std::cout << "=" << pair.second << " ";
+            std::cout << " " << std::endl;
         }
     };
 
@@ -58,58 +57,50 @@ namespace ft
         /**
          * @debug
          */
-        void _print(node_pointer node)
+        void _print(node_pointer node, int value_toggle = 0)
         {
             if (node == NULL)
-            {
                 return;
-            }
-            _print(node->left);
-            node->print();
-            _print(node->right);
+
+            _print(node->left, value_toggle);
+            node->print(value_toggle);
+            _print(node->right, value_toggle);
+        }
+
+        void _insert_normal(const Key &key, const Value &value, node_pointer parent)
+        {
+            if (parent == NULL)
+                throw std::runtime_error("parent is NULL");
+
+            node_pointer &child = key < parent->pair.first ? parent->left : parent->right;
+
+            if (child == NULL)
+                child = new Node<Key, Value>(ft::make_pair(key, value), parent, parent->height + 1);
+            else
+                this->_insert_normal(key, value, child);
         }
 
     public:
-        // void insert(const Key &key, const Value &value)
-        // {
-
-        //     node_pointer new_node = new Node<Key, Value>(make_pair(key, value), parent, 0);
-
-        //     node_pointer node = this->head;
-        //     node_pointer parent = NULL;
-        //     while (node != NULL)
-        //     {
-        //         parent = node;
-        //         if (key < node->pair.first)
-        //         {
-        //             node = node->left;
-        //         }
-        //         else
-        //         {
-        //             node = node->right;
-        //         }
-        //     }
-
-        //     if (parent == NULL)
-        //     {
-        //         this->head = node;
-        //     }
-        //     else if (key < parent->pair.first)
-        //     {
-        //         parent->left = node;
-        //     }
-        //     else
-        //     {
-        //         parent->right = node;
-        //     }
-        // }
+        /**
+         * @debug
+         */
+        void
+        _print(int value_toggle = 0)
+        {
+            this->_print(this->head, value_toggle);
+        }
 
         /**
          * @debug
          */
-        void _print()
+        void _insert(const Key &key, const Value &value)
         {
-            this->_print(this->head);
+            this->_insert_normal(key, value, this->head);
+        }
+
+        void insert(const Key &key, const Value &value)
+        {
+            this->_insert_normal(key, value, this->head);
         }
     };
 }
