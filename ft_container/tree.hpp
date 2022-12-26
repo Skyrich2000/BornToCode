@@ -70,39 +70,39 @@ namespace ft
         }
 
     public:
-        void insert(const Key &key, const Value &value)
-        {
+        // void insert(const Key &key, const Value &value)
+        // {
 
-            node_pointer new_node = new Node<Key, Value>(make_pair(key, value), parent, 0);
+        //     node_pointer new_node = new Node<Key, Value>(make_pair(key, value), parent, 0);
 
-            node_pointer node = this->head;
-            node_pointer parent = NULL;
-            while (node != NULL)
-            {
-                parent = node;
-                if (key < node->pair.first)
-                {
-                    node = node->left;
-                }
-                else
-                {
-                    node = node->right;
-                }
-            }
+        //     node_pointer node = this->head;
+        //     node_pointer parent = NULL;
+        //     while (node != NULL)
+        //     {
+        //         parent = node;
+        //         if (key < node->pair.first)
+        //         {
+        //             node = node->left;
+        //         }
+        //         else
+        //         {
+        //             node = node->right;
+        //         }
+        //     }
 
-            if (parent == NULL)
-            {
-                this->head = node;
-            }
-            else if (key < parent->pair.first)
-            {
-                parent->left = node;
-            }
-            else
-            {
-                parent->right = node;
-            }
-        }
+        //     if (parent == NULL)
+        //     {
+        //         this->head = node;
+        //     }
+        //     else if (key < parent->pair.first)
+        //     {
+        //         parent->left = node;
+        //     }
+        //     else
+        //     {
+        //         parent->right = node;
+        //     }
+        // }
 
         /**
          * @debug
