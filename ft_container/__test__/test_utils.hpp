@@ -123,7 +123,7 @@ namespace __TEST__
 
         std::cout.rdbuf(__p_cout_streambuf);
         std::cout << "\x1B[31mTest " << __test_count << " Failed! ... " << test_name << "\033[0m" << std::endl;
-        std::cout << "\x1B[33mNew Snapshot Found!\033[0m" << std::endl;
+        std::cout << "\x1B[33mNew Snapshot Updated!\033[0m" << std::endl;
         std::cout << __oss.str() << std::endl;
 
         exit(1);

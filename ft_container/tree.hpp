@@ -27,7 +27,7 @@ namespace ft
          */
         void print(int value_toggle = 0)
         {
-            for (int i = 0; i < height; i++)
+            for (int i = -1; i < height; i++)
                 std::cout << "  ";
             std::cout << "(" << height << ") " << pair.first;
             if (value_toggle)
@@ -48,7 +48,7 @@ namespace ft
     public:
         Tree()
         {
-            this->head = new Node<Key, Value>(make_pair(Key(), Value()), NULL, 0);
+            this->head = new Node<Key, Value>(ft::make_pair(Key(), Value()), NULL, -1);
         }
 
         ~Tree() {}
@@ -67,12 +67,21 @@ namespace ft
             _print(node->right, value_toggle);
         }
 
+        node_pointer get_root()
+        {
+            node_pointer root = this->head->left;
+            root = root ? root : this->head->right;
+            root = root ? root : this->head;
+
+            return root;
+        }
+
         void _insert_normal(const Key &key, const Value &value, node_pointer parent)
         {
             if (parent == NULL)
                 throw std::runtime_error("parent is NULL");
 
-            node_pointer &child = key < parent->pair.first ? parent->left : parent->right;
+            node_pointer &child = parent->pair.first < key ? parent->left : parent->right;
 
             if (child == NULL)
                 child = new Node<Key, Value>(ft::make_pair(key, value), parent, parent->height + 1);
@@ -93,14 +102,23 @@ namespace ft
         /**
          * @debug
          */
+        node_pointer get_head()
+        {
+            return this->head;
+        }
+
+        /**
+         * @debug
+         */
         void _insert(const Key &key, const Value &value)
         {
-            this->_insert_normal(key, value, this->head);
+
+            this->_insert_normal(key, value, this->get_root());
         }
 
         void insert(const Key &key, const Value &value)
         {
-            this->_insert_normal(key, value, this->head);
+            this->_insert(key, value);
         }
     };
 }
