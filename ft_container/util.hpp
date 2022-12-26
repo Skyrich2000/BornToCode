@@ -140,11 +140,14 @@ namespace ft
         T1 first;
         T2 second;
 
-        pair() : first(), second() {}                           // 기본 생성자
+        pair() : first(), second() {} // 기본 생성자
+
         pair(const T1 &x, const T2 &y) : first(x), second(y) {} // 생성자
+
         template <class U1, class U2>
         pair(const pair<U1, U2> &p) : first(p.first), second(p.second) {} // 복사생성자
-        ~pair() {}                                                        // 소멸자
+
+        ~pair() {} // 소멸자
 
         pair &operator=(const pair &other)
         {
