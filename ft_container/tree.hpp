@@ -62,9 +62,9 @@ namespace ft
             if (node == NULL)
                 return;
 
-            _print(node->left, value_toggle);
-            node->print(value_toggle);
             _print(node->right, value_toggle);
+            node->print(value_toggle);
+            _print(node->left, value_toggle);
         }
 
         node_pointer get_root()
@@ -81,7 +81,7 @@ namespace ft
             if (parent == NULL)
                 throw std::runtime_error("parent is NULL");
 
-            node_pointer &child = parent->pair.first < key ? parent->left : parent->right;
+            node_pointer &child = key < parent->pair.first ? parent->left : parent->right;
 
             if (child == NULL)
                 child = new Node<Key, Value>(ft::make_pair(key, value), parent, parent->height + 1);
@@ -102,7 +102,7 @@ namespace ft
         /**
          * @debug
          */
-        node_pointer get_head()
+        node_pointer _get_head()
         {
             return this->head;
         }
@@ -119,6 +119,31 @@ namespace ft
         void insert(const Key &key, const Value &value)
         {
             this->_insert(key, value);
+        }
+
+        void rotate_right(node_pointer node)
+        {
+            if (node == NULL)
+                throw std::runtime_error("node is NULL");
+
+            node_pointer parent = node->parent;
+            node_pointer left = node->left;
+
+            if (left == NULL)
+                throw std::runtime_error("left is NULL");
+
+            node->left = left->right;
+            left->right = node;
+
+            if (parent == NULL)
+                this->head = left;
+            else if (parent->left == node)
+                parent->left = left;
+            else
+                parent->right = left;
+
+            left->parent = parent;
+            node->parent = left;
         }
     };
 }

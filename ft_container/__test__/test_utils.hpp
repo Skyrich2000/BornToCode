@@ -105,6 +105,14 @@ namespace __TEST__
 
     void expect()
     {
+        if (__test_file_name == "")
+        {
+            std::cout.rdbuf(__p_cout_streambuf);
+            std::cout << "\x1B[31mERROR! please set test file name first\033[0m" << std::endl;
+            std::cout << "\x1B[31mUsage: set_test_file(\"test_file_name.cpp\");\033[0m" << std::endl;
+            exit(1);
+        }
+
         std::vector<std::string> expected = _split(__oss.str(), '\n');
 
         size_t max_length = 0;
@@ -175,7 +183,7 @@ namespace __TEST__
     }
 #pragma GCC diagnostic pop
 
-    void init_test(std::string file_name)
+    void set_test_file(std::string file_name)
     {
         __test_file_name = file_name;
         std::cout << "\x1B[32mTest File: " << file_name << "\033[0m" << std::endl;
@@ -183,13 +191,6 @@ namespace __TEST__
 
     void run_test(void (*test)())
     {
-        if (__test_file_name == "")
-        {
-            std::cout << "\x1B[31mERROR! please use init_test function\033[0m" << std::endl;
-            std::cout << "\x1B[31mUsage: init_test(\"test_file_name.cpp\");\033[0m" << std::endl;
-            exit(1);
-        }
-
         __test_count++;
         __oss = std::ostringstream();
         __p_cout_streambuf = std::cout.rdbuf();

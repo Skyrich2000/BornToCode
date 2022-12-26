@@ -82,7 +82,20 @@ void test_rotate_right()
     tree._insert(70, "T2");
     tree._insert(40, "T4");
     tree._insert(20, "T3");
+    tree._print(1);
 
+    expect(""
+           "    (1) 99=T1       ",
+           "  (0) 90=z          ",
+           "      (2) 70=T2     ",
+           "    (1) 60=y        ",
+           "        (3) 40=T4   ",
+           "      (2) 30=x      ",
+           "        (3) 20=T3   ",
+           "(-1) 0=             "
+           "");
+
+    tree.rotate_right(tree._get_head()->right);
     tree._print(1);
 
     expect(""
@@ -99,13 +112,13 @@ void test_rotate_right()
 
 int main()
 {
-    init_test("tree.test.cpp");
+    set_test_file("tree.test.cpp");
 
     void (*list[])() = {
-        test_constructor,
-        test_empty_tree,
-        test_insert_one,
-        test_insert_both,
+        // test_constructor,
+        // test_empty_tree,
+        // test_insert_one,
+        // test_insert_both,
         test_rotate_right,
     };
 
