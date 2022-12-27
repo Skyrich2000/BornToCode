@@ -16,7 +16,7 @@ void test_empty_tree()
 {
     ft::Tree<int, int> tree;
 
-    tree._print();
+    tree.__print();
 
     expect(""
            "(-1) 0  "
@@ -26,21 +26,21 @@ void test_empty_tree()
 void test_insert_one()
 {
     ft::Tree<int, int> tree1;
-    tree1._insert(1, 2);
-    tree1._print();
+    tree1.__insert(1, 2);
+    tree1.__print();
 
     expect(""
-           "  (0) 1  ",
-           "(-1) 0   "
+           "  (-1) 1  ",
+           "(-1) 0    "
            "");
 
     ft::Tree<int, int> tree2;
-    tree2._insert(-1, 2);
-    tree2._print();
+    tree2.__insert(-1, 2);
+    tree2.__print();
 
     expect(""
-           "(-1) 0    ",
-           "  (0) -1  "
+           "(-1) 0     ",
+           "  (-1) -1  "
            "");
 }
 
@@ -48,22 +48,20 @@ void test_insert_both()
 {
     ft::Tree<int, int> tree;
 
-    tree._insert(1, 2);
-    tree._insert(-1, 2);
-    tree._insert(2, 2);
-    tree._insert(0, 2);
-    tree._insert(-5, 2);
-    tree._insert(3, 2);
-
-    tree._print();
+    tree.__insert(1, 2);
+    tree.__insert(-1, 2);
+    tree.__insert(2, 2);
+    tree.__insert(0, 2);
+    tree.__insert(-5, 2);
+    tree.__update_height();
+    tree.__print();
 
     expect(""
-           "      (2) 3   ",
            "    (1) 2     ",
-           "  (0) 1       ",
-           "      (2) 0   ",
-           "    (1) -1    ",
-           "      (2) -5  ",
+           "  (3) 1       ",
+           "      (1) 0   ",
+           "    (2) -1    ",
+           "      (1) -5  ",
            "(-1) 0        "
            "");
 }
@@ -75,38 +73,239 @@ void test_rotate_right()
 {
     ft::Tree<int, std::string> tree;
 
-    tree._insert(90, "z");
-    tree._insert(60, "y");
-    tree._insert(30, "x");
-    tree._insert(99, "T1");
-    tree._insert(70, "T2");
-    tree._insert(40, "T4");
-    tree._insert(20, "T3");
-    tree._print(1);
+    tree.__insert(90, "z");
+    tree.__insert(60, "y");
+    tree.__insert(30, "x");
+    tree.__insert(99, "T1");
+    tree.__insert(70, "T2");
+    tree.__insert(40, "T4");
+    tree.__insert(20, "T3");
+    tree.__update_height();
+    tree.__print(1);
 
     expect(""
            "    (1) 99=T1       ",
-           "  (0) 90=z          ",
-           "      (2) 70=T2     ",
-           "    (1) 60=y        ",
-           "        (3) 40=T4   ",
+           "  (4) 90=z          ",
+           "      (1) 70=T2     ",
+           "    (3) 60=y        ",
+           "        (1) 40=T4   ",
            "      (2) 30=x      ",
-           "        (3) 20=T3   ",
+           "        (1) 20=T3   ",
            "(-1) 0=             "
            "");
 
-    tree.rotate_right(tree._get_head()->right);
-    tree._print(1);
+    tree.__rotate_right(tree._get_head()->right);
+    tree.__update_height();
+    tree.__print(1);
 
     expect(""
-           "    (1) 99=T1       ",
-           "  (0) 90=z          ",
-           "      (2) 70=T2     ",
-           "    (1) 60=y        ",
-           "        (3) 40=T4   ",
-           "      (2) 30=x      ",
-           "        (3) 20=T3   ",
+           "      (1) 99=T1   ",
+           "    (2) 90=z      ",
+           "      (1) 70=T2   ",
+           "  (3) 60=y        ",
+           "      (1) 40=T4   ",
+           "    (2) 30=x      ",
+           "      (1) 20=T3   ",
+           "(-1) 0=           "
+           "");
+}
+
+void test_rotate_left()
+{
+    ft::Tree<int, std::string> tree;
+
+    tree.__insert(30, "z");
+    tree.__insert(60, "y");
+    tree.__insert(90, "x");
+    tree.__insert(20, "T1");
+    tree.__insert(40, "T2");
+    tree.__insert(70, "T3");
+    tree.__insert(99, "T4");
+    tree.__update_height();
+    tree.__print(1);
+
+    expect(""
+           "        (1) 99=T4   ",
+           "      (2) 90=x      ",
+           "        (1) 70=T3   ",
+           "    (3) 60=y        ",
+           "      (1) 40=T2     ",
+           "  (4) 30=z          ",
+           "    (1) 20=T1       ",
            "(-1) 0=             "
+           "");
+
+    tree.__rotate_left(tree._get_head()->right);
+    tree.__update_height();
+    tree.__print(1);
+
+    expect(""
+           "      (1) 99=T4   ",
+           "    (2) 90=x      ",
+           "      (1) 70=T3   ",
+           "  (3) 60=y        ",
+           "      (1) 40=T2   ",
+           "    (2) 30=z      ",
+           "      (1) 20=T1   ",
+           "(-1) 0=           "
+           "");
+}
+
+void test_rotate_case_ll()
+{
+    ft::Tree<int, int> tree;
+
+    tree.__insert(3, 0);
+    tree.__insert(2, 0);
+    tree.__insert(1, 0);
+    tree.__update_height();
+    tree.__print();
+
+    expect(""
+           "  (3) 3      ",
+           "    (2) 2    ",
+           "      (1) 1  ",
+           "(-1) 0       "
+           "");
+
+    tree.__rebalance();
+    tree.__print();
+
+    expect(""
+           "    (1) 3  ",
+           "  (2) 2    ",
+           "    (1) 1  ",
+           "(-1) 0     "
+           "");
+}
+
+void test_rotate_case_rr()
+{
+    ft::Tree<int, int> tree;
+
+    tree.__insert(1, 0);
+    tree.__insert(2, 0);
+    tree.__insert(3, 0);
+    tree.__update_height();
+    tree.__print();
+
+    expect(""
+           "      (1) 3  ",
+           "    (2) 2    ",
+           "  (3) 1      ",
+           "(-1) 0       "
+           "");
+
+    tree.__rebalance();
+    tree.__print();
+
+    expect(""
+           "    (1) 3  ",
+           "  (2) 2    ",
+           "    (1) 1  ",
+           "(-1) 0     "
+           "");
+}
+
+void test_rotate_case_lr()
+{
+    ft::Tree<int, int> tree;
+
+    tree.__insert(4, 0);
+    tree.__insert(2, 0);
+    tree.__insert(3, 0);
+    tree.__update_height();
+    tree.__print();
+
+    expect(""
+           "  (3) 4      ",
+           "      (1) 3  ",
+           "    (2) 2    ",
+           "(-1) 0       "
+           "");
+
+    tree.__rebalance();
+    tree.__print();
+
+    expect(""
+           "    (1) 4  ",
+           "  (2) 3    ",
+           "    (1) 2  ",
+           "(-1) 0     "
+           "");
+}
+
+void test_rotate_case_rl()
+{
+    ft::Tree<int, int> tree;
+
+    tree.__insert(2, 0);
+    tree.__insert(4, 0);
+    tree.__insert(3, 0);
+    tree.__update_height();
+    tree.__print();
+
+    expect(""
+           "    (2) 4    ",
+           "      (1) 3  ",
+           "  (3) 2      ",
+           "(-1) 0       "
+           "");
+
+    tree.__rebalance();
+    tree.__print();
+
+    expect(""
+           "    (1) 4  ",
+           "  (2) 3    ",
+           "    (1) 2  ",
+           "(-1) 0     "
+           "");
+}
+
+void test_insert_case_ll()
+{
+    ft::Tree<int, int> tree;
+
+    tree.insert(6, 0);
+    tree.insert(5, 0);
+    tree.insert(4, 0);
+    tree.insert(3, 0);
+    tree.insert(2, 0);
+    tree.insert(1, 0);
+    tree.__print();
+
+    expect(""
+           "      (1) 6  ",
+           "    (2) 5    ",
+           "      (1) 4  ",
+           "  (3) 3      ",
+           "    (2) 2    ",
+           "      (1) 1  ",
+           "(-1) 0       "
+           "");
+}
+
+void test_insert_case_llrl()
+{
+    ft::Tree<int, int> tree;
+
+    tree.insert(6, 0);
+    tree.insert(5, 0);
+    tree.insert(1, 0);
+    tree.insert(2, 0);
+    tree.insert(3, 0);
+    tree.insert(4, 0);
+    tree.__print();
+
+    expect(""
+           "      (1) 6  ",
+           "    (2) 5    ",
+           "      (1) 4  ",
+           "  (3) 3      ",
+           "    (2) 2    ",
+           "      (1) 1  ",
+           "(-1) 0       "
            "");
 }
 
@@ -115,11 +314,18 @@ int main()
     set_test_file("tree.test.cpp");
 
     void (*list[])() = {
-        // test_constructor,
-        // test_empty_tree,
-        // test_insert_one,
-        // test_insert_both,
+        test_constructor,
+        test_empty_tree,
+        test_insert_one,
+        test_insert_both,
         test_rotate_right,
+        test_rotate_left,
+        test_rotate_case_ll,
+        test_rotate_case_rr,
+        test_rotate_case_lr,
+        test_rotate_case_rl,
+        test_insert_case_ll,
+        test_insert_case_llrl,
     };
 
     for (int i = 0; i < sizeof(list) / sizeof(list[0]); i++)

@@ -172,4 +172,11 @@ typedef typename _Iter::iterator_category iterator_category; // random, bidirect
 7. tree 구현
 
 - avl tree 를 구현합니다.
-- avl tree 는... 여기까지 알려줬으면 나머지는 알아서 하십쇼 ㅅㄱ
+- 설명과 구현까지 잘 되어있다.
+  - https://yoongrammer.tistory.com/72
+  - https://code-lab1.tistory.com/61
+- 순서
+  - 일반적인 tree 를 구현한다.
+  - rotate right, left 를 구현한다
+  - rebalance 를 구현한다
+  - insert 를 구현한다
