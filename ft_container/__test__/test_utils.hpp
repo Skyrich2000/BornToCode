@@ -7,6 +7,7 @@
 #include <execinfo.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <fstream>
 
 namespace __TEST__
 {
@@ -93,13 +94,28 @@ namespace __TEST__
         return name.substr(0, name.size() - 1);
     }
 
+    inline bool _is_file_exists(const std::string &name)
+    {
+        if (FILE *file = fopen(name.c_str(), "r"))
+        {
+            fclose(file);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     void _update_test_file(std::string output_str, std::string file_name, std::string test_name)
     {
         std::string command_get_target_line = "cat " + file_name + " | grep '" + test_name + "()' -n -A 100 | grep 'expect();' | tr '\\n' ' ' | cut -d - -f 1";
         std::string command_save_line = "LINE=$(" + command_get_target_line + ")";
+        std::string command_check_line = "if [ -z \"$LINE\" ]; then echo \"\x1B[31mERROR! Failed to update test file. You maybe put the wrong test file in the set_test_file function.\033[0m\"; exit 1; fi";
         std::string command_update_line = "sed -i '' ${LINE}s/'expect();'/'" + output_str + "'/ " + file_name + "";
 
-        std::string command = command_save_line + " && " + command_update_line;
+        std::string command = command_save_line + " && " + command_check_line + " && " + command_update_line;
+
         system(command.c_str());
     }
 
@@ -113,7 +129,8 @@ namespace __TEST__
             exit(1);
         }
 
-        std::vector<std::string> expected = _split(__oss.str(), '\n');
+        std::vector<std::string>
+            expected = _split(__oss.str(), '\n');
 
         size_t max_length = 0;
         for (std::vector<std::string>::iterator it = expected.begin(); it != expected.end(); ++it)
@@ -124,15 +141,14 @@ namespace __TEST__
             it->resize(max_length + 1, ' ');
 
         std::string output_str = "expect(\"\"\\\n\"" + _join(expected, "\",\\\n\"") + "\"\\\n\"\");";
-        std::string file_name = "tree.test.cpp";
         std::string test_name = _get_failed_test_name();
-
-        _update_test_file(output_str, file_name, test_name);
 
         std::cout.rdbuf(__p_cout_streambuf);
         std::cout << "\x1B[31mTest " << __test_count << " Failed! ... " << test_name << "\033[0m" << std::endl;
         std::cout << "\x1B[33mNew Snapshot Updated!\033[0m" << std::endl;
         std::cout << __oss.str() << std::endl;
+
+        _update_test_file(output_str, __test_file_name, test_name);
 
         exit(1);
     }
@@ -186,7 +202,15 @@ namespace __TEST__
     void set_test_file(std::string file_name)
     {
         __test_file_name = file_name;
-        std::cout << "\x1B[32mTest File: " << file_name << "\033[0m" << std::endl;
+        if (_is_file_exists(file_name))
+        {
+            std::cout << "\x1B[32mTest File: " << file_name << "\033[0m" << std::endl;
+        }
+        else
+        {
+            std::cout << "\x1B[31mERROR! Test File Not Found: " << file_name << "\033[0m" << std::endl;
+            exit(1);
+        }
     }
 
     void run_test(void (*test)())

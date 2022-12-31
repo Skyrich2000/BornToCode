@@ -47,6 +47,7 @@ namespace ft
         typedef std::random_access_iterator_tag iterator_category;
     };
 
+    // TODO: 이거 꼭 필요함??
     template <class Category, class T, class Distance = ptrdiff_t, class Pointer = T *, class Reference = T &>
     struct iterator
     {
@@ -76,6 +77,7 @@ namespace ft
     class reverse_iterator
     {
     public:
+        typedef Iterator iterator_type;
         typedef typename iterator_traits<Iterator>::pointer pointer;
         typedef typename iterator_traits<Iterator>::value_type value_type;
         typedef typename iterator_traits<Iterator>::reference reference;
@@ -84,10 +86,10 @@ namespace ft
 
         reverse_iterator() : _current() {}
 
-        explicit reverse_iterator(Iterator x) : _current(x) {}
+        explicit reverse_iterator(iterator_type it) : _current(it) {}
 
         template <class U>
-        reverse_iterator(const reverse_iterator<U> &other) : _current(other.base()) {}
+        reverse_iterator(const reverse_iterator<U> &rev_it) : _current(rev_it.base()) {}
 
         template <class U>
         reverse_iterator &operator=(const reverse_iterator<U> &other)
@@ -98,7 +100,7 @@ namespace ft
 
         virtual ~reverse_iterator() {}
 
-        Iterator base() const
+        iterator_type base() const
         {
             return (_current);
         }
@@ -197,7 +199,7 @@ namespace ft
         }
 
     private:
-        Iterator _current;
+        iterator_type _current;
     };
 
     template <class Iterator>

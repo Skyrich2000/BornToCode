@@ -1,11 +1,11 @@
-#include "../tree.hpp"
+#include "../avl_tree.hpp"
 #include "test_utils.hpp"
 
 using namespace __TEST__;
 
 void test_constructor()
 {
-    ft::Tree<int, int> tree;
+    ft::AvlTree<int, int> tree;
 
     expect(""
            ""
@@ -14,7 +14,7 @@ void test_constructor()
 
 void test_empty_tree()
 {
-    ft::Tree<int, int> tree;
+    ft::AvlTree<int, int> tree;
 
     tree.__print();
 
@@ -25,7 +25,7 @@ void test_empty_tree()
 
 void test_insert_one()
 {
-    ft::Tree<int, int> tree1;
+    ft::AvlTree<int, int> tree1;
     tree1.__insert(1, 2);
     tree1.__print();
 
@@ -34,7 +34,7 @@ void test_insert_one()
            "(-1) 0    "
            "");
 
-    ft::Tree<int, int> tree2;
+    ft::AvlTree<int, int> tree2;
     tree2.__insert(-1, 2);
     tree2.__print();
 
@@ -46,7 +46,7 @@ void test_insert_one()
 
 void test_insert_both()
 {
-    ft::Tree<int, int> tree;
+    ft::AvlTree<int, int> tree;
 
     tree.__insert(1, 2);
     tree.__insert(-1, 2);
@@ -71,7 +71,7 @@ void test_insert_both()
  */
 void test_rotate_right()
 {
-    ft::Tree<int, std::string> tree;
+    ft::AvlTree<int, std::string> tree;
 
     tree.__insert(90, "z");
     tree.__insert(60, "y");
@@ -94,7 +94,7 @@ void test_rotate_right()
            "(-1) 0=             "
            "");
 
-    tree.__rotate_right(tree._get_head()->right);
+    tree.__rotate_right(tree._get_head()->get_right());
     tree.__update_height();
     tree.__print(1);
 
@@ -112,7 +112,7 @@ void test_rotate_right()
 
 void test_rotate_left()
 {
-    ft::Tree<int, std::string> tree;
+    ft::AvlTree<int, std::string> tree;
 
     tree.__insert(30, "z");
     tree.__insert(60, "y");
@@ -135,7 +135,7 @@ void test_rotate_left()
            "(-1) 0=             "
            "");
 
-    tree.__rotate_left(tree._get_head()->right);
+    tree.__rotate_left(tree._get_head()->get_right());
     tree.__update_height();
     tree.__print(1);
 
@@ -153,7 +153,7 @@ void test_rotate_left()
 
 void test_rotate_case_ll()
 {
-    ft::Tree<int, int> tree;
+    ft::AvlTree<int, int> tree;
 
     tree.__insert(3, 0);
     tree.__insert(2, 0);
@@ -181,7 +181,7 @@ void test_rotate_case_ll()
 
 void test_rotate_case_rr()
 {
-    ft::Tree<int, int> tree;
+    ft::AvlTree<int, int> tree;
 
     tree.__insert(1, 0);
     tree.__insert(2, 0);
@@ -209,7 +209,7 @@ void test_rotate_case_rr()
 
 void test_rotate_case_lr()
 {
-    ft::Tree<int, int> tree;
+    ft::AvlTree<int, int> tree;
 
     tree.__insert(4, 0);
     tree.__insert(2, 0);
@@ -237,7 +237,7 @@ void test_rotate_case_lr()
 
 void test_rotate_case_rl()
 {
-    ft::Tree<int, int> tree;
+    ft::AvlTree<int, int> tree;
 
     tree.__insert(2, 0);
     tree.__insert(4, 0);
@@ -265,7 +265,7 @@ void test_rotate_case_rl()
 
 void test_insert_case_ll()
 {
-    ft::Tree<int, int> tree;
+    ft::AvlTree<int, int> tree;
 
     tree.insert(6, 0);
     tree.insert(5, 0);
@@ -288,7 +288,7 @@ void test_insert_case_ll()
 
 void test_insert_case_llrl()
 {
-    ft::Tree<int, int> tree;
+    ft::AvlTree<int, int> tree;
 
     tree.insert(6, 0);
     tree.insert(5, 0);
@@ -309,6 +309,83 @@ void test_insert_case_llrl()
            "");
 }
 
+void test_find_key()
+{
+    ft::AvlTree<int, std::string> tree;
+
+    tree.insert(1, "value 11111");
+    tree.insert(2, "value 22222");
+    tree.insert(3, "value 33333");
+    ft::AvlTree<int, std::string>::node_pointer node = tree.find(2);
+
+    std::cout << node->get_pair().first << std::endl;
+    std::cout << node->get_pair().second << std::endl;
+
+    expect(""
+           "2           ",
+           "value 22222 "
+           "");
+
+    ft::AvlTree<int, std::string>::node_pointer null_node = tree.find(99);
+
+    std::cout << null_node << std::endl;
+
+    expect(""
+           "0x0 "
+           "");
+}
+
+void test_erase()
+{
+    ft::AvlTree<int, int> tree;
+    tree.insert(6, 0);
+    tree.insert(5, 0);
+    tree.insert(4, 0);
+    tree.insert(3, 0);
+    tree.insert(2, 0);
+    tree.insert(1, 0);
+    tree.__print();
+
+    expect(""
+           "      (1) 6  ",
+           "    (2) 5    ",
+           "      (1) 4  ",
+           "  (3) 3      ",
+           "    (2) 2    ",
+           "      (1) 1  ",
+           "(-1) 0       "
+           "");
+
+    tree.erase(6);
+    tree.erase(3);
+    tree.erase(1);
+    tree.__print();
+
+    expect(""
+           "    (1) 5  ",
+           "  (2) 4    ",
+           "    (1) 2  ",
+           "(-1) 0     "
+           "");
+}
+
+void test_empty()
+{
+    ft::AvlTree<int, int> tree;
+
+    std::cout << tree.empty() << std::endl;
+    tree.insert(1, 0);
+    std::cout << tree.empty() << std::endl;
+    tree.erase(1);
+    std::cout << tree.empty() << std::endl;
+
+    expect(""
+           "1 ",
+           "0 ",
+           "1 "
+           "");
+}
+
 int main()
 {
     set_test_file("tree.test.cpp");
@@ -326,8 +403,13 @@ int main()
         test_rotate_case_rl,
         test_insert_case_ll,
         test_insert_case_llrl,
+        test_find_key,
+        test_erase,
+        test_empty,
     };
 
     for (int i = 0; i < sizeof(list) / sizeof(list[0]); i++)
         run_test(list[i]);
+
+    //     system("leaks a.out");
 }

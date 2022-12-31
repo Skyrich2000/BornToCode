@@ -13,7 +13,6 @@ namespace ft
         typedef typename ft::iterator_traits<pointer>::value_type value_type;
         typedef typename ft::iterator_traits<pointer>::reference reference;
         typedef typename ft::iterator_traits<pointer>::difference_type difference_type;
-        // typedef typename ft::iterator_traits<pointer>::iterator_category iterator_category;
         typedef std::random_access_iterator_tag iterator_category; // TODO: 이거써도 되는거 아닌가
 
         random_access_iterator(void) : _p(NULL) {}
@@ -32,6 +31,7 @@ namespace ft
 
         virtual ~random_access_iterator() {}
 
+        // TODO: 꼭 필요한건가??
         pointer base() const
         {
             return (this->_p);
@@ -49,6 +49,34 @@ namespace ft
         const reference operator*() const
         {
             return (*(this->_p));
+        }
+
+        // ----------------------------------------
+        // operator-> 연산
+        // ----------------------------------------
+
+        pointer operator->()
+        {
+            return (_p);
+        }
+
+        const pointer operator->() const
+        {
+            return (_p);
+        }
+
+        // ----------------------------------------
+        // operator[] 연산
+        // ----------------------------------------
+
+        reference operator[](difference_type n)
+        {
+            return (*(operator+(n)));
+        }
+
+        const reference operator[](difference_type n) const
+        {
+            return (*(operator+(n)));
         }
 
         // ----------------------------------------
@@ -181,34 +209,6 @@ namespace ft
         {
             _p -= n;
             return (*this);
-        }
-
-        // ----------------------------------------
-        // operator-> 연산
-        // ----------------------------------------
-
-        pointer operator->()
-        {
-            return (_p);
-        }
-
-        const pointer operator->() const
-        {
-            return (_p);
-        }
-
-        // ----------------------------------------
-        // operator[] 연산
-        // ----------------------------------------
-
-        reference operator[](difference_type n)
-        {
-            return (*(operator+(n)));
-        }
-
-        const reference operator[](difference_type n) const
-        {
-            return (*(operator+(n)));
         }
 
         // TODO: 야매로 구현한 부분. 확인 필요.

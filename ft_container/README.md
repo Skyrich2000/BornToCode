@@ -47,6 +47,7 @@
 1. iterator_traits
 
 - iterator 의 상태(특성)를 나타내는 구조체!! 그냥 정의만 해주는거임
+- https://3dmpengines.tistory.com/641
 
 ```cpp
 // https://legacy.cplusplus.com/reference/iterator/iterator_traits/?kw=iterator_traits
@@ -106,12 +107,14 @@ typedef typename _Iter::iterator_category iterator_category; // random, bidirect
 4. random_access_iterator 구현
 
 - 사실상 해주는건 포인터 연산을 wrap 해준것일뿐
-- iterate utils 들 (begin, end) 등의 혜택을 받기 위해서 감싼것뿐이고 (알고리즘 적용을 가능하게 해주는것 뿐)
+- iterate utils 들 (begin, end) 등의 혜택을 받기 위해서 포인터를 감싼것뿐이고 (알고리즘 적용을 가능하게 해주는것 뿐)
 - 실제로는 거의 깡통에 가까움
 
-- https://cplusplus.com/reference/iterator/
-- 실제 구현체 의존 순서 (뇌피셜)
+- 구현 스펙
 
+  - https://cplusplus.com/reference/iterator/
+  - 내부적으로 pointer 를 들고 있어야함
+  - 실제 구현체 의존 순서 (뇌피셜)
   - Forward -> Bidirectional -> Random Access
 
 - iterator 의 base 가 되는 느낌이라고 생각하면 됨
@@ -180,3 +183,30 @@ typedef typename _Iter::iterator_category iterator_category; // random, bidirect
   - rotate right, left 를 구현한다
   - rebalance 를 구현한다
   - insert 를 구현한다
+  - erase 를 구현한다.
+  - empty, clear 를 구현한다.
+
+## bidirectional_iterator.hpp
+
+8. bidirectional_iterator 구현
+
+- random_access_iterator 와 마찬가지로
+- 사실상 해주는건 tree 연산을 wrap 해준것일뿐
+- iterate utils 들 (begin, end) 등의 혜택을 받기 위해서 tree를 감싼것뿐이고 (알고리즘 적용을 가능하게 해주는것 뿐)
+- 실제로는 거의 깡통에 가까움
+- 다만, random_access_iterator 구현당시에는 포인터자체에 ++, -- 연산이 있지만, tree에는 없으므로 다른 iterator 와 호환되도록 ++ 연산과 -- 연산만 구현해주면된다.
+
+- 공식 스펙
+
+  - https://en.cppreference.com/w/cpp/iterator/bidirectional_iterator
+  - random_access_iterator 와 다르게 내부적으로 node 를 들고 있어야함
+
+- 참고할것
+  - 지금 c++ stl 코드는 추상화 단계가 깊어서 보기 어려운데, 예전에 만들어진 코드는 볼만하다
+  - http://stepanovpapers.com/butler.hpl.hp/stl/stl/MAP.H
+
+## map.hpp
+
+9. map 구현
+
+- 진짜 토나올거같다
