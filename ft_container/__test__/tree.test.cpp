@@ -309,6 +309,84 @@ void test_insert_case_llrl()
            "");
 }
 
+void test_begin()
+{
+    ft::AvlTree<int, std::string> tree;
+
+    ft::AvlTree<int, std::string>::node_pointer node1 = tree.begin();
+    std::cout << node1 << std::endl;
+
+    expect(""
+           "0x0 "
+           "");
+
+    tree.insert(1, "value 11111");
+    tree.insert(-1, "value 11111");
+    tree.insert(1, "value 11111");
+    tree.insert(-2, "value 22222");
+    tree.insert(3, "value 33333");
+    tree.insert(-4, "value 44444");
+    tree.__print();
+
+    expect(""
+           "      (1) 3   ",
+           "    (2) 1     ",
+           "  (3) 1       ",
+           "      (1) -1  ",
+           "    (2) -2    ",
+           "      (1) -4  ",
+           "(-1) 0        "
+           "");
+
+    ft::AvlTree<int, std::string>::node_pointer node2 = tree.begin();
+    std::cout << node2->get_pair().first << std::endl;
+    std::cout << node2->get_pair().second << std::endl;
+
+    expect(""
+           "-4          ",
+           "value 44444 "
+           "");
+}
+
+void test_end()
+{
+    ft::AvlTree<int, std::string> tree;
+
+    ft::AvlTree<int, std::string>::node_pointer node1 = tree.end();
+    std::cout << node1 << std::endl;
+
+    expect(""
+           "0x0 "
+           "");
+
+    tree.insert(1, "value 11111");
+    tree.insert(-1, "value 11111");
+    tree.insert(1, "value 11111");
+    tree.insert(-2, "value 22222");
+    tree.insert(3, "value 33333");
+    tree.insert(-4, "value 44444");
+    tree.__print();
+
+    expect(""
+           "      (1) 3   ",
+           "    (2) 1     ",
+           "  (3) 1       ",
+           "      (1) -1  ",
+           "    (2) -2    ",
+           "      (1) -4  ",
+           "(-1) 0        "
+           "");
+
+    ft::AvlTree<int, std::string>::node_pointer node2 = tree.end();
+    std::cout << node2->get_pair().first << std::endl;
+    std::cout << node2->get_pair().second << std::endl;
+
+    expect(""
+           "3           ",
+           "value 33333 "
+           "");
+}
+
 void test_find_key()
 {
     ft::AvlTree<int, std::string> tree;
@@ -434,6 +512,8 @@ int main()
         test_rotate_case_rl,
         test_insert_case_ll,
         test_insert_case_llrl,
+        test_begin,
+        test_end,
         test_find_key,
         test_erase,
         test_erase_not_found,

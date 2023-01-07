@@ -290,6 +290,26 @@ namespace ft
             this->_rebalance(this->_get_root());
         }
 
+        node_pointer begin()
+        {
+            node_pointer node = this->_get_root();
+            if (node->is_head())
+                return NULL;
+            while (node->get_left() != NULL)
+                node = node->get_left();
+            return node;
+        }
+
+        node_pointer end()
+        {
+            node_pointer node = this->_get_root();
+            if (node->is_head())
+                return NULL;
+            while (node->get_right() != NULL)
+                node = node->get_right();
+            return node;
+        }
+
         void insert(const Key &key, const Value &value)
         {
             node_pointer node = this->_insert_normal(key, value, this->_get_root());
