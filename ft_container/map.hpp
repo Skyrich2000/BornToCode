@@ -30,22 +30,66 @@ namespace ft
         typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
         class value_compare
-        {
+        { // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
+            friend class map;
+
         protected:
             Compare comp;
-
+            value_compare(Compare c) : comp(c) {} // constructed with map's comparison object
         public:
             typedef bool result_type;
             typedef value_type first_argument_type;
             typedef value_type second_argument_type;
-
-            value_compare(Compare c) : comp(c) {}
-
-            bool operator()(const value_type &lhs, const value_type &rhs) const
+            bool operator()(const value_type &x, const value_type &y) const
             {
-                return comp(lhs.first, rhs.first);
+                return comp(x.first, y.first);
             }
         };
+
+    private:
+        typedef typename ft::AvlTree<value_type, Compare, node_allocator> tree;
+
+        Compare _comp;
+        tree _tree;
+
+    public:
+        explicit map(const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type())
+        {
+            _tree = new ft::AvlTree<value_type, Compare, node_allocator>(comp, alloc);
+            _comp = comp;
+        }
+
+        // template <class InputIterator>
+        // map(InputIterator first, InputIterator last, const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type()) {}
+
+        // map(const map &x) {}
+
+        iterator begin()
+        {
+            return _tree->begin();
+        }
+
+        ft::pair<iterator, bool> insert(const value_type &val)
+        {
+            ft::pair<iterator, bool> ret;
+
+            if (_tree->find(val.first) != _tree->end())
+            {
+                ret.first = _tree->find(val.first);
+                ret.second = false;
+                return ret;
+            }
+
+            ret.first = _tree->insert(val);
+            ret.second = true;
+            return ret;
+        }
+
+        iterator insert(iterator position, const value_type &val)
+        {
+            (void)position;
+            return _tree->insert(val);
+        }
     };
 }
 

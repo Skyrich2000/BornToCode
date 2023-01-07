@@ -369,6 +369,20 @@ void test_erase()
            "");
 }
 
+void test_erase_not_found()
+{
+    ft::AvlTree<int, int> tree;
+
+    tree.insert(1, 0);
+    tree.erase(2);
+    tree.__print();
+
+    expect(""
+           "  (1) 1  ",
+           "(-1) 0   "
+           "");
+}
+
 void test_empty()
 {
     ft::AvlTree<int, int> tree;
@@ -383,6 +397,23 @@ void test_empty()
            "1 ",
            "0 ",
            "1 "
+           "");
+}
+
+void test_size()
+{
+    ft::AvlTree<int, int> tree;
+
+    std::cout << tree.size() << std::endl;
+    tree.insert(1, 0);
+    std::cout << tree.size() << std::endl;
+    tree.erase(1);
+    std::cout << tree.size() << std::endl;
+
+    expect(""
+           "0 ",
+           "1 ",
+           "0 "
            "");
 }
 
@@ -405,11 +436,13 @@ int main()
         test_insert_case_llrl,
         test_find_key,
         test_erase,
+        test_erase_not_found,
         test_empty,
+        test_size,
     };
 
     for (int i = 0; i < sizeof(list) / sizeof(list[0]); i++)
         run_test(list[i]);
 
-    //     system("leaks a.out");
+    system("leaks a.out 2>/dev/null | tail -n 4");
 }

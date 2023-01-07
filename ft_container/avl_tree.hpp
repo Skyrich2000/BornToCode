@@ -76,25 +76,42 @@ namespace ft
         }
     };
 
-    template <class Key, class Value>
+    template <
+        class Key,
+        class Value,
+        class Compare = std::less<Key>,
+        class Allocator = std::allocator<std::pair<const Key, Value> > >
     class AvlTree
     {
     public:
         typedef AvlNode<Key, Value> *node_pointer;
+        typedef Compare key_compare;
+        typedef typename Allocator::template rebind<ft::AvlNode<Key, Value> >::other allocator_type;
+        typedef std::size_t size_type;
 
     private:
         node_pointer head;
+        key_compare _comp;
+        allocator_type _alloc;
+        size_type _size;
 
     public:
-        AvlTree()
+        AvlTree(key_compare comp = key_compare(), allocator_type alloc = allocator_type())
         {
-            this->head = new AvlNode<Key, Value>(ft::make_pair(Key(), Value()), NULL, -1, 1);
+            // this->head = new AvlNode<Key, Value>(ft::make_pair(Key(), Value()), NULL, -1, true);
+            this->head = alloc.allocate(1);
+            alloc.construct(this->head, AvlNode<Key, Value>(ft::make_pair(Key(), Value()), NULL, -1, true));
+            this->_comp = comp;
+            this->_alloc = alloc;
+            this->_size = 0;
         }
 
         ~AvlTree()
         {
             this->clear();
-            delete this->head;
+            // delete this->head;
+            _alloc.destroy(this->head);
+            _alloc.deallocate(this->head, 1);
         }
 
     private:
@@ -126,11 +143,14 @@ namespace ft
             if (child)
                 return this->_insert_normal(key, value, child);
 
-            node_pointer new_node = new AvlNode<Key, Value>(ft::make_pair(key, value), node, -1);
+            // node_pointer new_node = new AvlNode<Key, Value>(ft::make_pair(key, value), node, -1);
+            node_pointer new_node = _alloc.allocate(1);
+            _alloc.construct(new_node, ft::AvlNode<Key, Value>(ft::make_pair(key, value), node, -1));
             if (key < node->get_pair().first)
                 node->set_children(new_node, node->get_right());
             else
                 node->set_children(node->get_left(), new_node);
+            this->_size++;
 
             return new_node;
         }
@@ -306,7 +326,9 @@ namespace ft
                     parent->set_children(NULL, parent->get_right());
                 else
                     parent->set_children(parent->get_left(), NULL);
-                delete node;
+                // delete node;
+                _alloc.destroy(node);
+                _alloc.deallocate(node, 1);
             }
             else if (node->get_left() == NULL || node->get_right() == NULL)
             {
@@ -316,7 +338,9 @@ namespace ft
                 else
                     parent->set_children(parent->get_left(), child);
                 child->set_parent(parent);
-                delete node;
+                // delete node;
+                _alloc.destroy(node);
+                _alloc.deallocate(node, 1);
             }
             else
             {
@@ -341,20 +365,29 @@ namespace ft
                     else
                         successor->get_parent()->set_children(successor->get_parent()->get_left(), NULL);
                 }
-                delete successor;
+                // delete successor;
+                _alloc.destroy(successor);
+                _alloc.deallocate(successor, 1);
             }
+
+            this->_size--;
             this->_rebalance(parent);
         }
 
         bool empty()
         {
-            return this->_get_root()->is_head();
+            return this->_size == 0;
         }
 
         void clear()
         {
             while (!this->empty())
                 this->erase(this->_get_root()->get_pair().first);
+        }
+
+        size_type size()
+        {
+            return this->_size;
         }
     };
 }
