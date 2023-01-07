@@ -24,7 +24,7 @@ namespace ft
         Node *right;
 
     public:
-        Node(const pair_type &pair, Node *parent, Node *left, Node *right, bool is_head = false) : pair(pair), parent(parent), left(left), right(right), _is_head(is_head) {}
+        Node(const pair_type &pair, Node *parent, Node *left, Node *right, bool is_head = false) : _is_head(is_head), pair(pair), parent(parent), left(left), right(right) {}
 
         virtual ~Node() {}
 
@@ -72,9 +72,9 @@ namespace ft
             return parent;
         }
 
-        pair_type get_pair()
+        pair_type *get_pair()
         {
-            return pair;
+            return &pair;
         }
 
         Node *get_next()

@@ -108,7 +108,7 @@ namespace ft
 
         ~AvlTree()
         {
-            this->clear();
+            clear();
             // delete this->head;
             _alloc.destroy(this->head);
             _alloc.deallocate(this->head, 1);
@@ -322,9 +322,9 @@ namespace ft
             node_pointer node = this->_get_root();
             while (node != NULL)
             {
-                if (key == node->get_pair().first)
+                if (key == node->get_pair()->first)
                     return node;
-                else if (key < node->get_pair().first)
+                else if (key < node->get_pair()->first)
                     node = node->get_left();
                 else
                     node = node->get_right();
@@ -368,7 +368,7 @@ namespace ft
                 while (successor->get_left() != NULL)
                     successor = successor->get_left();
 
-                node->set_pair(successor->get_pair());
+                node->set_pair(*successor->get_pair());
                 if (successor->get_right() != NULL)
                 {
                     node_pointer child = successor->get_right();
@@ -402,7 +402,7 @@ namespace ft
         void clear()
         {
             while (!this->empty())
-                this->erase(this->_get_root()->get_pair().first);
+                this->erase(this->_get_root()->get_pair()->first);
         }
 
         size_type size()
