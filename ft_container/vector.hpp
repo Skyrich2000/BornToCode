@@ -31,6 +31,14 @@ namespace ft
         size_type _capacity;
         allocator_type _alloc;
 
+        template <class U>
+        void _swap(U &a, U &b)
+        {
+            U tmp = a;
+            a = b;
+            b = tmp;
+        }
+
         void free_base()
         {
             for (size_type i = 0; i < _size; i++)
@@ -249,10 +257,10 @@ namespace ft
 
         void swap(vector &x)
         {
-            ft::swap(_base, x._base);
-            ft::swap(_size, x._size);
-            ft::swap(_capacity, x._capacity);
-            ft::swap(_alloc, x._alloc);
+            this->_swap(_base, x._base);
+            this->_swap(_size, x._size);
+            this->_swap(_capacity, x._capacity);
+            this->_swap(_alloc, x._alloc);
         }
 
         iterator begin()

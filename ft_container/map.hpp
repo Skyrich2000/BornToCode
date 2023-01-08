@@ -222,8 +222,9 @@ namespace ft
         {
             while (first != last)
             {
-                erase(first);
-                first++;
+                iterator index = first;
+                ++first;
+                erase(index);
             }
         }
 

@@ -46,17 +46,6 @@ namespace ft
             std::cout << " " << std::endl;
         }
 
-        // void set_children(AvlNode *left, AvlNode *right)
-        // {
-        //     this->left = left;
-        //     this->right = right;
-
-        //     if (left)
-        //         left->parent = this;
-        //     if (right)
-        //         right->parent = this;
-        // }
-
         void set_left_child(AvlNode *left)
         {
             this->left = left;
@@ -108,7 +97,7 @@ namespace ft
     private:
         node_pointer head;
         node_pointer tail;
-        key_compare _comp; // TODO:이거 쓸것!!!
+        key_compare _comp;
         allocator_type _alloc;
         size_type _size;
 
@@ -165,14 +154,14 @@ namespace ft
             if (node == NULL)
                 throw std::runtime_error("[AvlTree::_insert_normal] node is NULL");
 
-            node_pointer child = key < node->get_pair()->first ? node->get_left() : node->get_right();
+            node_pointer child = _comp(key, node->get_pair()->first) ? node->get_left() : node->get_right();
             if (!_is_nil_node(child))
                 return this->_insert_normal(key, value, child);
 
             // node_pointer new_node = new AvlNode<Key, Value>(ft::make_pair(key, value), node, -1);
             node_pointer new_node = _alloc.allocate(1);
             _alloc.construct(new_node, ft::AvlNode<Key, Value>(ft::make_pair(key, value), node, -1));
-            if (key < node->get_pair()->first)
+            if (_comp(key, node->get_pair()->first))
                 node->set_left_child(new_node);
             else
                 node->set_right_child(new_node);
@@ -346,7 +335,7 @@ namespace ft
             {
                 if (key == node->get_pair()->first)
                     return node;
-                else if (key < node->get_pair()->first)
+                else if (_comp(key, node->get_pair()->first))
                     node = node->get_left();
                 else
                     node = node->get_right();

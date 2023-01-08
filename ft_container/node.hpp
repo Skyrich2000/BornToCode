@@ -31,7 +31,21 @@ namespace ft
     public:
         Node(const pair_type &pair, Node *parent, Node *left, Node *right, int node_type = NODE_NORMAL) : _node_type(node_type), pair(pair), parent(parent), left(left), right(right) {}
 
+        Node(const Node &other) : _node_type(other._node_type), pair(other.pair), parent(other.parent), left(other.left), right(other.right) {}
+
         virtual ~Node() {}
+
+        Node &operator=(const Node &other)
+        {
+            if (this == &other)
+                return (*this);
+            this->_node_type = other._node_type;
+            this->pair = other.pair;
+            this->parent = other.parent;
+            this->left = other.left;
+            this->right = other.right;
+            return (*this);
+        }
 
         bool is_dummy()
         {
