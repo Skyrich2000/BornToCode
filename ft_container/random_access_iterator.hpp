@@ -13,7 +13,7 @@ namespace ft
         typedef typename ft::iterator_traits<pointer>::value_type value_type;
         typedef typename ft::iterator_traits<pointer>::reference reference;
         typedef typename ft::iterator_traits<pointer>::difference_type difference_type;
-        typedef std::random_access_iterator_tag iterator_category; // TODO: 이거써도 되는거 아닌가
+        typedef std::random_access_iterator_tag iterator_category;
 
         random_access_iterator(void) : _p(NULL) {}
 
@@ -31,7 +31,6 @@ namespace ft
 
         virtual ~random_access_iterator() {}
 
-        // TODO: 꼭 필요한건가??
         pointer base() const
         {
             return (this->_p);
@@ -212,7 +211,10 @@ namespace ft
         }
 
         // TODO: 야매로 구현한 부분. 확인 필요.
-        operator random_access_iterator<const T>() const { return (random_access_iterator<const T>(this->_p)); }
+        operator random_access_iterator<const T>() const
+        {
+            return (random_access_iterator<const T>(this->_p));
+        }
 
     private:
         pointer _p;
@@ -323,13 +325,6 @@ namespace ft
     {
         return (rhs + n);
     }
-
-    // TODO: 이거 왜 주석 해제하면 안됨?
-    // template <class Iterator>
-    // const random_access_iterator<Iterator> operator+(typename random_access_iterator<Iterator>::difference_type n, const random_access_iterator<Iterator> &rhs)
-    // {
-    //     return (rhs + n);
-    // }
 
     // ----------------------------------------
     // operator- 연산

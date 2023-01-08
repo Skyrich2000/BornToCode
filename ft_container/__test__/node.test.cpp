@@ -19,10 +19,10 @@ void test_child_parent()
     ft::Node<int, int> node2(ft::make_pair(1, 2), NULL, NULL, NULL, NODE_NORMAL);
     ft::Node<int, int> node3(ft::make_pair(3, 3), NULL, NULL, NULL, NODE_NORMAL);
 
-    node1.__set_left(&node2);
-    node1.__set_right(&node3);
-    node2.__set_parent(&node1);
-    node3.__set_parent(&node1);
+    node1.set_left(&node2);
+    node1.set_right(&node3);
+    node2.set_parent(&node1);
+    node3.set_parent(&node1);
 
     std::cout << "node1: " << node1.get_pair()->first << std::endl;
     std::cout << "node1-parent: " << node1.get_parent() << std::endl;
@@ -65,13 +65,13 @@ void test_next()
     ft::Node<int, int> node2(ft::make_pair(2, 2), NULL, NULL, NULL, NODE_NORMAL);
     ft::Node<int, int> node3(ft::make_pair(3, 3), NULL, NULL, NULL, NODE_NORMAL);
 
-    node0.__set_right(&node2);
-    node2.__set_parent(&node0);
+    node0.set_right(&node2);
+    node2.set_parent(&node0);
 
-    node2.__set_left(&node1);
-    node2.__set_right(&node3);
-    node1.__set_parent(&node2);
-    node3.__set_parent(&node2);
+    node2.set_left(&node1);
+    node2.set_right(&node3);
+    node1.set_parent(&node2);
+    node3.set_parent(&node2);
 
     std::cout << "node1: " << node1.get_pair()->first << std::endl;
     std::cout << "node1-next: " << node1.get_next()->get_pair()->first << "\n\n";

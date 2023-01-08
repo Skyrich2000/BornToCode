@@ -62,26 +62,17 @@ namespace ft
             return _node_type == NODE_TAIL;
         }
 
-        /**
-         * @debug
-         */
-        void __set_left(Node *node)
+        void set_left(Node *node)
         {
             left = node;
         }
 
-        /**
-         * @debug
-         */
-        void __set_right(Node *node)
+        void set_right(Node *node)
         {
             right = node;
         }
 
-        /**
-         * @debug
-         */
-        void __set_parent(Node *node)
+        void set_parent(Node *node)
         {
             parent = node;
         }

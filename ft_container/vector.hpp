@@ -39,6 +39,18 @@ namespace ft
             b = tmp;
         }
 
+        template <class InputIterator>
+        typename iterator_traits<InputIterator>::difference_type _distance(InputIterator first, InputIterator last)
+        {
+            typename iterator_traits<InputIterator>::difference_type n = 0;
+            while (first != last)
+            {
+                first++;
+                n++;
+            }
+            return (n);
+        }
+
         void free_base()
         {
             for (size_type i = 0; i < _size; i++)
@@ -64,7 +76,7 @@ namespace ft
         template <class InputIterator>
         vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = NULL)
         {
-            difference_type n = ft::distance(first, last);
+            difference_type n = _distance(first, last);
 
             _alloc = alloc;
             _base = _alloc.allocate(n);
@@ -146,7 +158,7 @@ namespace ft
         void assign(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = NULL)
         {
             clear();
-            reserve(ft::distance(first, last));
+            reserve(_distance(first, last));
             for (InputIterator it = first; it != last; it++)
                 push_back(*it);
         }
@@ -204,7 +216,7 @@ namespace ft
         void insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = NULL)
         {
             size_type pos = position - begin();
-            size_type n = ft::distance(first, last);
+            size_type n = _distance(first, last);
             if (_size + n > _capacity)
                 reserve(_size + n);
             for (size_type i = _size + n - 1; i >= pos + n; i--)

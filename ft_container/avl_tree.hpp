@@ -327,7 +327,6 @@ namespace ft
             return node;
         }
 
-        // copilot
         node_pointer find(const Key &key)
         {
             node_pointer node = this->_get_root();
@@ -343,7 +342,6 @@ namespace ft
             return NULL;
         }
 
-        // copilot
         void erase(const Key &key)
         {
             node_pointer node = this->find(key);

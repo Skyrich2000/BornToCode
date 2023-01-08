@@ -17,9 +17,6 @@ namespace ft
 
     public:
         typedef typename ft::iterator_traits<ft::pair<Key, Value> *>::pointer pointer;
-        // TODO: noconst
-        // typedef typename ft::iterator_traits<ft::pair<const Key, Value> *>::pointer pointer;
-        // typedef ft::pair<const Key, Value> *pointer;
         typedef typename ft::iterator_traits<pointer>::value_type value_type;
         typedef typename ft::iterator_traits<pointer>::reference reference;
         typedef typename ft::iterator_traits<pointer>::difference_type difference_type;
@@ -137,13 +134,11 @@ namespace ft
             return (n);
         }
 
-        // copy
         bool operator==(const bidirectional_iterator &op) const
         {
             return (this->_node == op._node);
         }
 
-        // copy
         bool operator!=(const bidirectional_iterator &op) const
         {
             return (this->_node != op._node);

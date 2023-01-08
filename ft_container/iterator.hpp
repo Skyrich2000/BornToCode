@@ -47,7 +47,6 @@ namespace ft
         typedef std::random_access_iterator_tag iterator_category;
     };
 
-    // TODO: 이거 꼭 필요함??
     template <class Category, class T, class Distance = ptrdiff_t, class Pointer = T *, class Reference = T &>
     struct iterator
     {
@@ -57,21 +56,6 @@ namespace ft
         typedef Distance difference_type;
         typedef Category iterator_category;
     };
-
-    /**
-     * 과제 요구 사항에 있진 않지만, list iterator 와 vector iterator 를 비교하기 위해
-     */
-    template <class InputIterator>
-    typename iterator_traits<InputIterator>::difference_type distance(InputIterator first, InputIterator last)
-    {
-        typename iterator_traits<InputIterator>::difference_type n = 0;
-        while (first != last)
-        {
-            first++;
-            n++;
-        }
-        return (n);
-    }
 
     template <class Iterator>
     class reverse_iterator
@@ -209,7 +193,7 @@ namespace ft
     }
 
     /**
-     * 실제 스펙에는 없지만, 안하면 테스트가 통과하지 못하는거같아서 추가합니다.
+     * 과제 요구 사항에 있진 않지만, list iterator 와 vector iterator 를 비교하기 위해
      */
     template <class LIterator, class RIterator>
     bool operator==(const reverse_iterator<LIterator> &lhs, const reverse_iterator<RIterator> &rhs)
@@ -224,7 +208,7 @@ namespace ft
     }
 
     /**
-     * 실제 스펙에는 없지만, 안하면 테스트가 통과하지 못하는거같아서 추가합니다.
+     * 과제 요구 사항에 있진 않지만, list iterator 와 vector iterator 를 비교하기 위해
      */
     template <class LIterator, class RIterator>
     bool operator!=(const reverse_iterator<LIterator> &lhs, const reverse_iterator<RIterator> &rhs)
@@ -239,7 +223,7 @@ namespace ft
     }
 
     /**
-     * 실제 스펙에는 없지만, 안하면 테스트가 통과하지 못하는거같아서 추가합니다.
+     * 과제 요구 사항에 있진 않지만, list iterator 와 vector iterator 를 비교하기 위해
      */
     template <class LIterator, class RIterator>
     bool operator<(const reverse_iterator<LIterator> &lhs, const reverse_iterator<RIterator> &rhs)
@@ -254,7 +238,7 @@ namespace ft
     }
 
     /**
-     * 실제 스펙에는 없지만, 안하면 테스트가 통과하지 못하는거같아서 추가합니다.
+     * 과제 요구 사항에 있진 않지만, list iterator 와 vector iterator 를 비교하기 위해
      */
     template <class LIterator, class RIterator>
     bool operator<=(const reverse_iterator<LIterator> &lhs, const reverse_iterator<RIterator> &rhs)
@@ -269,7 +253,7 @@ namespace ft
     }
 
     /**
-     * 실제 스펙에는 없지만, 안하면 테스트가 통과하지 못하는거같아서 추가합니다.
+     * 과제 요구 사항에 있진 않지만, list iterator 와 vector iterator 를 비교하기 위해
      */
     template <class LIterator, class RIterator>
     bool operator>(const reverse_iterator<LIterator> &lhs, const reverse_iterator<RIterator> &rhs)
@@ -284,7 +268,7 @@ namespace ft
     }
 
     /**
-     * 실제 스펙에는 없지만, 안하면 테스트가 통과하지 못하는거같아서 추가합니다.
+     * 과제 요구 사항에 있진 않지만, list iterator 와 vector iterator 를 비교하기 위해
      */
     template <class LIterator, class RIterator>
     bool operator>=(const reverse_iterator<LIterator> &lhs, const reverse_iterator<RIterator> &rhs)
@@ -311,7 +295,7 @@ namespace ft
     }
 
     /**
-     * 실제 스펙에는 없지만, 안하면 테스트가 통과하지 못하는거같아서 추가합니다.
+     * 과제 요구 사항에 있진 않지만, list iterator 와 vector iterator 를 비교하기 위해
      */
     template <class LIterator, class RIterator>
     ptrdiff_t operator-(const reverse_iterator<LIterator> &lhs, const reverse_iterator<RIterator> &rhs)
