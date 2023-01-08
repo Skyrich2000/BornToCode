@@ -66,7 +66,7 @@ namespace ft
             return lhs.c < rhs.c;
         }
 
-    protected: // private 로 바꾸고 테스트하면 터질지도??
+    protected:
         /**
          * 실제 stack 에서도 protected 로 선언되어 있음
          */

@@ -185,7 +185,6 @@ namespace ft
             return _base[n];
         }
 
-        // copilot
         iterator insert(iterator position, const value_type &val)
         {
             size_type n = position - begin();
@@ -198,7 +197,6 @@ namespace ft
             return (begin() + n);
         }
 
-        // copilot
         void insert(iterator position, size_type n, const value_type &val)
         {
             size_type pos = position - begin();
@@ -211,7 +209,6 @@ namespace ft
             _size += n;
         }
 
-        // copilot
         template <class InputIterator>
         void insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = NULL)
         {
@@ -226,7 +223,6 @@ namespace ft
             _size += n;
         }
 
-        // copilot
         iterator erase(iterator position)
         {
             size_type n = position - begin();
@@ -236,7 +232,6 @@ namespace ft
             return (begin() + n);
         }
 
-        // copilot
         iterator erase(iterator first, iterator last)
         {
             size_type n = first - begin();
@@ -248,7 +243,6 @@ namespace ft
             return (begin() + n);
         }
 
-        // copilot
         void resize(size_type n, value_type val = value_type())
         {
             if (n < _size)
