@@ -85,7 +85,7 @@ namespace ft
         class Key,
         class Value,
         class Compare = std::less<Key>,
-        class Allocator = std::allocator<std::pair<const Key, Value> > >
+        class Allocator = std::allocator<ft::pair<const Key, Value> > >
     class AvlTree
     {
     public:
