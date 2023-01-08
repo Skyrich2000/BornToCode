@@ -46,32 +46,32 @@ namespace ft
             std::cout << " " << std::endl;
         }
 
-        void set_children(AvlNode *left, AvlNode *right)
-        {
-            this->left = left;
-            this->right = right;
-
-            if (left)
-                left->parent = this;
-            if (right)
-                right->parent = this;
-        }
-
-        // void set_left_child(AvlNode *left)
+        // void set_children(AvlNode *left, AvlNode *right)
         // {
         //     this->left = left;
+        //     this->right = right;
 
         //     if (left)
         //         left->parent = this;
-        // }
-
-        // void set_right_child(AvlNode *right)
-        // {
-        //     this->right = right;
-
         //     if (right)
         //         right->parent = this;
         // }
+
+        void set_left_child(AvlNode *left)
+        {
+            this->left = left;
+
+            if (left)
+                left->parent = this;
+        }
+
+        void set_right_child(AvlNode *right)
+        {
+            this->right = right;
+
+            if (right)
+                right->parent = this;
+        }
 
         void set_parent(AvlNode *parent)
         {
@@ -115,13 +115,15 @@ namespace ft
     public:
         AvlTree(key_compare comp = key_compare(), allocator_type alloc = allocator_type())
         {
-            this->head = new AvlNode<Key, Value>(ft::make_pair(Key(), Value()), NULL, -1, NODE_HEAD);
-            this->tail = new AvlNode<Key, Value>(ft::make_pair(Key(), Value()), NULL, 999, NODE_TAIL);
-            this->head->set_children(this->tail, this->tail);
-            // this->head->set_left_child(this->tail);
-            // this->head->set_right_child(this->tail);
-            // this->head = alloc.allocate(1);
-            // alloc.construct(this->head, AvlNode<Key, Value>(ft::make_pair(Key(), Value()), NULL, -1, true));
+            // this->head = new AvlNode<Key, Value>(ft::make_pair(Key(), Value()), NULL, -1, NODE_HEAD);
+            this->head = alloc.allocate(1);
+            alloc.construct(this->head, AvlNode<Key, Value>(ft::make_pair(Key(), Value()), NULL, -1, NODE_HEAD));
+            // this->tail = new AvlNode<Key, Value>(ft::make_pair(Key(), Value()), NULL, 999, NODE_TAIL);
+            this->tail = alloc.allocate(1);
+            alloc.construct(this->tail, AvlNode<Key, Value>(ft::make_pair(Key(), Value()), NULL, 999, NODE_TAIL));
+
+            this->head->set_left_child(this->tail);
+            this->head->set_right_child(this->tail);
             this->_comp = comp;
             this->_alloc = alloc;
             this->_size = 0;
@@ -130,10 +132,12 @@ namespace ft
         ~AvlTree()
         {
             clear();
-            delete this->head;
-            delete this->tail;
-            // _alloc.destroy(this->head);
-            // _alloc.deallocate(this->head, 1);
+            // delete this->head;
+            // delete this->tail;
+            _alloc.destroy(this->head);
+            _alloc.deallocate(this->head, 1);
+            _alloc.destroy(this->tail);
+            _alloc.deallocate(this->tail, 1);
         }
 
     private:
@@ -169,11 +173,11 @@ namespace ft
             node_pointer new_node = _alloc.allocate(1);
             _alloc.construct(new_node, ft::AvlNode<Key, Value>(ft::make_pair(key, value), node, -1));
             if (key < node->get_pair()->first)
-                node->set_children(new_node, node->get_right());
+                node->set_left_child(new_node);
             else
-                node->set_children(node->get_left(), new_node);
+                node->set_right_child(new_node);
             if (child && child->is_tail())
-                new_node->set_children(NULL, this->tail);
+                new_node->set_right_child(this->tail);
             this->_size++;
 
             return new_node;
@@ -203,11 +207,11 @@ namespace ft
                 throw std::runtime_error("[AvlTree::_rotate_right] left is NULL");
 
             if (parent->get_left() == z)
-                parent->set_children(y, parent->get_right());
+                parent->set_left_child(y);
             else
-                parent->set_children(parent->get_left(), y);
-            z->set_children(y->get_right(), z->get_right());
-            y->set_children(y->get_left(), z);
+                parent->set_right_child(y);
+            z->set_left_child(y->get_right());
+            y->set_right_child(z);
         }
 
         void _rotate_left(node_pointer node)
@@ -225,11 +229,11 @@ namespace ft
                 throw std::runtime_error("[AvlTree::_rotate_left] right is NULL");
 
             if (parent->get_left() == z)
-                parent->set_children(y, parent->get_right());
+                parent->set_left_child(y);
             else
-                parent->set_children(parent->get_left(), y);
-            z->set_children(z->get_left(), y->get_left());
-            y->set_children(z, y->get_right());
+                parent->set_right_child(y);
+            z->set_right_child(y->get_left());
+            y->set_left_child(z);
         }
 
         void _rebalance(node_pointer node)
@@ -361,9 +365,9 @@ namespace ft
             if (node->get_left() == NULL && node->get_right() == NULL)
             {
                 if (parent->get_left() == node)
-                    parent->set_children(NULL, parent->get_right());
+                    parent->set_left_child(NULL);
                 else
-                    parent->set_children(parent->get_left(), NULL);
+                    parent->set_right_child(NULL);
                 // delete node;
                 if (!node->is_tail())
                 {
@@ -376,9 +380,9 @@ namespace ft
             {
                 node_pointer child = node->get_left() ? node->get_left() : node->get_right();
                 if (parent->get_left() == node)
-                    parent->set_children(child, parent->get_right());
+                    parent->set_left_child(child);
                 else
-                    parent->set_children(parent->get_left(), child);
+                    parent->set_right_child(child);
                 child->set_parent(parent);
                 // delete node;
                 if (!node->is_tail())
