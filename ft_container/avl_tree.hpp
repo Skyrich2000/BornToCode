@@ -14,7 +14,7 @@ namespace ft
     public:
         int height;
 
-        AvlNode(const typename Node<Key, Value>::pair_type &pair, AvlNode *parent, int height, int is_head = false) : Node<Key, Value>(pair, parent, NULL, NULL, is_head), height(height) {}
+        AvlNode(const typename Node<Key, Value>::pair_type &pair, AvlNode *parent, int height, int is_dummy = NODE_NORMAL) : Node<Key, Value>(pair, parent, NULL, NULL, is_dummy), height(height) {}
 
         ~AvlNode() {}
 
@@ -57,6 +57,22 @@ namespace ft
                 right->parent = this;
         }
 
+        // void set_left_child(AvlNode *left)
+        // {
+        //     this->left = left;
+
+        //     if (left)
+        //         left->parent = this;
+        // }
+
+        // void set_right_child(AvlNode *right)
+        // {
+        //     this->right = right;
+
+        //     if (right)
+        //         right->parent = this;
+        // }
+
         void set_parent(AvlNode *parent)
         {
             this->parent = parent;
@@ -69,8 +85,8 @@ namespace ft
 
         int get_balance_factor()
         {
-            int left_height = this->left ? this->get_left()->height : 0;
-            int right_height = this->right ? this->get_right()->height : 0;
+            int left_height = _is_nil_node(this->get_left()) ? 0 : this->get_left()->height;
+            int right_height = _is_nil_node(this->get_right()) ? 0 : this->get_right()->height;
 
             return left_height - right_height;
         }
@@ -91,16 +107,21 @@ namespace ft
 
     private:
         node_pointer head;
-        key_compare _comp;
+        node_pointer tail;
+        key_compare _comp; // TODO:이거 쓸것!!!
         allocator_type _alloc;
         size_type _size;
 
     public:
         AvlTree(key_compare comp = key_compare(), allocator_type alloc = allocator_type())
         {
-            // this->head = new AvlNode<Key, Value>(ft::make_pair(Key(), Value()), NULL, -1, true);
-            this->head = alloc.allocate(1);
-            alloc.construct(this->head, AvlNode<Key, Value>(ft::make_pair(Key(), Value()), NULL, -1, true));
+            this->head = new AvlNode<Key, Value>(ft::make_pair(Key(), Value()), NULL, -1, NODE_HEAD);
+            this->tail = new AvlNode<Key, Value>(ft::make_pair(Key(), Value()), NULL, 999, NODE_TAIL);
+            this->head->set_children(this->tail, this->tail);
+            // this->head->set_left_child(this->tail);
+            // this->head->set_right_child(this->tail);
+            // this->head = alloc.allocate(1);
+            // alloc.construct(this->head, AvlNode<Key, Value>(ft::make_pair(Key(), Value()), NULL, -1, true));
             this->_comp = comp;
             this->_alloc = alloc;
             this->_size = 0;
@@ -109,9 +130,10 @@ namespace ft
         ~AvlTree()
         {
             clear();
-            // delete this->head;
-            _alloc.destroy(this->head);
-            _alloc.deallocate(this->head, 1);
+            delete this->head;
+            delete this->tail;
+            // _alloc.destroy(this->head);
+            // _alloc.deallocate(this->head, 1);
         }
 
     private:
@@ -128,8 +150,8 @@ namespace ft
         node_pointer _get_root()
         {
             node_pointer root = this->head->get_left();
-            root = root ? root : this->head->get_right();
-            root = root ? root : this->head;
+            root = !_is_nil_node(root) ? root : this->head->get_right();
+            root = !_is_nil_node(root) ? root : this->head;
 
             return root;
         }
@@ -139,17 +161,19 @@ namespace ft
             if (node == NULL)
                 throw std::runtime_error("[AvlTree::_insert_normal] node is NULL");
 
-            node_pointer child = key < node->get_pair().first ? node->get_left() : node->get_right();
-            if (child)
+            node_pointer child = key < node->get_pair()->first ? node->get_left() : node->get_right();
+            if (!_is_nil_node(child))
                 return this->_insert_normal(key, value, child);
 
             // node_pointer new_node = new AvlNode<Key, Value>(ft::make_pair(key, value), node, -1);
             node_pointer new_node = _alloc.allocate(1);
             _alloc.construct(new_node, ft::AvlNode<Key, Value>(ft::make_pair(key, value), node, -1));
-            if (key < node->get_pair().first)
+            if (key < node->get_pair()->first)
                 node->set_children(new_node, node->get_right());
             else
                 node->set_children(node->get_left(), new_node);
+            if (child && child->is_tail())
+                new_node->set_children(NULL, this->tail);
             this->_size++;
 
             return new_node;
@@ -157,7 +181,7 @@ namespace ft
 
         int _update_child_height(node_pointer node)
         {
-            if (node == NULL)
+            if (_is_nil_node(node))
                 return 0;
 
             node->height = std::max(_update_child_height(node->get_left()), _update_child_height(node->get_right())) + 1;
@@ -210,7 +234,7 @@ namespace ft
 
         void _rebalance(node_pointer node)
         {
-            if (node == NULL || node->get_parent() == NULL)
+            if (_is_nil_node(node))
                 return;
 
             int balance_factor = node->get_balance_factor();
@@ -290,37 +314,31 @@ namespace ft
             this->_rebalance(this->_get_root());
         }
 
-        node_pointer begin()
+        node_pointer find_most_left()
         {
             node_pointer node = this->_get_root();
-            if (node->is_head())
-                return NULL;
             while (node->get_left() != NULL)
                 node = node->get_left();
             return node;
         }
 
-        node_pointer end()
+        node_pointer get_tail()
         {
-            node_pointer node = this->_get_root();
-            if (node->is_head())
-                return NULL;
-            while (node->get_right() != NULL)
-                node = node->get_right();
-            return node;
+            return this->tail;
         }
 
-        void insert(const Key &key, const Value &value)
+        node_pointer insert(const Key &key, const Value &value)
         {
             node_pointer node = this->_insert_normal(key, value, this->_get_root());
             this->_rebalance(node);
+            return node;
         }
 
         // copilot
         node_pointer find(const Key &key)
         {
             node_pointer node = this->_get_root();
-            while (node != NULL)
+            while (!_is_nil_node(node))
             {
                 if (key == node->get_pair()->first)
                     return node;
@@ -347,8 +365,12 @@ namespace ft
                 else
                     parent->set_children(parent->get_left(), NULL);
                 // delete node;
-                _alloc.destroy(node);
-                _alloc.deallocate(node, 1);
+                if (!node->is_tail())
+                {
+                    _alloc.destroy(node);
+                    _alloc.deallocate(node, 1);
+                    this->_size--;
+                }
             }
             else if (node->get_left() == NULL || node->get_right() == NULL)
             {
@@ -359,38 +381,21 @@ namespace ft
                     parent->set_children(parent->get_left(), child);
                 child->set_parent(parent);
                 // delete node;
-                _alloc.destroy(node);
-                _alloc.deallocate(node, 1);
+                if (!node->is_tail())
+                {
+                    _alloc.destroy(node);
+                    _alloc.deallocate(node, 1);
+                    this->_size--;
+                }
             }
             else
             {
-                node_pointer successor = node->get_right();
-                while (successor->get_left() != NULL)
-                    successor = successor->get_left();
-
+                node_pointer successor = node->get_left();
+                while (successor->get_right() != NULL)
+                    successor = successor->get_right();
+                erase(successor->get_pair()->first);
                 node->set_pair(*successor->get_pair());
-                if (successor->get_right() != NULL)
-                {
-                    node_pointer child = successor->get_right();
-                    if (successor->get_parent()->get_left() == successor)
-                        successor->get_parent()->set_children(child, successor->get_parent()->get_right());
-                    else
-                        successor->get_parent()->set_children(successor->get_parent()->get_left(), child);
-                    child->set_parent(successor->get_parent());
-                }
-                else
-                {
-                    if (successor->get_parent()->get_left() == successor)
-                        successor->get_parent()->set_children(NULL, successor->get_parent()->get_right());
-                    else
-                        successor->get_parent()->set_children(successor->get_parent()->get_left(), NULL);
-                }
-                // delete successor;
-                _alloc.destroy(successor);
-                _alloc.deallocate(successor, 1);
             }
-
-            this->_size--;
             this->_rebalance(parent);
         }
 
@@ -402,7 +407,9 @@ namespace ft
         void clear()
         {
             while (!this->empty())
+            {
                 this->erase(this->_get_root()->get_pair()->first);
+            }
         }
 
         size_type size()
@@ -410,6 +417,12 @@ namespace ft
             return this->_size;
         }
     };
+
+    template <class Key, class Value>
+    bool _is_nil_node(AvlNode<Key, Value> *node)
+    {
+        return node == NULL || node->is_dummy();
+    }
 }
 
 #endif

@@ -6,14 +6,19 @@
 #endif
 
 #include "util.hpp"
+#include <iostream>
 
 namespace ft
 {
+#define NODE_NORMAL 0
+#define NODE_HEAD 1
+#define NODE_TAIL 2
+
     template <class Key, class Value>
     class Node
     {
     private:
-        bool _is_head;
+        int _node_type;
 
     protected:
         typedef ft::pair<Key, Value> pair_type;
@@ -24,13 +29,23 @@ namespace ft
         Node *right;
 
     public:
-        Node(const pair_type &pair, Node *parent, Node *left, Node *right, bool is_head = false) : _is_head(is_head), pair(pair), parent(parent), left(left), right(right) {}
+        Node(const pair_type &pair, Node *parent, Node *left, Node *right, int node_type = NODE_NORMAL) : _node_type(node_type), pair(pair), parent(parent), left(left), right(right) {}
 
         virtual ~Node() {}
 
+        bool is_dummy()
+        {
+            return _node_type != NODE_NORMAL;
+        }
+
         bool is_head()
         {
-            return _is_head;
+            return _node_type == NODE_HEAD;
+        }
+
+        bool is_tail()
+        {
+            return _node_type == NODE_TAIL;
         }
 
         /**
@@ -96,6 +111,10 @@ namespace ft
                     next = next->parent;
                 }
                 next = next->parent;
+                if (next->is_head())
+                {
+                    throw std::out_of_range("out of range");
+                }
             }
             return next;
         }
@@ -114,11 +133,15 @@ namespace ft
             else
             {
                 prev = this;
-                while (prev->parent != NULL && prev->parent->left == prev)
+                while (!prev->parent->is_head() && prev->parent->left == prev)
                 {
                     prev = prev->parent;
                 }
                 prev = prev->parent;
+                if (prev->is_head())
+                {
+                    throw std::out_of_range("out of range");
+                }
             }
             return prev;
         }

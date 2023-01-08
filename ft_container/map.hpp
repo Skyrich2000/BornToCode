@@ -48,11 +48,19 @@ namespace ft
         };
 
     private:
-        typedef typename ft::AvlTree<Key, Value, Compare, Allocator> *tree;
+        typedef typename ft::AvlTree<Key, Value, Compare, Allocator> tree;
 
         Compare _comp;
         Allocator _alloc;
-        tree _tree;
+        tree *_tree;
+
+        template <class T>
+        void _swap(T &a, T &b)
+        {
+            T tmp = a;
+            a = b;
+            b = tmp;
+        }
 
     public:
         explicit map(const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type())
@@ -87,24 +95,32 @@ namespace ft
             delete _tree;
         }
 
+        // TODO: debug!!!!!
+        tree *___get_tree()
+        {
+            return _tree;
+        }
+
         iterator begin()
         {
-            return iterator(_tree->begin());
+            return iterator(_tree->find_most_left());
         }
 
         const_iterator begin() const
         {
-            return const_iterator(_tree->begin());
+            // return iterator(_tree->begin());
+            return iterator(_tree->find_most_left());
         }
 
         iterator end()
         {
-            return iterator(_tree->end());
+            return iterator(_tree->get_tail());
         }
 
         const_iterator end() const
         {
-            return const_iterator(_tree->end());
+            // return const_iterator(_tree->end());
+            return iterator(_tree->get_tail());
         }
 
         reverse_iterator rbegin()
@@ -152,25 +168,24 @@ namespace ft
 
         mapped_type &operator[](const key_type &k)
         {
-            iterator it = _tree->find(k);
+            typename tree::node_pointer node = _tree->find(k);
 
-            if (!it)
-                it = _tree->insert(ft::make_pair(k, mapped_type()));
-            return it->second;
+            if (!node)
+                node = _tree->insert(k, mapped_type());
+            return node->get_pair()->second;
         }
 
         ft::pair<iterator, bool> insert(const value_type &val)
         {
             ft::pair<iterator, bool> ret;
 
-            if (_tree->find(val.first) != _tree->end())
+            if (_tree->find(val.first) != NULL)
             {
                 ret.first = iterator(_tree->find(val.first));
                 ret.second = false;
                 return ret;
             }
-
-            ret.first = iterator(_tree->insert(val));
+            ret.first = iterator(_tree->insert(val.first, val.second));
             ret.second = true;
             return ret;
         }
@@ -178,7 +193,7 @@ namespace ft
         iterator insert(iterator position, const value_type &val)
         {
             (void)position;
-            return insert(val);
+            return insert(val).first;
         }
 
         template <class InputIterator>
@@ -214,8 +229,8 @@ namespace ft
 
         void swap(map &x)
         {
-            ft::swap(_tree, x._tree);
-            ft::swap(_comp, x._comp);
+            _swap(_tree, x._tree);
+            _swap(_comp, x._comp);
         }
 
         void clear()
@@ -246,14 +261,16 @@ namespace ft
         {
             typename tree::node_pointer node = _tree->find(k);
 
+            // if (node)
+            //     return const_iterator(node);
             if (node)
-                return const_iterator(node);
+                return iterator(node);
             return end();
         }
 
         size_type count(const key_type &k) const
         {
-            if (_tree->find(k) != _tree->end())
+            if (_tree->find(k))
                 return 1;
             return 0;
         }

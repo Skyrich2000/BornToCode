@@ -6,7 +6,7 @@ using namespace __TEST__;
 
 void test_constructor()
 {
-    ft::Node<int, int> node(ft::make_pair(1, 2), NULL, NULL, NULL, true);
+    ft::Node<int, int> node(ft::make_pair(1, 2), NULL, NULL, NULL, NODE_NORMAL);
 
     expect(""
            ""
@@ -15,28 +15,28 @@ void test_constructor()
 
 void test_child_parent()
 {
-    ft::Node<int, int> node1(ft::make_pair(2, 1), NULL, NULL, NULL, true);
-    ft::Node<int, int> node2(ft::make_pair(1, 2), NULL, NULL, NULL, false);
-    ft::Node<int, int> node3(ft::make_pair(3, 3), NULL, NULL, NULL, false);
+    ft::Node<int, int> node1(ft::make_pair(2, 1), NULL, NULL, NULL, NODE_NORMAL);
+    ft::Node<int, int> node2(ft::make_pair(1, 2), NULL, NULL, NULL, NODE_NORMAL);
+    ft::Node<int, int> node3(ft::make_pair(3, 3), NULL, NULL, NULL, NODE_NORMAL);
 
     node1.__set_left(&node2);
     node1.__set_right(&node3);
     node2.__set_parent(&node1);
     node3.__set_parent(&node1);
 
-    std::cout << "node1: " << node1.get_pair().first << std::endl;
+    std::cout << "node1: " << node1.get_pair()->first << std::endl;
     std::cout << "node1-parent: " << node1.get_parent() << std::endl;
-    std::cout << "node1-left: " << node1.get_left()->get_pair().first << std::endl;
-    std::cout << "node1-right: " << node1.get_right()->get_pair().first << "\n\n";
+    std::cout << "node1-left: " << node1.get_left()->get_pair()->first << std::endl;
+    std::cout << "node1-right: " << node1.get_right()->get_pair()->first << "\n\n";
 
     std::cout
-        << "node2: " << node2.get_pair().first << std::endl;
-    std::cout << "node2-parent: " << node2.get_parent()->get_pair().first << std::endl;
+        << "node2: " << node2.get_pair()->first << std::endl;
+    std::cout << "node2-parent: " << node2.get_parent()->get_pair()->first << std::endl;
     std::cout << "node2-left: " << node2.get_left() << std::endl;
     std::cout << "node2-right: " << node2.get_right() << "\n\n";
 
-    std::cout << "node3: " << node3.get_pair().first << std::endl;
-    std::cout << "node3-parent: " << node3.get_parent()->get_pair().first << std::endl;
+    std::cout << "node3: " << node3.get_pair()->first << std::endl;
+    std::cout << "node3-parent: " << node3.get_parent()->get_pair()->first << std::endl;
     std::cout << "node3-left: " << node3.get_left() << std::endl;
     std::cout << "node3-right: " << node3.get_right() << std::endl;
 
@@ -60,23 +60,27 @@ void test_child_parent()
 
 void test_next()
 {
-    ft::Node<int, int> node1(ft::make_pair(1, 1), NULL, NULL, NULL, true);
-    ft::Node<int, int> node2(ft::make_pair(2, 2), NULL, NULL, NULL, false);
-    ft::Node<int, int> node3(ft::make_pair(3, 3), NULL, NULL, NULL, false);
+    ft::Node<int, int> node0(ft::make_pair(0, 1), NULL, NULL, NULL, NODE_HEAD);
+    ft::Node<int, int> node1(ft::make_pair(1, 1), NULL, NULL, NULL, NODE_NORMAL);
+    ft::Node<int, int> node2(ft::make_pair(2, 2), NULL, NULL, NULL, NODE_NORMAL);
+    ft::Node<int, int> node3(ft::make_pair(3, 3), NULL, NULL, NULL, NODE_NORMAL);
+
+    node0.__set_right(&node2);
+    node2.__set_parent(&node0);
 
     node2.__set_left(&node1);
     node2.__set_right(&node3);
     node1.__set_parent(&node2);
     node3.__set_parent(&node2);
 
-    std::cout << "node1: " << node1.get_pair().first << std::endl;
-    std::cout << "node1-next: " << node1.get_next()->get_pair().first << "\n\n";
+    std::cout << "node1: " << node1.get_pair()->first << std::endl;
+    std::cout << "node1-next: " << node1.get_next()->get_pair()->first << "\n\n";
 
-    std::cout << "node2: " << node2.get_pair().first << std::endl;
-    std::cout << "node2-next: " << node2.get_next()->get_pair().first << "\n\n";
+    std::cout << "node2: " << node2.get_pair()->first << std::endl;
+    std::cout << "node2-next: " << node2.get_next()->get_pair()->first << "\n\n";
 
-    // std::cout << "node3: " << node3.get_pair().first << std::endl;
-    // std::cout << "node3-next: " << node3.get_next()->get_pair().first << std::endl;
+    // std::cout << "node3: " << node3.get_pair()->first << std::endl;
+    // std::cout << "node3-next: " << node3.get_next()->is_head() << std::endl;
 
     expect(""
            "node1: 1      ",

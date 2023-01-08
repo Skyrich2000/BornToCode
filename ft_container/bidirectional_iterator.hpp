@@ -13,9 +13,12 @@ namespace ft
     {
     private:
         typedef ft::Node<Key, Value> *node_pointer;
+        typedef ft::Node<const Key, const Value> *const_node_pointer;
 
     public:
-        typedef typename ft::iterator_traits<ft::pair<const Key, Value> *>::pointer pointer;
+        typedef typename ft::iterator_traits<ft::pair<Key, Value> *>::pointer pointer;
+        // TODO: noconst
+        // typedef typename ft::iterator_traits<ft::pair<const Key, Value> *>::pointer pointer;
         // typedef ft::pair<const Key, Value> *pointer;
         typedef typename ft::iterator_traits<pointer>::value_type value_type;
         typedef typename ft::iterator_traits<pointer>::reference reference;
@@ -134,10 +137,22 @@ namespace ft
             return (n);
         }
 
+        // copy
+        bool operator==(const bidirectional_iterator &op) const
+        {
+            return (this->_node == op._node);
+        }
+
+        // copy
+        bool operator!=(const bidirectional_iterator &op) const
+        {
+            return (this->_node != op._node);
+        }
+
         // TODO : 야매로 구현한 부분.확인 필요.
         operator bidirectional_iterator<const Key, const Value>() const
         {
-            return (bidirectional_iterator<const Key, const Value>(this->_node));
+            return (bidirectional_iterator<const Key, const Value>(const_node_pointer(this->_node)));
         }
 
     private:
