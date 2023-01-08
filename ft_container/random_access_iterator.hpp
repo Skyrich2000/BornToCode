@@ -210,7 +210,6 @@ namespace ft
             return (*this);
         }
 
-        // TODO: 야매로 구현한 부분. 확인 필요.
         operator random_access_iterator<const T>() const
         {
             return (random_access_iterator<const T>(this->_p));

@@ -144,7 +144,6 @@ namespace ft
             return (this->_node != op._node);
         }
 
-        // TODO : 야매로 구현한 부분.확인 필요.
         operator bidirectional_iterator<const Key, const Value>() const
         {
             return (bidirectional_iterator<const Key, const Value>(const_node_pointer(this->_node)));
