@@ -43,10 +43,9 @@ void PrivmsgService::sendToChannel(std::vector<Message>& ret, User* user, const 
     }
 }
 
-void PrivmsgService::sendToChannelByBot(std::vector<Message>& ret, const std::string channelName) {
+void PrivmsgService::sendToChannelByBot(std::vector<Message>& ret, const std::string channelName, const std::string text) {
     User *bot = this->repository->getUser(0);
 
-    std::string text = "https://42world.kr";
     this->sendToChannel(ret, bot, channelName, text);
 }
 
@@ -99,9 +98,8 @@ const std::vector<Message> PrivmsgService::execute(User* user, const std::vector
 
         if (target[0] == '#') {
             if (text == "42world" && msgType == PRIVMSG)
-                this->sendToChannelByBot(ret, target);
-            else 
-                this->sendToChannel(ret, user, target, text);
+                this->sendToChannelByBot(ret, target, "https://42world.kr"); 
+            this->sendToChannel(ret, user, target, text);
         } else {
             this->sendToUser(ret, user, target, text);
         }

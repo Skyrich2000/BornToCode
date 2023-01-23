@@ -19,7 +19,7 @@ class PrivmsgService : public Service {
     PrivmsgService(const PrivmsgService& obj);
 
     void sendToChannel(std::vector<Message>& ret, User* user, const std::string channelName, const std::string text);
-    void sendToChannelByBot(std::vector<Message>& ret, const std::string channelName);
+    void sendToChannelByBot(std::vector<Message>& ret, const std::string channelName, const std::string text);
     void sendToUser(std::vector<Message>& ret, User* user, const std::string nickname, const std::string text);
 
    public:
