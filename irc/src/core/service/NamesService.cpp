@@ -21,7 +21,7 @@ void NamesService::printNames(const Channel* const channel, std::vector<Message>
     users = repository->getUsersByChannel(channel);
     typedef std::vector<UserInChannel*>::const_iterator UserIter;
     for (UserIter userIter = users.begin(); userIter != users.end(); userIter++) {
-        if ((*userIter)->is_host == true)
+        if ((*userIter)->is_operator == true)
             nicks.push_back("@" + (*userIter)->user->nickname);
         else
             nicks.push_back((*userIter)->user->nickname);
