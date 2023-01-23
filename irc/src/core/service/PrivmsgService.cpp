@@ -97,9 +97,9 @@ const std::vector<Message> PrivmsgService::execute(User* user, const std::vector
         }
 
         if (target[0] == '#') {
+            this->sendToChannel(ret, user, target, text);
             if (text == "42world" && msgType == PRIVMSG)
                 this->sendToChannelByBot(ret, target, "https://42world.kr"); 
-            this->sendToChannel(ret, user, target, text);
         } else {
             this->sendToUser(ret, user, target, text);
         }
