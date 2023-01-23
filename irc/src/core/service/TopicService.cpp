@@ -74,6 +74,10 @@ const std::vector<Message> TopicService::execute(User* user, const std::vector<s
 
     topic = param[1];
     channel->setTopic(topic);
-    ret.push_back(Message::create(server, user, StatusCode::RPL_TOPIC(channelName, topic)));
+    std::vector<UserInChannel*> users = this->repository->getUsersByChannel(channel);
+    for (std::vector<UserInChannel*>::iterator it = users.begin(); it != users.end(); ++it) {
+        ret.push_back(Message::create(server, (*it)->user, StatusCode::RPL_TOPIC(channelName, topic)));
+    }
+    
     return ret;
 }
