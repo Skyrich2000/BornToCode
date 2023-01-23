@@ -42,7 +42,7 @@ class StatusCode {
     static const StatusCode RPL_LIST(std::string channel, int userNum, std::string topic);
     static const StatusCode RPL_LISTEND();
 
-    static const StatusCode RPL_CHANNELMODEIS(std::string channel, std::string mode, std::string param = "");
+    static const StatusCode MSG_MODE(std::string channel, std::string mode, std::string param = "");
     static const StatusCode RPL_UMODEIS(std::string mode);
 
     static const StatusCode ERR_UNKNOWNCOMMAND(std::string command);

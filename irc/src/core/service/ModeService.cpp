@@ -23,7 +23,7 @@ const std::vector<Message> ModeService::modeChannel(User* user, const std::vecto
 
     if (param.size() == 1) {
         std::string _mode = channel->getMode();
-        return std::vector<Message>(1, Message::create(server, user, StatusCode::RPL_CHANNELMODEIS(channelName, _mode != "" ? "+" + _mode : "")));
+        return std::vector<Message>(1, Message::create(server, user, StatusCode::MSG_MODE(channelName, _mode != "" ? "+" + _mode : "")));
     }
 
     UserInChannel* userInChannel = this->repository->getUserInChannel(user, channel);
@@ -72,7 +72,7 @@ const std::vector<Message> ModeService::modeChannel(User* user, const std::vecto
     std::vector<Message> ret;
     std::vector<UserInChannel*> users = this->repository->getUsersByChannel(channel);
     for (std::vector<UserInChannel*>::iterator it = users.begin(); it != users.end(); ++it) {
-        ret.push_back(Message::create(server, (*it)->user, StatusCode::RPL_CHANNELMODEIS(channelName, param[1], param.size() > 2 ? ":" + param[2] : "")));
+        ret.push_back(Message::create(server, (*it)->user, StatusCode::MSG_MODE(channelName, param[1], param.size() > 2 ? param[2] : "")));
     }
 
     return ret;

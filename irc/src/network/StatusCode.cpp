@@ -95,8 +95,8 @@ const StatusCode StatusCode::RPL_LISTEND() {
     return StatusCode("323", " :End of /LIST");
 }
 
-const StatusCode StatusCode::RPL_CHANNELMODEIS(std::string channel, std::string mode, std::string param) {
-    return StatusCode("324", channel + " " + mode + (param != "" ? " " + param : ""));
+const StatusCode StatusCode::MSG_MODE(std::string channel, std::string mode, std::string param) {
+    return StatusCode("MODE", channel + " " + mode + (param != "" ? " " + param : ""), " ");
 }
 
 const StatusCode StatusCode::RPL_UMODEIS(std::string mode) {
