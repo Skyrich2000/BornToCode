@@ -47,8 +47,7 @@ const Message Message::create(int fd, const std::string& rawstring) {
 
     for (std::vector<std::string>::iterator itr = tokens.begin(); itr != tokens.end(); ++itr) {
         if ((*itr)[0] == ':') {
-            (*itr).erase(0, 1);
-            *itr = Util::join(std::vector<std::string>(itr, tokens.end()), ' ');
+            *itr = rawstring.substr(rawstring.find(":") + 1);
             tokens.erase(itr + 1, tokens.end());
             break;
         }

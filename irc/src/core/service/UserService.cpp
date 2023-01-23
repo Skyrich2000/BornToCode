@@ -15,6 +15,7 @@ UserService& UserService::operator=(const UserService& obj) {
 
 const std::vector<Message> UserService::execute(User* user, const std::vector<std::string>& param) {
     std::vector<Message> ret;
+    bool before_register_status = user->isRegistered();
 
     if (param.size() < 4) {
         ret.push_back(Message::create(server, user, StatusCode::ERR_NEEDMOREPARAMS("USER")));
@@ -36,6 +37,8 @@ const std::vector<Message> UserService::execute(User* user, const std::vector<st
     user->servername = "FT_IRC";
     user->realname = realname;
     user->registerStatus |= User::REGISTER_USER;
-    ret.push_back(Message::create(server, user, StatusCode::MSG_USER(user->isRegistered())));
+    ret.push_back(Message::create(server, user, StatusCode::MSG_USER()));
+    if (user->isRegistered() && before_register_status != user->isRegistered())
+        ret.push_back(Message::create(server, user, StatusCode::RPL_WELCOME()));
     return ret;
 }

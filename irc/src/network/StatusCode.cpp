@@ -15,29 +15,36 @@ StatusCode& StatusCode::operator=(const StatusCode& obj) {
     return (*this);
 }
 
-const StatusCode StatusCode::MSG_PASS(int is_registered) {
-    return StatusCode("PASS", " :Password accepted" + std::string(is_registered ? " (new registered!)" : ""));
+const StatusCode StatusCode::MSG_CAP() {
+    return StatusCode("CAP", "* LS");
 }
 
-const StatusCode StatusCode::MSG_NICK(std::string nick, int is_new_registered) {
-    (void)is_new_registered;
+const StatusCode StatusCode::MSG_PONG(std::string str) {
+    return StatusCode("PONG", ":" + str, "ft.irc");
+}
+
+const StatusCode StatusCode::MSG_PASS() {
+    return StatusCode("PASS", " :Password accepted");
+}
+
+const StatusCode StatusCode::MSG_NICK(std::string nick) {
     return StatusCode("NICK", "", nick);
 }
 
-const StatusCode StatusCode::MSG_USER(int is_registered) {
-    return StatusCode("USER", " :User accepted" + std::string(is_registered ? " (new registered!)" : ""));
+const StatusCode StatusCode::MSG_USER() {
+    return StatusCode("USER", " :User accepted");
 }
 
 const StatusCode StatusCode::MSG_QUIT(std::string msg) {
-    return StatusCode("QUIT", msg);
+    return StatusCode("QUIT", ":" + msg, " ");
 }
 
 const StatusCode StatusCode::MSG_JOIN(std::string channel) {
     return StatusCode("JOIN", "", channel);
 }
 
-const StatusCode StatusCode::MSG_PART(std::string channelName, std::string username) {
-    return StatusCode("PART", channelName + " :" + username + " has left");
+const StatusCode StatusCode::MSG_PART(std::string channelName, std::string message) {
+    return StatusCode("PART",  ":" + message, channelName);
 }
 
 const StatusCode StatusCode::MSG_PRIVMSG(std::string target, std::string text) {
@@ -46,6 +53,10 @@ const StatusCode StatusCode::MSG_PRIVMSG(std::string target, std::string text) {
 
 const StatusCode StatusCode::MSG_NOTICE(std::string target, std::string text) {
     return StatusCode("NOTICE", ":" + text, target);
+}
+
+const StatusCode StatusCode::RPL_WELCOME() {
+    return StatusCode("001", "Welcome!!");
 }
 
 const StatusCode StatusCode::RPL_TOPIC(std::string channel, std::string topic) {

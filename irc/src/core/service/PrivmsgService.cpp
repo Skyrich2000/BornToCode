@@ -14,9 +14,7 @@ PrivmsgService& PrivmsgService::operator=(const PrivmsgService& obj) {
 }
 
 void PrivmsgService::setIsNotice(bool type) {
-    if (type == NOTICE)
-        msgType = NOTICE;
-    msgType = PRIVMSG;
+    msgType = type;
 }
 
 void PrivmsgService::sendToChannel(std::vector<Message>& ret, User* user, const std::string channelName, const std::string text) {
@@ -44,6 +42,14 @@ void PrivmsgService::sendToChannel(std::vector<Message>& ret, User* user, const 
         }
     }
 }
+
+void PrivmsgService::sendToChannelByBot(std::vector<Message>& ret, const std::string channelName) {
+    User *bot = this->repository->getUser(0);
+
+    std::string text = "https://42world.kr";
+    this->sendToChannel(ret, bot, channelName, text);
+}
+
 
 void PrivmsgService::sendToUser(std::vector<Message>& ret, User* user, const std::string nickname, const std::string text) {
     User* targetUser = repository->getUserByNickname(nickname);
@@ -92,7 +98,10 @@ const std::vector<Message> PrivmsgService::execute(User* user, const std::vector
         }
 
         if (target[0] == '#') {
-            this->sendToChannel(ret, user, target, text);
+            if (text == "42world" && msgType == PRIVMSG)
+                this->sendToChannelByBot(ret, target);
+            else 
+                this->sendToChannel(ret, user, target, text);
         } else {
             this->sendToUser(ret, user, target, text);
         }

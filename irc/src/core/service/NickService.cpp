@@ -49,11 +49,12 @@ const std::vector<Message> NickService::execute(User* user, const std::vector<st
     };
 
     for (std::set<User*>::iterator uit = users.begin(); uit != users.end(); ++uit) {
-        ret.push_back(Message::create(&oldUser, *uit, StatusCode::MSG_NICK(nickname, false)));
+        ret.push_back(Message::create(&oldUser, *uit, StatusCode::MSG_NICK(nickname)));
     }
 
-    int is_new_registered = user->isRegistered() && oldUser.registerStatus != user->registerStatus;
-    ret.push_back(Message::create(&oldUser, user, StatusCode::MSG_NICK(nickname, is_new_registered)));
+    ret.push_back(Message::create(&oldUser, user, StatusCode::MSG_NICK(nickname)));
+    if (user->isRegistered() && oldUser.registerStatus != user->isRegistered())
+        ret.push_back(Message::create(server, user, StatusCode::RPL_WELCOME()));
     return ret;
 }
 

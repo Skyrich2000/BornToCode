@@ -19,6 +19,8 @@ FILE		=	main.cpp \
 				core/model/Repository.cpp \
 				core/service/Service.cpp \
 				core/service/QuitService.cpp \
+				core/service/CapService.cpp \
+				core/service/PingService.cpp \
 				core/service/NickService.cpp \
 				core/service/PassService.cpp \
 				core/service/UserService.cpp \

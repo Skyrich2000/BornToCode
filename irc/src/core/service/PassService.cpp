@@ -15,6 +15,7 @@ PassService& PassService::operator=(const PassService& obj) {
 
 const std::vector<Message> PassService::execute(User* user, const std::vector<std::string>& param) {
     std::vector<Message> ret;
+    bool before_register_status = user->isRegistered();
 
     if (param.size() < 1) {
         ret.push_back(Message::create(server, user, StatusCode::ERR_NEEDMOREPARAMS("PASS")));
@@ -33,6 +34,8 @@ const std::vector<Message> PassService::execute(User* user, const std::vector<st
     }
 
     user->registerStatus |= User::REGISTER_PASS;
-    ret.push_back(Message::create(server, user, StatusCode::MSG_PASS(user->isRegistered())));
+    ret.push_back(Message::create(server, user, StatusCode::MSG_PASS()));
+    if (user->isRegistered() && before_register_status != user->isRegistered())
+        ret.push_back(Message::create(server, user, StatusCode::RPL_WELCOME()));
     return ret;
 }

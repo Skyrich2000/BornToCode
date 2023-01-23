@@ -21,15 +21,18 @@ class StatusCode {
     StatusCode(const StatusCode& obj);
     ~StatusCode();
 
-    static const StatusCode MSG_PASS(int is_registered);
-    static const StatusCode MSG_NICK(std::string nick, int is_new_registered);
-    static const StatusCode MSG_USER(int is_registered);
+    static const StatusCode MSG_CAP();
+    static const StatusCode MSG_PONG(std::string str);
+    static const StatusCode MSG_PASS();
+    static const StatusCode MSG_NICK(std::string nick);
+    static const StatusCode MSG_USER();
     static const StatusCode MSG_QUIT(std::string msg);
     static const StatusCode MSG_JOIN(std::string channel);
-    static const StatusCode MSG_PART(std::string channelName, std::string username);
+    static const StatusCode MSG_PART(std::string channelName, std::string message);
     static const StatusCode MSG_PRIVMSG(std::string target, std::string text);
     static const StatusCode MSG_NOTICE(std::string target, std::string text);
 
+    static const StatusCode RPL_WELCOME();
     static const StatusCode RPL_TOPIC(std::string channel, std::string topic);
     static const StatusCode RPL_NOTOPIC(std::string channel);
 

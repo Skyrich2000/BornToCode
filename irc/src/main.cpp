@@ -4,6 +4,8 @@
 #include "Controller.hpp"
 #include "Event.hpp"
 #include "JoinService.hpp"
+#include "CapService.hpp"
+#include "PingService.hpp"
 #include "ListService.hpp"
 #include "Message.hpp"
 #include "ModeService.hpp"
@@ -64,6 +66,8 @@ int main(int argc, char** argv) {
     UserMiddleware userMiddleware(&repository);
 
     QuitService quitService(&repository, &event);
+    CapService capService(&repository, &event);
+    PingService pingService(&repository, &event);
     NickService nickService(&repository, &event);
     PassService passService(&repository, &event);
     UserService userService(&repository, &event);
@@ -82,6 +86,8 @@ int main(int argc, char** argv) {
     Controller controller(&userMiddleware);
 
     controller.addService("NICK", &nickService);
+    controller.addService("CAP", &capService);
+    controller.addService("PING", &pingService);
     controller.addService("QUIT", &quitService);
     controller.addService("PASS", &passService);
     controller.addService("USER", &userService);

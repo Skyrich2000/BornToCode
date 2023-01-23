@@ -21,12 +21,13 @@ const std::vector<Message> PartService::execute(User* user, const std::vector<st
         return ret;
     }
 
-    if (param.size() == 0) {
+    if (param.size() != 2) {
         ret.push_back(Message::create(server, user, StatusCode::ERR_NEEDMOREPARAMS("PART")));
         return ret;
     }
 
     std::vector<std::string> channelNames = Util::split(param[0], ',');
+    std::string message = param[1];
     for (std::vector<std::string>::iterator it = channelNames.begin(); it != channelNames.end(); ++it) {
         std::string channelName = *it;
         if (channelName[0] != '#') {
@@ -47,7 +48,7 @@ const std::vector<Message> PartService::execute(User* user, const std::vector<st
         std::string userName = user->nickname;
         const std::vector<UserInChannel*> userInChannel = this->repository->getUsersByChannel(channel);
         for (std::vector<UserInChannel*>::const_iterator it = userInChannel.begin(); it != userInChannel.end(); ++it) {
-            ret.push_back(Message::create(user, (*it)->user, StatusCode::MSG_PART(channelName, userName)));
+            ret.push_back(Message::create(user, (*it)->user, StatusCode::MSG_PART(channelName, message)));
         }
         repository->removeUserFromChannel(user, channel);
     }
